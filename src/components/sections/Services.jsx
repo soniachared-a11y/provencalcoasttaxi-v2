@@ -43,6 +43,7 @@ export default function Services() {
   const [active, setActive] = useState(0)
   const sectionRef = useRef(null)
 
+  // Entry animation
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.strips-container', {
@@ -56,9 +57,66 @@ export default function Services() {
           once: true,
         },
       })
+
+      // Parallax on active strip image
+      gsap.utils.toArray('.service-strip').forEach(strip => {
+        gsap.to(strip.querySelector('.strip-bg'), {
+          yPercent: -15,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: strip,
+            start: 'top bottom',
+            end: 'bottom top',
+            scrub: 1.5,
+          },
+        })
+      })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
+
+  // Cinematic content animation on strip change
+  useEffect(() => {
+    const activeStrip = document.querySelector(`.service-strip[data-index="${active}"]`)
+    if (!activeStrip) return
+
+    const content = activeStrip.querySelector('.strip-content-active')
+    if (!content) return
+
+    const tl = gsap.timeline()
+
+    // Content elements slide in with stagger
+    const num = content.querySelector('.strip-num')
+    const title = content.querySelector('.strip-title')
+    const desc = content.querySelector('.strip-desc')
+    const tags = content.querySelectorAll('.strip-tag')
+    const cta = content.querySelector('.strip-cta')
+    const line = content.querySelector('.strip-line')
+
+    const elements = [num, title, desc, ...tags, cta].filter(Boolean)
+
+    gsap.set(elements, { opacity: 0, y: 20 })
+    if (line) gsap.set(line, { scaleX: 0, transformOrigin: 'left' })
+
+    tl.to(elements, {
+      opacity: 1,
+      y: 0,
+      duration: 0.5,
+      stagger: 0.06,
+      ease: 'power3.out',
+      delay: 0.3,
+    })
+
+    if (line) {
+      tl.to(line, {
+        scaleX: 1,
+        duration: 0.6,
+        ease: 'power3.inOut',
+      }, '-=0.3')
+    }
+
+    return () => tl.kill()
+  }, [active])
 
   return (
     <section
@@ -124,6 +182,7 @@ export default function Services() {
               <div
                 key={i}
                 className="service-strip"
+                data-index={i}
                 onClick={() => setActive(i)}
                 style={{
                   flex: isActive ? 5 : 1,
@@ -139,15 +198,18 @@ export default function Services() {
                   e.currentTarget.style.transform = 'scale(1)'
                 }}
               >
-                {/* Background image */}
-                <div style={{
+                {/* Background image with parallax */}
+                <div className="strip-bg" style={{
                   position: 'absolute',
-                  inset: 0,
+                  inset: '-15% 0',
+                  width: '100%',
+                  height: '130%',
                   backgroundImage: `url(${s.image})`,
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
-                  transform: isActive ? 'scale(1.05)' : 'scale(1)',
-                  transition: 'transform 0.7s cubic-bezier(0.76, 0, 0.24, 1)',
+                  transform: isActive ? 'scale(1.08)' : 'scale(1)',
+                  filter: isActive ? 'none' : 'grayscale(40%)',
+                  transition: 'transform 1s cubic-bezier(0.22, 1, 0.36, 1), filter 0.8s ease',
                 }} />
 
                 {/* Gradient overlay */}
@@ -205,7 +267,7 @@ export default function Services() {
                 </div>
 
                 {/* Open state content */}
-                <div style={{
+                <div className="strip-content-active" style={{
                   position: 'absolute',
                   inset: 0,
                   display: 'flex',
@@ -216,7 +278,7 @@ export default function Services() {
                   transition: `opacity 0.3s ease ${isActive ? '0.2s' : '0s'}`,
                   pointerEvents: isActive ? 'auto' : 'none',
                 }}>
-                  <span style={{
+                  <span className="strip-num" style={{
                     fontFamily: 'Sora, sans-serif',
                     fontSize: 12,
                     color: 'rgba(255,255,255,0.4)',
@@ -225,7 +287,7 @@ export default function Services() {
                     {num} / 05
                   </span>
 
-                  <h3 style={{
+                  <h3 className="strip-title" style={{
                     fontFamily: "'Instrument Serif', serif",
                     fontSize: 32,
                     fontWeight: 400,
@@ -236,7 +298,7 @@ export default function Services() {
                     {s.titre}
                   </h3>
 
-                  <p style={{
+                  <p className="strip-desc" style={{
                     fontFamily: 'Sora, sans-serif',
                     fontSize: 13,
                     color: 'rgba(255,255,255,0.65)',

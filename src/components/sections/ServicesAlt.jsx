@@ -12,7 +12,7 @@ export default function ServicesAlt() {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768)
+    const checkMobile = () => setIsMobile(window.innerWidth <= 1024)
     checkMobile()
     window.addEventListener('resize', checkMobile)
     return () => window.removeEventListener('resize', checkMobile)
@@ -139,7 +139,7 @@ export default function ServicesAlt() {
                 className="services-alt-card"
                 style={{
                   ...(isMobile
-                    ? { height: '70vh', marginBottom: 16, position: 'relative', borderRadius: 8, overflow: 'hidden' }
+                    ? { height: '50vh', minHeight: 360, marginBottom: 16, position: 'relative', borderRadius: 8, overflow: 'hidden' }
                     : { minWidth: '100vw', height: '100vh', position: 'relative' }),
                 }}
               >

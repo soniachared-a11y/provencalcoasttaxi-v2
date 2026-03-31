@@ -1,51 +1,136 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ChevronRight } from 'lucide-react'
-import { FAQS, SECTION_INTROS } from '../../data/content'
+import { Plus, Minus } from 'lucide-react'
+import { FAQS } from '../../data/content'
+import CharReveal from '../ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
-function FAQItem({ faq, index, isOpen, onToggle }) {
+function FAQItem({ faq, index, isOpen, onToggle, total }) {
+  const itemRef = useRef(null)
   const contentRef = useRef(null)
-  const chevronRef = useRef(null)
+  const barRef = useRef(null)
+  const numberRef = useRef(null)
   const id = `faq-${index}`
+  const num = String(index + 1).padStart(2, '0')
 
+  // Animate open/close
   useEffect(() => {
     const el = contentRef.current
+    const bar = barRef.current
+    const numEl = numberRef.current
     if (!el) return
 
     if (isOpen) {
-      gsap.set(el, { height: 'auto', display: 'block' })
-      const h = el.offsetHeight
-      gsap.fromTo(el,
-        { height: 0, opacity: 0 },
-        { height: h, opacity: 1, duration: 0.4, ease: 'power2.out' }
-      )
+      // 1. Show content container
+      gsap.set(el, { display: 'block' })
+      const h = el.scrollHeight
+
+      // 2. Animated timeline for opening
+      const tl = gsap.timeline()
+
+      // Accent bar expands
+      if (bar) {
+        tl.to(bar, {
+          height: '100%',
+          duration: 0.5,
+          ease: 'power3.inOut',
+        }, 0)
+      }
+
+      // Number color shifts
+      if (numEl) {
+        tl.to(numEl, {
+          color: 'var(--olive)',
+          duration: 0.3,
+        }, 0)
+      }
+
+      // Content expands with clip-path reveal
+      tl.fromTo(el,
+        { height: 0, clipPath: 'inset(0 0 100% 0)' },
+        {
+          height: h,
+          clipPath: 'inset(0 0 0% 0)',
+          duration: 0.6,
+          ease: 'power3.inOut',
+        }, 0.1)
+
+      // Words stagger in
+      const words = el.querySelectorAll('.faq-word')
+      if (words.length) {
+        tl.from(words, {
+          opacity: 0,
+          y: 8,
+          duration: 0.3,
+          stagger: 0.015,
+          ease: 'power2.out',
+        }, 0.3)
+      }
     } else {
-      gsap.to(el, {
+      // Close animation
+      const tl = gsap.timeline()
+
+      if (bar) {
+        tl.to(bar, {
+          height: '0%',
+          duration: 0.3,
+          ease: 'power2.in',
+        }, 0)
+      }
+
+      if (numEl) {
+        tl.to(numEl, {
+          color: 'var(--texte-faint)',
+          duration: 0.3,
+        }, 0)
+      }
+
+      tl.to(el, {
         height: 0,
-        opacity: 0,
-        duration: 0.3,
+        clipPath: 'inset(0 0 100% 0)',
+        duration: 0.4,
         ease: 'power2.in',
         onComplete: () => gsap.set(el, { display: 'none' }),
-      })
+      }, 0)
     }
   }, [isOpen])
 
-  useEffect(() => {
-    if (chevronRef.current) {
-      gsap.to(chevronRef.current, {
-        rotate: isOpen ? 90 : 0,
-        duration: 0.3,
-        ease: 'power2.out',
-      })
-    }
-  }, [isOpen])
+  // Split answer into words for stagger
+  const answerWords = faq.r.split(' ')
 
   return (
-    <div style={{ borderBottom: '1px solid var(--border)' }}>
-      {/* Question */}
+    <div
+      ref={itemRef}
+      style={{
+        position: 'relative',
+        borderBottom: '1px solid var(--border)',
+        transition: 'background 0.3s ease',
+      }}
+      className="faq-item"
+      onMouseEnter={e => {
+        if (!isOpen) e.currentTarget.style.background = 'var(--surface-alt)'
+      }}
+      onMouseLeave={e => {
+        if (!isOpen) e.currentTarget.style.background = 'transparent'
+      }}
+    >
+      {/* Accent bar left */}
+      <div
+        ref={barRef}
+        style={{
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          width: 3,
+          height: '0%',
+          background: 'var(--olive)',
+          borderRadius: 2,
+        }}
+      />
+
+      {/* Question button */}
       <button
         onClick={() => onToggle(index)}
         aria-expanded={isOpen}
@@ -54,39 +139,60 @@ function FAQItem({ faq, index, isOpen, onToggle }) {
           width: '100%',
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: '24px 0',
+          padding: '28px 0 28px 24px',
           background: 'none',
           border: 'none',
           cursor: 'pointer',
-          fontFamily: 'Sora, sans-serif',
-          fontSize: 15,
-          fontWeight: 600,
-          color: 'var(--texte)',
           textAlign: 'left',
-          gap: 16,
-        }}
-        onMouseEnter={() => {
-          if (chevronRef.current && !isOpen) {
-            gsap.to(chevronRef.current, { x: 4, duration: 0.2, ease: 'power2.out' })
-          }
-        }}
-        onMouseLeave={() => {
-          if (chevronRef.current && !isOpen) {
-            gsap.to(chevronRef.current, { x: 0, duration: 0.2, ease: 'power2.out' })
-          }
+          gap: 20,
         }}
       >
-        <span>{faq.q}</span>
+        {/* Number */}
         <span
-          ref={chevronRef}
-          style={{ flexShrink: 0, color: 'var(--lavande)' }}
+          ref={numberRef}
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 20,
+            color: isOpen ? 'var(--olive)' : 'var(--texte-faint)',
+            minWidth: 32,
+            transition: 'color 0.3s',
+          }}
         >
-          <ChevronRight size={18} />
+          {num}
+        </span>
+
+        {/* Question text */}
+        <span style={{
+          flex: 1,
+          fontFamily: 'Sora, sans-serif',
+          fontSize: 15,
+          fontWeight: 500,
+          color: 'var(--texte)',
+          lineHeight: 1.4,
+        }}>
+          {faq.q}
+        </span>
+
+        {/* Icon morph: Plus ↔ Minus */}
+        <span style={{
+          flexShrink: 0,
+          width: 32,
+          height: 32,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          borderRadius: '50%',
+          background: isOpen ? 'var(--olive)' : 'transparent',
+          border: isOpen ? 'none' : '1px solid var(--border)',
+          color: isOpen ? '#fff' : 'var(--texte-light)',
+          transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
+          transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+        }}>
+          {isOpen ? <Minus size={14} strokeWidth={2.5} /> : <Plus size={14} strokeWidth={2} />}
         </span>
       </button>
 
-      {/* Answer */}
+      {/* Answer with word stagger */}
       <div
         ref={contentRef}
         id={id}
@@ -94,21 +200,28 @@ function FAQItem({ faq, index, isOpen, onToggle }) {
         style={{
           overflow: 'hidden',
           height: 0,
-          opacity: 0,
           display: 'none',
+          clipPath: 'inset(0 0 100% 0)',
         }}
       >
-        <p style={{
-          fontFamily: 'Sora, sans-serif',
-          fontSize: 14,
-          fontWeight: 300,
-          color: 'var(--texte-light)',
-          lineHeight: 1.7,
-          margin: 0,
-          paddingBottom: 24,
+        <div style={{
+          padding: '0 24px 32px 76px',
+          lineHeight: 1.8,
         }}>
-          {faq.r}
-        </p>
+          <p style={{
+            fontFamily: 'Sora, sans-serif',
+            fontSize: 14,
+            fontWeight: 300,
+            color: 'var(--texte-light)',
+            margin: 0,
+          }}>
+            {answerWords.map((word, i) => (
+              <span key={i} className="faq-word" style={{ display: 'inline-block', marginRight: '0.3em' }}>
+                {word}
+              </span>
+            ))}
+          </p>
+        </div>
       </div>
     </div>
   )
@@ -119,31 +232,34 @@ export default function FAQ() {
   const [autoPlay, setAutoPlay] = useState(false)
   const sectionRef = useRef(null)
   const timerRef = useRef(null)
+  const progressRef = useRef(null)
 
   const handleToggle = useCallback((index) => {
-    setAutoPlay(false) // Stop autoplay on manual click
+    setAutoPlay(false)
     if (timerRef.current) clearInterval(timerRef.current)
+    if (progressRef.current) gsap.killTweensOf(progressRef.current)
     setOpenIndex(prev => prev === index ? -1 : index)
   }, [])
 
-  // Auto-cycle FAQ when section enters viewport
+  // Stagger reveal each FAQ item individually
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from('.faq-list', {
-        y: 40,
+      // Each FAQ item reveals with stagger
+      gsap.from('.faq-item', {
+        x: -30,
         opacity: 0,
-        duration: 0.8,
-        ease: 'power2.out',
+        duration: 0.7,
+        stagger: 0.08,
+        ease: 'power3.out',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
+          start: 'top 75%',
           once: true,
           onEnter: () => {
-            // Start auto-cycling after reveal
             setTimeout(() => {
               setAutoPlay(true)
               setOpenIndex(0)
-            }, 800)
+            }, 900)
           },
         },
       })
@@ -151,12 +267,36 @@ export default function FAQ() {
     return () => ctx.revert()
   }, [])
 
-  // Auto-cycle timer
+  // Auto-cycle with progress bar
   useEffect(() => {
     if (!autoPlay) return
+
+    // Animate progress bar
+    if (progressRef.current) {
+      gsap.fromTo(progressRef.current,
+        { scaleX: 0 },
+        {
+          scaleX: 1,
+          duration: 5,
+          ease: 'none',
+          transformOrigin: 'left',
+        }
+      )
+    }
+
     timerRef.current = setInterval(() => {
-      setOpenIndex(prev => (prev + 1) % FAQS.length)
-    }, 4000)
+      setOpenIndex(prev => {
+        const next = (prev + 1) % FAQS.length
+        // Reset progress
+        if (progressRef.current) {
+          gsap.fromTo(progressRef.current,
+            { scaleX: 0 },
+            { scaleX: 1, duration: 5, ease: 'none', transformOrigin: 'left' }
+          )
+        }
+        return next
+      })
+    }, 5000)
     return () => clearInterval(timerRef.current)
   }, [autoPlay])
 
@@ -166,9 +306,9 @@ export default function FAQ() {
       id="faq"
       style={{ background: 'var(--surface)' }}
     >
-      <div style={{ maxWidth: 800, margin: '0 auto', padding: '80px 24px' }}>
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: '100px 24px' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+        <div style={{ textAlign: 'center', marginBottom: 64 }}>
           <span style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 11,
@@ -181,31 +321,53 @@ export default function FAQ() {
           }}>
             Questions fréquentes
           </span>
-          <h2 style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 36,
-            fontWeight: 400,
-            color: 'var(--texte)',
-            lineHeight: 1.2,
-            margin: 0,
-          }}>
-            Questions fréquentes
-          </h2>
+          <CharReveal
+            text="Tout savoir avant de réserver"
+            as="h2"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 36,
+              fontWeight: 400,
+              color: 'var(--texte)',
+              lineHeight: 1.2,
+              margin: '0 0 20px 0',
+            }}
+          />
           <p style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 14,
             color: 'var(--texte-light)',
             lineHeight: 1.8,
-            maxWidth: 560,
-            margin: '20px auto 0',
-            textAlign: 'center',
+            maxWidth: 480,
+            margin: '0 auto',
           }}>
-            Retrouvez les réponses aux questions les plus fréquentes de nos clients. N'hésitez pas à nous contacter pour toute autre question.
+            Retrouvez les réponses aux questions les plus fréquentes de nos clients.
           </p>
         </div>
 
+        {/* Auto-cycle progress bar */}
+        {autoPlay && (
+          <div style={{
+            width: '100%',
+            height: 2,
+            background: 'var(--border)',
+            marginBottom: 8,
+            overflow: 'hidden',
+          }}>
+            <div
+              ref={progressRef}
+              style={{
+                height: '100%',
+                background: 'var(--olive)',
+                transformOrigin: 'left',
+                transform: 'scaleX(0)',
+              }}
+            />
+          </div>
+        )}
+
         {/* FAQ list */}
-        <div className="faq-list">
+        <div>
           {FAQS.map((faq, i) => (
             <FAQItem
               key={i}
@@ -213,6 +375,7 @@ export default function FAQ() {
               index={i}
               isOpen={openIndex === i}
               onToggle={handleToggle}
+              total={FAQS.length}
             />
           ))}
         </div>

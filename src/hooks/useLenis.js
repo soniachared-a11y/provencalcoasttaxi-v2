@@ -21,18 +21,12 @@ export function useLenis() {
     })
     gsap.ticker.lagSmoothing(0)
 
-    // Sync Lenis avec ScrollTrigger
+    // Rafraîchir ScrollTrigger après init Lenis
     lenis.on('scroll', ScrollTrigger.update)
-
-    // Exposer Lenis globalement pour que les composants puissent le stopper/démarrer
-    window.__lenis = lenis
-
-    // Triple RAF pour s'assurer que tous les composants sont montés
+    // Attendre que tous les composants soient montés
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh()
-        })
+        ScrollTrigger.refresh()
       })
     })
 

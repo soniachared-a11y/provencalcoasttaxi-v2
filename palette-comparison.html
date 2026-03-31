@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Palettes Provence — Provençal Coast Taxi V2</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: #111; color: #eee; padding: 40px 20px; }
+h1 { text-align: center; font-size: 32px; margin-bottom: 8px; font-family: 'Cormorant Garamond', serif; }
+.intro { text-align: center; color: #999; margin-bottom: 16px; font-size: 14px; max-width: 700px; margin-left: auto; margin-right: auto; }
+.sources { text-align: center; color: #666; margin-bottom: 48px; font-size: 11px; }
+
+.palette-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr)); gap: 32px; max-width: 1400px; margin: 0 auto; }
+
+.palette-card { border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+.palette-header { padding: 28px 24px 20px; }
+.palette-header h2 { font-size: 22px; margin-bottom: 6px; font-family: 'Cormorant Garamond', serif; }
+.palette-header .tagline { font-size: 13px; opacity: 0.6; font-style: italic; }
+
+.color-strip { display: flex; height: 56px; }
+.color-strip div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; letter-spacing: 0.04em; line-height: 1.4; }
+
+.demo { padding: 32px 28px; }
+.demo-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 10px; font-weight: 600; }
+.demo-h1 { font-size: 36px; line-height: 1.15; margin-bottom: 14px; }
+.demo-sub { font-size: 14px; line-height: 1.7; margin-bottom: 24px; max-width: 380px; }
+.demo-tel { font-size: 28px; margin-bottom: 20px; letter-spacing: -0.01em; }
+.btn-row { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+.btn-primary { padding: 13px 28px; border-radius: 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; border: none; }
+.btn-outline { padding: 12px 27px; border-radius: 6px; font-size: 13px; font-weight: 600; letter-spacing: 0.05em; background: transparent; }
+.demo-card { padding: 20px; border-radius: 12px; margin-bottom: 12px; }
+.demo-card strong { display: block; margin-bottom: 4px; }
+.demo-card span { font-size: 13px; }
+.card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+.mini-card { padding: 16px; border-radius: 10px; font-size: 12px; line-height: 1.5; }
+.mini-card .mc-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 6px; font-weight: 600; }
+.palette-footer { padding: 14px 24px; font-size: 12px; text-align: center; border-top: 1px solid rgba(255,255,255,0.05); color: #666; }
+</style>
+</head>
+<body>
+
+<h1>Palettes Provence — Sans Or</h1>
+<p class="intro">3 directions inspirées de Cézanne, de la Sainte-Victoire et du territoire provençal.<br>Couleurs du paysage réel — lavande, ocre, pierre, terre, ciel.</p>
+<p class="sources">Recherche : palettes Cézanne, tendances luxe 2025-2026, design Provence contemporain</p>
+
+<div class="palette-grid">
+
+<!-- PALETTE A — CÉZANNE -->
+<div class="palette-card">
+  <div class="palette-header" style="background:#0D0B0F;">
+    <h2 style="color:#D4A05A; font-family:'Libre Baskerville',serif;">A — Cézanne</h2>
+    <div class="tagline" style="color:#8B8090;">Ocre chaud & Bleu Provençal — comme ses tableaux de la Sainte-Victoire</div>
+  </div>
+  <div class="color-strip">
+    <div style="background:#0D0B0F; color:#555;">Fond<br>#0D0B0F</div>
+    <div style="background:#171420; color:#555;">Surface<br>#171420</div>
+    <div style="background:#D4A05A; color:#0D0B0F;">Ocre<br>#D4A05A</div>
+    <div style="background:#3B5998; color:#fff;">Bleu<br>#3B5998</div>
+    <div style="background:#9B85B8; color:#fff;">Lavande<br>#9B85B8</div>
+    <div style="background:#E8DDD0; color:#333;">Pierre<br>#E8DDD0</div>
+  </div>
+  <div class="demo" style="background:#0D0B0F;">
+    <div class="demo-label" style="color:#9B85B8;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+    <div class="demo-h1" style="font-family:'Libre Baskerville',serif;">
+      <span style="color:#E8DDD0;">Chauffeur Privé</span><br>
+      <span style="color:#D4A05A;">Aix-en-Provence</span>
+    </div>
+    <div class="demo-sub" style="color:#8B8090;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme. Tarifs fixes.</div>
+    <div class="demo-tel" style="color:#D4A05A; font-family:'Libre Baskerville',serif;">06 15 96 32 75</div>
+    <div class="btn-row">
+      <span class="btn-primary" style="background:#D4A05A; color:#0D0B0F;">Réserver mon transfert →</span>
+      <span class="btn-outline" style="border:2px solid #3B5998; color:#3B5998;">WhatsApp</span>
+    </div>
+    <div class="demo-card" style="background:#171420; border:1px solid rgba(155,133,184,0.15); color:#8B8090;">
+      <strong style="color:#E8DDD0; font-family:'Libre Baskerville',serif;">Mercedes S-Class</strong>
+      <span>Le summum du luxe. <span style="color:#9B85B8;">3 passagers · 2 bagages</span></span>
+    </div>
+    <div class="card-row">
+      <div class="mini-card" style="background:#171420; border:1px solid rgba(155,133,184,0.1);">
+        <div class="mc-title" style="color:#D4A05A;">Tarif Fixe</div>
+        <span style="color:#8B8090;">Prix confirmé, aucune surprise</span>
+      </div>
+      <div class="mini-card" style="background:#171420; border:1px solid rgba(155,133,184,0.1);">
+        <div class="mc-title" style="color:#3B5998;">Ponctualité</div>
+        <span style="color:#8B8090;">Suivi de vol en temps réel</span>
+      </div>
+    </div>
+  </div>
+  <div class="palette-footer">Ambiance picturale Cézanne. Ocre = terre d'Aix · Bleu = ciel de Provence · Lavande = accent</div>
+</div>
+
+<!-- PALETTE B — LAVANDE & PIERRE -->
+<div class="palette-card">
+  <div class="palette-header" style="background:#0C0A10;">
+    <h2 style="color:#A68EC2; font-family:'Cormorant Garamond',serif;">B — Lavande & Pierre</h2>
+    <div class="tagline" style="color:#7A7080;">Lavande dominante + pierre calcaire chaude. Identité provençale immédiate.</div>
+  </div>
+  <div class="color-strip">
+    <div style="background:#0C0A10; color:#555;">Fond<br>#0C0A10</div>
+    <div style="background:#16131E; color:#555;">Surface<br>#16131E</div>
+    <div style="background:#A68EC2; color:#0C0A10;">Lavande<br>#A68EC2</div>
+    <div style="background:#C4AAD8; color:#0C0A10;">Lavande cl.<br>#C4AAD8</div>
+    <div style="background:#C2956B; color:#fff;">Terre<br>#C2956B</div>
+    <div style="background:#E5DCD0; color:#333;">Pierre<br>#E5DCD0</div>
+  </div>
+  <div class="demo" style="background:#0C0A10;">
+    <div class="demo-label" style="color:#C2956B;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+    <div class="demo-h1" style="font-family:'Cormorant Garamond',serif; font-weight:700;">
+      <span style="color:#E5DCD0;">Chauffeur Privé</span><br>
+      <span style="color:#A68EC2;">Aix-en-Provence</span>
+    </div>
+    <div class="demo-sub" style="color:#7A7080;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme. Tarifs fixes.</div>
+    <div class="demo-tel" style="color:#C4AAD8; font-family:'Cormorant Garamond',serif; font-weight:700;">06 15 96 32 75</div>
+    <div class="btn-row">
+      <span class="btn-primary" style="background:#A68EC2; color:#0C0A10;">Réserver mon transfert →</span>
+      <span class="btn-outline" style="border:2px solid #C2956B; color:#C2956B;">WhatsApp</span>
+    </div>
+    <div class="demo-card" style="background:#16131E; border:1px solid rgba(166,142,194,0.2); color:#7A7080;">
+      <strong style="color:#E5DCD0; font-family:'Cormorant Garamond',serif;">Mercedes S-Class</strong>
+      <span>Le summum du luxe. <span style="color:#C2956B;">3 passagers · 2 bagages</span></span>
+    </div>
+    <div class="card-row">
+      <div class="mini-card" style="background:#16131E; border:1px solid rgba(166,142,194,0.12);">
+        <div class="mc-title" style="color:#A68EC2;">Tarif Fixe</div>
+        <span style="color:#7A7080;">Prix confirmé, aucune surprise</span>
+      </div>
+      <div class="mini-card" style="background:#16131E; border:1px solid rgba(166,142,194,0.12);">
+        <div class="mc-title" style="color:#C2956B;">Ponctualité</div>
+        <span style="color:#7A7080;">Suivi de vol en temps réel</span>
+      </div>
+    </div>
+  </div>
+  <div class="palette-footer">La lavande prend le lead. Identité Provence immédiate. Terre chaude en accent secondaire.</div>
+</div>
+
+<!-- PALETTE C — BASTIDE -->
+<div class="palette-card">
+  <div class="palette-header" style="background:#0E0C09;">
+    <h2 style="color:#C47A50; font-family:'Playfair Display',serif;">C — Bastide</h2>
+    <div class="tagline" style="color:#8A7E6E;">Terre cuite, olive, pierre dorée. Provence authentique et chaleureuse.</div>
+  </div>
+  <div class="color-strip">
+    <div style="background:#0E0C09; color:#555;">Fond<br>#0E0C09</div>
+    <div style="background:#181410; color:#555;">Surface<br>#181410</div>
+    <div style="background:#C47A50; color:#0E0C09;">Terre cuite<br>#C47A50</div>
+    <div style="background:#D4976A; color:#0E0C09;">Terre cl.<br>#D4976A</div>
+    <div style="background:#7A8E5A; color:#fff;">Olive<br>#7A8E5A</div>
+    <div style="background:#E8DCCA; color:#333;">Pierre<br>#E8DCCA</div>
+  </div>
+  <div class="demo" style="background:#0E0C09;">
+    <div class="demo-label" style="color:#7A8E5A;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+    <div class="demo-h1" style="font-family:'Playfair Display',serif;">
+      <span style="color:#E8DCCA;">Chauffeur Privé</span><br>
+      <span style="color:#C47A50;">Aix-en-Provence</span>
+    </div>
+    <div class="demo-sub" style="color:#8A7E6E;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme. Tarifs fixes.</div>
+    <div class="demo-tel" style="color:#D4976A; font-family:'Playfair Display',serif;">06 15 96 32 75</div>
+    <div class="btn-row">
+      <span class="btn-primary" style="background:#C47A50; color:#0E0C09;">Réserver mon transfert →</span>
+      <span class="btn-outline" style="border:2px solid #7A8E5A; color:#7A8E5A;">WhatsApp</span>
+    </div>
+    <div class="demo-card" style="background:#181410; border:1px solid rgba(196,122,80,0.15); color:#8A7E6E;">
+      <strong style="color:#E8DCCA; font-family:'Playfair Display',serif;">Mercedes S-Class</strong>
+      <span>Le summum du luxe. <span style="color:#7A8E5A;">3 passagers · 2 bagages</span></span>
+    </div>
+    <div class="card-row">
+      <div class="mini-card" style="background:#181410; border:1px solid rgba(196,122,80,0.1);">
+        <div class="mc-title" style="color:#C47A50;">Tarif Fixe</div>
+        <span style="color:#8A7E6E;">Prix confirmé, aucune surprise</span>
+      </div>
+      <div class="mini-card" style="background:#181410; border:1px solid rgba(196,122,80,0.1);">
+        <div class="mc-title" style="color:#7A8E5A;">Ponctualité</div>
+        <span style="color:#8A7E6E;">Suivi de vol en temps réel</span>
+      </div>
+    </div>
+  </div>
+  <div class="palette-footer">100% terroir. Terre cuite des mas + olive des collines + pierre des bastides. Zéro lavande.</div>
+</div>
+
+</div>
+
+<div style="text-align:center; margin-top:48px; color:#666; font-size:13px; max-width:600px; margin-left:auto; margin-right:auto; line-height:1.7; padding-bottom: 40px;">
+  <strong style="color:#999;">On peut mixer</strong> — lavande de B + terre de C, ou ocre de A + lavande de B, etc.<br>
+  Chaque palette propose aussi une <strong style="color:#999;">typo différente</strong> à comparer.<br>
+  Dis ce qui te parle et ce qui ne va pas.
+</div>
+
+</body>
+</html>

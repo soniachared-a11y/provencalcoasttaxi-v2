@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodboard V3 — Provençal Coast Taxi — Awwwards Level</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   RESET & BASE
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #F6F3EE;
+  color: #2A2A2A;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =========================================================
+   LAYOUT
+   ========================================================= */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.board-section { padding: 80px 0; }
+.board-section + .board-section { border-top: 1px solid #E8E4DE; }
+
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #8B6FA0;
+  margin-bottom: 12px;
+}
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 24px;
+  height: 1.5px;
+  background: #8B6FA0;
+}
+.section-heading {
+  font-family: 'Fraunces', serif;
+  font-size: 36px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.section-sub {
+  font-size: 15px;
+  color: #888;
+  line-height: 1.6;
+  max-width: 560px;
+}
+
+/* =========================================================
+   PAGE INTRO
+   ========================================================= */
+.intro {
+  padding: 64px 0 48px;
+  text-align: center;
+}
+.intro .section-tag { justify-content: center; }
+.intro .section-tag::before { display: none; }
+.intro .section-heading { font-size: 42px; }
+.intro .section-sub { max-width: 640px; margin: 0 auto; }
+
+/* =========================================================
+   PALETTE STRIP
+   ========================================================= */
+.palette-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 32px;
+  justify-content: center;
+}
+.palette-chip {
+  width: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+.palette-dot {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+.palette-name { font-size: 10px; font-weight: 600; color: #888; letter-spacing: 0.04em; }
+.palette-hex { font-size: 9px; color: #bbb; font-family: monospace; }
+
+/* =========================================================
+   TYPOGRAPHY PAIRINGS
+   ========================================================= */
+.typo-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+.typo-card {
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+.typo-card:hover {
+  box-shadow: 0 12px 48px rgba(139,111,160,0.1);
+  transform: translateY(-2px);
+}
+.typo-card-inner { padding: 36px; }
+.typo-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #6B7D4A;
+  margin-bottom: 16px;
+}
+.typo-headline {
+  font-size: 38px;
+  line-height: 1.08;
+  color: #1a1a1a;
+  margin-bottom: 16px;
+}
+.typo-headline span { color: #8B6FA0; }
+.typo-body {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #777;
+  margin-bottom: 24px;
+}
+.typo-meta-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid #f0ede8;
+}
+.typo-chip {
+  font-size: 10px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.typo-demo-strip {
+  padding: 24px 36px;
+  background: #faf8f5;
+  border-top: 1px solid #f0ede8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.typo-nav-demo {
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: #999;
+}
+.typo-phone-demo {
+  font-size: 22px;
+  color: #8B6FA0;
+}
+.typo-btn-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 24px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #fff;
+  background: #3D5A80;
+  border: none;
+  cursor: pointer;
+}
+
+/* =========================================================
+   SVG ICONS (inline, replacing emojis)
+   ========================================================= */
+.icon-line {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* =========================================================
+   EXPANDING STRIPS (inspiration TaxiEnProvence)
+   ========================================================= */
+.strips-container {
+  display: flex;
+  height: 420px;
+  gap: 4px;
+  margin-top: 48px;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.strip {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.strip.active { flex: 4; }
+.strip-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.6s ease;
+}
+.strip:hover .strip-bg { transform: scale(1.03); }
+.strip-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(26,26,26,0.85) 0%, rgba(26,26,26,0.3) 50%, rgba(26,26,26,0.1) 100%);
+  transition: background 0.4s ease;
+}
+.strip.active .strip-overlay {
+  background: linear-gradient(to top, rgba(26,26,26,0.8) 0%, rgba(26,26,26,0.15) 60%, transparent 100%);
+}
+.strip-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 28px;
+  color: #fff;
+  z-index: 2;
+}
+.strip-number {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  opacity: 0.5;
+  margin-bottom: 8px;
+}
+.strip-title {
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: font-size 0.4s ease;
+}
+.strip.active .strip-title { font-size: 26px; white-space: normal; }
+.strip-title-vertical {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: 'Fraunces', serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  opacity: 0.9;
+}
+.strip-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: all 0.5s ease 0.1s;
+  margin-top: 0;
+}
+.strip.active .strip-desc {
+  opacity: 0.85;
+  max-height: 200px;
+  margin-top: 12px;
+}
+.strip-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.2s;
+}
+.strip.active .strip-tags { opacity: 1; }
+.strip-tag {
+  font-size: 10px;
+  padding: 4px 10px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+.strip-accent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 3px;
+  height: 0;
+  background: #8B6FA0;
+  transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.strip.active .strip-accent { height: 100%; }
+.strip-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #fff;
+  opacity: 0;
+  transition: opacity 0.4s ease 0.25s;
+}
+.strip.active .strip-cta { opacity: 1; }
+.strip-cta-arrow {
+  display: inline-flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  background: #8B6FA0;
+}
+
+/* =========================================================
+   STACKED DEPTH CARDS (Style C refined)
+   ========================================================= */
+.depth-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 48px;
+}
+.depth-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px;
+  position: relative;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.depth-card::before {
+  content: '';
+  position: absolute;
+  top: 6px; left: 6px; right: -6px; bottom: -6px;
+  background: rgba(139,111,160,0.06);
+  border-radius: 16px;
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+.depth-card::after {
+  content: '';
+  position: absolute;
+  top: 12px; left: 12px; right: -12px; bottom: -12px;
+  background: rgba(107,125,74,0.04);
+  border-radius: 16px;
+  z-index: -2;
+  transition: all 0.5s ease;
+}
+.depth-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.06);
+}
+.depth-card:hover::before { top: 8px; left: 4px; right: -4px; bottom: -8px; }
+.dc-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.dc-icon-wrap svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 1.5;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.dc-title {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.dc-sub {
+  font-size: 12px;
+  color: #8B6FA0;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+.dc-text {
+  font-size: 13px;
+  line-height: 1.7;
+  color: #888;
+}
+.dc-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid #f0ede8;
+}
+.dc-price {
+  font-size: 14px;
+  font-weight: 700;
+  color: #6B7D4A;
+}
+.dc-link {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #8B6FA0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* =========================================================
+   SIDE PANEL LIST (inspiration DreamCarSud)
+   ========================================================= */
+.sidepanel-demo {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  min-height: 400px;
+}
+.sidepanel-image {
+  background: linear-gradient(135deg, #e8e2d8, #d8d0c4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.sidepanel-image-placeholder {
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+}
+.sidepanel-list {
+  background: #fff;
+  padding: 0;
+}
+.sidepanel-item {
+  padding: 28px 32px;
+  border-bottom: 1px solid #f0ede8;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s ease;
+}
+.sidepanel-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+.sidepanel-item:hover::before,
+.sidepanel-item.active::before {
+  background: #8B6FA0;
+}
+.sidepanel-item:hover,
+.sidepanel-item.active {
+  background: #faf8f5;
+}
+.sp-icon {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 10px;
+  color: #8B6FA0;
+}
+.sp-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+.sp-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #8B6FA0;
+  margin-bottom: 6px;
+}
+.sp-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #888;
+}
+
+/* =========================================================
+   CTA BUTTONS
+   ========================================================= */
+.cta-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 48px;
+}
+.cta-item {
+  background: #fff;
+  border-radius: 16px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.cta-item h4 {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #888;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 28px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+.cta-btn:hover { transform: translateY(-1px); }
+.cta-spec {
+  font-size: 10px;
+  color: #bbb;
+  font-family: monospace;
+  margin-top: 12px;
+}
+
+/* =========================================================
+   WHATSAPP FLOATING
+   ========================================================= */
+.wa-float-demo {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+.wa-float-preview {
+  position: relative;
+  width: 280px;
+  height: 200px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid #E8E4DE;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.wa-float-icon {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 52px;
+  height: 52px;
+  background: #25D366;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+}
+.wa-float-icon:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 24px rgba(37,211,102,0.4);
+}
+.wa-float-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: #fff;
+}
+.wa-float-info h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 8px;
+}
+.wa-float-info p {
+  font-size: 13px;
+  color: #888;
+  line-height: 1.6;
+}
+
+/* =========================================================
+   SECTION LAYOUT WIREFRAMES
+   ========================================================= */
+.wireframe-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+.wireframe {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.04);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+}
+.wireframe-body {
+  padding: 24px;
+  min-height: 240px;
+}
+.wireframe-caption {
+  padding: 20px 24px;
+  border-top: 1px solid #f0ede8;
+}
+.wireframe-caption h4 {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 4px;
+}
+.wireframe-caption p {
+  font-size: 12px;
+  color: #888;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+  .typo-grid, .wireframe-grid { grid-template-columns: 1fr; }
+  .cta-row { grid-template-columns: 1fr 1fr; }
+  .depth-grid { grid-template-columns: 1fr; }
+  .strips-container { height: 360px; }
+  .sidepanel-demo { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- INTRO -->
+<!-- ============================================================ -->
+<div class="intro container">
+  <div class="section-tag">Provençal Coast Taxi — Design System V3</div>
+  <h1 class="section-heading">Composants, Typographies & Interactions</h1>
+  <p class="section-sub">Chaque élément défini pour un site qui respire le luxe provençal — lumineux, moderne, niveau Awwwards.</p>
+  <div class="palette-row">
+    <div class="palette-chip"><div class="palette-dot" style="background:#F6F3EE; border-color:#E8E4DE;"></div><div class="palette-name">Crème</div><div class="palette-hex">#F6F3EE</div></div>
+    <div class="palette-chip"><div class="palette-dot" style="background:#FFFFFF;"></div><div class="palette-name">Surface</div><div class="palette-hex">#FFFFFF</div></div>
+    <div class="palette-chip"><div class="palette-dot" style="background:#8B6FA0;"></div><div class="palette-name">Lavande</div><div class="palette-hex">#8B6FA0</div></div>
+    <div class="palette-chip"><div class="palette-dot" style="background:#6B7D4A;"></div><div class="palette-name">Olive</div><div class="palette-hex">#6B7D4A</div></div>
+    <div class="palette-chip"><div class="palette-dot" style="background:#3D5A80;"></div><div class="palette-name">Bleu Nuit</div><div class="palette-hex">#3D5A80</div></div>
+    <div class="palette-chip"><div class="palette-dot" style="background:#2A2A2A;"></div><div class="palette-name">Texte</div><div class="palette-hex">#2A2A2A</div></div>
+    <div class="palette-chip"><div class="palette-dot" style="background:#25D366;"></div><div class="palette-name">WhatsApp</div><div class="palette-hex">#25D366</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 1: TYPOGRAPHIES -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">01 — Typographies</div>
+    <h2 class="section-heading">Pairings distinctives</h2>
+    <p class="section-sub">Quatre combinaisons rares — aucune n'est Playfair, Cormorant, Lora ou Source Serif.</p>
+
+    <div class="typo-grid">
+
+      <!-- A: Fraunces + Plus Jakarta Sans -->
+      <div class="typo-card">
+        <div class="typo-card-inner">
+          <div class="typo-label" style="font-family:'Plus Jakarta Sans',sans-serif;">Chauffeur privé — Aix-en-Provence</div>
+          <div class="typo-headline" style="font-family:'Fraunces',serif; font-weight:800;">L'élégance provençale<br><span>à votre service</span></div>
+          <div class="typo-body" style="font-family:'Plus Jakarta Sans',sans-serif;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes, service 24h/24.</div>
+          <div class="typo-meta-bar">
+            <span class="typo-chip" style="background:rgba(139,111,160,0.08); color:#8B6FA0;">Fraunces</span>
+            <span class="typo-chip" style="background:rgba(107,125,74,0.08); color:#6B7D4A;">Plus Jakarta Sans</span>
+            <span style="font-size:11px; color:#bbb; margin-left:auto;">Variable · Wonky · Unique</span>
+          </div>
+        </div>
+        <div class="typo-demo-strip" style="font-family:'Plus Jakarta Sans',sans-serif;">
+          <span class="typo-nav-demo">Accueil &nbsp; Services &nbsp; Flotte &nbsp; Contact</span>
+          <span class="typo-phone-demo" style="font-family:'Fraunces',serif;">06 15 96 32 75</span>
+          <span class="typo-btn-demo">Réserver</span>
+        </div>
+      </div>
+
+      <!-- B: Bodoni Moda + Outfit -->
+      <div class="typo-card">
+        <div class="typo-card-inner">
+          <div class="typo-label" style="font-family:'Outfit',sans-serif;">Chauffeur privé — Aix-en-Provence</div>
+          <div class="typo-headline" style="font-family:'Bodoni Moda',serif; font-weight:700;">L'élégance provençale<br><span>à votre service</span></div>
+          <div class="typo-body" style="font-family:'Outfit',sans-serif; font-weight:300;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes, service 24h/24.</div>
+          <div class="typo-meta-bar">
+            <span class="typo-chip" style="background:rgba(139,111,160,0.08); color:#8B6FA0;">Bodoni Moda</span>
+            <span class="typo-chip" style="background:rgba(107,125,74,0.08); color:#6B7D4A;">Outfit</span>
+            <span style="font-size:11px; color:#bbb; margin-left:auto;">Didot-like · Fashion · Haute couture</span>
+          </div>
+        </div>
+        <div class="typo-demo-strip" style="font-family:'Outfit',sans-serif;">
+          <span class="typo-nav-demo" style="letter-spacing:0.14em;">Accueil &nbsp; Services &nbsp; Flotte &nbsp; Contact</span>
+          <span class="typo-phone-demo" style="font-family:'Bodoni Moda',serif;">06 15 96 32 75</span>
+          <span class="typo-btn-demo" style="font-family:'Outfit',sans-serif;">Réserver</span>
+        </div>
+      </div>
+
+      <!-- C: Instrument Serif + Sora -->
+      <div class="typo-card">
+        <div class="typo-card-inner">
+          <div class="typo-label" style="font-family:'Sora',sans-serif;">Chauffeur privé — Aix-en-Provence</div>
+          <div class="typo-headline" style="font-family:'Instrument Serif',serif; font-size:42px;">L'élégance provençale<br><span>à votre service</span></div>
+          <div class="typo-body" style="font-family:'Sora',sans-serif; font-weight:300;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes, service 24h/24.</div>
+          <div class="typo-meta-bar">
+            <span class="typo-chip" style="background:rgba(139,111,160,0.08); color:#8B6FA0;">Instrument Serif</span>
+            <span class="typo-chip" style="background:rgba(107,125,74,0.08); color:#6B7D4A;">Sora</span>
+            <span style="font-size:11px; color:#bbb; margin-left:auto;">Condensée · Éditoriale · Tendance</span>
+          </div>
+        </div>
+        <div class="typo-demo-strip" style="font-family:'Sora',sans-serif;">
+          <span class="typo-nav-demo">Accueil &nbsp; Services &nbsp; Flotte &nbsp; Contact</span>
+          <span class="typo-phone-demo" style="font-family:'Instrument Serif',serif;">06 15 96 32 75</span>
+          <span class="typo-btn-demo" style="font-family:'Sora',sans-serif;">Réserver</span>
+        </div>
+      </div>
+
+      <!-- D: Newsreader + Figtree -->
+      <div class="typo-card">
+        <div class="typo-card-inner">
+          <div class="typo-label" style="font-family:'Figtree',sans-serif;">Chauffeur privé — Aix-en-Provence</div>
+          <div class="typo-headline" style="font-family:'Newsreader',serif; font-weight:700;">L'élégance provençale<br><span>à votre service</span></div>
+          <div class="typo-body" style="font-family:'Figtree',sans-serif; font-weight:300;">Transferts aéroport, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes, service 24h/24.</div>
+          <div class="typo-meta-bar">
+            <span class="typo-chip" style="background:rgba(139,111,160,0.08); color:#8B6FA0;">Newsreader</span>
+            <span class="typo-chip" style="background:rgba(107,125,74,0.08); color:#6B7D4A;">Figtree</span>
+            <span style="font-size:11px; color:#bbb; margin-left:auto;">Littéraire · Optique variable · Chaleureuse</span>
+          </div>
+        </div>
+        <div class="typo-demo-strip" style="font-family:'Figtree',sans-serif;">
+          <span class="typo-nav-demo">Accueil &nbsp; Services &nbsp; Flotte &nbsp; Contact</span>
+          <span class="typo-phone-demo" style="font-family:'Newsreader',serif; font-weight:600;">06 15 96 32 75</span>
+          <span class="typo-btn-demo" style="font-family:'Figtree',sans-serif;">Réserver</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2: EXPANDING STRIPS -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">02 — Card Style A : Expanding Strips</div>
+    <h2 class="section-heading">Services en bandes expansives</h2>
+    <p class="section-sub">Inspiré du pattern TaxiEnProvence mais sur fond lumineux, avec accent lavande et animations fluides. Cliquer pour expand.</p>
+
+    <div class="strips-container">
+      <!-- Strip 1 -->
+      <div class="strip active" onclick="activateStrip(this)" style="background:#d4c8b8;">
+        <div class="strip-bg" style="background: linear-gradient(135deg, #c8bfb0 0%, #b8a99a 100%);"></div>
+        <div class="strip-overlay"></div>
+        <div class="strip-accent"></div>
+        <div class="strip-content">
+          <div class="strip-number">01</div>
+          <div class="strip-title">Transfert Aéroport</div>
+          <div class="strip-desc">Prise en charge dès l'atterrissage. Suivi de vol en temps réel, ajustement automatique des retards. Véhicule garé au plus proche de la sortie, panneau nominatif.</div>
+          <div class="strip-tags">
+            <span class="strip-tag">Suivi de vol</span>
+            <span class="strip-tag">Tarif fixe</span>
+            <span class="strip-tag">Panneau nominatif</span>
+          </div>
+          <div class="strip-cta">
+            Réserver <span class="strip-cta-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+      <!-- Strip 2 -->
+      <div class="strip" onclick="activateStrip(this)" style="background:#c4b8a8;">
+        <div class="strip-bg" style="background: linear-gradient(135deg, #bfb3a0 0%, #a89a8a 100%);"></div>
+        <div class="strip-overlay"></div>
+        <div class="strip-accent"></div>
+        <div class="strip-content">
+          <div class="strip-number">02</div>
+          <div class="strip-title">Déplacement Affaires</div>
+          <div class="strip-desc">Discrétion et ponctualité pour vos rendez-vous professionnels. Mise à disposition demi-journée ou journée complète. Wi-Fi, eau fraîche, chargeurs.</div>
+          <div class="strip-tags">
+            <span class="strip-tag">Wi-Fi</span>
+            <span class="strip-tag">Mise à disposition</span>
+            <span class="strip-tag">Discrétion</span>
+          </div>
+          <div class="strip-cta">
+            Réserver <span class="strip-cta-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+      <!-- Strip 3 -->
+      <div class="strip" onclick="activateStrip(this)" style="background:#c8b8c8;">
+        <div class="strip-bg" style="background: linear-gradient(135deg, #c4b0c4 0%, #a898a8 100%);"></div>
+        <div class="strip-overlay"></div>
+        <div class="strip-accent"></div>
+        <div class="strip-content">
+          <div class="strip-number">03</div>
+          <div class="strip-title">Événements & Soirées</div>
+          <div class="strip-desc">Arrivez avec style à vos mariages, galas et concerts. Service aller-retour, le chauffeur attend et vous ramène en toute sérénité.</div>
+          <div class="strip-tags">
+            <span class="strip-tag">Aller-retour</span>
+            <span class="strip-tag">Attente incluse</span>
+          </div>
+          <div class="strip-cta">
+            Réserver <span class="strip-cta-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+      <!-- Strip 4 -->
+      <div class="strip" onclick="activateStrip(this)" style="background:#b8c4b8;">
+        <div class="strip-bg" style="background: linear-gradient(135deg, #b0bfb0 0%, #98a898 100%);"></div>
+        <div class="strip-overlay"></div>
+        <div class="strip-accent"></div>
+        <div class="strip-content">
+          <div class="strip-number">04</div>
+          <div class="strip-title">Longue Distance</div>
+          <div class="strip-desc">Voyages inter-villes confortables. Nice, Lyon, Monaco, partout en France. Véhicule privé, pas de correspondances, pas de stress.</div>
+          <div class="strip-tags">
+            <span class="strip-tag">France entière</span>
+            <span class="strip-tag">Tarif négocié</span>
+          </div>
+          <div class="strip-cta">
+            Demander un devis <span class="strip-cta-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+      <!-- Strip 5 -->
+      <div class="strip" onclick="activateStrip(this)" style="background:#c8c0b0;">
+        <div class="strip-bg" style="background: linear-gradient(135deg, #c4b8a4 0%, #b0a490 100%);"></div>
+        <div class="strip-overlay"></div>
+        <div class="strip-accent"></div>
+        <div class="strip-content">
+          <div class="strip-number">05</div>
+          <div class="strip-title">Visite Touristique</div>
+          <div class="strip-desc">Découvrez la Provence avec un guide-chauffeur. Gordes, Roussillon, Cassis, les Calanques. Itinéraires sur mesure.</div>
+          <div class="strip-tags">
+            <span class="strip-tag">Sur mesure</span>
+            <span class="strip-tag">Demi-journée</span>
+          </div>
+          <div class="strip-cta">
+            Réserver <span class="strip-cta-arrow">&rarr;</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <p style="font-size:11px; color:#aaa; margin-top:12px; font-style:italic; text-align:center;">En production : photos réelles Provence/Mercedes en background de chaque strip. Ici, dégradés placeholder.</p>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3: STACKED DEPTH CARDS -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">03 — Card Style B : Stacked Depth</div>
+    <h2 class="section-heading">Cards à profondeur empilée</h2>
+    <p class="section-sub">Couleurs en touches d'accent uniquement. Ombres lavande/olive subtiles. Icônes Lucide.</p>
+
+    <div class="depth-grid">
+
+      <div class="depth-card">
+        <div class="dc-icon-wrap" style="background:rgba(139,111,160,0.08);">
+          <svg viewBox="0 0 24 24" stroke="#8B6FA0"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.2 3 .1.1-2.1 2.1-2.4-.8c-.4-.1-.8 0-1 .3l-.3.5c-.2.3-.1.7.2.9l2.9 1.7 1.7 2.9c.2.3.6.4.9.2l.5-.3c.3-.2.4-.6.3-1l-.8-2.4 2.1-2.1.1.1 3 5.2c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+        </div>
+        <div class="dc-title">Transfert Aéroport</div>
+        <div class="dc-sub">Marseille · Nice · Toulon</div>
+        <div class="dc-text">Accueil personnalisé, suivi de vol en temps réel, adaptation automatique aux retards. Panneau nominatif.</div>
+        <div class="dc-footer">
+          <span class="dc-price">dès 65 EUR</span>
+          <span class="dc-link">Détails &rarr;</span>
+        </div>
+      </div>
+
+      <div class="depth-card">
+        <div class="dc-icon-wrap" style="background:rgba(107,125,74,0.08);">
+          <svg viewBox="0 0 24 24" stroke="#6B7D4A"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+        </div>
+        <div class="dc-title">Déplacement Affaires</div>
+        <div class="dc-sub">RDV · Séminaires · Journée</div>
+        <div class="dc-text">Discrétion totale, Wi-Fi embarqué, eau fraîche, chargeurs. Mise à disposition flexible demi-journée ou journée.</div>
+        <div class="dc-footer">
+          <span class="dc-price">dès 45 EUR/h</span>
+          <span class="dc-link">Détails &rarr;</span>
+        </div>
+      </div>
+
+      <div class="depth-card">
+        <div class="dc-icon-wrap" style="background:rgba(139,111,160,0.08);">
+          <svg viewBox="0 0 24 24" stroke="#8B6FA0"><path d="M8 21h8m-4-4v4m-8-8a8 8 0 1 1 16 0"/><path d="M12 3v1m-7.07 3.93l.71.71M3 12h1m3.93 7.07l.71-.71M21 12h-1m-3.93-7.07l-.71.71"/></svg>
+        </div>
+        <div class="dc-title">Événements</div>
+        <div class="dc-sub">Mariage · Gala · Soirée</div>
+        <div class="dc-text">Arrivée VIP, service aller-retour, attente incluse. Chauffeur dédié toute la soirée en toute sérénité.</div>
+        <div class="dc-footer">
+          <span class="dc-price">sur devis</span>
+          <span class="dc-link">Détails &rarr;</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4: SIDE PANEL (DreamCarSud inspi) -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">04 — Card Style C : Side Panel</div>
+    <h2 class="section-heading">Panel latéral avec accent vertical</h2>
+    <p class="section-sub">Inspiré DreamCarSud — icônes ligne, titres uppercase, barre accent lavande sur l'item actif. Photo du service à gauche.</p>
+
+    <div class="sidepanel-demo">
+      <div class="sidepanel-image">
+        <span class="sidepanel-image-placeholder">Photo Mercedes / Provence ici</span>
+      </div>
+      <div class="sidepanel-list">
+        <div class="sidepanel-item active" onclick="activatePanel(this)">
+          <div class="sp-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="sp-title">Transport VTC</div>
+          <div class="sp-desc">Trajets inter-villes, transferts longue distance et prises en charge dans toute la Provence.</div>
+        </div>
+        <div class="sidepanel-item" onclick="activatePanel(this)">
+          <div class="sp-icon">
+            <svg viewBox="0 0 24 24"><path d="M17.8 19.2L16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.4-.1.9.3 1.1l5.2 3-2 2-2.4-.8c-.4-.1-.8 0-1 .3l-.3.5c-.2.3-.1.7.2.9l2.9 1.7 1.7 2.9c.2.3.6.4.9.2l.5-.3c.3-.2.4-.6.3-1l-.8-2.4 2-2 3 5.2c.2.4.7.5 1.1.3l.5-.3c.4-.2.6-.6.5-1.1z"/></svg>
+          </div>
+          <div class="sp-title">Transfert Aéroport</div>
+          <div class="sp-desc">Accueil personnalisé en gare ou aéroport avec assistance bagages.</div>
+        </div>
+        <div class="sidepanel-item" onclick="activatePanel(this)">
+          <div class="sp-icon">
+            <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="sp-title">VIP & Événementiel</div>
+          <div class="sp-desc">Accompagnement d'événements d'entreprise et clients nécessitant discrétion.</div>
+        </div>
+        <div class="sidepanel-item" onclick="activatePanel(this)">
+          <div class="sp-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div class="sp-title">Mise à Disposition</div>
+          <div class="sp-desc">Chauffeur dédié demi-journée ou journée complète, flexibilité totale.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5: CTA BUTTONS -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">05 — CTA Buttons</div>
+    <h2 class="section-heading">Actions principales</h2>
+    <p class="section-sub">CTA primaire en bleu nuit (complémentaire). Carrés, nets, zéro gradient.</p>
+
+    <div class="cta-row">
+
+      <div class="cta-item">
+        <h4>Primaire — Bleu Nuit</h4>
+        <span class="cta-btn" style="background:#3D5A80; color:#fff;">Réserver mon transfert &rarr;</span>
+        <div class="cta-spec">#3D5A80 · carré · 700</div>
+      </div>
+
+      <div class="cta-item">
+        <h4>Secondaire — Outline Lavande</h4>
+        <span class="cta-btn" style="background:transparent; border:1.5px solid #8B6FA0; color:#8B6FA0;">Voir les tarifs</span>
+        <div class="cta-spec">outline 1.5px #8B6FA0</div>
+      </div>
+
+      <div class="cta-item">
+        <h4>Ghost — Lavande 6%</h4>
+        <span class="cta-btn" style="background:rgba(139,111,160,0.06); color:#8B6FA0;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8B6FA0" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          06 15 96 32 75
+        </span>
+        <div class="cta-spec">ghost lavande 6%</div>
+      </div>
+
+      <div class="cta-item">
+        <h4>Texte Link — Olive</h4>
+        <span class="cta-btn" style="background:transparent; color:#6B7D4A; padding:14px 0; text-decoration:underline; text-underline-offset:4px;">En savoir plus &rarr;</span>
+        <div class="cta-spec">#6B7D4A · underline</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 6: WHATSAPP FLOTTANT -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">06 — WhatsApp Flottant</div>
+    <h2 class="section-heading">Icône fixe bas-droite</h2>
+
+    <div class="wa-float-demo">
+      <div class="wa-float-preview">
+        <div style="padding:16px; font-size:11px; color:#bbb;">Aperçu de page...</div>
+        <div class="wa-float-icon">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        </div>
+      </div>
+      <div class="wa-float-info">
+        <h4>Position fixe, toujours accessible</h4>
+        <p>Cercle #25D366 avec ombre verte. Hover : scale 1.08 + pulse subtil. Tooltip "Contactez-nous sur WhatsApp" au hover. Z-index au-dessus de tout. Lien direct : wa.me/33615963275</p>
+        <div style="margin-top:16px; display:flex; gap:12px; align-items:center;">
+          <span style="font-size:11px; color:#888;">Specs :</span>
+          <span style="font-size:10px; padding:4px 10px; background:rgba(37,211,102,0.08); color:#25D366; font-weight:600;">52x52px</span>
+          <span style="font-size:10px; padding:4px 10px; background:rgba(37,211,102,0.08); color:#25D366; font-weight:600;">bottom: 24px</span>
+          <span style="font-size:10px; padding:4px 10px; background:rgba(37,211,102,0.08); color:#25D366; font-weight:600;">right: 24px</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 7: WIREFRAMES -->
+<!-- ============================================================ -->
+<div class="board-section">
+  <div class="container">
+    <div class="section-tag">07 — Layouts de Sections</div>
+    <h2 class="section-heading">Structure par section</h2>
+    <p class="section-sub">Wireframes des principales sections. Chaque layout sera animé avec GSAP ScrollTrigger.</p>
+
+    <div class="wireframe-grid">
+
+      <!-- Hero -->
+      <div class="wireframe">
+        <div class="wireframe-body" style="background: linear-gradient(135deg, #f0ede8, #e8e2d8); display:flex; align-items:center; padding:28px;">
+          <div style="flex:1;">
+            <div style="font-size:10px; letter-spacing:0.18em; color:#6B7D4A; font-weight:700; text-transform:uppercase; margin-bottom:10px;">Chauffeur privé — Aix-en-Provence</div>
+            <div style="font-family:'Fraunces',serif; font-size:24px; font-weight:800; color:#1a1a1a; line-height:1.12; margin-bottom:10px;">L'élégance<br>provençale<br><span style='color:#8B6FA0;'>à votre service</span></div>
+            <div style="font-size:11px; color:#888; margin-bottom:14px; line-height:1.5; max-width:260px;">Transferts, événements, déplacements professionnels. Mercedes haut de gamme.</div>
+            <div style="display:flex; gap:6px;">
+              <span style="display:inline-block; padding:8px 16px; background:#3D5A80; color:#fff; font-size:9px; font-weight:700; letter-spacing:0.08em;">RÉSERVER</span>
+              <span style="display:inline-block; padding:8px 16px; border:1.5px solid #8B6FA0; color:#8B6FA0; font-size:9px; font-weight:700; letter-spacing:0.08em;">VOIR LES TARIFS</span>
+            </div>
+          </div>
+          <div style="flex:0.5; display:flex; align-items:center; justify-content:center;">
+            <div style="width:120px; height:160px; background:rgba(139,111,160,0.08); border-radius:12px; display:flex; align-items:center; justify-content:center;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#8B6FA0" stroke-width="1"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="wireframe-caption">
+          <h4>Hero — Split + Vidéo</h4>
+          <p>60/40. Texte à gauche, vidéo hero-video.mp4 à droite avec overlay léger. ScrollTrigger : fade up séquentiel sur les éléments texte.</p>
+        </div>
+      </div>
+
+      <!-- Services -->
+      <div class="wireframe">
+        <div class="wireframe-body" style="background:#F6F3EE; padding:28px;">
+          <div style="text-align:center; margin-bottom:16px;">
+            <div style="font-size:9px; letter-spacing:0.18em; color:#8B6FA0; font-weight:700;">NOS SERVICES</div>
+            <div style="font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:#1a1a1a;">Un service pour chaque <span style='color:#8B6FA0;'>occasion</span></div>
+          </div>
+          <div style="display:flex; gap:3px; height:120px; border-radius:8px; overflow:hidden;">
+            <div style="flex:3; background:linear-gradient(to top, rgba(26,26,26,0.7), transparent); position:relative; border-radius:4px;">
+              <div style="position:absolute; bottom:10px; left:10px; color:#fff; font-size:10px; font-weight:600;">Transfert Aéroport</div>
+            </div>
+            <div style="flex:1; background:#c8bfb0; border-radius:4px; display:flex; align-items:flex-end; padding:8px;">
+              <span style="font-size:8px; color:#fff; writing-mode:vertical-rl; font-weight:600;">Affaires</span>
+            </div>
+            <div style="flex:1; background:#c4b8a8; border-radius:4px; display:flex; align-items:flex-end; padding:8px;">
+              <span style="font-size:8px; color:#fff; writing-mode:vertical-rl; font-weight:600;">Événements</span>
+            </div>
+            <div style="flex:1; background:#b8c4b8; border-radius:4px; display:flex; align-items:flex-end; padding:8px;">
+              <span style="font-size:8px; color:#fff; writing-mode:vertical-rl; font-weight:600;">Distance</span>
+            </div>
+          </div>
+        </div>
+        <div class="wireframe-caption">
+          <h4>Services — Expanding Strips</h4>
+          <p>Le pattern du Card Style A ci-dessus. Photos réelles Provence par strip. Click = expand avec texte + tags + CTA.</p>
+        </div>
+      </div>
+
+      <!-- Flotte -->
+      <div class="wireframe">
+        <div class="wireframe-body" style="background:#fff; padding:28px;">
+          <div style="text-align:center; margin-bottom:16px;">
+            <div style="font-size:9px; letter-spacing:0.18em; color:#8B6FA0; font-weight:700;">NOTRE FLOTTE</div>
+            <div style="font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:#1a1a1a;">Mercedes haut de gamme</div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div style="flex:1; background:#F6F3EE; border-radius:10px; padding:14px; text-align:center;">
+              <div style="height:50px; background:rgba(107,125,74,0.06); border-radius:6px; margin-bottom:8px; display:flex; align-items:center; justify-content:center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6B7D4A" stroke-width="1.2"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="17 8 23 12 23 16 17 16 17 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div style="font-family:'Fraunces',serif; font-size:12px; font-weight:700;">Classe E</div>
+              <div style="font-size:9px; color:#888; margin-top:2px;">3 passagers</div>
+            </div>
+            <div style="flex:1; background:#F6F3EE; border-radius:10px; padding:14px; text-align:center; border:1.5px solid #8B6FA0;">
+              <div style="height:50px; background:rgba(139,111,160,0.08); border-radius:6px; margin-bottom:8px; display:flex; align-items:center; justify-content:center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#8B6FA0" stroke-width="1.2"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="17 8 23 12 23 16 17 16 17 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div style="font-family:'Fraunces',serif; font-size:12px; font-weight:700;">Classe S</div>
+              <div style="font-size:9px; color:#8B6FA0; margin-top:2px;">3 passagers · Premium</div>
+            </div>
+            <div style="flex:1; background:#F6F3EE; border-radius:10px; padding:14px; text-align:center;">
+              <div style="height:50px; background:rgba(107,125,74,0.06); border-radius:6px; margin-bottom:8px; display:flex; align-items:center; justify-content:center;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#6B7D4A" stroke-width="1.2"><rect x="1" y="3" width="15" height="13" rx="2"/><polygon points="17 8 23 12 23 16 17 16 17 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+              </div>
+              <div style="font-family:'Fraunces',serif; font-size:12px; font-weight:700;">Classe V</div>
+              <div style="font-size:9px; color:#888; margin-top:2px;">7 passagers</div>
+            </div>
+          </div>
+        </div>
+        <div class="wireframe-caption">
+          <h4>Flotte — Cards sélectionnables</h4>
+          <p>Photos réelles Mercedes fournies par client. Card active = bordure lavande. Hover = élévation + specs détaillées.</p>
+        </div>
+      </div>
+
+      <!-- Avis -->
+      <div class="wireframe">
+        <div class="wireframe-body" style="background:linear-gradient(135deg, rgba(139,111,160,0.04), rgba(107,125,74,0.04)); padding:28px;">
+          <div style="text-align:center; margin-bottom:16px;">
+            <div style="font-size:9px; letter-spacing:0.18em; color:#6B7D4A; font-weight:700;">AVIS CLIENTS</div>
+            <div style="font-family:'Fraunces',serif; font-size:18px; font-weight:700; color:#1a1a1a;">Ils nous font <span style='color:#8B6FA0;'>confiance</span></div>
+          </div>
+          <div style="display:flex; gap:10px;">
+            <div style="flex:1; background:#fff; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+              <div style="color:#8B6FA0; font-size:12px; margin-bottom:6px; letter-spacing:2px;">*****</div>
+              <div style="font-size:10px; color:#666; line-height:1.5; font-style:italic;">"Service impeccable, véhicule immaculé."</div>
+              <div style="font-size:9px; color:#aaa; margin-top:8px; font-weight:600;">— Marie L.</div>
+            </div>
+            <div style="flex:1; background:#fff; border-radius:10px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.03);">
+              <div style="color:#8B6FA0; font-size:12px; margin-bottom:6px; letter-spacing:2px;">*****</div>
+              <div style="font-size:10px; color:#666; line-height:1.5; font-style:italic;">"Ponctuel, discret, très professionnel."</div>
+              <div style="font-size:9px; color:#aaa; margin-top:8px; font-weight:600;">— Thomas K.</div>
+            </div>
+          </div>
+        </div>
+        <div class="wireframe-caption">
+          <h4>Avis — Slider horizontal</h4>
+          <p>Carrousel auto avec étoiles lavande. Background gradient subtil. Flèches latérales discrètes. Auto-scroll 5s.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- RÉCAP / PROCHAINES ÉTAPES -->
+<!-- ============================================================ -->
+<div class="board-section" style="border-top:none;">
+  <div class="container" style="text-align:center; max-width:640px;">
+    <div class="section-tag" style="justify-content:center;">Prochaines étapes</div>
+    <div style="font-size:14px; color:#666; line-height:2;">
+      <strong style="color:#1a1a1a;">1.</strong> Valide la typo (A / B / C / D ou mix)<br>
+      <strong style="color:#1a1a1a;">2.</strong> Valide le style cards (Strips / Depth / SidePanel ou mix par section)<br>
+      <strong style="color:#1a1a1a;">3.</strong> Valide le CTA bleu nuit ou propose une autre couleur<br>
+      <strong style="color:#1a1a1a;">4.</strong> On finalise DESIGN-SYSTEM.md + GUIDE-PILOTAGE-V2.md<br>
+      <strong style="color:#1a1a1a;">5.</strong> Tu copies dans Claude Code = il code tout
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JAVASCRIPT -->
+<!-- ============================================================ -->
+<script>
+function activateStrip(el) {
+  el.parentElement.querySelectorAll('.strip').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+function activatePanel(el) {
+  el.parentElement.querySelectorAll('.sidepanel-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+
+</body>
+</html>

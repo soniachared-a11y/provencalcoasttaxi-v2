@@ -1,0 +1,72 @@
+/* Google Fonts — DOIT être avant Tailwind */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+/* ── Design Tokens (Light Provence Theme) ─────────────────── */
+:root {
+  --cream:        #F6F3EE;
+  --surface:      #FFFFFF;
+  --surface-alt:  #FAF8F5;
+  --lavande:      #6B7D4A;
+  --olive:        #7A6091;
+  --bleu:         #3D5A80;
+  --texte:        #2A2A2A;
+  --texte-light:  #6B6B6B;
+  --texte-faint:  #BBBBBB;
+  --border:       #E8E4DE;
+  --border-hover: #D0C8BE;
+}
+
+/* ── Reset & Base ──────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: auto; } /* Lenis gère le smooth scroll */
+
+body {
+  background-color: var(--cream);
+  color: var(--texte);
+  font-family: 'Sora', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+#root { min-height: 100vh; }
+
+/* ── Typography ────────────────────────────────────────────── */
+.font-serif { font-family: 'Instrument Serif', Georgia, serif; }
+
+/* ── Utilitaires custom ────────────────────────────────────── */
+.text-lavande     { color: var(--lavande); }
+.text-olive       { color: var(--olive); }
+.text-bleu        { color: var(--bleu); }
+.text-light       { color: var(--texte-light); }
+.text-faint       { color: var(--texte-faint); }
+.bg-surface       { background-color: var(--surface); }
+.bg-surface-alt   { background-color: var(--surface-alt); }
+.border-default   { border-color: var(--border); }
+
+/* Overflow clip pour animations GSAP word-reveal */
+.overflow-clip { overflow: hidden; }
+
+/* ── Scrollbar custom (premium) ────────────────────────────── */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--cream); }
+::-webkit-scrollbar-thumb { background: var(--lavande); border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #7B5F90; }
+
+/* ── Focus visible (accessibilité) ─────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--lavande);
+  outline-offset: 4px;
+}
+
+/* ── Selection ─────────────────────────────────────────────── */
+::selection {
+  background: rgba(139, 111, 160, 0.15);
+  color: var(--texte);
+}

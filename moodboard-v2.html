@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Moodboard V2 — Provençal Coast Taxi</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,400&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,600;0,6..96,700;0,6..96,800;1,6..96,400&family=Instrument+Serif:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700&family=Figtree:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Plus Jakarta Sans', sans-serif; background: #F6F3EE; color: #2A2A2A; padding: 40px 20px; }
+
+/* --- Header --- */
+.page-title { text-align: center; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; color: #8B6FA0; margin-bottom: 8px; font-weight: 600; }
+.page-sub { text-align: center; font-size: 32px; color: #2A2A2A; margin-bottom: 48px; font-family: 'Fraunces', serif; font-weight: 700; }
+
+/* --- Sections --- */
+.section { max-width: 1200px; margin: 0 auto 64px; }
+.section-title { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #8B6FA0; margin-bottom: 24px; font-weight: 700; padding-bottom: 12px; border-bottom: 2px solid #8B6FA0; display: inline-block; }
+
+/* --- Palette reminder --- */
+.palette-strip { display: flex; border-radius: 12px; overflow: hidden; margin-bottom: 16px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.palette-strip div { flex: 1; height: 72px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; letter-spacing: 0.04em; line-height: 1.6; }
+
+/* --- Typo Grid --- */
+.typo-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.typo-card { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
+.typo-card-header { padding: 24px 28px 16px; border-bottom: 1px solid #f0ede8; }
+.typo-card-header h3 { font-size: 18px; margin-bottom: 4px; color: #2A2A2A; }
+.typo-card-header .typo-meta { font-size: 12px; color: #8B6FA0; font-weight: 500; }
+.typo-card-body { padding: 28px; }
+.typo-hero { font-size: 42px; line-height: 1.1; margin-bottom: 12px; color: #1a1a1a; }
+.typo-sub { font-size: 15px; line-height: 1.7; color: #666; margin-bottom: 20px; }
+.typo-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.18em; margin-bottom: 8px; font-weight: 700; }
+.typo-card-demo { padding: 24px 28px; background: #faf8f5; border-top: 1px solid #f0ede8; }
+.typo-card-demo .demo-nav { font-size: 13px; letter-spacing: 0.08em; color: #555; margin-bottom: 12px; }
+.typo-card-demo .demo-phone { font-size: 26px; margin-bottom: 12px; }
+.typo-card-demo .demo-btn { display: inline-block; padding: 14px 28px; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #fff; border: none; margin-right: 10px; }
+.typo-badge { display: inline-block; font-size: 10px; padding: 4px 10px; border-radius: 4px; font-weight: 600; letter-spacing: 0.05em; margin-top: 8px; }
+.typo-verdict { font-size: 12px; color: #999; padding: 12px 28px; border-top: 1px solid #f0ede8; }
+
+/* --- Card Styles --- */
+.card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.card-section { background: #fff; border-radius: 16px; padding: 32px; box-shadow: 0 2px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
+.card-section h3 { font-size: 18px; margin-bottom: 6px; color: #2A2A2A; font-family: 'Fraunces', serif; }
+.card-section .card-desc { font-size: 13px; color: #8B6FA0; margin-bottom: 24px; font-weight: 500; }
+
+/* Card Style A — Accordion Reveal */
+.accordion-card { border: 1px solid #e8e4de; border-radius: 12px; overflow: hidden; margin-bottom: 12px; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; }
+.accordion-card:hover { border-color: #8B6FA0; box-shadow: 0 8px 32px rgba(139,111,160,0.12); }
+.accordion-header { padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; }
+.accordion-header .acc-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 16px; flex-shrink: 0; }
+.accordion-header .acc-info { flex: 1; }
+.accordion-header .acc-title { font-size: 16px; font-weight: 600; color: #2A2A2A; }
+.accordion-header .acc-subtitle { font-size: 12px; color: #999; margin-top: 2px; }
+.accordion-header .acc-arrow { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid #ddd; display: flex; align-items: center; justify-content: center; font-size: 14px; color: #999; transition: all 0.3s ease; }
+.accordion-card:hover .acc-arrow { border-color: #8B6FA0; color: #8B6FA0; transform: rotate(45deg); }
+.accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.accordion-card.open .accordion-body { max-height: 300px; }
+.accordion-body-inner { padding: 0 24px 24px; }
+.accordion-body-inner p { font-size: 13px; line-height: 1.7; color: #666; margin-bottom: 16px; }
+.accordion-body-inner .acc-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+.accordion-body-inner .acc-tag { font-size: 11px; padding: 5px 12px; border-radius: 4px; background: #f5f2ec; color: #6B7D4A; font-weight: 600; }
+.accordion-card.open .acc-arrow { transform: rotate(135deg); border-color: #8B6FA0; color: #8B6FA0; }
+
+/* Card Style B — Sliding Panel Reveal */
+.panel-card { border-radius: 12px; overflow: hidden; position: relative; height: 200px; margin-bottom: 12px; cursor: pointer; border: 1px solid #e8e4de; }
+.panel-bg { position: absolute; inset: 0; background: linear-gradient(135deg, #f0ede8 0%, #e8e2d8 100%); display: flex; align-items: center; padding: 0 28px; }
+.panel-bg .panel-icon { font-size: 48px; margin-right: 24px; opacity: 0.3; }
+.panel-bg .panel-title { font-size: 22px; font-weight: 700; color: #2A2A2A; }
+.panel-bg .panel-sub { font-size: 13px; color: #888; margin-top: 4px; }
+.panel-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, #8B6FA0 0%, #6B7D4A 100%); color: #fff; padding: 28px; display: flex; flex-direction: column; justify-content: space-between; transform: translateX(100%); transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+.panel-card:hover .panel-overlay { transform: translateX(0); }
+.panel-overlay .po-title { font-size: 18px; font-weight: 700; }
+.panel-overlay .po-desc { font-size: 13px; line-height: 1.6; opacity: 0.9; }
+.panel-overlay .po-price { font-size: 15px; font-weight: 700; letter-spacing: 0.05em; }
+.panel-overlay .po-btn { display: inline-block; padding: 10px 20px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border-radius: 0; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #fff; align-self: flex-start; }
+
+/* Card Style C — Stacked Depth Cards */
+.depth-card { background: #fff; border-radius: 12px; padding: 28px; margin-bottom: 12px; border: 1px solid #e8e4de; position: relative; transition: all 0.4s ease; }
+.depth-card::before { content: ''; position: absolute; inset: 6px -6px -6px 6px; background: rgba(139,111,160,0.08); border-radius: 12px; z-index: -1; transition: all 0.4s ease; }
+.depth-card::after { content: ''; position: absolute; inset: 12px -12px -12px 12px; background: rgba(107,125,74,0.06); border-radius: 12px; z-index: -2; transition: all 0.4s ease; }
+.depth-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+.depth-card:hover::before { inset: 8px -4px -8px 4px; }
+.depth-card .dc-top { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+.depth-card .dc-badge { width: 48px; height: 48px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.depth-card .dc-title { font-size: 17px; font-weight: 700; color: #2A2A2A; }
+.depth-card .dc-sub { font-size: 12px; color: #8B6FA0; font-weight: 500; }
+.depth-card .dc-desc { font-size: 13px; line-height: 1.7; color: #666; }
+.depth-card .dc-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 16px; padding-top: 16px; border-top: 1px solid #f0ede8; }
+.depth-card .dc-price { font-size: 14px; font-weight: 700; color: #6B7D4A; }
+.depth-card .dc-link { font-size: 12px; font-weight: 600; color: #8B6FA0; letter-spacing: 0.06em; }
+
+/* --- CTA Section --- */
+.cta-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.cta-card { background: #fff; border-radius: 16px; padding: 28px; text-align: center; box-shadow: 0 2px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
+.cta-card h4 { font-size: 13px; color: #2A2A2A; margin-bottom: 16px; font-weight: 600; }
+.cta-card .cta-btn { display: inline-block; padding: 15px 32px; font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; margin-bottom: 8px; }
+.cta-card .cta-code { font-size: 10px; color: #999; font-family: monospace; }
+
+/* --- Section Layout Previews --- */
+.layout-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.layout-preview { background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 2px 20px rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.04); }
+.layout-mockup { padding: 24px; min-height: 280px; position: relative; }
+.layout-footer { padding: 16px 24px; border-top: 1px solid #f0ede8; }
+.layout-footer h4 { font-size: 15px; color: #2A2A2A; margin-bottom: 4px; font-family: 'Fraunces', serif; }
+.layout-footer p { font-size: 12px; color: #888; line-height: 1.5; }
+
+/* --- Responsive --- */
+@media (max-width: 900px) {
+  .typo-grid, .card-grid, .layout-grid { grid-template-columns: 1fr; }
+  .cta-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- HEADER -->
+<!-- ============================================================ -->
+<p class="page-title">Provençal Coast Taxi — Design System V2</p>
+<h1 class="page-sub">Moodboard Typographies, Cards & Composants</h1>
+
+<!-- ============================================================ -->
+<!-- SECTION 1 : PALETTE RAPPEL -->
+<!-- ============================================================ -->
+<div class="section">
+  <span class="section-title">Palette Validée — Rappel</span>
+  <div class="palette-strip">
+    <div style="background:#F6F3EE; color:#888;">Fond crème<br>#F6F3EE</div>
+    <div style="background:#FFFFFF; color:#888;">Surface<br>#FFFFFF</div>
+    <div style="background:#8B6FA0; color:#fff;">Lavande<br>#8B6FA0</div>
+    <div style="background:#6B7D4A; color:#fff;">Olive<br>#6B7D4A</div>
+    <div style="background:#2A2A2A; color:#fff;">Texte<br>#2A2A2A</div>
+    <div style="background:#E8E4DE; color:#555;">Bordure<br>#E8E4DE</div>
+  </div>
+  <p style="font-size:12px; color:#999; text-align:center;">+ Accent WhatsApp #25D366 · Accent chaud #C4956A (pierre/terre optionnel)</p>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 2 : TYPOGRAPHIES -->
+<!-- ============================================================ -->
+<div class="section">
+  <span class="section-title">Typographies — 4 Pairings Distinctives</span>
+
+  <div class="typo-grid">
+
+    <!-- TYPO A : Fraunces + Plus Jakarta Sans -->
+    <div class="typo-card">
+      <div class="typo-card-header">
+        <h3 style="font-family:'Fraunces',serif; font-weight:700;">A — Fraunces + Plus Jakarta Sans</h3>
+        <div class="typo-meta">Variable font · Axes: wonk, softness, optical size</div>
+      </div>
+      <div class="typo-card-body">
+        <div class="typo-label" style="color:#6B7D4A; font-family:'Plus Jakarta Sans',sans-serif;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+        <div class="typo-hero" style="font-family:'Fraunces',serif; font-weight:800;">
+          Votre Chauffeur<br><span style="color:#8B6FA0;">en Provence</span>
+        </div>
+        <div class="typo-sub" style="font-family:'Plus Jakarta Sans',sans-serif;">
+          Transferts aéroport Marseille, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes.
+        </div>
+        <span class="typo-badge" style="background:rgba(139,111,160,0.1); color:#8B6FA0;">Wonky · Caractère fort · Unique</span>
+      </div>
+      <div class="typo-card-demo">
+        <div class="demo-nav" style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:500;">Accueil · Services · Flotte · Tarifs · Contact</div>
+        <div class="demo-phone" style="font-family:'Fraunces',serif; font-weight:700; color:#8B6FA0;">06 15 96 32 75</div>
+        <span class="demo-btn" style="background: linear-gradient(135deg, #8B6FA0, #6B7D4A); border-radius: 0; font-family:'Plus Jakarta Sans',sans-serif;">Réserver →</span>
+        <span class="demo-btn" style="background: #25D366; border-radius: 0; font-family:'Plus Jakarta Sans',sans-serif;">WhatsApp</span>
+      </div>
+      <div class="typo-verdict">✦ Très distinctive — "wonk" = détails irréguliers qui la rendent unique. Jamais vue sur un VTC.</div>
+    </div>
+
+    <!-- TYPO B : Bodoni Moda + Outfit -->
+    <div class="typo-card">
+      <div class="typo-card-header">
+        <h3 style="font-family:'Bodoni Moda',serif; font-weight:700;">B — Bodoni Moda + Outfit</h3>
+        <div class="typo-meta">Haute couture · Contraste extrême · Ultra-luxe</div>
+      </div>
+      <div class="typo-card-body">
+        <div class="typo-label" style="color:#6B7D4A; font-family:'Outfit',sans-serif;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+        <div class="typo-hero" style="font-family:'Bodoni Moda',serif; font-weight:700;">
+          Votre Chauffeur<br><span style="color:#8B6FA0;">en Provence</span>
+        </div>
+        <div class="typo-sub" style="font-family:'Outfit',sans-serif; font-weight:300;">
+          Transferts aéroport Marseille, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes.
+        </div>
+        <span class="typo-badge" style="background:rgba(107,125,74,0.1); color:#6B7D4A;">Didot-like · Fashion luxe · Intemporel</span>
+      </div>
+      <div class="typo-card-demo">
+        <div class="demo-nav" style="font-family:'Outfit',sans-serif; font-weight:400; letter-spacing:0.12em;">Accueil · Services · Flotte · Tarifs · Contact</div>
+        <div class="demo-phone" style="font-family:'Bodoni Moda',serif; font-weight:700; color:#8B6FA0;">06 15 96 32 75</div>
+        <span class="demo-btn" style="background: linear-gradient(135deg, #8B6FA0, #6B7D4A); border-radius: 0; font-family:'Outfit',sans-serif;">Réserver →</span>
+        <span class="demo-btn" style="background: #25D366; border-radius: 0; font-family:'Outfit',sans-serif;">WhatsApp</span>
+      </div>
+      <div class="typo-verdict">✦ Esprit Vogue/Dior. Contraste fin/épais très marqué. Moins courant que Playfair sur le web.</div>
+    </div>
+
+    <!-- TYPO C : Instrument Serif + Sora -->
+    <div class="typo-card">
+      <div class="typo-card-header">
+        <h3 style="font-family:'Instrument Serif',serif;">C — Instrument Serif + Sora</h3>
+        <div class="typo-meta">Condensée · Éditoriale · Moderne & Audacieuse</div>
+      </div>
+      <div class="typo-card-body">
+        <div class="typo-label" style="color:#6B7D4A; font-family:'Sora',sans-serif;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+        <div class="typo-hero" style="font-family:'Instrument Serif',serif;">
+          Votre Chauffeur<br><span style="color:#8B6FA0;">en Provence</span>
+        </div>
+        <div class="typo-sub" style="font-family:'Sora',sans-serif; font-weight:300;">
+          Transferts aéroport Marseille, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes.
+        </div>
+        <span class="typo-badge" style="background:rgba(139,111,160,0.1); color:#8B6FA0;">Condensée · Impactante · Éditorial</span>
+      </div>
+      <div class="typo-card-demo">
+        <div class="demo-nav" style="font-family:'Sora',sans-serif; font-weight:400;">Accueil · Services · Flotte · Tarifs · Contact</div>
+        <div class="demo-phone" style="font-family:'Instrument Serif',serif; color:#8B6FA0;">06 15 96 32 75</div>
+        <span class="demo-btn" style="background: linear-gradient(135deg, #8B6FA0, #6B7D4A); border-radius: 0; font-family:'Sora',sans-serif;">Réserver →</span>
+        <span class="demo-btn" style="background: #25D366; border-radius: 0; font-family:'Sora',sans-serif;">WhatsApp</span>
+      </div>
+      <div class="typo-verdict">✦ Étroite et confiante. Permet des titres XXL sans casser la mise en page. Très tendance 2025-26.</div>
+    </div>
+
+    <!-- TYPO D : Newsreader + Figtree -->
+    <div class="typo-card">
+      <div class="typo-card-header">
+        <h3 style="font-family:'Newsreader',serif; font-weight:700;">D — Newsreader + Figtree</h3>
+        <div class="typo-meta">Littéraire · Élégante · Chaleureuse</div>
+      </div>
+      <div class="typo-card-body">
+        <div class="typo-label" style="color:#6B7D4A; font-family:'Figtree',sans-serif;">SERVICE PREMIUM 24H/24 — LICENCE VTC</div>
+        <div class="typo-hero" style="font-family:'Newsreader',serif; font-weight:700;">
+          Votre Chauffeur<br><span style="color:#8B6FA0;">en Provence</span>
+        </div>
+        <div class="typo-sub" style="font-family:'Figtree',sans-serif; font-weight:300;">
+          Transferts aéroport Marseille, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes.
+        </div>
+        <span class="typo-badge" style="background:rgba(107,125,74,0.1); color:#6B7D4A;">Presse luxe · Optiques · Caractère</span>
+      </div>
+      <div class="typo-card-demo">
+        <div class="demo-nav" style="font-family:'Figtree',sans-serif; font-weight:500;">Accueil · Services · Flotte · Tarifs · Contact</div>
+        <div class="demo-phone" style="font-family:'Newsreader',serif; font-weight:600; color:#8B6FA0;">06 15 96 32 75</div>
+        <span class="demo-btn" style="background: linear-gradient(135deg, #8B6FA0, #6B7D4A); border-radius: 0; font-family:'Figtree',sans-serif;">Réserver →</span>
+        <span class="demo-btn" style="background: #25D366; border-radius: 0; font-family:'Figtree',sans-serif;">WhatsApp</span>
+      </div>
+      <div class="typo-verdict">✦ Optique variable — s'adapte à toutes les tailles. Personnalité littéraire sans être old-school.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 3 : CARD STYLES -->
+<!-- ============================================================ -->
+<div class="section">
+  <span class="section-title">Styles de Cards — 3 Approches</span>
+
+  <div class="card-grid">
+
+    <!-- Card A — Accordion Reveal -->
+    <div class="card-section">
+      <h3>A — Accordion Reveal</h3>
+      <p class="card-desc">Inspiré TaxiEnProvence mais avec line lavande + tags olive + icône animée</p>
+
+      <div class="accordion-card open">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-icon" style="background: rgba(139,111,160,0.1);">🚗</div>
+          <div class="acc-info">
+            <div class="acc-title">Transfert Aéroport</div>
+            <div class="acc-subtitle">Marseille · Nice · Toulon</div>
+          </div>
+          <div class="acc-arrow">↗</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Prise en charge à l'arrivée de votre vol. Suivi en temps réel, ajustement automatique en cas de retard. Véhicule garé au plus proche de la sortie.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Suivi de vol</span>
+              <span class="acc-tag">Tarif fixe</span>
+              <span class="acc-tag">Panneau nominatif</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-card">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-icon" style="background: rgba(107,125,74,0.1);">💼</div>
+          <div class="acc-info">
+            <div class="acc-title">Déplacement Affaires</div>
+            <div class="acc-subtitle">Rendez-vous · Séminaires · Journée</div>
+          </div>
+          <div class="acc-arrow">↗</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Discrétion et ponctualité pour vos rendez-vous professionnels. Mise à disposition possible à la journée.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Wi-Fi</span>
+              <span class="acc-tag">Eau fraîche</span>
+              <span class="acc-tag">Chargeurs</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-card">
+        <div class="accordion-header" onclick="this.parentElement.classList.toggle('open')">
+          <div class="acc-icon" style="background: rgba(139,111,160,0.1);">🥂</div>
+          <div class="acc-info">
+            <div class="acc-title">Événement & Soirée</div>
+            <div class="acc-subtitle">Mariage · Gala · Concert</div>
+          </div>
+          <div class="acc-arrow">↗</div>
+        </div>
+        <div class="accordion-body">
+          <div class="accordion-body-inner">
+            <p>Arrivez avec style. Service aller-retour pour vos soirées. Le chauffeur attend et vous ramène.</p>
+            <div class="acc-tags">
+              <span class="acc-tag">Aller-retour</span>
+              <span class="acc-tag">Attente incluse</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card B — Sliding Panel -->
+    <div class="card-section">
+      <h3>B — Sliding Panel Reveal</h3>
+      <p class="card-desc">Inspiré DreamCarSud — panneau gradient qui glisse au hover avec détails</p>
+
+      <div class="panel-card">
+        <div class="panel-bg">
+          <div class="panel-icon">✈️</div>
+          <div>
+            <div class="panel-title" style="font-family:'Fraunces',serif;">Transfert Aéroport</div>
+            <div class="panel-sub">Marseille · Nice · Toulon</div>
+          </div>
+        </div>
+        <div class="panel-overlay">
+          <div>
+            <div class="po-title">Transfert Aéroport</div>
+            <div class="po-desc" style="margin-top:8px;">Prise en charge dès l'atterrissage. Suivi de vol automatique, ajustement retard, panneau nominatif.</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="po-price">À partir de 65€</div>
+            <div class="po-btn">Réserver →</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-card">
+        <div class="panel-bg">
+          <div class="panel-icon">🏛️</div>
+          <div>
+            <div class="panel-title" style="font-family:'Fraunces',serif;">Déplacement Affaires</div>
+            <div class="panel-sub">Rendez-vous · Séminaires</div>
+          </div>
+        </div>
+        <div class="panel-overlay">
+          <div>
+            <div class="po-title">Déplacement Affaires</div>
+            <div class="po-desc" style="margin-top:8px;">Ponctualité, discrétion, confort absolu. Mise à disposition demi-journée ou journée complète.</div>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div class="po-price">À partir de 45€/h</div>
+            <div class="po-btn">Réserver →</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card C — Stacked Depth -->
+    <div class="card-section" style="grid-column: 1 / -1;">
+      <h3>C — Stacked Depth Cards</h3>
+      <p class="card-desc">Effet de profondeur avec ombres lavande/olive empilées. Hover = élévation. Original et premium.</p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+        <div class="depth-card">
+          <div class="dc-top">
+            <div class="dc-badge" style="background: rgba(139,111,160,0.1);">✈️</div>
+            <div>
+              <div class="dc-title" style="font-family:'Fraunces',serif;">Transfert Aéroport</div>
+              <div class="dc-sub">Marseille · Nice · Toulon</div>
+            </div>
+          </div>
+          <div class="dc-desc">Accueil personnalisé, suivi de vol en temps réel, adaptation automatique aux retards.</div>
+          <div class="dc-footer">
+            <span class="dc-price">dès 65€</span>
+            <span class="dc-link">Détails →</span>
+          </div>
+        </div>
+
+        <div class="depth-card">
+          <div class="dc-top">
+            <div class="dc-badge" style="background: rgba(107,125,74,0.1);">💼</div>
+            <div>
+              <div class="dc-title" style="font-family:'Fraunces',serif;">Business</div>
+              <div class="dc-sub">RDV · Séminaires · Journée</div>
+            </div>
+          </div>
+          <div class="dc-desc">Discrétion totale, Wi-Fi, eau fraîche, chargeurs. Mise à disposition flexible.</div>
+          <div class="dc-footer">
+            <span class="dc-price">dès 45€/h</span>
+            <span class="dc-link">Détails →</span>
+          </div>
+        </div>
+
+        <div class="depth-card">
+          <div class="dc-top">
+            <div class="dc-badge" style="background: rgba(139,111,160,0.1);">🥂</div>
+            <div>
+              <div class="dc-title" style="font-family:'Fraunces',serif;">Événements</div>
+              <div class="dc-sub">Mariage · Gala · Soirée</div>
+            </div>
+          </div>
+          <div class="dc-desc">Arrivée VIP, service aller-retour, attente incluse. Chauffeur dédié toute la soirée.</div>
+          <div class="dc-footer">
+            <span class="dc-price">sur devis</span>
+            <span class="dc-link">Détails →</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 4 : CTA BUTTONS -->
+<!-- ============================================================ -->
+<div class="section">
+  <span class="section-title">CTA Buttons — Carré + Gradient Provence</span>
+
+  <div class="cta-grid">
+    <div class="cta-card">
+      <h4>Primaire — Gradient</h4>
+      <span class="cta-btn" style="background: linear-gradient(135deg, #8B6FA0, #6B7D4A); color: #fff; border-radius: 0;">Réserver mon transfert →</span>
+      <div class="cta-code">gradient 135° lavande→olive · carré</div>
+    </div>
+
+    <div class="cta-card">
+      <h4>WhatsApp — Vert Officiel</h4>
+      <span class="cta-btn" style="background: #25D366; color: #fff; border-radius: 0;">
+        <span style="margin-right:6px;">💬</span> WhatsApp
+      </span>
+      <div class="cta-code">#25D366 · carré</div>
+    </div>
+
+    <div class="cta-card">
+      <h4>Secondaire — Outline Lavande</h4>
+      <span class="cta-btn" style="background: transparent; border: 2px solid #8B6FA0; color: #8B6FA0; border-radius: 0;">Voir les tarifs</span>
+      <div class="cta-code">outline 2px #8B6FA0 · carré</div>
+    </div>
+
+    <div class="cta-card">
+      <h4>Téléphone — Ghost</h4>
+      <span class="cta-btn" style="background: rgba(139,111,160,0.08); color: #8B6FA0; border-radius: 0;">📞 06 15 96 32 75</span>
+      <div class="cta-code">ghost lavande 8% · carré</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SECTION 5 : SECTION LAYOUTS -->
+<!-- ============================================================ -->
+<div class="section">
+  <span class="section-title">Layouts de Sections — Structures Inspirées</span>
+
+  <div class="layout-grid">
+
+    <!-- Layout Hero -->
+    <div class="layout-preview">
+      <div class="layout-mockup" style="background: linear-gradient(to bottom, #F6F3EE, #ede8df); display:flex; align-items:center; padding:32px;">
+        <div style="flex:1;">
+          <div style="font-size:10px; letter-spacing:0.18em; color:#6B7D4A; font-weight:700; text-transform:uppercase; margin-bottom:12px;">CHAUFFEUR PRIVÉ — AIX-EN-PROVENCE</div>
+          <div style="font-family:'Fraunces',serif; font-size:28px; font-weight:800; color:#2A2A2A; line-height:1.15; margin-bottom:12px;">L'élégance<br>provençale<br><span style="color:#8B6FA0;">à votre service</span></div>
+          <div style="font-size:12px; color:#888; margin-bottom:16px; line-height:1.6;">Transferts, événements, déplacements. Mercedes haut de gamme.</div>
+          <div style="display:flex; gap:8px;">
+            <span style="display:inline-block; padding:10px 20px; background:linear-gradient(135deg,#8B6FA0,#6B7D4A); color:#fff; font-size:10px; font-weight:700; letter-spacing:0.08em;">RÉSERVER →</span>
+            <span style="display:inline-block; padding:10px 20px; background:#25D366; color:#fff; font-size:10px; font-weight:700; letter-spacing:0.08em;">WHATSAPP</span>
+          </div>
+        </div>
+        <div style="flex:0.6; text-align:right;">
+          <div style="width:160px; height:200px; background:linear-gradient(135deg, rgba(139,111,160,0.15), rgba(107,125,74,0.1)); border-radius:12px; display:flex; align-items:center; justify-content:center; margin-left:auto;">
+            <span style="font-size:48px; opacity:0.4;">🚗</span>
+          </div>
+          <div style="font-size:10px; color:#aaa; margin-top:6px; font-style:italic;">Photo/Vidéo hero ici</div>
+        </div>
+      </div>
+      <div class="layout-footer">
+        <h4>Hero — Split asymétrique</h4>
+        <p>Texte à gauche (60%), média à droite (40%). Video/photo Provence en fond avec overlay léger. Inspiré DreamCarSud mais avec gradient lavande-olive.</p>
+      </div>
+    </div>
+
+    <!-- Layout Flotte -->
+    <div class="layout-preview">
+      <div class="layout-mockup" style="background: #fff; padding:24px;">
+        <div style="text-align:center; margin-bottom:20px;">
+          <div style="font-size:10px; letter-spacing:0.18em; color:#8B6FA0; font-weight:700; margin-bottom:6px;">NOTRE FLOTTE</div>
+          <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:#2A2A2A;">Mercedes haut de gamme</div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1; background:#F6F3EE; border-radius:12px; padding:16px; text-align:center;">
+            <div style="height:60px; background:rgba(139,111,160,0.08); border-radius:8px; margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:24px;">🚘</div>
+            <div style="font-family:'Fraunces',serif; font-size:13px; font-weight:700; color:#2A2A2A;">Classe E</div>
+            <div style="font-size:10px; color:#8B6FA0; margin-top:2px;">3 passagers</div>
+          </div>
+          <div style="flex:1; background:#F6F3EE; border-radius:12px; padding:16px; text-align:center; border:2px solid #8B6FA0;">
+            <div style="height:60px; background:rgba(139,111,160,0.12); border-radius:8px; margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:24px;">🚗</div>
+            <div style="font-family:'Fraunces',serif; font-size:13px; font-weight:700; color:#2A2A2A;">Classe S</div>
+            <div style="font-size:10px; color:#8B6FA0; margin-top:2px;">3 passagers · Premium</div>
+          </div>
+          <div style="flex:1; background:#F6F3EE; border-radius:12px; padding:16px; text-align:center;">
+            <div style="height:60px; background:rgba(107,125,74,0.08); border-radius:8px; margin-bottom:10px; display:flex; align-items:center; justify-content:center; font-size:24px;">🚐</div>
+            <div style="font-family:'Fraunces',serif; font-size:13px; font-weight:700; color:#2A2A2A;">Classe V</div>
+            <div style="font-size:10px; color:#6B7D4A; margin-top:2px;">7 passagers</div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-footer">
+        <h4>Flotte — Cards horizontales</h4>
+        <p>3 véhicules côte à côte. Card active (sélectionnée) avec bordure lavande. Photos réelles Mercedes fournies par client. Hover = élévation + détails.</p>
+      </div>
+    </div>
+
+    <!-- Layout Services Accordion -->
+    <div class="layout-preview">
+      <div class="layout-mockup" style="background: #F6F3EE; padding:24px;">
+        <div style="display:flex; gap:20px; align-items:flex-start;">
+          <div style="flex:0.4;">
+            <div style="font-size:10px; letter-spacing:0.18em; color:#8B6FA0; font-weight:700; margin-bottom:6px;">NOS SERVICES</div>
+            <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:#2A2A2A; line-height:1.2; margin-bottom:8px;">Un service pour<br>chaque <span style="color:#8B6FA0;">occasion</span></div>
+            <div style="font-size:11px; color:#888; line-height:1.6;">Que ce soit pour un transfert, un déplacement professionnel ou un événement, nous adaptons notre service.</div>
+          </div>
+          <div style="flex:0.6;">
+            <div style="background:#fff; border-radius:8px; padding:14px 16px; margin-bottom:8px; border-left:3px solid #8B6FA0;">
+              <div style="font-size:13px; font-weight:600; color:#2A2A2A;">✈️ Transfert Aéroport</div>
+              <div style="font-size:11px; color:#888; margin-top:4px;">Marseille · Nice · Toulon — dès 65€</div>
+            </div>
+            <div style="background:#fff; border-radius:8px; padding:14px 16px; margin-bottom:8px; border-left:3px solid transparent;">
+              <div style="font-size:13px; font-weight:600; color:#2A2A2A;">💼 Déplacement Affaires</div>
+            </div>
+            <div style="background:#fff; border-radius:8px; padding:14px 16px; border-left:3px solid transparent;">
+              <div style="font-size:13px; font-weight:600; color:#2A2A2A;">🥂 Événements</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-footer">
+        <h4>Services — Split + Accordion</h4>
+        <p>Texte intro à gauche, accordéon à droite. L'item ouvert a une bordure lavande à gauche + contenu expandé. Inspiré TaxiEnProvence avec twist unique.</p>
+      </div>
+    </div>
+
+    <!-- Layout Avis -->
+    <div class="layout-preview">
+      <div class="layout-mockup" style="background: linear-gradient(135deg, rgba(139,111,160,0.05), rgba(107,125,74,0.05)); padding:24px;">
+        <div style="text-align:center; margin-bottom:16px;">
+          <div style="font-size:10px; letter-spacing:0.18em; color:#6B7D4A; font-weight:700; margin-bottom:4px;">AVIS CLIENTS</div>
+          <div style="font-family:'Fraunces',serif; font-size:22px; font-weight:700; color:#2A2A2A;">Ils nous font <span style="color:#8B6FA0;">confiance</span></div>
+        </div>
+        <div style="display:flex; gap:12px;">
+          <div style="flex:1; background:#fff; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+            <div style="color:#8B6FA0; font-size:18px; margin-bottom:6px;">★★★★★</div>
+            <div style="font-size:11px; color:#666; line-height:1.6; font-style:italic;">"Service impeccable, véhicule immaculé. Je recommande."</div>
+            <div style="font-size:10px; color:#aaa; margin-top:8px; font-weight:600;">— Marie L.</div>
+          </div>
+          <div style="flex:1; background:#fff; border-radius:12px; padding:16px; box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+            <div style="color:#8B6FA0; font-size:18px; margin-bottom:6px;">★★★★★</div>
+            <div style="font-size:11px; color:#666; line-height:1.6; font-style:italic;">"Yassine est ponctuel, discret et très professionnel."</div>
+            <div style="font-size:10px; color:#aaa; margin-top:8px; font-weight:600;">— Thomas K.</div>
+          </div>
+        </div>
+      </div>
+      <div class="layout-footer">
+        <h4>Avis — Carrousel horizontal</h4>
+        <p>Slider auto avec étoiles lavande. Background gradient subtil lavande→olive. Cards blanches avec ombre douce. Flèches de navigation discrètes.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- FOOTER NOTES -->
+<!-- ============================================================ -->
+<div style="text-align:center; margin-top:48px; padding:32px; max-width:700px; margin-left:auto; margin-right:auto;">
+  <div style="font-size:11px; letter-spacing:0.15em; color:#8B6FA0; text-transform:uppercase; font-weight:700; margin-bottom:12px;">Prochaines étapes</div>
+  <div style="font-size:14px; color:#666; line-height:1.8;">
+    <strong style="color:#2A2A2A;">1.</strong> Valide la typo (A/B/C/D ou mix)<br>
+    <strong style="color:#2A2A2A;">2.</strong> Valide le style de card (A/B/C ou mix)<br>
+    <strong style="color:#2A2A2A;">3.</strong> On finalise DESIGN-SYSTEM.md + GUIDE-PILOTAGE-V2.md<br>
+    <strong style="color:#2A2A2A;">4.</strong> Tu copies dans Claude Code → il code tout
+  </div>
+</div>
+
+<script>
+// Simple accordion toggle
+document.querySelectorAll('.accordion-header').forEach(h => {
+  h.addEventListener('click', () => {
+    h.parentElement.classList.toggle('open');
+  });
+});
+</script>
+
+</body>
+</html>

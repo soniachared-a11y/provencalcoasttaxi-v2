@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodboard V4 — Provençal Coast Taxi</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   FOUNDATION
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Sora', sans-serif;
+  background: #F6F3EE;
+  color: #2A2A2A;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+:root {
+  --cream: #F6F3EE;
+  --surface: #FFFFFF;
+  --lavande: #8B6FA0;
+  --olive: #6B7D4A;
+  --bleu: #3D5A80;
+  --texte: #2A2A2A;
+  --texte-light: #888888;
+  --border: #E8E4DE;
+  --radius: 0px;
+}
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+.section-board { padding: 100px 0; position: relative; }
+.section-board + .section-board { border-top: 1px solid var(--border); }
+.tag {
+  font-family: 'Sora', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--lavande);
+}
+.serif { font-family: 'Instrument Serif', serif; }
+
+/* =========================================================
+   INTRO
+   ========================================================= */
+.intro {
+  padding: 80px 0 60px;
+  text-align: center;
+}
+.intro h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 52px;
+  font-weight: 400;
+  color: var(--texte);
+  line-height: 1.05;
+  margin: 16px 0;
+}
+.intro h1 em {
+  font-style: italic;
+  color: var(--lavande);
+}
+.intro p {
+  font-size: 14px;
+  color: var(--texte-light);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* Palette dots */
+.palette-dots {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin-top: 40px;
+}
+.pdot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.pdot-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.pdot-label { font-size: 9px; letter-spacing: 0.08em; color: var(--texte-light); font-weight: 500; }
+.pdot-hex { font-size: 8px; color: #bbb; font-family: monospace; }
+
+/* =========================================================
+   SECTION 01: HERO — FULL SCREEN TYPOGRAPHIC
+   ========================================================= */
+.hero-demo {
+  position: relative;
+  width: 100%;
+  min-height: 560px;
+  background: var(--texte);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 48px;
+}
+.hero-video-zone {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #3a3530, #2a2520);
+  opacity: 0.6;
+}
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(42,42,42,0.2) 0%, rgba(42,42,42,0.7) 100%);
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  min-height: 560px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 60px;
+}
+.hero-tag {
+  font-family: 'Sora', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 72px;
+  font-weight: 400;
+  color: #fff;
+  line-height: 0.95;
+  margin-bottom: 24px;
+}
+.hero-title em {
+  font-style: italic;
+  color: rgba(255,255,255,0.6);
+  display: block;
+}
+.hero-line {
+  width: 48px;
+  height: 1px;
+  background: var(--lavande);
+  margin-bottom: 20px;
+}
+.hero-subtitle {
+  font-size: 14px;
+  color: rgba(255,255,255,0.6);
+  line-height: 1.7;
+  max-width: 400px;
+  margin-bottom: 36px;
+}
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: var(--bleu);
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-primary:hover { background: #345070; }
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 32px;
+  background: transparent;
+  color: #fff;
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-secondary:hover { border-color: rgba(255,255,255,0.5); }
+
+/* Hero corner metrics */
+.hero-metrics {
+  position: absolute;
+  top: 40px;
+  right: 60px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-end;
+}
+.hero-metric {
+  text-align: right;
+}
+.hero-metric-value {
+  font-family: 'Instrument Serif', serif;
+  font-size: 36px;
+  color: #fff;
+}
+.hero-metric-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  font-weight: 500;
+}
+
+/* Hero nav mockup */
+.hero-nav {
+  position: absolute;
+  top: 40px;
+  left: 60px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.hero-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 20px;
+  color: #fff;
+}
+.hero-nav-links {
+  display: flex;
+  gap: 24px;
+}
+.hero-nav-links a {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  letter-spacing: 0.06em;
+  font-weight: 400;
+  transition: color 0.3s;
+}
+.hero-nav-links a:hover { color: #fff; }
+
+/* =========================================================
+   SECTION 02: ATOUTS — COMPTEURS HORIZONTAUX
+   ========================================================= */
+.atouts-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 48px;
+  border: 1px solid var(--border);
+}
+.atout-item {
+  padding: 48px 32px;
+  border-right: 1px solid var(--border);
+  transition: background 0.4s ease;
+}
+.atout-item:last-child { border-right: none; }
+.atout-item:hover { background: var(--surface); }
+.atout-number {
+  font-family: 'Instrument Serif', serif;
+  font-size: 48px;
+  color: var(--lavande);
+  line-height: 1;
+  margin-bottom: 12px;
+}
+.atout-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texte);
+  margin-bottom: 8px;
+}
+.atout-desc {
+  font-size: 12px;
+  color: var(--texte-light);
+  line-height: 1.6;
+}
+
+/* =========================================================
+   SECTION 03: SERVICES — EXPANDING STRIPS (validé)
+   ========================================================= */
+.strips-wrap {
+  margin-top: 48px;
+  display: flex;
+  height: 480px;
+  gap: 3px;
+  overflow: hidden;
+}
+.strip {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  cursor: pointer;
+  transition: flex 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+}
+.strip.active { flex: 5; }
+.strip-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: brightness(0.7);
+  transition: filter 0.5s ease, transform 0.7s ease;
+}
+.strip.active .strip-bg { filter: brightness(0.5); transform: scale(1.05); }
+.strip-accent-bar {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 2px;
+  height: 0;
+  background: var(--lavande);
+  transition: height 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  z-index: 3;
+}
+.strip.active .strip-accent-bar { height: 100%; }
+
+/* Collapsed state: vertical text */
+.strip-collapsed {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+.strip.active .strip-collapsed { opacity: 0; pointer-events: none; }
+.strip-collapsed-num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 14px;
+  color: rgba(255,255,255,0.4);
+}
+.strip-collapsed-title {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-family: 'Instrument Serif', serif;
+  font-size: 16px;
+  color: #fff;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+/* Expanded state: full content */
+.strip-expanded {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 40px;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
+}
+.strip.active .strip-expanded { opacity: 1; transform: translateY(0); }
+.strip-exp-num {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.35);
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+.strip-exp-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 32px;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 12px;
+}
+.strip-exp-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  line-height: 1.7;
+  max-width: 360px;
+  margin-bottom: 20px;
+}
+.strip-exp-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.strip-exp-tag {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,0.15);
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+  backdrop-filter: blur(4px);
+}
+.strip-exp-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 600;
+}
+.strip-exp-cta-line {
+  display: inline-block;
+  width: 32px;
+  height: 1px;
+  background: var(--lavande);
+  transition: width 0.3s ease;
+}
+
+/* =========================================================
+   SECTION 04: FLOTTE — TABLEAU COMPARATIF ÉDITORIAL
+   ========================================================= */
+.flotte-layout {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.flotte-item {
+  padding: 0;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+}
+.flotte-item:last-child { border-right: none; }
+.flotte-item:hover { background: #faf8f5; }
+.flotte-item.featured::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--lavande);
+}
+.flotte-image {
+  height: 200px;
+  background: linear-gradient(135deg, #ebe6de, #ddd6cc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.flotte-image-placeholder {
+  font-size: 11px;
+  color: #bbb;
+  font-style: italic;
+}
+.flotte-info {
+  padding: 32px;
+}
+.flotte-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 24px;
+  color: var(--texte);
+  margin-bottom: 4px;
+}
+.flotte-class {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--lavande);
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+.flotte-specs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.flotte-spec {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0ede8;
+}
+.flotte-spec-label { color: var(--texte-light); }
+.flotte-spec-value { color: var(--texte); font-weight: 600; }
+
+/* =========================================================
+   SECTION 05: AVIS — MARQUEE + GRANDE CITATION
+   ========================================================= */
+.avis-main {
+  margin-top: 48px;
+}
+.avis-featured {
+  padding: 64px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.avis-quote-mark {
+  font-family: 'Instrument Serif', serif;
+  font-size: 120px;
+  color: var(--lavande);
+  opacity: 0.12;
+  line-height: 0.6;
+  position: absolute;
+  top: 40px;
+  left: 0;
+}
+.avis-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 36px;
+  font-style: italic;
+  color: var(--texte);
+  line-height: 1.35;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
+}
+.avis-author {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+.avis-author-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--lavande), var(--olive));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+.avis-author-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.avis-author-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texte);
+}
+.avis-author-detail {
+  font-size: 11px;
+  color: var(--texte-light);
+}
+.avis-stars {
+  margin-left: auto;
+  font-size: 11px;
+  letter-spacing: 4px;
+  color: var(--lavande);
+}
+
+/* Marquee strip */
+.marquee-strip {
+  margin-top: 40px;
+  overflow: hidden;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+}
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  animation: marquee 30s linear infinite;
+  width: max-content;
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  white-space: nowrap;
+}
+.marquee-stars {
+  font-size: 10px;
+  color: var(--lavande);
+  letter-spacing: 2px;
+}
+.marquee-text {
+  font-family: 'Instrument Serif', serif;
+  font-size: 15px;
+  font-style: italic;
+  color: var(--texte-light);
+}
+.marquee-name {
+  font-size: 11px;
+  color: #bbb;
+  font-weight: 500;
+}
+.marquee-sep {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+/* =========================================================
+   SECTION 06: ZONES — CARTE INTERACTIVE SIMPLIFIÉE
+   ========================================================= */
+.zones-layout {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 0;
+  min-height: 400px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.zones-map {
+  background: linear-gradient(135deg, #e8e2d8 0%, #ddd6cc 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  position: relative;
+}
+.zones-map-placeholder {
+  font-size: 12px;
+  color: #aaa;
+  font-style: italic;
+  text-align: center;
+  line-height: 1.6;
+}
+.zones-list {
+  background: var(--surface);
+}
+.zones-item {
+  padding: 28px 32px;
+  border-bottom: 1px solid #f0ede8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.zones-item::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: transparent;
+  transition: background 0.3s ease;
+}
+.zones-item:hover::after,
+.zones-item.active::after { background: var(--lavande); }
+.zones-item:hover { background: #faf8f5; }
+.zones-item-dest {
+  font-family: 'Instrument Serif', serif;
+  font-size: 18px;
+  color: var(--texte);
+  margin-bottom: 4px;
+}
+.zones-item-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 4px;
+}
+.zones-item-distance {
+  font-size: 11px;
+  color: var(--texte-light);
+}
+.zones-item-price {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--olive);
+}
+
+/* =========================================================
+   SECTION 07: CONTACT — GLASS FORM
+   ========================================================= */
+.contact-layout {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr;
+  gap: 0;
+  min-height: 480px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.contact-info-side {
+  background: var(--texte);
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+}
+.contact-info-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 28px;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+.contact-info-item {
+  margin-bottom: 20px;
+}
+.contact-info-label {
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+.contact-info-value {
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
+}
+.contact-form-side {
+  background: var(--surface);
+  padding: 48px;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-field { margin-bottom: 16px; }
+.form-label {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--texte-light);
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+.form-input {
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  color: var(--texte);
+  outline: none;
+  transition: border-color 0.3s;
+}
+.form-input:focus { border-color: var(--lavande); }
+.form-textarea {
+  width: 100%;
+  padding: 14px 0;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  background: transparent;
+  font-family: 'Sora', sans-serif;
+  font-size: 14px;
+  color: var(--texte);
+  outline: none;
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* =========================================================
+   SECTION 08: PHONE FLOATING (pas WhatsApp)
+   ========================================================= */
+.float-demo {
+  margin-top: 48px;
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+.float-preview {
+  width: 320px;
+  height: 220px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  position: relative;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.float-preview-lines {
+  padding: 24px;
+}
+.float-preview-line {
+  height: 6px;
+  background: #f0ede8;
+  border-radius: 3px;
+  margin-bottom: 8px;
+}
+.float-preview-line:nth-child(2) { width: 80%; }
+.float-preview-line:nth-child(3) { width: 60%; }
+.float-icon {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 56px;
+  height: 56px;
+  background: var(--bleu);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 20px rgba(61,90,128,0.3);
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+.float-icon:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 28px rgba(61,90,128,0.4);
+}
+.float-icon svg {
+  width: 24px;
+  height: 24px;
+  stroke: #fff;
+  stroke-width: 2;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.float-info h4 {
+  font-family: 'Instrument Serif', serif;
+  font-size: 22px;
+  color: var(--texte);
+  margin-bottom: 10px;
+}
+.float-info p {
+  font-size: 13px;
+  color: var(--texte-light);
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+.float-specs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.float-spec {
+  font-size: 10px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  color: var(--texte-light);
+  font-weight: 500;
+  letter-spacing: 0.03em;
+}
+
+/* =========================================================
+   SECTION 09: CTA
+   ========================================================= */
+.cta-showcase {
+  margin-top: 48px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.cta-demo-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+.cta-demo-label {
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #bbb;
+  font-weight: 500;
+}
+.cta-btn-main {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  font-family: 'Sora', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+.cta-btn-main:hover { opacity: 0.9; transform: translateY(-1px); }
+
+/* =========================================================
+   SECTION 10: TOKENS RÉCAP
+   ========================================================= */
+.tokens-grid {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border: 1px solid var(--border);
+}
+.token-group {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+}
+.token-group:last-child { border-right: none; }
+.token-group-title {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lavande);
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.token-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid #f5f2ed;
+  font-size: 12px;
+}
+.token-item:last-child { border-bottom: none; }
+.token-key { color: var(--texte-light); }
+.token-val { color: var(--texte); font-weight: 600; font-family: monospace; font-size: 11px; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero-title { font-size: 44px; }
+  .atouts-row { grid-template-columns: 1fr 1fr; }
+  .strips-wrap { height: 400px; }
+  .flotte-layout { grid-template-columns: 1fr; }
+  .zones-layout { grid-template-columns: 1fr; }
+  .contact-layout { grid-template-columns: 1fr; }
+  .tokens-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- INTRO -->
+<!-- ============================================================ -->
+<div class="intro container">
+  <span class="tag">Provençal Coast Taxi — Design V4</span>
+  <h1>Composants & <em>Interactions</em></h1>
+  <p>Typo validée : Instrument Serif + Sora. Chaque section conçue comme une expérience, pas un template.</p>
+  <div class="palette-dots">
+    <div class="pdot"><div class="pdot-circle" style="background:#F6F3EE; border:1px solid #E8E4DE;"></div><div class="pdot-label">Crème</div><div class="pdot-hex">#F6F3EE</div></div>
+    <div class="pdot"><div class="pdot-circle" style="background:#FFFFFF; border:1px solid #E8E4DE;"></div><div class="pdot-label">Surface</div><div class="pdot-hex">#FFFFFF</div></div>
+    <div class="pdot"><div class="pdot-circle" style="background:#8B6FA0;"></div><div class="pdot-label">Lavande</div><div class="pdot-hex">#8B6FA0</div></div>
+    <div class="pdot"><div class="pdot-circle" style="background:#6B7D4A;"></div><div class="pdot-label">Olive</div><div class="pdot-hex">#6B7D4A</div></div>
+    <div class="pdot"><div class="pdot-circle" style="background:#3D5A80;"></div><div class="pdot-label">Bleu nuit</div><div class="pdot-hex">#3D5A80</div></div>
+    <div class="pdot"><div class="pdot-circle" style="background:#2A2A2A;"></div><div class="pdot-label">Texte</div><div class="pdot-hex">#2A2A2A</div></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 01 : HERO -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">01 — Hero</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px; color:var(--texte);">Full-screen typographique + vidéo</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">La vidéo hero-video.mp4 en fond. Overlay sombre progressif. Titre géant Instrument Serif en bas-gauche. Métriques de confiance en haut-droite. Animation : chaque ligne apparaît séquentiellement (GSAP stagger 0.2s).</p>
+
+    <div class="hero-demo">
+      <div class="hero-video-zone"></div>
+      <div class="hero-overlay"></div>
+
+      <div class="hero-nav">
+        <div class="hero-logo">Provençal Coast</div>
+        <div class="hero-nav-links">
+          <a href="#">Services</a>
+          <a href="#">Flotte</a>
+          <a href="#">Zones</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+
+      <div class="hero-metrics">
+        <div class="hero-metric">
+          <div class="hero-metric-value">4.9</div>
+          <div class="hero-metric-label">Note Google</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value">24/7</div>
+          <div class="hero-metric-label">Disponibilité</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-value">10+</div>
+          <div class="hero-metric-label">Ans d'expérience</div>
+        </div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-tag">Chauffeur privé — Aix-en-Provence</div>
+        <h1 class="hero-title">
+          L'élégance<br>provençale
+          <em>à votre service</em>
+        </h1>
+        <div class="hero-line"></div>
+        <p class="hero-subtitle">Transferts aéroport, déplacements professionnels, événements. Mercedes haut de gamme, tarifs fixes.</p>
+        <div class="hero-actions">
+          <span class="btn-primary">Réserver &rarr;</span>
+          <span class="btn-secondary">Voir les tarifs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 02 : ATOUTS -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">02 — Atouts</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Compteurs en grille</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">Pas de cards. Grille à bordures fines, chiffre Instrument Serif large, texte Sora. GSAP : countUp animé au scroll.</p>
+
+    <div class="atouts-row">
+      <div class="atout-item">
+        <div class="atout-number">4.9</div>
+        <div class="atout-title">Note Google</div>
+        <div class="atout-desc">+200 avis 5 étoiles vérifiés</div>
+      </div>
+      <div class="atout-item">
+        <div class="atout-number">24/7</div>
+        <div class="atout-title">Disponibilité</div>
+        <div class="atout-desc">Réservation à toute heure, 365 jours par an</div>
+      </div>
+      <div class="atout-item">
+        <div class="atout-number">15min</div>
+        <div class="atout-title">Temps de réponse</div>
+        <div class="atout-desc">Confirmation de réservation garantie</div>
+      </div>
+      <div class="atout-item">
+        <div class="atout-number">0&euro;</div>
+        <div class="atout-title">Frais cachés</div>
+        <div class="atout-desc">Tarif fixe annoncé = tarif payé</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 03 : SERVICES — EXPANDING STRIPS -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">03 — Services</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Strips expansives</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">Pattern validé. Photos Provence/Mercedes en background. Clic = expansion fluide (0.7s cubic-bezier). Barre accent lavande. Texte vertical quand fermé. En production : photos réelles fournies par client.</p>
+
+    <div class="strips-wrap">
+      <div class="strip active" onclick="activateStrip(this)">
+        <div class="strip-bg" style="background: linear-gradient(160deg, #c8bfb0 0%, #a89a8a 100%);"></div>
+        <div class="strip-accent-bar"></div>
+        <div class="strip-collapsed">
+          <div class="strip-collapsed-num">01</div>
+          <div class="strip-collapsed-title">Aéroport</div>
+        </div>
+        <div class="strip-expanded">
+          <div class="strip-exp-num">01 / 05</div>
+          <div class="strip-exp-title">Transfert<br>Aéroport</div>
+          <div class="strip-exp-desc">Prise en charge dès l'atterrissage. Suivi de vol en temps réel, ajustement automatique des retards, panneau nominatif en zone d'arrivée.</div>
+          <div class="strip-exp-tags">
+            <span class="strip-exp-tag">Suivi de vol</span>
+            <span class="strip-exp-tag">Tarif fixe</span>
+            <span class="strip-exp-tag">Panneau nominatif</span>
+          </div>
+          <div class="strip-exp-cta"><span class="strip-exp-cta-line"></span> Réserver</div>
+        </div>
+      </div>
+
+      <div class="strip" onclick="activateStrip(this)">
+        <div class="strip-bg" style="background: linear-gradient(160deg, #bfb3a0 0%, #9a8e7e 100%);"></div>
+        <div class="strip-accent-bar"></div>
+        <div class="strip-collapsed">
+          <div class="strip-collapsed-num">02</div>
+          <div class="strip-collapsed-title">Affaires</div>
+        </div>
+        <div class="strip-expanded">
+          <div class="strip-exp-num">02 / 05</div>
+          <div class="strip-exp-title">Déplacement<br>Affaires</div>
+          <div class="strip-exp-desc">Discrétion et ponctualité pour vos rendez-vous professionnels. Mise à disposition demi-journée ou journée complète.</div>
+          <div class="strip-exp-tags">
+            <span class="strip-exp-tag">Wi-Fi</span>
+            <span class="strip-exp-tag">Discrétion</span>
+            <span class="strip-exp-tag">Mise à disposition</span>
+          </div>
+          <div class="strip-exp-cta"><span class="strip-exp-cta-line"></span> Réserver</div>
+        </div>
+      </div>
+
+      <div class="strip" onclick="activateStrip(this)">
+        <div class="strip-bg" style="background: linear-gradient(160deg, #c4b0c4 0%, #9a8a9a 100%);"></div>
+        <div class="strip-accent-bar"></div>
+        <div class="strip-collapsed">
+          <div class="strip-collapsed-num">03</div>
+          <div class="strip-collapsed-title">Événements</div>
+        </div>
+        <div class="strip-expanded">
+          <div class="strip-exp-num">03 / 05</div>
+          <div class="strip-exp-title">Événements<br>& Soirées</div>
+          <div class="strip-exp-desc">Arrivez avec style. Mariages, galas, concerts. Service aller-retour, chauffeur dédié toute la soirée.</div>
+          <div class="strip-exp-tags">
+            <span class="strip-exp-tag">Aller-retour</span>
+            <span class="strip-exp-tag">Attente incluse</span>
+          </div>
+          <div class="strip-exp-cta"><span class="strip-exp-cta-line"></span> Réserver</div>
+        </div>
+      </div>
+
+      <div class="strip" onclick="activateStrip(this)">
+        <div class="strip-bg" style="background: linear-gradient(160deg, #b0bfb0 0%, #8a9a8a 100%);"></div>
+        <div class="strip-accent-bar"></div>
+        <div class="strip-collapsed">
+          <div class="strip-collapsed-num">04</div>
+          <div class="strip-collapsed-title">Distance</div>
+        </div>
+        <div class="strip-expanded">
+          <div class="strip-exp-num">04 / 05</div>
+          <div class="strip-exp-title">Longue<br>Distance</div>
+          <div class="strip-exp-desc">Nice, Lyon, Monaco, partout en France. Véhicule privé, pas de correspondances, pas de stress.</div>
+          <div class="strip-exp-tags">
+            <span class="strip-exp-tag">France entière</span>
+            <span class="strip-exp-tag">Tarif négocié</span>
+          </div>
+          <div class="strip-exp-cta"><span class="strip-exp-cta-line"></span> Demander un devis</div>
+        </div>
+      </div>
+
+      <div class="strip" onclick="activateStrip(this)">
+        <div class="strip-bg" style="background: linear-gradient(160deg, #c4b8a4 0%, #a0947e 100%);"></div>
+        <div class="strip-accent-bar"></div>
+        <div class="strip-collapsed">
+          <div class="strip-collapsed-num">05</div>
+          <div class="strip-collapsed-title">Tourisme</div>
+        </div>
+        <div class="strip-expanded">
+          <div class="strip-exp-num">05 / 05</div>
+          <div class="strip-exp-title">Visite<br>Touristique</div>
+          <div class="strip-exp-desc">Gordes, Roussillon, Cassis, les Calanques. Itinéraires sur mesure avec guide-chauffeur.</div>
+          <div class="strip-exp-tags">
+            <span class="strip-exp-tag">Sur mesure</span>
+            <span class="strip-exp-tag">Demi-journée</span>
+          </div>
+          <div class="strip-exp-cta"><span class="strip-exp-cta-line"></span> Réserver</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 04 : FLOTTE -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">04 — Flotte</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Tableau comparatif éditorial</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">Pas de cards rondes. Grille à bordures fines, photo réelle Mercedes en haut, specs en tableau en bas. Le modèle phare (Classe S) a un accent lavande.</p>
+
+    <div class="flotte-layout">
+      <div class="flotte-item">
+        <div class="flotte-image"><span class="flotte-image-placeholder">Photo Mercedes Classe E</span></div>
+        <div class="flotte-info">
+          <div class="flotte-name">Classe E</div>
+          <div class="flotte-class">Berline confort</div>
+          <div class="flotte-specs">
+            <div class="flotte-spec"><span class="flotte-spec-label">Passagers</span><span class="flotte-spec-value">3</span></div>
+            <div class="flotte-spec"><span class="flotte-spec-label">Bagages</span><span class="flotte-spec-value">3</span></div>
+            <div class="flotte-spec"><span class="flotte-spec-label">Wi-Fi</span><span class="flotte-spec-value">Oui</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flotte-item featured">
+        <div class="flotte-image" style="background:linear-gradient(135deg, #e0d8ce, #d0c8bc);"><span class="flotte-image-placeholder">Photo Mercedes Classe S</span></div>
+        <div class="flotte-info">
+          <div class="flotte-name">Classe S</div>
+          <div class="flotte-class">Premium</div>
+          <div class="flotte-specs">
+            <div class="flotte-spec"><span class="flotte-spec-label">Passagers</span><span class="flotte-spec-value">3</span></div>
+            <div class="flotte-spec"><span class="flotte-spec-label">Bagages</span><span class="flotte-spec-value">3</span></div>
+            <div class="flotte-spec"><span class="flotte-spec-label">Sièges massants</span><span class="flotte-spec-value">Oui</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flotte-item">
+        <div class="flotte-image"><span class="flotte-image-placeholder">Photo Mercedes Classe V</span></div>
+        <div class="flotte-info">
+          <div class="flotte-name">Classe V</div>
+          <div class="flotte-class">Van premium</div>
+          <div class="flotte-specs">
+            <div class="flotte-spec"><span class="flotte-spec-label">Passagers</span><span class="flotte-spec-value">7</span></div>
+            <div class="flotte-spec"><span class="flotte-spec-label">Bagages</span><span class="flotte-spec-value">7</span></div>
+            <div class="flotte-spec"><span class="flotte-spec-label">Idéal groupes</span><span class="flotte-spec-value">Oui</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 05 : AVIS -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">05 — Avis</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Grande citation + marquee défilant</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">Pas de slider. Un avis mis en avant en grande typo Instrument Serif italic. En dessous, un marquee horizontal infini avec les autres avis qui défilent. GSAP TextPlugin pour animer le changement d'avis principal.</p>
+
+    <div class="avis-main">
+      <div class="avis-featured">
+        <div class="avis-quote-mark">"</div>
+        <div class="avis-text">Service impeccable du début à la fin. Yassine est d'une ponctualité exemplaire, le véhicule était immaculé. Une vraie expérience premium.</div>
+        <div class="avis-author">
+          <div class="avis-author-avatar">ML</div>
+          <div class="avis-author-info">
+            <span class="avis-author-name">Marie Lefèvre</span>
+            <span class="avis-author-detail">Transfert Aéroport Marseille</span>
+          </div>
+          <div class="avis-stars">★ ★ ★ ★ ★</div>
+        </div>
+      </div>
+
+      <div class="marquee-strip">
+        <div class="marquee-track">
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Ponctuel, discret, très professionnel"</span><span class="marquee-name">— Thomas K.</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Je ne prends plus que ce service pour mes déplacements"</span><span class="marquee-name">— Sophie R.</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Mercedes impeccable, trajet parfait vers Nice"</span><span class="marquee-name">— Jean-Marc D.</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Notre chauffeur pour le mariage, service royal"</span><span class="marquee-name">— Claire & Antoine</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Fiable, élégant, le meilleur VTC de la région"</span><span class="marquee-name">— Pierre M.</span></div>
+          <div class="marquee-sep"></div>
+          <!-- Dupliqué pour boucle infinie -->
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Ponctuel, discret, très professionnel"</span><span class="marquee-name">— Thomas K.</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Je ne prends plus que ce service pour mes déplacements"</span><span class="marquee-name">— Sophie R.</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Mercedes impeccable, trajet parfait vers Nice"</span><span class="marquee-name">— Jean-Marc D.</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Notre chauffeur pour le mariage, service royal"</span><span class="marquee-name">— Claire & Antoine</span></div>
+          <div class="marquee-sep"></div>
+          <div class="marquee-item"><span class="marquee-stars">★★★★★</span><span class="marquee-text">"Fiable, élégant, le meilleur VTC de la région"</span><span class="marquee-name">— Pierre M.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 06 : ZONES -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">06 — Zones</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Carte + liste interactive</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">Carte stylisée Provence à gauche (SVG ou image). Liste des destinations à droite avec accent vertical au hover. Chaque item montre distance + prix indicatif.</p>
+
+    <div class="zones-layout">
+      <div class="zones-map">
+        <span class="zones-map-placeholder">Carte Provence stylisée<br>SVG interactif ou image fournie<br>Points animés GSAP sur chaque destination</span>
+      </div>
+      <div class="zones-list">
+        <div class="zones-item active">
+          <div class="zones-item-dest">Aéroport Marseille</div>
+          <div class="zones-item-meta">
+            <span class="zones-item-distance">35 min — 42 km</span>
+            <span class="zones-item-price">dès 65 EUR</span>
+          </div>
+        </div>
+        <div class="zones-item">
+          <div class="zones-item-dest">Gare TGV Aix</div>
+          <div class="zones-item-meta">
+            <span class="zones-item-distance">15 min — 12 km</span>
+            <span class="zones-item-price">dès 25 EUR</span>
+          </div>
+        </div>
+        <div class="zones-item">
+          <div class="zones-item-dest">Aéroport Nice</div>
+          <div class="zones-item-meta">
+            <span class="zones-item-distance">2h — 180 km</span>
+            <span class="zones-item-price">dès 220 EUR</span>
+          </div>
+        </div>
+        <div class="zones-item">
+          <div class="zones-item-dest">Cassis / Calanques</div>
+          <div class="zones-item-meta">
+            <span class="zones-item-distance">45 min — 50 km</span>
+            <span class="zones-item-price">dès 75 EUR</span>
+          </div>
+        </div>
+        <div class="zones-item">
+          <div class="zones-item-dest">Gordes / Luberon</div>
+          <div class="zones-item-meta">
+            <span class="zones-item-distance">1h — 65 km</span>
+            <span class="zones-item-price">dès 90 EUR</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 07 : CONTACT -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">07 — Contact</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Formulaire minimal + infos</h2>
+    <p style="font-size:13px; color:var(--texte-light); line-height:1.6; margin-top:8px; max-width:560px;">Split : infos sur fond sombre à gauche, formulaire épuré à droite. Inputs underline seulement, pas de bordures. Focus = ligne lavande.</p>
+
+    <div class="contact-layout">
+      <div class="contact-info-side">
+        <div>
+          <div class="contact-info-title">Réservez votre<br>prochain trajet</div>
+          <div class="contact-info-item">
+            <div class="contact-info-label">Téléphone</div>
+            <div class="contact-info-value">06 15 96 32 75</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-label">Email</div>
+            <div class="contact-info-value">contact@provencalcoast.fr</div>
+          </div>
+          <div class="contact-info-item">
+            <div class="contact-info-label">Zone</div>
+            <div class="contact-info-value">Aix-en-Provence et environs</div>
+          </div>
+        </div>
+        <div style="font-size:10px; color:rgba(255,255,255,0.25); letter-spacing:0.08em;">Licence VTC — SIRET XXXXXXXXX</div>
+      </div>
+      <div class="contact-form-side">
+        <div class="form-row">
+          <div class="form-field">
+            <label class="form-label">Nom</label>
+            <input type="text" class="form-input" placeholder="Votre nom">
+          </div>
+          <div class="form-field">
+            <label class="form-label">Téléphone</label>
+            <input type="tel" class="form-input" placeholder="06 XX XX XX XX">
+          </div>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Service</label>
+          <input type="text" class="form-input" placeholder="Transfert aéroport, événement...">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Date & heure souhaitées</label>
+          <input type="text" class="form-input" placeholder="JJ/MM/AAAA — HH:MM">
+        </div>
+        <div class="form-field">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Détails de votre demande..."></textarea>
+        </div>
+        <span class="btn-primary" style="margin-top:24px;">Envoyer la demande &rarr;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 08 : TÉLÉPHONE FLOTTANT -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">08 — Téléphone flottant</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Icône fixe bas-droite</h2>
+
+    <div class="float-demo">
+      <div class="float-preview">
+        <div class="float-preview-lines">
+          <div class="float-preview-line"></div>
+          <div class="float-preview-line"></div>
+          <div class="float-preview-line"></div>
+        </div>
+        <div class="float-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+      </div>
+      <div class="float-info">
+        <h4>Appel direct, toujours visible</h4>
+        <p>Cercle bleu nuit #3D5A80. Icône téléphone Lucide (Phone). Hover : scale 1.1 + pulse subtil. Lien tel:+33615963275. Position fixe z-index 999.</p>
+        <div class="float-specs">
+          <span class="float-spec">56 × 56px</span>
+          <span class="float-spec">bottom: 24px</span>
+          <span class="float-spec">right: 24px</span>
+          <span class="float-spec">shadow: bleu 30%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 09 : CTA BUTTONS -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">09 — CTA Buttons</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Hiérarchie d'actions</h2>
+
+    <div class="cta-showcase">
+      <div class="cta-demo-item">
+        <span class="cta-demo-label">Primaire</span>
+        <span class="cta-btn-main" style="background:var(--bleu); color:#fff;">Réserver mon transfert &rarr;</span>
+      </div>
+      <div class="cta-demo-item">
+        <span class="cta-demo-label">Secondaire</span>
+        <span class="cta-btn-main" style="background:transparent; border:1.5px solid var(--lavande); color:var(--lavande);">Voir les tarifs</span>
+      </div>
+      <div class="cta-demo-item">
+        <span class="cta-demo-label">Ghost</span>
+        <span class="cta-btn-main" style="background:rgba(139,111,160,0.06); color:var(--lavande);">Nos services</span>
+      </div>
+      <div class="cta-demo-item">
+        <span class="cta-demo-label">Lien</span>
+        <span class="cta-btn-main" style="background:transparent; color:var(--olive); padding:16px 0; text-decoration:underline; text-underline-offset:4px;">En savoir plus &rarr;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- 10 : TOKENS RÉCAP -->
+<!-- ============================================================ -->
+<div class="section-board">
+  <div class="container">
+    <span class="tag">10 — Design Tokens</span>
+    <h2 class="serif" style="font-size:32px; margin-top:12px;">Récapitulatif technique</h2>
+
+    <div class="tokens-grid">
+      <div class="token-group">
+        <div class="token-group-title">Couleurs</div>
+        <div class="token-item"><span class="token-key">Fond</span><span class="token-val">#F6F3EE</span></div>
+        <div class="token-item"><span class="token-key">Surface</span><span class="token-val">#FFFFFF</span></div>
+        <div class="token-item"><span class="token-key">Lavande</span><span class="token-val">#8B6FA0</span></div>
+        <div class="token-item"><span class="token-key">Olive</span><span class="token-val">#6B7D4A</span></div>
+        <div class="token-item"><span class="token-key">Bleu nuit</span><span class="token-val">#3D5A80</span></div>
+        <div class="token-item"><span class="token-key">Texte</span><span class="token-val">#2A2A2A</span></div>
+        <div class="token-item"><span class="token-key">Texte light</span><span class="token-val">#888888</span></div>
+        <div class="token-item"><span class="token-key">Bordure</span><span class="token-val">#E8E4DE</span></div>
+      </div>
+      <div class="token-group">
+        <div class="token-group-title">Typographie</div>
+        <div class="token-item"><span class="token-key">Display</span><span class="token-val">Instrument Serif</span></div>
+        <div class="token-item"><span class="token-key">Body</span><span class="token-val">Sora</span></div>
+        <div class="token-item"><span class="token-key">H1</span><span class="token-val">72px / 400</span></div>
+        <div class="token-item"><span class="token-key">H2</span><span class="token-val">36px / 400</span></div>
+        <div class="token-item"><span class="token-key">H3</span><span class="token-val">24px / 400</span></div>
+        <div class="token-item"><span class="token-key">Body</span><span class="token-val">14px / 300-400</span></div>
+        <div class="token-item"><span class="token-key">Label</span><span class="token-val">10px / 600 / 0.2em</span></div>
+        <div class="token-item"><span class="token-key">Small</span><span class="token-val">12px / 400</span></div>
+      </div>
+      <div class="token-group">
+        <div class="token-group-title">Composants</div>
+        <div class="token-item"><span class="token-key">Border radius</span><span class="token-val">0px (carré)</span></div>
+        <div class="token-item"><span class="token-key">Border</span><span class="token-val">1px solid #E8E4DE</span></div>
+        <div class="token-item"><span class="token-key">CTA padding</span><span class="token-val">16px 32px</span></div>
+        <div class="token-item"><span class="token-key">CTA font</span><span class="token-val">11px / 600 / 0.12em</span></div>
+        <div class="token-item"><span class="token-key">Section padding</span><span class="token-val">100px 0</span></div>
+        <div class="token-item"><span class="token-key">Container</span><span class="token-val">1200px max</span></div>
+        <div class="token-item"><span class="token-key">Easing</span><span class="token-val">cubic-bezier(0.76,0,0.24,1)</span></div>
+        <div class="token-item"><span class="token-key">Duration</span><span class="token-val">0.6-0.8s</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- JS -->
+<!-- ============================================================ -->
+<script>
+function activateStrip(el) {
+  el.parentElement.querySelectorAll('.strip').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+</script>
+
+</body>
+</html>

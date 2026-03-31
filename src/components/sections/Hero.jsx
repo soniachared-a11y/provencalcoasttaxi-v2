@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Check } from 'lucide-react'
+import MagneticButton from '../ui/MagneticButton'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -92,13 +93,27 @@ export default function Hero() {
         y: 20, opacity: 0, duration: 0.5, stagger: 0.15, ease: 'power2.out',
       }, '-=0.6')
 
-      // Parallax vidéo
+      // Deep parallax vidéo + scale
       gsap.to(videoRef.current, {
-        yPercent: -10,
+        yPercent: -20,
+        scale: 1.1,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
+          end: 'bottom top',
+          scrub: 1.5,
+        },
+      })
+
+      // Fade out hero content on scroll
+      gsap.to('.hero-content-wrapper', {
+        opacity: 0,
+        y: -60,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: '60% top',
           end: 'bottom top',
           scrub: true,
         },
@@ -149,7 +164,7 @@ export default function Hero() {
 
       {/* Contenu bas-gauche */}
       <div
-        className="relative z-10 mx-auto max-w-[1200px] px-6 md:px-8 flex flex-col justify-end"
+        className="hero-content-wrapper relative z-10 mx-auto max-w-[1200px] px-6 md:px-8 flex flex-col justify-end"
         style={{ minHeight: '100vh', paddingBottom: '60px', paddingTop: '120px' }}
       >
         <div className="max-w-[640px]">
@@ -225,11 +240,12 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className="hero-actions flex flex-wrap items-center gap-4">
-            <a
+            <MagneticButton
+              as="a"
               href="#contact"
               className="flex items-center gap-2"
               style={{
-                backgroundColor: 'var(--bleu)',
+                backgroundColor: 'var(--olive)',
                 color: '#FFFFFF',
                 padding: '16px 32px',
                 borderRadius: '0px',
@@ -239,20 +255,18 @@ export default function Hero() {
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
                 textDecoration: 'none',
-                transition: 'all 0.3s ease',
+                transition: 'background-color 0.3s ease',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = '#345070'
-                e.currentTarget.style.transform = 'translateY(-1px)'
+                e.currentTarget.style.backgroundColor = '#5A6B3A'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.backgroundColor = 'var(--bleu)'
-                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.backgroundColor = 'var(--olive)'
               }}
             >
               Réserver
               <ArrowRight size={14} strokeWidth={2} />
-            </a>
+            </MagneticButton>
             <a
               href="#zones"
               style={{
@@ -305,7 +319,7 @@ export default function Hero() {
                   color: 'rgba(255,255,255,0.45)',
                 }}
               >
-                <Check size={12} strokeWidth={2.5} style={{ color: 'var(--lavande)' }} />
+                <Check size={12} strokeWidth={2.5} style={{ color: 'var(--olive)' }} />
                 {text}
               </span>
             ))}

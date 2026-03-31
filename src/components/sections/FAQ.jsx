@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ChevronRight } from 'lucide-react'
-import { FAQS } from '../../data/content'
+import { FAQS, SECTION_INTROS } from '../../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -80,7 +80,7 @@ function FAQItem({ faq, index, isOpen, onToggle }) {
         <span>{faq.q}</span>
         <span
           ref={chevronRef}
-          style={{ flexShrink: 0, color: 'var(--texte-light)' }}
+          style={{ flexShrink: 0, color: 'var(--lavande)' }}
         >
           <ChevronRight size={18} />
         </span>
@@ -116,12 +116,17 @@ function FAQItem({ faq, index, isOpen, onToggle }) {
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState(-1)
+  const [autoPlay, setAutoPlay] = useState(false)
   const sectionRef = useRef(null)
+  const timerRef = useRef(null)
 
   const handleToggle = useCallback((index) => {
+    setAutoPlay(false) // Stop autoplay on manual click
+    if (timerRef.current) clearInterval(timerRef.current)
     setOpenIndex(prev => prev === index ? -1 : index)
   }, [])
 
+  // Auto-cycle FAQ when section enters viewport
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.faq-list', {
@@ -133,11 +138,27 @@ export default function FAQ() {
           trigger: sectionRef.current,
           start: 'top 80%',
           once: true,
+          onEnter: () => {
+            // Start auto-cycling after reveal
+            setTimeout(() => {
+              setAutoPlay(true)
+              setOpenIndex(0)
+            }, 800)
+          },
         },
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
+
+  // Auto-cycle timer
+  useEffect(() => {
+    if (!autoPlay) return
+    timerRef.current = setInterval(() => {
+      setOpenIndex(prev => (prev + 1) % FAQS.length)
+    }, 4000)
+    return () => clearInterval(timerRef.current)
+  }, [autoPlay])
 
   return (
     <section
@@ -154,7 +175,7 @@ export default function FAQ() {
             fontWeight: 500,
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            color: 'var(--lavande)',
+            color: 'var(--olive)',
             display: 'inline-block',
             marginBottom: 16,
           }}>
@@ -170,6 +191,17 @@ export default function FAQ() {
           }}>
             Questions fréquentes
           </h2>
+          <p style={{
+            fontFamily: 'Sora, sans-serif',
+            fontSize: 14,
+            color: 'var(--texte-light)',
+            lineHeight: 1.8,
+            maxWidth: 560,
+            margin: '20px auto 0',
+            textAlign: 'center',
+          }}>
+            Retrouvez les réponses aux questions les plus fréquentes de nos clients. N'hésitez pas à nous contacter pour toute autre question.
+          </p>
         </div>
 
         {/* FAQ list */}

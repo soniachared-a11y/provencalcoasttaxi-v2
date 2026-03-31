@@ -146,7 +146,7 @@ export default function Nav() {
               href={CONTACT.telHref}
               className="flex items-center gap-2"
               style={{
-                color: scrolled ? 'var(--lavande)' : 'rgba(255,255,255,0.7)',
+                color: scrolled ? 'var(--olive)' : 'rgba(255,255,255,0.7)',
                 textDecoration: 'none',
                 transition: 'color 0.3s',
               }}
@@ -165,7 +165,7 @@ export default function Nav() {
               href="#contact"
               className="flex items-center gap-2"
               style={{
-                backgroundColor: scrolled ? 'var(--bleu)' : 'transparent',
+                backgroundColor: scrolled ? 'var(--olive)' : 'transparent',
                 border: scrolled ? 'none' : '1px solid rgba(255,255,255,0.3)',
                 color: '#FFFFFF',
                 padding: '12px 24px',
@@ -179,11 +179,11 @@ export default function Nav() {
                 transition: 'all 0.3s ease',
               }}
               onMouseEnter={e => {
-                e.currentTarget.style.backgroundColor = scrolled ? '#345070' : 'rgba(255,255,255,0.1)'
+                e.currentTarget.style.backgroundColor = scrolled ? '#5A6B3A' : 'rgba(255,255,255,0.1)'
                 e.currentTarget.style.transform = 'translateY(-1px)'
               }}
               onMouseLeave={e => {
-                e.currentTarget.style.backgroundColor = scrolled ? 'var(--bleu)' : 'transparent'
+                e.currentTarget.style.backgroundColor = scrolled ? 'var(--olive)' : 'transparent'
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
@@ -237,7 +237,7 @@ export default function Nav() {
               style={{
                 fontFamily: "'Instrument Serif', serif",
                 fontSize: '18px',
-                color: 'var(--lavande)',
+                color: 'var(--olive)',
                 textDecoration: 'none',
               }}
             >
@@ -251,7 +251,7 @@ export default function Nav() {
               onClick={handleLinkClick}
               className="flex items-center justify-center gap-2"
               style={{
-                backgroundColor: 'var(--bleu)',
+                backgroundColor: 'var(--olive)',
                 color: '#FFFFFF',
                 padding: '16px 32px',
                 borderRadius: '0px',

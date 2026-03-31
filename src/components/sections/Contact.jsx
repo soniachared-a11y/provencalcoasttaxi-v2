@@ -97,6 +97,25 @@ export default function Contact() {
       className="contact-section"
       style={{ background: 'var(--cream)' }}
     >
+      {/* CTA Bandeau */}
+      <div style={{
+        background: 'var(--olive)',
+        padding: '20px 24px',
+        textAlign: 'center',
+      }}>
+        <a
+          href="tel:+33615963275"
+          style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 20,
+            color: '#fff',
+            textDecoration: 'none',
+          }}
+        >
+          Appelez-nous au 06 15 96 32 75 — Disponible 24h/24
+        </a>
+      </div>
+
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px' }}>
         {/* Grid */}
         <div style={{
@@ -329,7 +348,7 @@ export default function Contact() {
                   display: 'flex',
                   alignItems: 'center',
                   gap: 8,
-                  backgroundColor: 'var(--bleu)',
+                  backgroundColor: 'var(--olive)',
                   color: '#fff',
                   padding: '16px 32px',
                   border: 'none',
@@ -342,11 +361,11 @@ export default function Contact() {
                   transition: 'all 0.3s ease',
                 }}
                 onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = '#345070'
+                  e.currentTarget.style.backgroundColor = '#6A5280'
                   e.currentTarget.style.transform = 'translateY(-1px)'
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = 'var(--bleu)'
+                  e.currentTarget.style.backgroundColor = 'var(--olive)'
                   e.currentTarget.style.transform = 'translateY(0)'
                 }}
               >

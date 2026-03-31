@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { Shield } from 'lucide-react'
 import { AVIS, SECTION_INTROS } from '../../data/content'
+import CharReveal from '../ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -126,16 +128,18 @@ export default function Avis() {
           }}>
             Avis clients
           </span>
-          <h2 style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 36,
-            fontWeight: 400,
-            color: 'var(--texte)',
-            lineHeight: 1.2,
-            margin: 0,
-          }}>
-            Ils nous font confiance
-          </h2>
+          <CharReveal
+            text="Ils nous font confiance"
+            as="h2"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 36,
+              fontWeight: 400,
+              color: 'var(--texte)',
+              lineHeight: 1.2,
+              margin: 0,
+            }}
+          />
           <p style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 14,
@@ -147,6 +151,56 @@ export default function Avis() {
           }}>
             {SECTION_INTROS.avis}
           </p>
+        </div>
+
+        {/* Google rating widget */}
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          gap: 16,
+          marginBottom: 40,
+        }}>
+          <div style={{ textAlign: 'right' }}>
+            <div style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 48,
+              color: 'var(--olive)',
+              lineHeight: 1,
+            }}>
+              4.9
+            </div>
+            <div style={{ fontSize: 16, color: 'var(--lavande)', letterSpacing: 2, marginTop: 4 }}>
+              {STARS}
+            </div>
+          </div>
+          <div style={{
+            width: 1,
+            height: 48,
+            background: 'var(--border)',
+          }} />
+          <div>
+            <div style={{
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 13,
+              fontWeight: 600,
+              color: 'var(--texte)',
+            }}>
+              200+ avis vérifiés
+            </div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 11,
+              color: 'var(--texte-light)',
+              marginTop: 4,
+            }}>
+              <Shield size={12} strokeWidth={2} style={{ color: 'var(--olive)' }} />
+              Avis Google vérifiés
+            </div>
+          </div>
         </div>
 
         {/* BLOC 1 — Featured review */}

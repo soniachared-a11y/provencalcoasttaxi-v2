@@ -20,6 +20,7 @@ export const SERVICES = [
     desc: 'Prise en charge personnalisée dès votre atterrissage à Marseille-Provence ou Nice Côte d\'Azur. Suivi de vol en temps réel, panneau nominatif à l\'arrivée, assistance bagages. Tarif fixe garanti, pas de supplément en cas de retard de vol.',
     tags: ['Suivi de vol', 'Tarif fixe', 'Panneau nominatif'],
     image: '/images/classe-s-parking.jpg',
+    prix: 'dès 65€',
   },
   {
     icon: 'Briefcase',
@@ -27,6 +28,7 @@ export const SERVICES = [
     desc: 'Ponctualité absolue et discrétion garantie pour vos rendez-vous professionnels. Mise à disposition à la demi-journée ou journée complète. Wi-Fi à bord, chargeurs, eau minérale. Votre bureau mobile en Mercedes Classe S.',
     tags: ['Wi-Fi', 'Discrétion', 'Mise à disposition'],
     image: '/images/classe-s-interieur.jpg',
+    prix: 'dès 45€/h',
   },
   {
     icon: 'Wine',
@@ -34,6 +36,7 @@ export const SERVICES = [
     desc: 'Mariages, galas, concerts, soirées privées. Aller-retour avec chauffeur dédié qui reste à votre disposition toute la soirée. Attente incluse, itinéraire flexible. Profitez de votre événement, on s\'occupe du reste.',
     tags: ['Aller-retour', 'Attente incluse', 'Chauffeur dédié'],
     image: '/images/flotte-chateau.jpeg',
+    prix: 'sur devis',
   },
   {
     icon: 'MapPin',
@@ -41,6 +44,7 @@ export const SERVICES = [
     desc: 'Nice, Lyon, Monaco, Cannes et au-delà. Voyagez en tout confort sans les contraintes du train ou de l\'avion. Véhicule privé, arrêts à la demande, tarif négocié pour les longs trajets.',
     tags: ['France entière', 'Tarif négocié', 'Arrêts libres'],
     image: '/images/classe-s-bastide.jpg',
+    prix: 'dès 1.50€/km',
   },
   {
     icon: 'Compass',
@@ -48,6 +52,7 @@ export const SERVICES = [
     desc: 'Gordes, Roussillon, les Calanques, le Luberon, les champs de lavande. Itinéraires sur mesure à la demi-journée ou journée complète. Votre chauffeur connaît chaque route, chaque point de vue, chaque adresse secrète de Provence.',
     tags: ['Sur mesure', 'Demi-journée', 'Guide local'],
     image: '/images/lavande-provence.jpg',
+    prix: 'dès 90€/demi-journée',
   },
 ]
 
@@ -195,6 +200,18 @@ export const FAQS = [
     q: 'Êtes-vous disponible la nuit ?',
     r: 'Oui, notre service fonctionne 24 heures sur 24, 7 jours sur 7, 365 jours par an. Les transferts tôt le matin ou tard le soir sont notre quotidien. Aucune majoration nocturne.',
   },
+  {
+    q: 'Comment est calculé le prix ?',
+    r: 'Nos tarifs sont fixes et calculés à la réservation en fonction de la distance et du type de véhicule choisi. Pas de compteur, pas de surprise : le prix annoncé inclut les péages, le carburant et l\'attente raisonnable. Pour les longues distances, nous proposons un tarif kilométrique négocié.',
+  },
+  {
+    q: 'Proposez-vous un service de conciergerie ?',
+    r: 'Absolument. Au-delà du transport, nos chauffeurs sont de véritables ambassadeurs de la Provence. Recommandations de restaurants, réservations d\'hôtels, suggestions d\'itinéraires touristiques, organisation de journées sur mesure. Chaque trajet peut devenir une expérience complète.',
+  },
+  {
+    q: 'Quels modes de paiement acceptez-vous ?',
+    r: 'Nous acceptons les cartes bancaires (Visa, Mastercard, American Express), les espèces et le virement bancaire. Pour les entreprises, nous proposons la facturation mensuelle avec paiement à 30 jours. Un reçu détaillé est systématiquement fourni.',
+  },
 ]
 
 // ── TEXTES D'INTRO PAR SECTION (paragraphes persuasifs)
@@ -223,6 +240,32 @@ export const IMAGES = {
   zonesFond: '/images/vignes-provence.jpg',
   lavande: '/images/lavande-provence.jpg',
 }
+
+// ── À PROPOS (section dédiée)
+export const ABOUT = {
+  paragraphs: [
+    'Provençal Coast Taxi est né d\'une conviction simple : le transport privé en Provence mérite le même niveau d\'exigence que l\'hôtellerie de luxe. Depuis plus de 10 ans, nous accompagnons particuliers et professionnels dans tous leurs déplacements, de l\'aéroport de Marseille aux villages perchés du Luberon.',
+    'Notre flotte exclusivement composée de Mercedes récentes — Classe E, Classe S et Classe V — est entretenue quotidiennement. Cuir intégral, climatisation bi-zone, vitres surteintées, Wi-Fi et chargeurs USB : chaque détail est pensé pour votre confort.',
+    'Nos chauffeurs expérimentés sont des spécialistes du transport sur mesure. Bilingues français-anglais, formés à l\'accueil VIP, ils connaissent chaque route, chaque raccourci et chaque adresse secrète de Provence. Un service de conciergerie est inclus : recommandations de restaurants, réservations d\'hôtels, itinéraires personnalisés.',
+  ],
+  zones: [
+    'Gare d\'Aix-en-Provence TGV',
+    'Aéroport Marseille Provence',
+    'Centre historique d\'Aix',
+    'Cours Mirabeau',
+    'Principaux hôtels et résidences',
+    'Quartiers résidentiels (Pont de l\'Arc, Les Milles)',
+    'Villes PACA (Gardanne, Salon, Pertuis, Manosque)',
+    'Parcs d\'activités (La Duranne, Les Milles)',
+  ],
+}
+
+// ── ZONES EXTRA (villes additionnelles)
+export const ZONES_EXTRA = [
+  'Salon-de-Provence', 'Gardanne', 'Pertuis', 'Manosque',
+  'Aubagne', 'La Ciotat', 'Bandol', 'Saint-Raphaël',
+  'Martigues', 'Istres', 'Vitrolles', 'Les Pennes-Mirabeau',
+]
 
 // ── NAV
 export const NAV_LINKS = [

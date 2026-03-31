@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { FLOTTE, SECTION_INTROS } from '../../data/content'
+import CharReveal from '../ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -17,7 +18,7 @@ function SpecRow({ label, value, last }) {
       fontSize: 13,
     }}>
       <span style={{ color: 'var(--texte-light)' }}>{label}</span>
-      <span style={{ color: 'var(--texte)', fontWeight: 500 }}>{value}</span>
+      <span style={{ color: 'var(--olive)', fontWeight: 500 }}>{value}</span>
     </div>
   )
 }
@@ -28,14 +29,29 @@ export default function Flotte() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.flotte-item', {
-        y: 50,
+        y: 60,
         opacity: 0,
-        duration: 0.9,
-        stagger: 0.15,
+        rotateZ: (i) => (i % 2 === 0 ? -1.5 : 1.5),
+        scale: 0.95,
+        duration: 1,
+        stagger: 0.18,
         ease: 'power3.out',
         scrollTrigger: {
           trigger: '.flotte-grid',
           start: 'top 80%',
+          once: true,
+        },
+      })
+
+      // Blur-in on fleet images
+      gsap.from('.flotte-image', {
+        filter: 'blur(15px) grayscale(100%)',
+        duration: 1.4,
+        stagger: 0.2,
+        ease: 'power2.out',
+        scrollTrigger: {
+          trigger: '.flotte-grid',
+          start: 'top 75%',
           once: true,
         },
       })
@@ -70,22 +86,24 @@ export default function Flotte() {
             fontWeight: 500,
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            color: 'var(--lavande)',
+            color: 'var(--olive)',
             display: 'inline-block',
             marginBottom: 16,
           }}>
             Notre flotte
           </span>
-          <h2 style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 36,
-            fontWeight: 400,
-            color: 'var(--texte)',
-            lineHeight: 1.2,
-            margin: 0,
-          }}>
-            Mercedes haut de gamme
-          </h2>
+          <CharReveal
+            text="Mercedes haut de gamme"
+            as="h2"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 36,
+              fontWeight: 400,
+              color: 'var(--texte)',
+              lineHeight: 1.2,
+              margin: 0,
+            }}
+          />
           <p style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 14,
@@ -136,7 +154,7 @@ export default function Flotte() {
             >
               {/* Photo with interior crossfade */}
               <div style={{
-                height: 200,
+                height: 240,
                 overflow: 'hidden',
                 position: 'relative',
               }}>
@@ -199,6 +217,19 @@ export default function Flotte() {
                 }}>
                   {v.modele}
                 </h3>
+
+                {/* Description */}
+                {v.desc && (
+                  <p style={{
+                    fontFamily: 'Sora, sans-serif',
+                    fontSize: 12,
+                    color: 'var(--texte-light)',
+                    lineHeight: 1.6,
+                    margin: '0 0 20px 0',
+                  }}>
+                    {v.desc}
+                  </p>
+                )}
 
                 {/* Specs */}
                 <SpecRow label="Passagers" value={v.pax} />

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SECTION_INTROS, IMAGES } from '../../data/content'
+import CharReveal from '../ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -35,13 +36,14 @@ export default function Atouts() {
         start: 'top 82%',
         once: true,
         onEnter: () => {
-          // 1. Reveal stagger
+          // 1. Reveal stagger with rotation
           gsap.from('.atout-item', {
-            y: 30,
+            y: 50,
             opacity: 0,
-            duration: 0.7,
-            stagger: 0.1,
-            ease: 'power2.out',
+            rotateZ: (i) => (i % 2 === 0 ? -2 : 2),
+            duration: 0.9,
+            stagger: 0.12,
+            ease: 'power3.out',
           })
           // 2. CountUp with delay to let reveal start
           setTimeout(() => {
@@ -77,7 +79,7 @@ export default function Atouts() {
           width: '100%',
           height: '100%',
           objectFit: 'cover',
-          opacity: 0.04,
+          opacity: 0.08,
           zIndex: 0,
         }}
       />
@@ -99,7 +101,9 @@ export default function Atouts() {
           >
             Nos atouts
           </span>
-          <h2
+          <CharReveal
+            text="Pourquoi nous choisir"
+            as="h2"
             style={{
               fontFamily: "'Instrument Serif', serif",
               fontSize: 36,
@@ -108,9 +112,7 @@ export default function Atouts() {
               lineHeight: 1.2,
               margin: '0 0 20px 0',
             }}
-          >
-            Pourquoi nous choisir
-          </h2>
+          />
           <p style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 14,
@@ -151,7 +153,7 @@ export default function Atouts() {
                 style={{
                   fontFamily: "'Instrument Serif', serif",
                   fontSize: 48,
-                  color: 'var(--lavande)',
+                  color: 'var(--olive)',
                   lineHeight: 1,
                   marginBottom: 12,
                 }}
@@ -178,7 +180,7 @@ export default function Atouts() {
                 style={{
                   fontFamily: 'Sora, sans-serif',
                   fontSize: 12,
-                  color: 'var(--texte-light)',
+                  color: 'var(--lavande)',
                   lineHeight: 1.5,
                 }}
               >

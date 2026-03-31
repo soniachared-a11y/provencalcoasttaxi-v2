@@ -39,7 +39,7 @@ export default function PhoneFloat() {
         width: 56,
         height: 56,
         borderRadius: '50%',
-        backgroundColor: 'var(--olive)',
+        backgroundColor: 'var(--lavande)',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

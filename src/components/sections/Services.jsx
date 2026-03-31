@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { SECTION_INTROS } from '../../data/content'
+import CharReveal from '../ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -80,16 +81,18 @@ export default function Services() {
           }}>
             Nos services
           </span>
-          <h2 style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 36,
-            fontWeight: 400,
-            color: 'var(--texte)',
-            lineHeight: 1.2,
-            margin: 0,
-          }}>
-            Une offre complète
-          </h2>
+          <CharReveal
+            text="Une offre complète"
+            as="h2"
+            style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 36,
+              fontWeight: 400,
+              color: 'var(--texte)',
+              lineHeight: 1.2,
+              margin: 0,
+            }}
+          />
           <p style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 14,
@@ -164,7 +167,7 @@ export default function Services() {
                   top: 0,
                   width: 2,
                   height: isActive ? '100%' : '0%',
-                  background: 'var(--lavande)',
+                  background: 'var(--olive)',
                   transition: 'height 0.6s cubic-bezier(0.76, 0, 0.24, 1)',
                   transitionDelay: isActive ? '0.2s' : '0s',
                 }} />
@@ -269,22 +272,30 @@ export default function Services() {
                   </div>
 
                   {/* CTA */}
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                    <div style={{
-                      width: 32,
-                      height: 1,
-                      background: 'var(--lavande)',
-                    }} />
-                    <span style={{
-                      fontFamily: 'Sora, sans-serif',
-                      fontSize: 11,
-                      fontWeight: 500,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.1em',
-                      color: '#fff',
-                    }}>
-                      Réserver
-                    </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                      <div style={{ width: 32, height: 1, background: 'var(--olive)' }} />
+                      <span style={{
+                        fontFamily: 'Sora, sans-serif',
+                        fontSize: 11,
+                        fontWeight: 500,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.1em',
+                        color: '#fff',
+                      }}>
+                        Réserver
+                      </span>
+                    </div>
+                    {s.prix && (
+                      <span style={{
+                        fontFamily: 'Sora, sans-serif',
+                        fontSize: 12,
+                        fontWeight: 600,
+                        color: 'var(--lavande)',
+                      }}>
+                        {s.prix}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>

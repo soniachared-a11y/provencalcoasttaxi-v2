@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight } from 'lucide-react'
-import { ZONES, SECTION_INTROS } from '../../data/content'
+import { ZONES, SECTION_INTROS, ZONES_EXTRA } from '../../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -69,7 +69,7 @@ export default function Zones() {
             fontWeight: 500,
             letterSpacing: '0.12em',
             textTransform: 'uppercase',
-            color: 'var(--lavande)',
+            color: 'var(--olive)',
             display: 'inline-block',
             marginBottom: 16,
           }}>
@@ -278,6 +278,29 @@ export default function Zones() {
               )
             })}
           </div>
+        </div>
+
+        {/* Additional cities */}
+        <div style={{
+          marginTop: 32,
+          textAlign: 'center',
+          fontFamily: 'Sora, sans-serif',
+          fontSize: 12,
+          color: 'var(--texte-light)',
+          lineHeight: 2,
+        }}>
+          <span style={{
+            fontWeight: 600,
+            color: 'var(--texte)',
+            fontSize: 10,
+            textTransform: 'uppercase',
+            letterSpacing: '0.15em',
+            display: 'block',
+            marginBottom: 8,
+          }}>
+            Villes également desservies
+          </span>
+          {ZONES_EXTRA.join('  ·  ')}
         </div>
       </div>
 

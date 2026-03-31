@@ -192,10 +192,22 @@ export default function Services() {
                   transition: 'flex 0.7s cubic-bezier(0.76, 0, 0.24, 1), transform 0.3s ease',
                 }}
                 onMouseEnter={e => {
-                  if (!isActive) e.currentTarget.style.transform = 'scale(1.02)'
+                  if (!isActive) {
+                    const bg = e.currentTarget.querySelector('.strip-bg')
+                    const overlay = e.currentTarget.querySelector('.strip-overlay')
+                    const title = e.currentTarget.querySelector('.strip-closed-title')
+                    gsap.to(bg, { scale: 1.08, duration: 0.6, ease: 'power2.out' })
+                    gsap.to(overlay, { opacity: 0.3, duration: 0.4 })
+                    if (title) gsap.to(title, { y: -8, duration: 0.3, ease: 'power2.out' })
+                  }
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.transform = 'scale(1)'
+                  const bg = e.currentTarget.querySelector('.strip-bg')
+                  const overlay = e.currentTarget.querySelector('.strip-overlay')
+                  const title = e.currentTarget.querySelector('.strip-closed-title')
+                  gsap.to(bg, { scale: 1, duration: 0.6, ease: 'power2.out' })
+                  gsap.to(overlay, { opacity: 1, duration: 0.4 })
+                  if (title) gsap.to(title, { y: 0, duration: 0.3, ease: 'power2.out' })
                 }}
               >
                 {/* Background image with parallax */}
@@ -213,7 +225,7 @@ export default function Services() {
                 }} />
 
                 {/* Gradient overlay */}
-                <div style={{
+                <div className="strip-overlay" style={{
                   position: 'absolute',
                   inset: 0,
                   background: isActive
@@ -255,12 +267,13 @@ export default function Services() {
                   }}>
                     {num}
                   </span>
-                  <span style={{
+                  <span className="strip-closed-title" style={{
                     writingMode: 'vertical-rl',
                     fontFamily: "'Instrument Serif', serif",
                     fontSize: 16,
                     color: '#fff',
                     letterSpacing: '0.02em',
+                    willChange: 'transform',
                   }}>
                     {s.titre}
                   </span>

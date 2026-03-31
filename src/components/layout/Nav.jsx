@@ -11,6 +11,7 @@ export default function Nav() {
   const drawerRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [onDark, setOnDark] = useState(true) // Start on hero (dark)
 
   // Entrée animée — fromTo pour éviter le bug opacity:0 bloqué
   useEffect(() => {
@@ -31,6 +32,25 @@ export default function Nav() {
       onLeaveBack: () => setScrolled(false),
     })
     return () => st.kill()
+  }, [])
+
+  // Couleur contextuelle — détecter les sections dark
+  useEffect(() => {
+    const darkSections = document.querySelectorAll('#hero, #hero-alt, #partners, #experience, #chiffres, #devis, #avis-alt')
+    const triggers = []
+    darkSections.forEach(section => {
+      if (!section) return
+      triggers.push(ScrollTrigger.create({
+        trigger: section,
+        start: 'top top+=72',
+        end: 'bottom top+=72',
+        onEnter: () => setOnDark(true),
+        onLeave: () => setOnDark(false),
+        onEnterBack: () => setOnDark(true),
+        onLeaveBack: () => setOnDark(false),
+      }))
+    })
+    return () => triggers.forEach(t => t.kill())
   }, [])
 
   useEffect(() => {
@@ -81,10 +101,11 @@ export default function Nav() {
     if (open) closeDrawer()
   }
 
-  // Couleurs contextuelles
-  const textColor = scrolled ? 'var(--texte)' : '#FFFFFF'
-  const linkColor = scrolled ? 'var(--texte-light)' : 'rgba(255,255,255,0.5)'
-  const linkHover = scrolled ? 'var(--texte)' : '#FFFFFF'
+  // Couleurs contextuelles — adapte la nav aux sections dark/light
+  const isDark = !scrolled || onDark
+  const textColor = scrolled && !onDark ? 'var(--texte)' : '#FFFFFF'
+  const linkColor = scrolled && !onDark ? 'var(--texte-light)' : 'rgba(255,255,255,0.5)'
+  const linkHover = scrolled && !onDark ? 'var(--texte)' : '#FFFFFF'
 
   return (
     <nav

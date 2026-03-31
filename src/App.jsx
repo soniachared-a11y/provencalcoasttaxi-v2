@@ -1,6 +1,7 @@
 // App.jsx — Provençal Coast Taxi V2
 // Point d'entrée principal — importe et orchestre toutes les sections
 import { useLenis } from './hooks/useLenis'
+import { useAnimations } from './hooks/useAnimations'
 import { SchemaOrg } from './seo/SchemaOrg'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
@@ -29,6 +30,8 @@ import CursorFollower from './components/ui/CursorFollower'
 export default function App() {
   // Initialise Lenis smooth scroll + GSAP ticker
   useLenis()
+  // Animations globales Awwwards (parallaxe, reveals, fade-ups, stagger)
+  useAnimations()
 
   return (
     <>

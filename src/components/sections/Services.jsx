@@ -66,9 +66,9 @@ export default function Services() {
       id="services"
       style={{ background: 'var(--cream)' }}
     >
-      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 24px' }}>
+      <div style={{ padding: '80px 0' }}>
         {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
+        <div style={{ textAlign: 'center', marginBottom: 56, maxWidth: 1200, margin: '0 auto 56px', padding: '0 24px' }}>
           <span style={{
             fontFamily: 'Sora, sans-serif',
             fontSize: 11,
@@ -112,7 +112,9 @@ export default function Services() {
           style={{
             display: 'flex',
             gap: 3,
-            height: 580,
+            height: 600,
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
             willChange: 'transform',
           }}
         >
@@ -127,6 +129,7 @@ export default function Services() {
                 onClick={() => setActive(i)}
                 style={{
                   flex: isActive ? 5 : 1,
+                  minWidth: isActive ? 0 : 160,
                   position: 'relative',
                   overflow: 'hidden',
                   cursor: 'pointer',

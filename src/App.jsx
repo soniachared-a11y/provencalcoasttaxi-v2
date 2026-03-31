@@ -14,6 +14,14 @@ import Avis from './components/sections/Avis'
 import FAQ from './components/sections/FAQ'
 import Contact from './components/sections/Contact'
 import BandeauCTA from './components/sections/BandeauCTA'
+import HeroAlt from './components/sections/HeroAlt'
+import PartnersBar from './components/sections/PartnersBar'
+import ServicesAlt from './components/sections/ServicesAlt'
+import Experience from './components/sections/Experience'
+import FlotteAlt from './components/sections/FlotteAlt'
+import DevisSimulateur from './components/sections/DevisSimulateur'
+import ChiffresImpact from './components/sections/ChiffresImpact'
+import AvisAlt from './components/sections/AvisAlt'
 import PhoneFloat from './components/ui/PhoneFloat'
 import SectionDivider from './components/ui/SectionDivider'
 import CursorFollower from './components/ui/CursorFollower'
@@ -28,17 +36,31 @@ export default function App() {
       <Nav />
       <main>
         <Hero />
+        <HeroAlt />
+        <PartnersBar />
         <Atouts />
         <SectionDivider />
         <About />
         <SectionDivider />
         <Services />
         <SectionDivider />
+        <ServicesAlt />
+        <SectionDivider />
+        <Experience />
+        <SectionDivider />
         <Flotte />
+        <SectionDivider />
+        <FlotteAlt />
         <SectionDivider />
         <Zones />
         <SectionDivider />
+        <ChiffresImpact />
+        <SectionDivider />
+        <DevisSimulateur />
+        <SectionDivider />
         <Avis />
+        <SectionDivider />
+        <AvisAlt />
         <SectionDivider />
         <FAQ />
         <SectionDivider />

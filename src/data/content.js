@@ -275,3 +275,24 @@ export const NAV_LINKS = [
   { href: '#avis', label: 'Avis' },
   { href: '#contact', label: 'Contact' },
 ]
+
+export const PARTNERS = [
+  { name: 'Pays d\'Aix', subtitle: 'Communauté' },
+  { name: 'SNCF', subtitle: 'Gare TGV' },
+  { name: 'Aéroport MRS', subtitle: 'Marseille Provence' },
+  { name: 'Conventionné', subtitle: 'Transport médical' },
+  { name: 'Hôtels 5★', subtitle: 'Partenaire officiel' },
+]
+
+export const EXPERIENCE_FEATURES = [
+  { icon: 'Shield', title: 'Sécurité & confiance', desc: 'Chauffeur licencié VTC, assurance tous risques, véhicules contrôlés chaque semaine. Votre sécurité est notre priorité absolue.' },
+  { icon: 'Clock', title: 'Ponctualité absolue', desc: 'Suivi de vol en temps réel, anticipation du trafic, jamais en retard. Nous arrivons toujours 10 minutes avant l\'heure.' },
+  { icon: 'Crown', title: 'Service conciergerie', desc: 'Recommandations restaurants, réservations hôtels, itinéraires sur mesure. Un service premium au-delà du simple transport.' },
+]
+
+export const CHIFFRES = [
+  { value: 15000, suffix: '+', label: 'Trajets réalisés', desc: 'Depuis notre création' },
+  { value: 10, suffix: ' ans', label: 'D\'expérience', desc: 'Au service de la Provence' },
+  { value: 98, suffix: '%', label: 'Satisfaction client', desc: 'Note moyenne sur 200+ avis' },
+  { value: 24, suffix: '/7', label: 'Disponibilité', desc: '365 jours par an' },
+]

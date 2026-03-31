@@ -12,15 +12,12 @@ export default function Nav() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
-  // Entrée animée
+  // Entrée animée — fromTo pour éviter le bug opacity:0 bloqué
   useEffect(() => {
-    gsap.from(navRef.current, {
-      y: -20,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-      delay: 0.1,
-    })
+    gsap.fromTo(navRef.current,
+      { y: -20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out', delay: 0.3, clearProps: 'transform' }
+    )
   }, [])
 
   // Changement de fond au scroll — via ScrollTrigger pour Lenis compat

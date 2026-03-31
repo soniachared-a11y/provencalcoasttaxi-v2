@@ -66,7 +66,7 @@ export default function Services() {
       id="services"
       style={{ background: 'var(--cream)' }}
     >
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px' }}>
+      <div style={{ maxWidth: 1400, margin: '0 auto', padding: '80px 24px' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 56 }}>
           <span style={{
@@ -112,7 +112,7 @@ export default function Services() {
           style={{
             display: 'flex',
             gap: 3,
-            height: 480,
+            height: 580,
             willChange: 'transform',
           }}
         >

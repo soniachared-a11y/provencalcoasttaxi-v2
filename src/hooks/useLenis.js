@@ -21,14 +21,27 @@ export function useLenis() {
     })
     gsap.ticker.lagSmoothing(0)
 
-    // Rafraîchir ScrollTrigger après init Lenis
+    // Sync Lenis avec ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update)
-    // Attendre que tous les composants soient montés
+
+    // Exposer Lenis globalement
+    window.__lenis = lenis
+
+    // Rafraîchir ScrollTrigger après que tous les composants soient montés
+    // Triple RAF pour être sûr que le DOM est stable
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        ScrollTrigger.refresh()
+        requestAnimationFrame(() => {
+          ScrollTrigger.refresh()
+        })
       })
     })
+
+    // Fallback: forcer un refresh supplémentaire après 1s
+    // Au cas où certains ScrollTriggers n'ont pas été calculés correctement
+    const fallbackTimer = setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 1000)
 
     // Smooth anchor scroll via Lenis
     const handleAnchorClick = (e) => {
@@ -44,6 +57,7 @@ export function useLenis() {
     document.addEventListener('click', handleAnchorClick)
 
     return () => {
+      clearTimeout(fallbackTimer)
       document.removeEventListener('click', handleAnchorClick)
       lenis.destroy()
       gsap.ticker.remove((time) => lenis.raf(time * 1000))

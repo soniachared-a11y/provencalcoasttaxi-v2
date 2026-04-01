@@ -1,9 +1,10 @@
-// FlotteVideo.jsx — Section vidéo plein écran + CTA centré
+// FlotteVideo.jsx — Section vidéo plein écran + mini calculateur hero
 // Véhicules détourés positionnés à CHEVAL entre cette section et la suivante
 
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { MapPin, ArrowRight } from 'lucide-react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -16,7 +17,7 @@ export default function FlotteVideo() {
 
       gsap.from('.fv-title', { opacity: 0, y: 50, duration: 1.1, ease: 'power3.out', scrollTrigger: st })
       gsap.from('.fv-desc',  { opacity: 0, y: 30, duration: 0.9, delay: 0.18, ease: 'power3.out', scrollTrigger: st })
-      gsap.from('.fv-btn',   { opacity: 0, y: 20, duration: 0.8, delay: 0.35, ease: 'power3.out', scrollTrigger: st })
+      gsap.from('.fv-mini-form', { opacity: 0, y: 20, duration: 0.8, delay: 0.35, ease: 'power3.out', scrollTrigger: st })
 
       gsap.from('.fv-van', {
         y: 140, opacity: 0, duration: 1.4, delay: 0.2, ease: 'power3.out',
@@ -100,35 +101,123 @@ export default function FlotteVideo() {
             color: 'rgba(246,243,238,0.6)',
             lineHeight: 1.8,
             maxWidth: 480,
-            margin: '0 auto 44px',
+            margin: '0 auto 40px',
           }}
         >
           Berlines et vans Mercedes avec chauffeur, disponibles 24h/7j dans toute la Provence.
         </p>
 
-        <a
-          href="#devis"
-          className="fv-btn"
+        {/* Mini calculateur hero */}
+        <form
+          className="fv-btn fv-mini-form"
+          onSubmit={e => e.preventDefault()}
           style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 10,
-            fontFamily: 'Sora, sans-serif',
-            fontSize: 12,
-            fontWeight: 600,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: '#FFFFFF',
-            background: 'var(--olive)',
-            padding: '18px 48px',
-            textDecoration: 'none',
-            transition: 'background 0.25s ease',
+            display: 'flex',
+            alignItems: 'stretch',
+            gap: 0,
+            background: 'rgba(246,243,238,0.07)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)',
+            border: '1px solid rgba(246,243,238,0.15)',
+            maxWidth: 780,
+            margin: '0 auto',
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = '#5A6B3A' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'var(--olive)' }}
         >
-          Calculer mon trajet →
-        </a>
+          {/* Départ */}
+          <div style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
+            <label style={{
+              position: 'absolute', top: 10, left: 16,
+              fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.2em',
+              color: 'var(--olive)',
+            }}>Départ</label>
+            <input
+              type="text"
+              placeholder="Adresse de départ"
+              style={{
+                background: 'transparent', border: 'none', outline: 'none',
+                color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
+                padding: '34px 40px 12px 16px', width: '100%',
+              }}
+              onFocus={e => (e.currentTarget.parentElement.style.background = 'rgba(246,243,238,0.05)')}
+              onBlur={e => (e.currentTarget.parentElement.style.background = 'transparent')}
+            />
+            <MapPin size={14} strokeWidth={1.5} style={{
+              position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+              color: 'var(--olive)', pointerEvents: 'none',
+            }} />
+          </div>
+
+          {/* Arrivée */}
+          <div style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
+            <label style={{
+              position: 'absolute', top: 10, left: 16,
+              fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.2em',
+              color: 'var(--olive)',
+            }}>Arrivée</label>
+            <input
+              type="text"
+              placeholder="Adresse d'arrivée"
+              style={{
+                background: 'transparent', border: 'none', outline: 'none',
+                color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
+                padding: '34px 40px 12px 16px', width: '100%',
+              }}
+              onFocus={e => (e.currentTarget.parentElement.style.background = 'rgba(246,243,238,0.05)')}
+              onBlur={e => (e.currentTarget.parentElement.style.background = 'transparent')}
+            />
+            <MapPin size={14} strokeWidth={1.5} style={{
+              position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
+              color: 'var(--olive)', pointerEvents: 'none',
+            }} />
+          </div>
+
+          {/* Date */}
+          <div style={{ flex: '0 0 160px', position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
+            <label style={{
+              position: 'absolute', top: 10, left: 16,
+              fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+              textTransform: 'uppercase', letterSpacing: '0.2em',
+              color: 'var(--olive)',
+            }}>Date</label>
+            <input
+              type="date"
+              style={{
+                background: 'transparent', border: 'none', outline: 'none',
+                color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
+                padding: '34px 16px 12px 16px', width: '100%', colorScheme: 'dark',
+              }}
+            />
+          </div>
+
+          {/* Bouton */}
+          <button
+            type="submit"
+            style={{
+              background: 'var(--olive)',
+              border: 'none',
+              color: '#fff',
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 11,
+              fontWeight: 600,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              padding: '0 28px',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              whiteSpace: 'nowrap',
+              transition: 'background 0.25s ease',
+              flexShrink: 0,
+            }}
+            onMouseEnter={e => { e.currentTarget.style.background = '#5A6B3A' }}
+            onMouseLeave={e => { e.currentTarget.style.background = 'var(--olive)' }}
+          >
+            Calculer <ArrowRight size={14} strokeWidth={2} />
+          </button>
+        </form>
       </div>
 
       {/* Contenu mobile — repositionné en haut */}

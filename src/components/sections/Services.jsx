@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { SECTION_INTROS } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -102,7 +101,7 @@ export default function Services() {
             margin: '20px auto 0',
             textAlign: 'center',
           }}>
-            {SECTION_INTROS.services}
+            Du transfert aéroport au circuit touristique, chaque trajet est pensé pour offrir confort, ponctualité et un service irréprochable.
           </p>
         </div>
 

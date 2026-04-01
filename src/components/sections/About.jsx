@@ -27,6 +27,17 @@ export default function About() {
         },
       })
 
+      // Zones — animation "voiture à pleine vitesse" : slide depuis gauche ultra rapide
+      const zonesSt = { trigger: '.zones-bottom', start: 'top 85%', once: true }
+      gsap.from('.zone-item-top, .zone-item-bottom', {
+        x: -90,
+        opacity: 0,
+        duration: 0.35,
+        stagger: 0.055,
+        ease: 'power4.out',
+        scrollTrigger: zonesSt,
+      })
+
       // Image clip-path reveal + blur-in
       if (imageRef.current) {
         gsap.from(imageRef.current, {
@@ -114,35 +125,27 @@ export default function About() {
               </p>
             ))}
 
-            {/* Zones desservies */}
-            <div style={{ marginTop: 32, marginBottom: 32 }}>
+
+            {/* Zones desservies — desktop uniquement, sous le CTA */}
+            <div className="about-zones-desktop" style={{ marginTop: 32, marginBottom: 32 }}>
               <span style={{
                 fontFamily: 'Sora, sans-serif',
-                fontSize: 10,
-                fontWeight: 600,
+                fontSize: 9,
+                fontWeight: 700,
                 textTransform: 'uppercase',
-                letterSpacing: '0.15em',
+                letterSpacing: '0.2em',
                 color: 'var(--texte)',
                 display: 'block',
-                marginBottom: 16,
-              }}>
-                Zones desservies
-              </span>
-              <div style={{
-                display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
-                gap: '8px 24px',
-              }}>
+                marginBottom: 12,
+              }}>Zones desservies</span>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px 16px' }}>
                 {ABOUT.zones.map((zone, i) => (
-                  <div key={i} style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: 8,
-                    fontFamily: 'Sora, sans-serif',
-                    fontSize: 12,
-                    color: 'var(--texte-light)',
+                  <div key={i} className="zone-item-desktop" style={{
+                    display: 'flex', alignItems: 'flex-start', gap: 7,
+                    fontFamily: 'Sora, sans-serif', fontSize: 11, fontWeight: 400,
+                    color: 'var(--texte-light)', lineHeight: 1.4,
                   }}>
-                    <MapPin size={10} strokeWidth={2} style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    <MapPin size={9} strokeWidth={2} style={{ color: 'var(--lavande)', flexShrink: 0, marginTop: 2 }} />
                     {zone}
                   </div>
                 ))}
@@ -173,7 +176,7 @@ export default function About() {
             </a>
           </div>
 
-          {/* Right — Image */}
+          {/* Right — Image avec overlay zones */}
           <div style={{ overflow: 'hidden', position: 'relative' }}>
             <img
               ref={imageRef}
@@ -184,23 +187,93 @@ export default function About() {
                 height: '100%',
                 objectFit: 'cover',
                 display: 'block',
-                minHeight: 500,
+                minHeight: 400,
               }}
             />
+
+            {/* Overlay TOP — 4 premières zones (mobile uniquement) */}
+            <div className="zones-top" style={{
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              right: 0,
+              background: 'linear-gradient(to bottom, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.3) 80%, transparent 100%)',
+              padding: '20px 20px 32px',
+              display: 'none',
+            }}>
+              <span style={{
+                fontFamily: 'Sora, sans-serif',
+                fontSize: 9,
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                letterSpacing: '0.2em',
+                color: 'var(--lavande)',
+                display: 'block',
+                marginBottom: 10,
+              }}>Zones desservies</span>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+                {ABOUT.zones.slice(0, 4).map((zone, i) => (
+                  <div key={i} className="zone-item-top" style={{
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
+                    color: '#F6F3EE',
+                  }}>
+                    <MapPin size={10} strokeWidth={2.5} style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    {zone}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Overlay BOTTOM — 4 dernières zones */}
+            <div className="zones-bottom" style={{
+              position: 'absolute',
+              bottom: 0,
+              left: 0,
+              right: 0,
+              background: 'linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.5) 70%, transparent 100%)',
+              padding: '32px 20px 20px',
+            }}>
+              <div className="zones-grid-bottom">
+                {ABOUT.zones.slice(4).map((zone, i) => (
+                  <div key={i} className="zone-item-bottom" style={{
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
+                    color: '#F6F3EE',
+                  }}>
+                    <MapPin size={10} strokeWidth={2.5} style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    {zone}
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
       <style>{`
+        /* Desktop : overlays image cachés, zones dans le texte */
+        .zones-top { display: none !important; }
+        .zones-bottom { display: none !important; }
+        .zones-grid-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 16px; }
+        .about-zones-desktop { display: block; }
         @media (max-width: 768px) {
+          .about-zones-desktop { display: none !important; }
+          .zones-top { display: block !important; }
+          .zones-bottom { display: block !important; }
+          .zones-grid-bottom { grid-template-columns: 1fr !important; }
           .about-grid {
             grid-template-columns: 1fr !important;
           }
           .about-grid > div:last-child {
-            order: -1;
+            order: 2;
           }
+          .about-grid > div:first-child {
+            order: 1;
+          }
+          .zones-top { display: block !important; }
           .about-grid > div:last-child img {
-            min-height: 280px !important;
+            min-height: 340px !important;
           }
           .about-text {
             padding: 32px 24px !important;

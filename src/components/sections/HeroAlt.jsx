@@ -314,11 +314,11 @@ export default function HeroAlt() {
             min-height: auto !important;
           }
           #hero-alt .heroalt-grid > div:first-child {
-            order: 2;
-            padding: 48px 24px 60px 24px !important;
+            order: 1;
+            padding: 150px 24px 60px 24px !important;
           }
           #hero-alt .heroalt-grid > div:last-child {
-            order: 1;
+            order: 2;
             height: 50vh;
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
           }

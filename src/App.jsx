@@ -6,7 +6,6 @@ import { SchemaOrg } from './seo/SchemaOrg'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
 import Hero from './components/sections/Hero'
-import Atouts from './components/sections/Atouts'
 import About from './components/sections/About'
 import Services from './components/sections/Services'
 import Flotte from './components/sections/Flotte'
@@ -19,7 +18,8 @@ import HeroAlt from './components/sections/HeroAlt'
 import PartnersBar from './components/sections/PartnersBar'
 import ServicesAlt from './components/sections/ServicesAlt'
 import Experience from './components/sections/Experience'
-import FlotteAlt from './components/sections/FlotteAlt'
+import FlotteBanner from './components/sections/FlotteBanner'
+import FlotteVideo from './components/sections/FlotteVideo'
 import DevisSimulateur from './components/sections/DevisSimulateur'
 import ChiffresImpact from './components/sections/ChiffresImpact'
 import AvisAlt from './components/sections/AvisAlt'
@@ -38,22 +38,21 @@ export default function App() {
       <SchemaOrg />
       <Nav />
       <main>
-        <Hero />
+        <FlotteVideo />
         <HeroAlt />
-        <PartnersBar />
-        <Atouts />
         <SectionDivider />
         <About />
         <SectionDivider />
+        <PartnersBar />
         <Services />
         <SectionDivider />
         <ServicesAlt />
         <SectionDivider />
         <Experience />
         <SectionDivider />
-        <Flotte />
+        <FlotteBanner />
         <SectionDivider />
-        <FlotteAlt />
+        <Flotte />
         <SectionDivider />
         <Zones />
         <SectionDivider />
@@ -68,6 +67,8 @@ export default function App() {
         <FAQ />
         <SectionDivider />
         <Contact />
+        <SectionDivider />
+        <Hero />
         <BandeauCTA />
       </main>
       <Footer />

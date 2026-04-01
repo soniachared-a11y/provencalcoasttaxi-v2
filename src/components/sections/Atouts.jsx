@@ -68,21 +68,6 @@ export default function Atouts() {
       id="atouts"
       style={{ background: 'var(--cream)', position: 'relative', overflow: 'hidden' }}
     >
-      {/* Background image */}
-      <img
-        src={IMAGES.atoutsFond}
-        alt=""
-        aria-hidden="true"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover',
-          opacity: 0.08,
-          zIndex: 0,
-        }}
-      />
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px', position: 'relative', zIndex: 1 }}>
         {/* Header */}

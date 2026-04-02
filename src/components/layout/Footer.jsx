@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield, CreditCard, Clock, Mail, Phone, MessageCircle, Twitter, Instagram } from 'lucide-react'
+import { Shield, CreditCard, Clock, Mail, Phone, MessageCircle, Share2 } from 'lucide-react'
 import { CONTACT, TRUST } from '../../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -180,7 +180,7 @@ export default function Footer() {
               Réseaux sociaux
             </div>
             <div style={{ display: 'flex', justifyContent: 'center', gap: 12 }}>
-              {[Twitter, Instagram].map((Icon, i) => (
+              {[Share2, MessageCircle].map((Icon, i) => (
                 <a key={i} href="#" style={{
                   width: 36, height: 36, borderRadius: '50%',
                   border: '1px solid rgba(255,255,255,0.15)',

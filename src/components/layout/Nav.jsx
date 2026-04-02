@@ -125,12 +125,18 @@ export default function Nav() {
           style={{ height: 'clamp(64px, 8vw, 72px)' }}
         >
           {/* Logo */}
-          <a
-            href="#"
-            className="font-serif"
-            style={{ fontSize: '20px', color: textColor, textDecoration: 'none', transition: 'color 0.3s' }}
-          >
-            Provençal Coast
+          <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
+            <img
+              src="/images/logo.png"
+              alt="Provençal Coast"
+              style={{
+                height: 'clamp(36px, 5vw, 48px)',
+                width: 'auto',
+                display: 'block',
+                filter: scrolled && !onDark ? 'none' : 'brightness(0) invert(1)',
+                transition: 'filter 0.3s',
+              }}
+            />
           </a>
 
           {/* Liens desktop */}

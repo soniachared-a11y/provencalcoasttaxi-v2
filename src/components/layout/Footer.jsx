@@ -140,15 +140,17 @@ export default function Footer() {
           }}>
             {/* Col 1 — Logo + desc */}
             <div>
-              <span style={{
-                fontFamily: "'Instrument Serif', serif",
-                fontSize: 20,
-                color: '#fff',
-                display: 'block',
-                marginBottom: 16,
-              }}>
-                Provençal Coast
-              </span>
+              <img
+                src="/images/logo.png"
+                alt="Provençal Coast"
+                style={{
+                  height: 48,
+                  width: 'auto',
+                  display: 'block',
+                  marginBottom: 16,
+                  filter: 'brightness(0) invert(1)',
+                }}
+              />
               <p style={{
                 fontFamily: 'Sora, sans-serif',
                 fontSize: 13,

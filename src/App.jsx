@@ -36,6 +36,7 @@ export default function App() {
       <main>
         <FlotteVideo />
         <HeroAlt />
+        <ChiffresImpact />
         <SectionDivider />
         <About />
         <SectionDivider />
@@ -45,8 +46,6 @@ export default function App() {
         <Flotte />
         <SectionDivider />
         <Zones />
-        <SectionDivider />
-        <ChiffresImpact />
         <SectionDivider />
         <DevisSimulateur />
         <SectionDivider />

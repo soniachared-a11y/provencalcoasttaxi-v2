@@ -124,19 +124,19 @@ export default function Nav() {
           className="flex items-center justify-between"
           style={{ height: 'clamp(64px, 8vw, 72px)' }}
         >
-          {/* Logo */}
-          <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center' }}>
-            <img
-              src="/images/logo.png"
-              alt="Provençal Coast"
-              style={{
-                height: 'clamp(36px, 5vw, 48px)',
-                width: 'auto',
-                display: 'block',
-                filter: scrolled && !onDark ? 'none' : 'brightness(0) invert(1)',
-                transition: 'filter 0.3s',
-              }}
-            />
+          {/* Logo texte */}
+          <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+            <span style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 'clamp(16px, 2vw, 20px)',
+              fontWeight: 400,
+              color: textColor,
+              letterSpacing: '0.02em',
+              transition: 'color 0.3s',
+              lineHeight: 1.1,
+            }}>
+              Taxis Provençal Aix
+            </span>
           </a>
 
           {/* Liens desktop */}

@@ -23,9 +23,13 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
     if (!el) return
 
     if (isOpen) {
+      // Kill any running tweens on this element first
+      gsap.killTweensOf([el, bar, numEl])
+
       // 1. Show content container
-      gsap.set(el, { display: 'block' })
+      gsap.set(el, { display: 'block', height: 'auto', clipPath: 'none' })
       const h = el.scrollHeight
+      gsap.set(el, { height: 0, clipPath: 'inset(0 0 100% 0)' })
 
       // 2. Animated timeline for opening
       const tl = gsap.timeline()
@@ -69,7 +73,8 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
         }, 0.3)
       }
     } else {
-      // Close animation
+      // Kill any running tweens before closing
+      gsap.killTweensOf([el, bar, numEl])
       const tl = gsap.timeline()
 
       if (bar) {

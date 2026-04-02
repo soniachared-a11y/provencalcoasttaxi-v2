@@ -19,7 +19,6 @@ import PartnersBar from './components/sections/PartnersBar'
 import FlotteVideo from './components/sections/FlotteVideo'
 import DevisSimulateur from './components/sections/DevisSimulateur'
 import ChiffresImpact from './components/sections/ChiffresImpact'
-import AvisAlt from './components/sections/AvisAlt'
 import PhoneFloat from './components/ui/PhoneFloat'
 import SectionDivider from './components/ui/SectionDivider'
 import CursorFollower from './components/ui/CursorFollower'
@@ -52,8 +51,6 @@ export default function App() {
         <DevisSimulateur />
         <SectionDivider />
         <Avis />
-        <SectionDivider />
-        <AvisAlt />
         <SectionDivider />
         <FAQ />
         <SectionDivider />

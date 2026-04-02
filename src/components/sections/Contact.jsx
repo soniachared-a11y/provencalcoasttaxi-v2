@@ -1,8 +1,9 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Shield, Star, Clock } from 'lucide-react'
 import { SECTION_INTROS, IMAGES } from '../../data/content'
+import { supabase } from '../../lib/supabase'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -52,6 +53,39 @@ const inputStyle = {
 
 export default function Contact() {
   const sectionRef = useRef(null)
+  const [form, setForm] = useState({ nom: '', tel: '', service: '', date_heure: '', message: '' })
+  const [loading, setLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  function update(field, value) {
+    setForm(f => ({ ...f, [field]: value }))
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setError('')
+    if (!form.nom.trim()) return setError('Votre nom est obligatoire.')
+    setLoading(true)
+    const { error: insertError } = await supabase.from('reservations').insert({
+      nom_client: form.nom.trim(),
+      tel_client: form.tel.trim() || null,
+      depart: form.message.trim() || null,
+      destination: form.service || null,
+      date_heure: form.date_heure ? new Date(form.date_heure).toISOString() : new Date().toISOString(),
+      marque: 'provencal',
+      source: 'site',
+      statut: 'nouvelle',
+      user_id: null,
+    })
+    setLoading(false)
+    if (insertError) {
+      setError('Une erreur est survenue. Appelez-nous directement.')
+      return
+    }
+    setSuccess(true)
+    setForm({ nom: '', tel: '', service: '', date_heure: '', message: '' })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -260,7 +294,33 @@ export default function Contact() {
               willChange: 'transform',
             }}
           >
-            <form onSubmit={e => e.preventDefault()}>
+            {success ? (
+              <div style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minHeight: 300,
+                gap: 16,
+                textAlign: 'center',
+              }}>
+                <div style={{ fontSize: 40 }}>✅</div>
+                <p style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: 'var(--texte)', margin: 0 }}>
+                  Demande envoyée
+                </p>
+                <p style={{ fontFamily: 'Sora, sans-serif', fontSize: 13, color: 'var(--texte-light)', margin: 0, lineHeight: 1.6 }}>
+                  Yassine vous contactera dans les plus brefs délais.<br />
+                  Pour un besoin urgent : <a href="tel:+33615963275" style={{ color: 'var(--olive)' }}>06 15 96 32 75</a>
+                </p>
+                <button
+                  onClick={() => setSuccess(false)}
+                  style={{ fontFamily: 'Sora, sans-serif', fontSize: 11, color: 'var(--texte-light)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 8, textDecoration: 'underline' }}
+                >
+                  Nouvelle demande
+                </button>
+              </div>
+            ) : (
+            <form onSubmit={handleSubmit}>
               {/* Row: Nom + Téléphone */}
               <div style={{
                 display: 'grid',
@@ -269,11 +329,13 @@ export default function Contact() {
                 marginBottom: 32,
               }}>
                 <div>
-                  <label htmlFor="contact-nom" style={labelStyle}>Nom</label>
+                  <label htmlFor="contact-nom" style={labelStyle}>Nom *</label>
                   <input
                     id="contact-nom"
                     type="text"
                     placeholder="Votre nom"
+                    value={form.nom}
+                    onChange={e => update('nom', e.target.value)}
                     style={inputStyle}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -285,6 +347,8 @@ export default function Contact() {
                     id="contact-tel"
                     type="tel"
                     placeholder="06 00 00 00 00"
+                    value={form.tel}
+                    onChange={e => update('tel', e.target.value)}
                     style={inputStyle}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
@@ -297,16 +361,13 @@ export default function Contact() {
                 <label htmlFor="contact-service" style={labelStyle}>Service</label>
                 <select
                   id="contact-service"
-                  style={{
-                    ...inputStyle,
-                    appearance: 'none',
-                    cursor: 'pointer',
-                  }}
+                  value={form.service}
+                  onChange={e => update('service', e.target.value)}
+                  style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
-                  defaultValue=""
                 >
-                  <option value="" disabled>Choisir un service</option>
+                  <option value="">Choisir un service</option>
                   {SERVICES_OPTIONS.map((s, i) => (
                     <option key={i} value={s}>{s}</option>
                   ))}
@@ -319,6 +380,8 @@ export default function Contact() {
                 <input
                   id="contact-date"
                   type="datetime-local"
+                  value={form.date_heure}
+                  onChange={e => update('date_heure', e.target.value)}
                   style={inputStyle}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
@@ -327,28 +390,34 @@ export default function Contact() {
 
               {/* Message */}
               <div style={{ marginBottom: 40 }}>
-                <label htmlFor="contact-message" style={labelStyle}>Message</label>
+                <label htmlFor="contact-message" style={labelStyle}>Message / Trajet</label>
                 <textarea
                   id="contact-message"
                   rows={4}
-                  placeholder="Détails de votre trajet..."
-                  style={{
-                    ...inputStyle,
-                    resize: 'vertical',
-                  }}
+                  placeholder="Départ, destination, détails..."
+                  value={form.message}
+                  onChange={e => update('message', e.target.value)}
+                  style={{ ...inputStyle, resize: 'vertical' }}
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                 />
               </div>
 
+              {error && (
+                <p style={{ fontFamily: 'Sora, sans-serif', fontSize: 12, color: '#e53e3e', marginBottom: 16 }}>
+                  {error}
+                </p>
+              )}
+
               {/* CTA */}
               <button
                 type="submit"
+                disabled={loading}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: 8,
-                  backgroundColor: 'var(--olive)',
+                  backgroundColor: loading ? '#999' : 'var(--olive)',
                   color: '#fff',
                   padding: '16px 32px',
                   border: 'none',
@@ -357,22 +426,17 @@ export default function Contact() {
                   fontWeight: 600,
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  cursor: 'pointer',
+                  cursor: loading ? 'not-allowed' : 'pointer',
                   transition: 'all 0.3s ease',
                 }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = '#6A5280'
-                  e.currentTarget.style.transform = 'translateY(-1px)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = 'var(--olive)'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}
+                onMouseEnter={e => { if (!loading) { e.currentTarget.style.backgroundColor = '#6A5280'; e.currentTarget.style.transform = 'translateY(-1px)' } }}
+                onMouseLeave={e => { if (!loading) { e.currentTarget.style.backgroundColor = 'var(--olive)'; e.currentTarget.style.transform = 'translateY(0)' } }}
               >
-                Envoyer la demande
-                <ArrowRight size={14} strokeWidth={2} />
+                {loading ? 'Envoi...' : 'Envoyer la demande'}
+                {!loading && <ArrowRight size={14} strokeWidth={2} />}
               </button>
             </form>
+            )}
           </div>
         </div>
       </div>

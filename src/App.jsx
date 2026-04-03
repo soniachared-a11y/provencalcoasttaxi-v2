@@ -24,6 +24,7 @@ import FlotteVideo from './components/sections/FlotteVideo'
 import DevisSimulateur from './components/sections/DevisSimulateur'
 import ChiffresImpact from './components/sections/ChiffresImpact'
 import SectionDivider from './components/ui/SectionDivider'
+import SEOHead from './seo/SEOHead'
 
 // Dedicated pages
 import FlottePage from './pages/FlottePage'
@@ -35,6 +36,11 @@ import MentionsLegalesPage from './pages/MentionsLegalesPage'
 function HomePage() {
   return (
     <main>
+      <SEOHead
+        path="/"
+        title="Taxis Provençale Aix — Chauffeur privé VTC Aix-en-Provence | Transfert aéroport Marseille"
+        description="Votre chauffeur privé à Aix-en-Provence. Mercedes Classe S, E et V avec chauffeur. Transferts aéroport Marseille-Provence, gare TGV, tourisme Luberon et Provence. Tarifs fixes garantis, disponible 24h/24 7j/7. Réservation en ligne."
+      />
       <FlotteVideo />
       <HeroAlt />
       <ChiffresImpact />

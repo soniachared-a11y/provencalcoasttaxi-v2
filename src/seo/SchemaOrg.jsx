@@ -1,17 +1,26 @@
-// Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage
-import { CONTACT, FAQS } from '../data/content'
+// Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage + Services + Breadcrumbs
+import { CONTACT, FAQS, SERVICES } from '../data/content'
+
+const DOMAIN = 'https://taxisprovencaleaix.fr'
 
 export function SchemaOrg() {
-  const schema = {
+  // ── 1. LocalBusiness + TaxiService (core)
+  const business = {
     '@context': 'https://schema.org',
     '@type': ['TaxiService', 'LocalBusiness'],
+    '@id': `${DOMAIN}/#organization`,
     name: 'Taxis Provençale Aix',
-    description: 'Service de chauffeur privé et taxi à Aix-en-Provence. Transferts aéroport Marseille, voyages d\'affaires, événements. Mercedes haut de gamme, tarifs fixes, disponible 24h/24.',
-    url: 'https://taxisprovencaleaix.fr',
+    alternateName: ['Taxi Aix-en-Provence', 'VTC Aix-en-Provence', 'Chauffeur privé Aix'],
+    description: 'Service de chauffeur privé VTC et taxi à Aix-en-Provence. Transferts aéroport Marseille-Provence, gare TGV, déplacements affaires et tourisme en Provence. Flotte Mercedes Classe S, E et V. Tarifs fixes garantis, disponible 24h/24 7j/7.',
+    url: DOMAIN,
     telephone: '+33615963275',
     email: CONTACT.email,
-    image: 'https://taxisprovencaleaix.fr/images/classe-s-provence.jpg',
-    logo: 'https://taxisprovencaleaix.fr/images/favicon.png',
+    image: [
+      `${DOMAIN}/images/classe-s-provence.jpg`,
+      `${DOMAIN}/images/classe-e-provence.jpg`,
+      `${DOMAIN}/images/flotte-intercontinental.jpeg`,
+    ],
+    logo: `${DOMAIN}/images/favicon.png`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: '82 avenue Henri Mauriat',
@@ -26,7 +35,7 @@ export function SchemaOrg() {
       longitude: 5.4474,
     },
     areaServed: [
-      { '@type': 'City', name: 'Aix-en-Provence' },
+      { '@type': 'City', name: 'Aix-en-Provence', sameAs: 'https://fr.wikipedia.org/wiki/Aix-en-Provence' },
       { '@type': 'City', name: 'Marseille' },
       { '@type': 'City', name: 'Nice' },
       { '@type': 'City', name: 'Monaco' },
@@ -35,7 +44,13 @@ export function SchemaOrg() {
       { '@type': 'City', name: 'Salon-de-Provence' },
       { '@type': 'City', name: 'Pertuis' },
       { '@type': 'City', name: 'Manosque' },
+      { '@type': 'City', name: 'Gardanne' },
+      { '@type': 'City', name: 'Avignon' },
+      { '@type': 'City', name: 'Gordes' },
+      { '@type': 'City', name: 'Cassis' },
+      { '@type': 'City', name: 'Lyon' },
       { '@type': 'AdministrativeArea', name: 'Provence-Alpes-Côte d\'Azur' },
+      { '@type': 'AdministrativeArea', name: 'Bouches-du-Rhône' },
     ],
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
@@ -43,7 +58,7 @@ export function SchemaOrg() {
       opens: '00:00',
       closes: '23:59',
     },
-    priceRange: '€€€',
+    priceRange: '€€',
     currenciesAccepted: 'EUR',
     paymentAccepted: 'Cash, Credit Card, Visa, Mastercard, American Express',
     hasMap: 'https://maps.google.com/?q=82+avenue+Henri+Mauriat+Aix-en-Provence',
@@ -55,8 +70,33 @@ export function SchemaOrg() {
       ratingCount: '200',
       reviewCount: '200',
     },
+    // Keywords pour AI crawlers
+    knowsAbout: [
+      'transfert aéroport Marseille Provence',
+      'taxi gare TGV Aix-en-Provence',
+      'chauffeur privé Luberon',
+      'navette aéroport Marseille',
+      'VTC Aix-en-Provence',
+      'taxi Aix-en-Provence',
+      'transport touristique Provence',
+      'location Mercedes avec chauffeur',
+    ],
   }
 
+  // ── 2. Services individuels (Service schema)
+  const serviceSchemas = SERVICES.map((s, i) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    '@id': `${DOMAIN}/services#service-${i + 1}`,
+    name: s.titre,
+    description: s.desc,
+    provider: { '@id': `${DOMAIN}/#organization` },
+    areaServed: { '@type': 'AdministrativeArea', name: 'Provence-Alpes-Côte d\'Azur' },
+    serviceType: 'TaxiService',
+    ...(s.prix ? { offers: { '@type': 'Offer', price: s.prix.replace(/[^0-9]/g, ''), priceCurrency: 'EUR', description: s.prix } } : {}),
+  }))
+
+  // ── 3. FAQPage
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -70,16 +110,40 @@ export function SchemaOrg() {
     })),
   }
 
+  // ── 4. BreadcrumbList
+  const breadcrumbs = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Accueil', item: DOMAIN },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: `${DOMAIN}/services` },
+      { '@type': 'ListItem', position: 3, name: 'Flotte', item: `${DOMAIN}/flotte` },
+      { '@type': 'ListItem', position: 4, name: 'À propos', item: `${DOMAIN}/a-propos` },
+      { '@type': 'ListItem', position: 5, name: 'Contact', item: `${DOMAIN}/contact` },
+    ],
+  }
+
+  // ── 5. WebSite (pour sitelinks searchbox)
+  const webSite = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Taxis Provençale Aix',
+    url: DOMAIN,
+    description: 'Chauffeur privé et taxi haut de gamme à Aix-en-Provence. Mercedes avec chauffeur, transferts aéroport Marseille, gare TGV. Disponible 24h/24.',
+    publisher: { '@id': `${DOMAIN}/#organization` },
+  }
+
+  const allSchemas = [business, ...serviceSchemas, faqSchema, breadcrumbs, webSite]
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema, null, 2) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema, null, 2) }}
-      />
+      {allSchemas.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
     </>
   )
 }

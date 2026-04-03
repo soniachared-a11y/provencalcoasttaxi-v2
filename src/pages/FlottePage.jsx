@@ -7,6 +7,7 @@ import {
 } from '@phosphor-icons/react'
 import { FLOTTE, CONTACT } from '../data/content'
 import CharReveal from '../components/ui/CharReveal'
+import SEOHead from '../seo/SEOHead'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -630,6 +631,11 @@ export default function FlottePage() {
 
   return (
     <>
+      <SEOHead
+        path="/flotte"
+        title="Flotte Mercedes avec chauffeur Aix-en-Provence | Classe S, E, V — Taxis Provençale Aix"
+        description="Découvrez notre flotte Mercedes haut de gamme : Classe E business, Classe S prestige avec sièges massants, Classe V van 7 places. Véhicules entretenus quotidiennement, Wi-Fi, climatisation. Réservez à Aix-en-Provence."
+      />
       {/* ── HERO ── */}
       <section
         ref={heroRef}

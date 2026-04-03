@@ -1,3 +1,5 @@
+import SEOHead from '../seo/SEOHead'
+
 export default function MentionsLegalesPage() {
   const s = {
     label: {
@@ -61,6 +63,11 @@ export default function MentionsLegalesPage() {
 
   return (
     <>
+      <SEOHead
+        path="/mentions-legales"
+        title="Mentions légales — Taxis Provençale Aix"
+        description="Mentions légales, politique de confidentialité et conditions d'utilisation du site taxisprovencaleaix.fr. Taxis Provençale Aix, 82 avenue Henri Mauriat, 13100 Aix-en-Provence."
+      />
       {/* Hero */}
       <div className="page-hero" style={{
         background: '#0D1117',

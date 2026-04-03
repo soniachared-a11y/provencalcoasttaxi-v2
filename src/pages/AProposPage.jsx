@@ -7,6 +7,7 @@ import {
   ArrowRight, Handshake, Trophy, UserCircle,
 } from '@phosphor-icons/react'
 import { ABOUT, CHIFFRES, ZONES_EXTRA, CONTACT } from '../data/content'
+import SEOHead from '../seo/SEOHead'
 import CharReveal from '../components/ui/CharReveal'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -150,6 +151,11 @@ export default function AProposPage() {
 
   return (
     <>
+      <SEOHead
+        path="/a-propos"
+        title="À propos — Taxis Provençale Aix | Chauffeur privé depuis 10 ans à Aix-en-Provence"
+        description="Découvrez Taxis Provençale Aix : plus de 10 ans d'expérience en transport privé haut de gamme en Provence. Chauffeurs bilingues, flotte Mercedes entretenue quotidiennement, service 24h/24."
+      />
       {/* ── HERO ───────────────────────────────────────────── */}
       <section
         ref={heroRef}

@@ -11,6 +11,7 @@ import {
 import { CONTACT } from '../data/content'
 import { supabase } from '../lib/supabase'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
+import SEOHead from '../seo/SEOHead'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -173,6 +174,11 @@ export default function ContactPage() {
 
   return (
     <>
+      <SEOHead
+        path="/contact"
+        title="Réserver un taxi à Aix-en-Provence | Devis gratuit — Taxis Provençale Aix"
+        description="Réservez votre chauffeur privé à Aix-en-Provence en ligne. Confirmation en 15 min, tarif fixe, annulation gratuite. Transferts aéroport Marseille, gare TGV, événements. Appelez le 06 15 96 32 75."
+      />
       {/* HERO + FORM */}
       <section ref={heroRef} className="page-hero" style={{
         position: 'relative', minHeight: '100vh',

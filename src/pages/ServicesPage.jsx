@@ -8,6 +8,7 @@ import {
 } from '@phosphor-icons/react'
 import { SERVICES, CONTACT } from '../data/content'
 import CharReveal from '../components/ui/CharReveal'
+import SEOHead from '../seo/SEOHead'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -372,6 +373,11 @@ export default function ServicesPage() {
 
   return (
     <main ref={pageRef} style={{ background: '#0D1117', minHeight: '100vh', paddingTop: 72 }}>
+      <SEOHead
+        path="/services"
+        title="Services VTC Aix-en-Provence | Transfert aéroport, affaires, tourisme — Taxis Provençale Aix"
+        description="Transfert aéroport Marseille-Provence, déplacements affaires, événements, longue distance et circuits touristiques en Provence. Mercedes avec chauffeur, tarif fixe garanti. Réservation 24h/24."
+      />
 
       {/* Hero */}
       <div className="svc-hero-text" style={{

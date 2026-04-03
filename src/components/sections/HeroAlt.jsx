@@ -255,6 +255,13 @@ export default function HeroAlt() {
                     <span style={{ color: 'var(--texte-light)' }}>· {dest.km} km</span>
                   </div>
                 )}
+                <p style={{
+                  fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 400,
+                  fontStyle: 'italic', color: 'var(--texte-light)', opacity: 0.65,
+                  margin: '2px 0 0', lineHeight: 1.5,
+                }}>
+                  * Estimation calculée au départ d'Aix-en-Provence centre
+                </p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <button
                     type="button"

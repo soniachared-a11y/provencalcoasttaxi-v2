@@ -1,5 +1,5 @@
 // App.jsx — Taxis Provençal Aix V2
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import { useLenis } from './hooks/useLenis'
 import { useAnimations } from './hooks/useAnimations'
 import { SchemaOrg } from './seo/SchemaOrg'
@@ -59,6 +59,7 @@ function HomePage() {
 export default function App() {
   useLenis()
   useAnimations()
+  const { pathname } = useLocation()
 
   return (
     <>
@@ -73,7 +74,7 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
       </Routes>
-      <Footer />
+      {pathname === '/' && <Footer />}
       <PhoneFloat />
       <CursorFollower />
     </>

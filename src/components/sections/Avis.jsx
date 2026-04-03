@@ -155,12 +155,22 @@ export default function Avis() {
           </div>
 
           {/* Google rating widget */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 16,
-          }}>
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Taxis+Proven%C3%A7al+Aix+Aix-en-Provence"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 16,
+              textDecoration: 'none',
+              cursor: 'pointer',
+              transition: 'opacity 0.2s',
+            }}
+            onMouseEnter={e => (e.currentTarget.style.opacity = '0.8')}
+            onMouseLeave={e => (e.currentTarget.style.opacity = '1')}
+          >
             <div style={{ textAlign: 'right' }}>
               <div style={{
                 fontFamily: "'Instrument Serif', serif",
@@ -198,10 +208,10 @@ export default function Avis() {
                 marginTop: 4,
               }}>
                 <ShieldCheck size={12} weight="duotone" style={{ color: 'rgba(255,255,255,0.8)' }} />
-                Avis Google vérifiés
+                Voir les avis Google →
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 

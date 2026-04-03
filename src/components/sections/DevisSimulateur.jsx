@@ -52,11 +52,11 @@ export default function DevisSimulateur() {
       ref={sectionRef}
       id="devis"
       style={{
-        background: '#070707',
+        background: 'var(--cream)',
         position: 'relative',
         overflow: 'hidden',
-        borderTop: '1px solid rgba(255,255,255,0.04)',
-        borderBottom: '1px solid rgba(255,255,255,0.04)',
+        borderTop: '1px solid var(--border)',
+        borderBottom: '1px solid var(--border)',
       }}
     >
       <style>{`
@@ -147,15 +147,13 @@ export default function DevisSimulateur() {
             fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 700,
             letterSpacing: '0.3em', textTransform: 'uppercase',
             color: 'var(--olive)', display: 'block', marginBottom: 8,
-            textShadow: '0 0 10px rgba(107,125,74,0.8), 0 0 20px rgba(107,125,74,0.4)',
           }}>Devis en ligne</span>
           <h2 style={{
             fontFamily: "'Instrument Serif', serif",
             fontSize: 'clamp(22px,3.2vw,42px)',
-            fontWeight: 400, color: '#fff',
+            fontWeight: 400, color: 'var(--texte)',
             margin: '0 0 20px', lineHeight: 1.1,
             letterSpacing: '-0.02em',
-            textShadow: '0 0 30px rgba(255,255,255,0.08)',
           }}>
             Estimez votre trajet
           </h2>
@@ -168,7 +166,7 @@ export default function DevisSimulateur() {
                 />
                 <span style={{
                   fontFamily: 'Sora, sans-serif', fontSize: 10,
-                  color: 'rgba(255,255,255,0.4)', letterSpacing: '0.05em',
+                  color: 'var(--texte-light)', letterSpacing: '0.05em',
                 }}>{item}</span>
               </div>
             ))}
@@ -184,12 +182,13 @@ export default function DevisSimulateur() {
                 value={dest}
                 onChange={d => { setDest(d); setResult(null) }}
                 placeholder="Votre destination (ville, adresse…)"
-                dark={true}
+                dark={false}
                 onLoadingChange={setLoading}
                 inputStyle={{
                   height: 46, fontSize: 12,
-                  border: '1px solid rgba(255,255,255,0.1)',
+                  border: '1px solid var(--border)',
                   borderRadius: 0,
+                  background: 'var(--surface)',
                 }}
               />
             </div>
@@ -199,8 +198,8 @@ export default function DevisSimulateur() {
               className="dvs-calc-btn"
               style={{
                 height: 46, padding: '0 20px', flexShrink: 0,
-                background: (dest?.km && !loading) ? 'var(--olive)' : 'rgba(255,255,255,0.05)',
-                color: (dest?.km && !loading) ? '#fff' : 'rgba(255,255,255,0.2)',
+                background: (dest?.km && !loading) ? 'var(--olive)' : 'rgba(0,0,0,0.05)',
+                color: (dest?.km && !loading) ? '#fff' : 'rgba(0,0,0,0.2)',
                 border: 'none', fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
                 letterSpacing: '0.12em', textTransform: 'uppercase',
                 cursor: (dest?.km && !loading) ? 'pointer' : 'not-allowed',
@@ -215,7 +214,7 @@ export default function DevisSimulateur() {
           {/* Distance hint */}
           {dest?.km && !result && (
             <p style={{
-              fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.28)',
+              fontFamily: 'Sora', fontSize: 9, color: 'var(--texte-light)',
               margin: '0 0 10px', letterSpacing: '0.04em',
             }}>{dest.km} km depuis Aix-en-Provence</p>
           )}
@@ -224,12 +223,12 @@ export default function DevisSimulateur() {
           {result ? (
             <div style={{
               display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
-              background: 'rgba(255,255,255,0.03)',
-              border: '1px solid rgba(107,125,74,0.25)',
+              background: 'var(--surface)',
+              border: '1px solid var(--border)',
               padding: '14px 20px',
             }}>
               <div style={{ flex: 1, minWidth: 120 }}>
-                <div style={{ fontFamily: 'Sora', fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
+                <div style={{ fontFamily: 'Sora', fontSize: 8, color: 'var(--texte-light)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
                   {result.km} km · tarif {result.isNuit ? 'nuit' : 'jour'}
                 </div>
                 <span style={{

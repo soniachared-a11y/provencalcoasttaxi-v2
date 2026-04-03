@@ -237,7 +237,7 @@ export default function Avis() {
               left: 0,
               fontFamily: "'Instrument Serif', serif",
               fontSize: 120,
-              color: 'var(--lavande)',
+              color: 'var(--olive)',
               opacity: 0.12,
               lineHeight: 1,
               userSelect: 'none',

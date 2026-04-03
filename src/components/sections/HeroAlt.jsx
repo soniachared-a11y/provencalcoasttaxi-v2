@@ -131,7 +131,7 @@ export default function HeroAlt() {
                 fontWeight: 600,
                 letterSpacing: '0.3em',
                 textTransform: 'uppercase',
-                color: 'var(--lavande)',
+                color: 'var(--olive)',
                 marginBottom: '24px',
               }}
             >

@@ -145,7 +145,7 @@ export default function About() {
                     fontFamily: 'Sora, sans-serif', fontSize: 11, fontWeight: 400,
                     color: 'var(--texte-light)', lineHeight: 1.4,
                   }}>
-                    <MapPin size={9} weight="bold" style={{ color: 'var(--lavande)', flexShrink: 0, marginTop: 2 }} />
+                    <MapPin size={9} weight="bold" style={{ color: 'var(--olive)', flexShrink: 0, marginTop: 2 }} />
                     {zone}
                   </div>
                 ))}
@@ -218,7 +218,7 @@ export default function About() {
                     fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
                     color: '#F6F3EE',
                   }}>
-                    <MapPin size={10} weight="bold" style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    <MapPin size={10} weight="bold" style={{ color: 'var(--olive)', flexShrink: 0 }} />
                     {zone}
                   </div>
                 ))}
@@ -241,7 +241,7 @@ export default function About() {
                     fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
                     color: '#F6F3EE',
                   }}>
-                    <MapPin size={10} weight="bold" style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    <MapPin size={10} weight="bold" style={{ color: 'var(--olive)', flexShrink: 0 }} />
                     {zone}
                   </div>
                 ))}

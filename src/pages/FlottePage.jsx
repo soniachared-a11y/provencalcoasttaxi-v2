@@ -462,6 +462,7 @@ function VehicleSection({ v, extra, index }) {
         {/* RIGHT — glass panel */}
         <div
           ref={panelRef}
+          className="flt-img-panel"
           style={{
             background: 'rgba(255,255,255,0.03)',
             backdropFilter: 'blur(24px)',
@@ -531,10 +532,14 @@ function VehicleSection({ v, extra, index }) {
       <style>{`
         @media (max-width: 900px) {
           .flotte-grid {
-            grid-template-columns: 1fr !important;
+            display: flex !important;
+            flex-direction: column !important;
             min-height: auto !important;
             padding: 48px 20px !important;
             gap: 40px !important;
+          }
+          .flt-img-panel {
+            order: -1 !important;
           }
         }
         @media (max-width: 600px) {

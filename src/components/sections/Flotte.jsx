@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   ArrowRight, ArrowUpRight,
   WifiHigh, Drop, Baby, Snowflake, Lightning, Armchair,
-  Users, Suitcase,
+  Users, Suitcase, ShieldCheck, SealCheck,
 } from '@phosphor-icons/react'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -26,6 +26,8 @@ const VEHICLES = [
       { Icon: Drop, label: 'Eau fraîche' },
       { Icon: Snowflake, label: 'Clim auto' },
       { Icon: Lightning, label: 'USB-C' },
+      { Icon: ShieldCheck, label: 'Vitres teintées' },
+      { Icon: SealCheck, label: 'Cuir' },
     ],
   },
   {
@@ -63,6 +65,7 @@ const VEHICLES = [
       { Icon: Baby, label: 'Siège bébé' },
       { Icon: Snowflake, label: 'Clim auto' },
       { Icon: Lightning, label: 'USB-C' },
+      { Icon: Users, label: '7 places' },
     ],
   },
 ]

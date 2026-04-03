@@ -245,10 +245,31 @@ export default function Flotte() {
         }
         @media (max-width: 480px) {
           .flt-feature-img {
-            height: 220px !important;
+            height: 200px !important;
           }
           .flt-feature-panel {
             padding: 20px 16px !important;
+          }
+          .flt-feature-panel h2 {
+            font-size: clamp(28px, 8vw, 40px) !important;
+          }
+          /* CTAs full width on mobile */
+          .flt-feature-panel > div:last-of-type {
+            flex-direction: column !important;
+          }
+          .flt-cta-primary, .flt-cta-secondary {
+            width: 100% !important;
+            justify-content: center !important;
+            box-sizing: border-box;
+          }
+          /* Bottom strip compact */
+          .flt-bottom-strip {
+            padding: 10px 16px !important;
+          }
+          /* Tabs padding */
+          .flt-tab-btn {
+            padding: 8px 10px !important;
+            font-size: 9px !important;
           }
         }
       `}</style>
@@ -581,10 +602,10 @@ export default function Flotte() {
             className="flt-amenity-row"
             style={{
               display: 'flex',
-              flexWrap: 'nowrap',
+              flexWrap: 'wrap',
               gap: 8,
               marginBottom: 28,
-              overflow: 'visible',
+              overflow: 'hidden',
             }}
           >
             {v.amenities.map(({ Icon, label }, ai) => (

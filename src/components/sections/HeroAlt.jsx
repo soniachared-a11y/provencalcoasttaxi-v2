@@ -335,6 +335,7 @@ export default function HeroAlt() {
 
       {/* Responsive */}
       <style>{`
+        #hero-alt { overflow: hidden; }
         @media (max-width: 1024px) {
           #hero-alt .heroalt-grid > div:first-child {
             padding: 120px 40px 60px 40px !important;
@@ -347,27 +348,36 @@ export default function HeroAlt() {
           }
           #hero-alt .heroalt-grid > div:first-child {
             order: 1;
-            padding: 110px 20px 48px 20px !important;
+            padding: 100px 16px 40px 16px !important;
           }
           #hero-alt .heroalt-grid > div:last-child {
             order: 2;
-            height: 45vh;
+            height: 40vh;
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
           }
           .heroalt-actions {
-            gap: 12px !important;
+            gap: 10px !important;
           }
           .heroalt-actions a, .heroalt-actions button {
             width: 100%;
             justify-content: center !important;
             box-sizing: border-box;
+            min-width: 0 !important;
           }
           .heroalt-estimator-inner {
             flex-direction: column !important;
           }
-          .heroalt-estimator-inner > div:first-child {
+          .heroalt-estimator-inner > div {
             width: 100% !important;
-            min-width: unset !important;
+            min-width: 0 !important;
+            flex: none !important;
+          }
+          .heroalt-estimator-inner a,
+          .heroalt-estimator-inner button {
+            width: 100% !important;
+            justify-content: center !important;
+            box-sizing: border-box;
+            min-width: 0 !important;
           }
           .heroalt-reassurance {
             gap: 10px !important;

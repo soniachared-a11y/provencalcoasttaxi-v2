@@ -118,9 +118,9 @@ export default function Services() {
             display: 'flex',
             gap: 3,
             height: 600,
-            width: '100vw',
-            marginLeft: 'calc(-50vw + 50%)',
+            width: '100%',
             willChange: 'transform',
+            overflow: 'hidden',
           }}
         >
           {SERVICES.map((s, i) => {
@@ -131,6 +131,7 @@ export default function Services() {
               <div
                 key={i}
                 className="service-strip"
+                data-active={String(isActive)}
                 onClick={() => setActive(i)}
                 style={{
                   flex: isActive ? 5 : 1,
@@ -181,7 +182,7 @@ export default function Services() {
                 }} />
 
                 {/* Closed state content */}
-                <div style={{
+                <div data-closed="" style={{
                   position: 'absolute',
                   inset: 0,
                   display: 'flex',
@@ -213,7 +214,7 @@ export default function Services() {
                 </div>
 
                 {/* Open state content */}
-                <div style={{
+                <div data-open="" style={{
                   position: 'absolute',
                   inset: 0,
                   display: 'flex',
@@ -351,11 +352,43 @@ export default function Services() {
 
       {/* Mobile responsive */}
       <style>{`
+        #services { overflow: hidden; }
         @media (max-width: 768px) {
-          .strips-container { height: 360px !important; }
-          .service-strip [style*="padding: 40px 32px"] { padding: 24px 20px !important; }
+          /* Convert strips to stacked accordion cards */
+          .strips-container {
+            flex-direction: column !important;
+            height: auto !important;
+            gap: 2px !important;
+          }
+          .service-strip {
+            flex: none !important;
+            min-width: 0 !important;
+            min-height: 64px !important;
+            transition: min-height 0.5s cubic-bezier(0.76,0,0.24,1) !important;
+          }
+          /* Active strip taller */
+          .service-strip[data-active="true"] {
+            min-height: 320px !important;
+          }
+          /* Closed state — horizontal layout on mobile */
+          .service-strip [data-closed] {
+            flex-direction: row !important;
+            justify-content: flex-start !important;
+            align-items: center !important;
+            padding: 0 20px !important;
+            gap: 12px;
+          }
+          .service-strip [data-closed] span[style*="writing-mode"] {
+            writing-mode: horizontal-tb !important;
+            font-size: 14px !important;
+          }
+          /* Open content padding */
+          .service-strip [data-open] { padding: 24px 20px !important; }
+          .service-strip [data-open] h3 { font-size: 22px !important; }
           #services > div:first-child { padding-top: 44px !important; }
-          #services > div:first-child > div:first-child { margin-bottom: 32px !important; }
+        }
+        @media (max-width: 480px) {
+          .service-strip[data-active="true"] { min-height: 280px !important; }
         }
       `}</style>
     </section>

@@ -1,4 +1,4 @@
-// ── Données statiques — Provençal Coast Taxi
+// ── Données statiques — Taxis Provençal Aix
 // Source unique de vérité. Ne jamais hardcoder dans les composants.
 
 export const CONTACT = {
@@ -143,7 +143,7 @@ export const AVIS = [
     nom: 'Sophie L.',
     ville: 'Aix-en-Provence',
     note: 5,
-    texte: 'Service impeccable pour mon transfert vers l\'aéroport de Marseille. Chauffeur ponctuel à 5h du matin, véhicule immaculé, suivi de vol activé. Aucune surprise sur le tarif. Je recommande vivement Provençal Coast pour tout déplacement en Provence.',
+    texte: 'Service impeccable pour mon transfert vers l\'aéroport de Marseille. Chauffeur ponctuel à 5h du matin, véhicule immaculé, suivi de vol activé. Aucune surprise sur le tarif. Je recommande vivement Taxis Provençal Aix pour tout déplacement en Provence.',
   },
   {
     nom: 'Marc D.',
@@ -245,7 +245,7 @@ export const IMAGES = {
 // ── À PROPOS (section dédiée)
 export const ABOUT = {
   paragraphs: [
-    'Provençal Coast Taxi est né d\'une conviction simple : le transport privé en Provence mérite le même niveau d\'exigence que l\'hôtellerie de luxe. Depuis plus de 10 ans, nous accompagnons particuliers et professionnels dans tous leurs déplacements, de l\'aéroport de Marseille aux villages perchés du Luberon.',
+    'Taxis Provençal Aix est né d\'une conviction simple : le transport privé en Provence mérite le même niveau d\'exigence que l\'hôtellerie de luxe. Depuis plus de 10 ans, nous accompagnons particuliers et professionnels dans tous leurs déplacements, de l\'aéroport de Marseille aux villages perchés du Luberon.',
     'Notre flotte exclusivement composée de Mercedes récentes — Classe E, Classe S et Classe V — est entretenue quotidiennement. Cuir intégral, climatisation bi-zone, vitres surteintées, Wi-Fi et chargeurs USB : chaque détail est pensé pour votre confort.',
     'Nos chauffeurs expérimentés sont des spécialistes du transport sur mesure. Bilingues français-anglais, formés à l\'accueil VIP, ils connaissent chaque route, chaque raccourci et chaque adresse secrète de Provence. Un service de conciergerie est inclus : recommandations de restaurants, réservations d\'hôtels, itinéraires personnalisés.',
   ],

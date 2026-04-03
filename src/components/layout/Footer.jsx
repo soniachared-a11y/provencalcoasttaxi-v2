@@ -120,7 +120,7 @@ export default function Footer() {
             color: '#fff', display: 'block', marginBottom: 20,
             letterSpacing: '-0.01em',
           }}>
-            Provençal Coast Taxi
+            Taxis Provençal Aix
           </span>
           <p style={{
             fontFamily: 'Sora, sans-serif', fontSize: 13,
@@ -348,7 +348,7 @@ export default function Footer() {
           flexWrap: 'wrap', gap: 12,
         }}>
           <span style={{ fontFamily: 'Sora, sans-serif', fontSize: 11, color: 'rgba(255,255,255,0.2)' }}>
-            © {new Date().getFullYear()} Provençal Coast Taxi — Licence VTC {CONTACT.licence}
+            © {new Date().getFullYear()} Taxis Provençal Aix — Licence VTC {CONTACT.licence}
           </span>
           <div className="ft-bottom-links" style={{ display: 'flex', gap: 24 }}>
             <Link to="/mentions-legales" style={{

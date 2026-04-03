@@ -1,4 +1,4 @@
-// App.jsx — Provençal Coast Taxi V2
+// App.jsx — Taxis Provençal Aix V2
 import { Routes, Route } from 'react-router-dom'
 import { useLenis } from './hooks/useLenis'
 import { useAnimations } from './hooks/useAnimations'

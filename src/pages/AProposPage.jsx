@@ -340,7 +340,7 @@ export default function AProposPage() {
               }} />
               <img
                 src="/images/flotte-hotel-luxe.jpg"
-                alt="Chauffeur Provençal Coast Taxi"
+                alt="Chauffeur Taxis Provençal Aix"
                 style={{
                   width: '100%',
                   aspectRatio: '4/5',
@@ -710,7 +710,7 @@ export default function AProposPage() {
             fontWeight: 400, color: '#fff',
             margin: '0 0 16px',
           }}>
-            Vivez l'expérience Provençal Coast
+            Vivez l'expérience Taxis Provençal Aix
           </h2>
           <p style={{
             fontFamily: 'Sora', fontSize: 14, color: 'rgba(255,255,255,0.5)',

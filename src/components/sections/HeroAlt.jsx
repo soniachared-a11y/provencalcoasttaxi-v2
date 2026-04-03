@@ -180,101 +180,47 @@ export default function HeroAlt() {
               }}
             />
 
-            {/* Subtitle */}
+            {/* Présentation chaleureuse — Qui sommes-nous */}
             <p
               className="heroalt-subtitle"
               style={{
                 fontFamily: "'Sora', sans-serif",
                 fontSize: '15px',
                 fontWeight: 300,
-                lineHeight: 1.7,
+                lineHeight: 1.8,
                 color: 'var(--texte-light)',
-                maxWidth: '420px',
-                marginBottom: '32px',
+                maxWidth: '440px',
+                marginBottom: '28px',
               }}
             >
-              Mercedes derni&egrave;re g&eacute;n&eacute;ration, tarifs fixes garantis et service personnalis&eacute; 24h/24 pour tous vos d&eacute;placements en Provence.
+              Fondés à Aix-en-Provence, nous accompagnons particuliers et professionnels depuis plus de 10 ans. Une seule conviction : chaque trajet mérite le même soin qu'un séjour dans un grand hôtel.
             </p>
 
-            {/* CTAs */}
-            <div className="heroalt-actions" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
-              <MagneticButton
-                as={Link}
-                to="/contact"
-                style={{
-                  backgroundColor: 'var(--olive)',
-                  color: '#FFFFFF',
-                  padding: '16px 32px',
-                  borderRadius: '0px',
-                  fontFamily: "'Sora', sans-serif",
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  textDecoration: 'none',
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  transition: 'background-color 0.3s ease',
-                  border: 'none',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#5A6B3A' }}
-                onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--olive)' }}
-              >
-                R&eacute;server
-                <ArrowRight size={14} weight="bold" />
-              </MagneticButton>
-              <a
-                href="#services"
-                style={{
-                  backgroundColor: 'transparent',
-                  border: '1.5px solid var(--lavande)',
-                  color: 'var(--lavande)',
-                  padding: '16px 32px',
-                  borderRadius: '0px',
-                  fontFamily: "'Sora', sans-serif",
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  letterSpacing: '0.12em',
-                  textTransform: 'uppercase',
-                  textDecoration: 'none',
-                  transition: 'all 0.3s ease',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => {
-                  e.currentTarget.style.backgroundColor = 'rgba(122, 96, 145, 0.08)'
-                  e.currentTarget.style.transform = 'translateY(-1px)'
-                }}
-                onMouseLeave={e => {
-                  e.currentTarget.style.backgroundColor = 'transparent'
-                  e.currentTarget.style.transform = 'translateY(0)'
-                }}
-              >
-                D&eacute;couvrir
-              </a>
-            </div>
-
-            {/* Reassurance */}
+            {/* Valeurs clés */}
             <div
               className="heroalt-reassurance"
-              style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '32px' }}
+              style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '32px' }}
             >
-              {REASSURANCE.map((text, i) => (
+              {[
+                { label: 'Chauffeurs bilingues formés à l\'accueil VIP', icon: '✦' },
+                { label: 'Flotte Mercedes entretenue quotidiennement', icon: '✦' },
+                { label: 'Disponibles 24h/24, 7j/7, sans supplément de nuit', icon: '✦' },
+              ].map((item, i) => (
                 <span
                   key={i}
                   style={{
                     display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
+                    alignItems: 'flex-start',
+                    gap: '10px',
                     fontFamily: "'Sora', sans-serif",
-                    fontSize: '11px',
-                    fontWeight: 400,
+                    fontSize: '13px',
+                    fontWeight: 300,
                     color: 'var(--texte-light)',
+                    lineHeight: 1.5,
                   }}
                 >
-                  <CheckCircle size={12} weight="duotone" style={{ color: 'var(--olive)' }} />
-                  {text}
+                  <span style={{ color: 'var(--olive)', fontSize: 10, marginTop: 3, flexShrink: 0 }}>{item.icon}</span>
+                  {item.label}
                 </span>
               ))}
             </div>

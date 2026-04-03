@@ -152,11 +152,18 @@ export default function DevisSimulateur() {
             fontFamily: "'Instrument Serif', serif",
             fontSize: 'clamp(22px,3.2vw,42px)',
             fontWeight: 400, color: 'var(--texte)',
-            margin: '0 0 20px', lineHeight: 1.1,
+            margin: '0 0 10px', lineHeight: 1.1,
             letterSpacing: '-0.02em',
           }}>
             Estimez votre trajet
           </h2>
+          <p style={{
+            fontFamily: 'Sora, sans-serif', fontSize: 10,
+            color: 'var(--texte-light)', margin: '0 0 18px',
+            lineHeight: 1.5, fontStyle: 'italic',
+          }}>
+            Calcul depuis Aix-en-Provence
+          </p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {TRUST.map((item, i) => (
               <div key={i} className="dvs-trust" style={{ display: 'flex', alignItems: 'center', gap: 7 }}>

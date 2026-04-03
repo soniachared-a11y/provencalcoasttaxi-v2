@@ -508,49 +508,198 @@ export default function ContactPage() {
       </section>
 
       {/* CONTACT CHANNELS */}
-      <section className="channels-section" style={{ background: 'var(--surface)', padding: 'clamp(64px,8vw,88px) clamp(24px,4vw,60px)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: 48 }}>
-            <span style={{ fontFamily: 'Sora', fontSize: 10, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--lavande)' }}>Nous contacter</span>
-            <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 'clamp(24px,3vw,32px)', fontWeight: 400, color: 'var(--texte)', margin: '12px 0 0' }}>
+      <section className="channels-section" style={{
+        position: 'relative',
+        padding: 'clamp(72px,9vw,100px) clamp(24px,4vw,60px)',
+        overflow: 'hidden',
+      }}>
+        {/* Background image */}
+        <img
+          src="/images/flotte-hotel-luxe.jpg"
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center 55%',
+          }}
+        />
+        {/* Dark overlay */}
+        <div style={{
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(135deg, rgba(7,9,13,0.93) 0%, rgba(7,9,13,0.82) 60%, rgba(7,9,13,0.88) 100%)',
+        }} />
+
+        {/* Decorative accent lines */}
+        <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(107,125,74,0.5), transparent)' }} />
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(122,96,145,0.4), transparent)' }} />
+
+        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(40px,6vw,64px)' }}>
+            <span style={{
+              fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
+              letterSpacing: '0.35em', textTransform: 'uppercase',
+              color: 'var(--olive)', display: 'block', marginBottom: 14,
+            }}>Nous contacter</span>
+            <h2 style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 'clamp(26px,3.2vw,40px)',
+              fontWeight: 400, color: '#fff',
+              margin: 0, letterSpacing: '-0.01em',
+            }}>
               Choisissez votre canal
             </h2>
+            <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, transparent, var(--lavande), transparent)', margin: '20px auto 0' }} />
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', border: '1px solid var(--border)' }} className="channels-grid">
+
+          <div className="channels-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
             {[
-              { icon: PhoneCall, color: 'var(--olive)', titre: 'Téléphone', valeur: CONTACT.tel, detail: 'Disponible 24h/24 · 7j/7', sub: 'Réponse immédiate', href: CONTACT.telHref, cta: 'Appeler' },
-              { icon: WhatsappLogo, color: '#22c55e', titre: 'WhatsApp', valeur: CONTACT.tel, detail: 'Message lu sous 5 minutes', sub: 'Réponse rapide garantie', href: CONTACT.whatsappHref, cta: 'Écrire', target: '_blank' },
-              { icon: EnvelopeSimple, color: 'var(--lavande)', titre: 'Email', valeur: CONTACT.email, detail: 'Réponse en moins de 2h', sub: 'Pour les demandes détaillées', href: `mailto:${CONTACT.email}`, cta: 'Envoyer' },
+              {
+                icon: PhoneCall,
+                accentColor: 'var(--olive)',
+                accentRgb: '107,125,74',
+                titre: 'Téléphone',
+                valeur: CONTACT.tel,
+                detail: 'Disponible 24h/24 · 7j/7',
+                sub: 'Réponse immédiate',
+                href: CONTACT.telHref,
+                cta: 'Appeler maintenant',
+                badge: '24/7',
+              },
+              {
+                icon: WhatsappLogo,
+                accentColor: '#22c55e',
+                accentRgb: '34,197,94',
+                titre: 'WhatsApp',
+                valeur: CONTACT.tel,
+                detail: 'Message lu sous 5 min',
+                sub: 'Réponse rapide garantie',
+                href: CONTACT.whatsappHref,
+                cta: 'Envoyer un message',
+                badge: '< 5 min',
+                target: '_blank',
+              },
+              {
+                icon: EnvelopeSimple,
+                accentColor: 'var(--lavande)',
+                accentRgb: '122,96,145',
+                titre: 'Email',
+                valeur: CONTACT.email,
+                detail: 'Réponse en moins de 2h',
+                sub: 'Pour les demandes détaillées',
+                href: `mailto:${CONTACT.email}`,
+                cta: 'Écrire un email',
+                badge: '< 2h',
+              },
             ].map((ch, i) => {
               const Icon = ch.icon
               return (
-                <div key={i} className="channel-card" style={{
-                  padding: '40px 32px', borderRight: i < 2 ? '1px solid var(--border)' : 'none',
-                  background: 'var(--surface)', transition: 'background 0.3s',
-                  position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column',
-                }}
-                  onMouseEnter={e => (e.currentTarget.style.background = 'var(--surface-alt)')}
-                  onMouseLeave={e => (e.currentTarget.style.background = 'var(--surface)')}>
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 2, background: ch.color }} />
-                  <div style={{ width: 48, height: 48, background: `${ch.color}14`, border: `1px solid ${ch.color}30`, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-                    <Icon size={22} weight="duotone" style={{ color: ch.color }} />
-                  </div>
-                  <div style={{ fontFamily: 'Sora', fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.2em', color: 'var(--texte-light)', marginBottom: 8 }}>{ch.titre}</div>
-                  <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 18, color: 'var(--texte)', marginBottom: 6, lineHeight: 1.2 }}>{ch.valeur}</div>
-                  <div style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte-light)', marginBottom: 4 }}>{ch.detail}</div>
-                  <div style={{ fontFamily: 'Sora', fontSize: 11, color: 'var(--texte-faint)', marginBottom: 28, flexGrow: 1 }}>{ch.sub}</div>
-                  <a href={ch.href} target={ch.target} rel={ch.target ? 'noreferrer' : undefined} style={{
-                    display: 'inline-flex', alignItems: 'center', gap: 8,
-                    fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
-                    textTransform: 'uppercase', letterSpacing: '0.15em',
-                    color: ch.color, textDecoration: 'none',
-                    borderBottom: `1px solid ${ch.color}`,
-                    paddingBottom: 2, transition: 'gap 0.3s', width: 'fit-content',
+                <div
+                  key={i}
+                  className="channel-card"
+                  style={{
+                    position: 'relative',
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    backdropFilter: 'blur(12px)',
+                    display: 'flex', flexDirection: 'column',
+                    overflow: 'hidden',
+                    transition: 'background 0.3s, border-color 0.3s, transform 0.3s',
                   }}
-                    onMouseEnter={e => (e.currentTarget.style.gap = '12px')}
-                    onMouseLeave={e => (e.currentTarget.style.gap = '8px')}>
-                    {ch.cta} <ArrowRight size={12} weight="bold" />
-                  </a>
+                  onMouseEnter={e => {
+                    e.currentTarget.style.background = `rgba(${ch.accentRgb},0.08)`
+                    e.currentTarget.style.borderColor = `rgba(${ch.accentRgb},0.35)`
+                    e.currentTarget.style.transform = 'translateY(-4px)'
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
+                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
+                    e.currentTarget.style.transform = 'translateY(0)'
+                  }}
+                >
+                  {/* Top accent bar */}
+                  <div style={{
+                    position: 'absolute', top: 0, left: 0, right: 0, height: 2,
+                    background: `linear-gradient(90deg, transparent, ${ch.accentColor}, transparent)`,
+                    opacity: 0.8,
+                  }} />
+
+                  <div style={{ padding: 'clamp(28px,3vw,40px)' }}>
+                    {/* Icon + badge row */}
+                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 28 }}>
+                      <div style={{
+                        width: 56, height: 56,
+                        background: `rgba(${ch.accentRgb},0.12)`,
+                        border: `1px solid rgba(${ch.accentRgb},0.25)`,
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      }}>
+                        <Icon size={26} weight="duotone" style={{ color: ch.accentColor }} />
+                      </div>
+                      <span style={{
+                        fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+                        letterSpacing: '0.12em', textTransform: 'uppercase',
+                        color: ch.accentColor,
+                        border: `1px solid rgba(${ch.accentRgb},0.35)`,
+                        padding: '4px 8px',
+                        background: `rgba(${ch.accentRgb},0.08)`,
+                      }}>{ch.badge}</span>
+                    </div>
+
+                    {/* Label */}
+                    <div style={{
+                      fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+                      textTransform: 'uppercase', letterSpacing: '0.28em',
+                      color: 'rgba(255,255,255,0.35)', marginBottom: 10,
+                    }}>{ch.titre}</div>
+
+                    {/* Value */}
+                    <div style={{
+                      fontFamily: "'Instrument Serif', serif",
+                      fontSize: 'clamp(16px,1.6vw,22px)',
+                      color: '#fff', lineHeight: 1.2, marginBottom: 14,
+                      wordBreak: 'break-all',
+                    }}>{ch.valeur}</div>
+
+                    {/* Detail */}
+                    <div style={{
+                      fontFamily: 'Sora', fontSize: 12,
+                      color: 'rgba(255,255,255,0.55)', marginBottom: 4, lineHeight: 1.5,
+                    }}>{ch.detail}</div>
+                    <div style={{
+                      fontFamily: 'Sora', fontSize: 11,
+                      color: 'rgba(255,255,255,0.28)',
+                      marginBottom: 32,
+                    }}>{ch.sub}</div>
+
+                    {/* CTA */}
+                    <a
+                      href={ch.href}
+                      target={ch.target}
+                      rel={ch.target ? 'noreferrer' : undefined}
+                      style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 10,
+                        fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                        textTransform: 'uppercase', letterSpacing: '0.15em',
+                        color: '#fff', textDecoration: 'none',
+                        background: `rgba(${ch.accentRgb},0.15)`,
+                        border: `1px solid rgba(${ch.accentRgb},0.4)`,
+                        padding: '12px 20px',
+                        transition: 'background 0.25s, gap 0.25s',
+                        width: '100%', justifyContent: 'center',
+                        boxSizing: 'border-box',
+                      }}
+                      onMouseEnter={e => {
+                        e.currentTarget.style.background = `rgba(${ch.accentRgb},0.3)`
+                        e.currentTarget.style.gap = '14px'
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.background = `rgba(${ch.accentRgb},0.15)`
+                        e.currentTarget.style.gap = '10px'
+                      }}
+                    >
+                      {ch.cta} <ArrowRight size={12} weight="bold" />
+                    </a>
+                  </div>
                 </div>
               )
             })}
@@ -558,9 +707,7 @@ export default function ContactPage() {
         </div>
         <style>{`
           @media (max-width: 768px) {
-            .channels-grid { grid-template-columns: 1fr !important; }
-            .channel-card { border-right: none !important; border-bottom: 1px solid var(--border); }
-            .channel-card:last-child { border-bottom: none; }
+            .channels-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
           }
         `}</style>
       </section>

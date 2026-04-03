@@ -9,10 +9,11 @@ gsap.registerPlugin(ScrollTrigger)
 export function useLenis() {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.0,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       smoothWheel: true,
+      touchMultiplier: 1.5,
     })
 
     // Connecter Lenis à GSAP ticker pour synchroniser ScrollTrigger

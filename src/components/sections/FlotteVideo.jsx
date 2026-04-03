@@ -407,7 +407,6 @@ export default function FlotteVideo() {
       }} />
 
       <style>{`
-        .fv-section { overflow-x: hidden !important; }
         @media (min-width: 769px) {
           .fv-section { min-height: 100vh !important; height: auto !important; align-items: center !important; }
           .fv-content-desktop { padding: 0 24px !important; }

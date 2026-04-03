@@ -225,17 +225,17 @@ export default function About() {
               </div>
             </div>
 
-            {/* Overlay BOTTOM — 4 dernières zones */}
+            {/* Overlay BOTTOM — zones (all zones on mobile, last 4 on desktop) */}
             <div className="zones-bottom" style={{
               position: 'absolute',
               bottom: 0,
               left: 0,
               right: 0,
-              background: 'linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.5) 70%, transparent 100%)',
-              padding: '32px 20px 20px',
+              background: 'linear-gradient(to top, rgba(10,10,10,0.92) 0%, rgba(10,10,10,0.6) 80%, transparent 100%)',
+              padding: '28px 16px 14px',
             }}>
               <div className="zones-grid-bottom">
-                {ABOUT.zones.slice(4).map((zone, i) => (
+                {ABOUT.zones.map((zone, i) => (
                   <div key={i} className="zone-item-bottom" style={{
                     display: 'flex', alignItems: 'center', gap: 8,
                     fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
@@ -259,9 +259,15 @@ export default function About() {
         .about-zones-desktop { display: block; }
         @media (max-width: 768px) {
           .about-zones-desktop { display: none !important; }
-          .zones-top { display: block !important; }
+          .zones-top { display: none !important; }
           .zones-bottom { display: block !important; }
-          .zones-grid-bottom { grid-template-columns: 1fr !important; }
+          .zones-grid-bottom {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 5px 12px !important;
+          }
+          .zones-grid-bottom .zone-item-bottom {
+            font-size: 10px !important;
+          }
           .about-grid {
             grid-template-columns: 1fr !important;
           }
@@ -271,12 +277,12 @@ export default function About() {
           .about-grid > div:first-child {
             order: 1;
           }
-          .zones-top { display: block !important; }
           .about-grid > div:last-child img {
-            min-height: 340px !important;
+            min-height: 240px !important;
+            max-height: 300px !important;
           }
           .about-text {
-            padding: 32px 24px !important;
+            padding: 28px 20px !important;
           }
         }
       `}</style>

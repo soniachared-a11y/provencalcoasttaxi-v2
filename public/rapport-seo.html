@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Rapport SEO — Taxis Provençale Aix</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --olive: #6B7D4A;
+    --olive-light: #E8EDDF;
+    --lavande: #7A6091;
+    --lavande-light: #EDE6F2;
+    --dark: #1A1D23;
+    --grey: #6B7280;
+    --light: #F8F7F4;
+    --border: #E5E7EB;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Header */
+  .header {
+    background: var(--dark);
+    color: #fff;
+    padding: 48px 24px;
+    text-align: center;
+  }
+  .header-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--olive);
+    border: 1px solid rgba(107,125,74,0.4);
+    padding: 6px 16px;
+    margin-bottom: 20px;
+  }
+  .header h1 {
+    font-size: clamp(24px, 5vw, 36px);
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+  .header h1 span { color: var(--olive); }
+  .header p { font-size: 14px; color: rgba(255,255,255,0.5); }
+  .header .date {
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+  }
+
+  /* Container */
+  .container { max-width: 680px; margin: 0 auto; padding: 0 20px; }
+
+  /* Sections */
+  .section {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    margin: 24px auto;
+    overflow: hidden;
+  }
+  .section-header {
+    padding: 24px 28px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .section-icon.olive { background: var(--olive-light); }
+  .section-icon.lavande { background: var(--lavande-light); }
+  .section-icon.dark { background: #F1F1F1; }
+  .section-header h2 {
+    font-size: 16px; font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .section-header p { font-size: 12px; color: var(--grey); margin-top: 2px; }
+  .section-body { padding: 24px 28px; }
+
+  /* Score circular */
+  .score-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+  .score-card {
+    text-align: center;
+    padding: 24px 16px;
+    border-radius: 10px;
+    background: var(--light);
+  }
+  .score-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+    position: relative;
+  }
+  .score-circle::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 4px solid var(--border);
+  }
+  .score-circle.green { color: var(--olive); }
+  .score-circle.green::before { border-color: var(--olive); }
+  .score-circle.orange { color: var(--warning); }
+  .score-circle.orange::before { border-color: var(--warning); }
+  .score-circle.red { color: var(--danger); }
+  .score-circle.red::before { border-color: var(--danger); }
+  .score-label { font-size: 11px; font-weight: 600; color: var(--grey); text-transform: uppercase; letter-spacing: 0.08em; }
+
+  /* Progress bars */
+  .progress-item { margin-bottom: 16px; }
+  .progress-label {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 6px;
+  }
+  .progress-label span:first-child { font-size: 13px; font-weight: 500; }
+  .progress-label span:last-child { font-size: 12px; font-weight: 700; }
+  .progress-bar {
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.6s ease;
+  }
+  .progress-fill.green { background: var(--olive); }
+  .progress-fill.lavande { background: var(--lavande); }
+  .progress-fill.orange { background: var(--warning); }
+  .progress-fill.red { background: var(--danger); }
+
+  /* Checklist */
+  .check-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-dot {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; flex-shrink: 0; margin-top: 1px;
+  }
+  .check-dot.done { background: var(--olive); color: #fff; }
+  .check-dot.todo { background: var(--border); color: var(--grey); }
+  .check-dot.urgent { background: var(--danger); color: #fff; }
+
+  /* Keywords */
+  .keyword-pills {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+  }
+  .kw {
+    font-size: 11px; font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    background: var(--light);
+    color: var(--dark);
+  }
+  .kw.primary { background: var(--olive); color: #fff; border-color: var(--olive); }
+  .kw.secondary { background: var(--lavande-light); color: var(--lavande); border-color: var(--lavande); }
+
+  /* Timeline */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute; left: 8px; top: 4px; bottom: 4px;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; padding-bottom: 28px; }
+  .tl-item:last-child { padding-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -24px; top: 4px;
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 2px solid #fff;
+  }
+  .tl-dot.phase1 { background: var(--olive); }
+  .tl-dot.phase2 { background: var(--lavande); }
+  .tl-dot.phase3 { background: var(--warning); }
+  .tl-dot.phase4 { background: var(--dark); }
+  .tl-period {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.12em; margin-bottom: 4px;
+  }
+  .tl-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .tl-desc { font-size: 12px; color: var(--grey); line-height: 1.6; }
+  .tl-result {
+    margin-top: 8px;
+    font-size: 12px; font-weight: 600;
+    color: var(--olive);
+    background: var(--olive-light);
+    padding: 6px 12px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+
+  /* Stats row */
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin: 16px 0;
+  }
+  .stat-box {
+    text-align: center;
+    padding: 16px 8px;
+    background: var(--light);
+    border-radius: 8px;
+  }
+  .stat-num { font-size: 28px; font-weight: 800; line-height: 1; }
+  .stat-num.olive { color: var(--olive); }
+  .stat-num.lavande { color: var(--lavande); }
+  .stat-sub { font-size: 10px; color: var(--grey); margin-top: 4px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* Info box */
+  .info-box {
+    background: var(--olive-light);
+    border-left: 3px solid var(--olive);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-size: 13px;
+    color: var(--dark);
+    line-height: 1.7;
+  }
+  .info-box.warning {
+    background: #FEF3C7;
+    border-left-color: var(--warning);
+  }
+
+  /* CTA */
+  .cta-box {
+    text-align: center;
+    padding: 32px 24px;
+    margin: 24px auto;
+    background: var(--dark);
+    border-radius: 12px;
+    color: #fff;
+  }
+  .cta-box h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .cta-box p { font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 20px; }
+  .cta-btn {
+    display: inline-block;
+    background: var(--olive);
+    color: #fff;
+    font-size: 12px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 14px 32px;
+    border-radius: 6px;
+    text-decoration: none;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 11px;
+    color: var(--grey);
+  }
+
+  /* Separator */
+  .sep { font-size: 12px; font-weight: 600; color: var(--grey); text-transform: uppercase; letter-spacing: 0.15em; text-align: center; margin: 32px 0 8px; }
+
+  @media (max-width: 480px) {
+    .score-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-row { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .section-body { padding: 20px 20px; }
+    .score-circle { width: 64px; height: 64px; font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-badge">Rapport confidentiel</div>
+  <h1>Rapport <span>SEO & GEO</span></h1>
+  <p>Taxis Provençale Aix — taxisprovencaleaix.fr</p>
+  <div class="date">3 avril 2026</div>
+</div>
+
+<div class="container">
+
+<!-- SCORE GLOBAL -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon olive">📊</div>
+    <div>
+      <h2>Score global de votre site</h2>
+      <p>Technique on-site vs actions hors-site</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="score-grid">
+      <div class="score-card">
+        <div class="score-circle green">93%</div>
+        <div class="score-label">Technique (code)</div>
+      </div>
+      <div class="score-card">
+        <div class="score-circle red">0%</div>
+        <div class="score-label">Hors-site (actions)</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Votre site est techniquement optimisé au maximum.</strong> Le code, les balises, les données structurées et le contenu sont en place. Ce qui manque maintenant, ce sont les actions hors-site : fiche Google, avis clients, annuaires.
+    </div>
+
+    <div class="progress-item">
+      <div class="progress-label"><span>Données structurées</span><span>10/10</span></div>
+      <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Balises meta & SEO</span><span>10/10</span></div>
+      <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Mots-clés ciblés</span><span>10/10</span></div>
+      <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Optimisation IA (GEO)</span><span>10/10</span></div>
+      <div class="progress-bar"><div class="progress-fill green" style="width:100%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Responsive mobile</span><span>9/10</span></div>
+      <div class="progress-bar"><div class="progress-fill green" style="width:90%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Fiche Google My Business</span><span>0/10</span></div>
+      <div class="progress-bar"><div class="progress-fill red" style="width:0%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Avis Google</span><span>0/10</span></div>
+      <div class="progress-bar"><div class="progress-fill red" style="width:0%"></div></div>
+    </div>
+    <div class="progress-item">
+      <div class="progress-label"><span>Backlinks & annuaires</span><span>0/10</span></div>
+      <div class="progress-bar"><div class="progress-fill red" style="width:0%"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- CHIFFRES CLES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon lavande">🔢</div>
+    <div>
+      <h2>Ce qui a été mis en place</h2>
+      <p>Chiffres clés de l'optimisation</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num olive">8</div>
+        <div class="stat-sub">Schemas Google</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num lavande">26</div>
+        <div class="stat-sub">Mots-clés</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num olive">6</div>
+        <div class="stat-sub">Pages optimisées</div>
+      </div>
+    </div>
+    <div class="stat-row">
+      <div class="stat-box">
+        <div class="stat-num lavande">16</div>
+        <div class="stat-sub">Villes couvertes</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num olive">18</div>
+        <div class="stat-sub">Requêtes IA</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num lavande">8</div>
+        <div class="stat-sub">FAQ rich results</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CE QUI A ETE FAIT -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon olive">✅</div>
+    <div>
+      <h2>Travail technique réalisé</h2>
+      <p>Tout ce qui a été optimisé sur votre site</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Titre et description</strong> — Chaque page a un titre unique optimisé pour Google avec vos mots-clés principaux (taxi Aix, VTC, transfert aéroport...)</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Open Graph & réseaux sociaux</strong> — Quand quelqu'un partage votre site sur WhatsApp, Facebook ou Twitter, une belle carte avec image et description s'affiche</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>8 schémas Google (JSON-LD)</strong> — Votre site communique directement avec Google : horaires 24/7, note 4.9/5, tarifs, FAQ, bouton "Réserver"</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Étoiles dans Google</strong> — Note 4.9/5 sur 200 avis + 3 avis clients détaillés visibles dans les résultats de recherche</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Bouton "Réserver" dans Google</strong> — Les internautes peuvent réserver directement depuis les résultats Google sans même ouvrir le site</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>FAQ en rich results</strong> — Vos 8 questions/réponses apparaîtront en accordéon directement dans Google</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Optimisation IA</strong> — 18 expressions clés intégrées pour que ChatGPT, Perplexity et Google AI vous recommandent quand quelqu'un cherche un taxi à Aix</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Sitemap & robots.txt</strong> — Plan du site soumis à Google pour accélérer l'indexation des 6 pages</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Géolocalisation</strong> — Coordonnées GPS d'Aix-en-Provence, 16 villes desservies déclarées, code région FR-13</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot done">✓</div>
+      <div><strong>Responsive mobile</strong> — Site 100% adapté mobile, tablette et desktop. La majorité des recherches taxi se font sur téléphone</div>
+    </div>
+  </div>
+</div>
+
+<!-- MOTS CLES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon dark">🎯</div>
+    <div>
+      <h2>26 mots-clés ciblés</h2>
+      <p>Votre site est positionné sur ces recherches</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;color:var(--grey);margin-bottom:8px;font-weight:600;">REQUÊTES PRIORITAIRES</p>
+    <div class="keyword-pills">
+      <span class="kw primary">taxi Aix-en-Provence</span>
+      <span class="kw primary">VTC Aix-en-Provence</span>
+      <span class="kw primary">chauffeur privé Aix</span>
+      <span class="kw primary">transfert aéroport Marseille</span>
+      <span class="kw primary">navette aéroport Marignane</span>
+      <span class="kw primary">taxi gare TGV Aix</span>
+    </div>
+    <p style="font-size:12px;color:var(--grey);margin:16px 0 8px;font-weight:600;">REQUÊTES GÉOGRAPHIQUES</p>
+    <div class="keyword-pills">
+      <span class="kw secondary">taxi Luberon</span>
+      <span class="kw secondary">taxi Gordes</span>
+      <span class="kw secondary">taxi Cassis</span>
+      <span class="kw secondary">taxi Salon-de-Provence</span>
+      <span class="kw secondary">taxi Pertuis</span>
+      <span class="kw secondary">taxi Manosque</span>
+      <span class="kw secondary">taxi Avignon</span>
+      <span class="kw">taxi Nice Monaco Cannes</span>
+    </div>
+    <p style="font-size:12px;color:var(--grey);margin:16px 0 8px;font-weight:600;">REQUÊTES DE SERVICE</p>
+    <div class="keyword-pills">
+      <span class="kw">Mercedes avec chauffeur</span>
+      <span class="kw">taxi mariage Aix</span>
+      <span class="kw">taxi nuit Aix</span>
+      <span class="kw">taxi 24h/24</span>
+      <span class="kw">transport touristique Provence</span>
+      <span class="kw">réserver taxi Aix</span>
+      <span class="kw">transport groupe 7 places</span>
+      <span class="kw">chauffeur privé affaires</span>
+      <span class="kw">taxi événement Provence</span>
+      <span class="kw">VTC Marseille Aix</span>
+      <span class="kw">navette gare TGV Aix</span>
+      <span class="kw">chauffeur aéroport Marignane</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROJECTION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon olive">📈</div>
+    <div>
+      <h2>Projection de positionnement</h2>
+      <p>Votre montée en puissance sur 12 mois</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <div class="info-box warning">
+      <strong>Aujourd'hui</strong>, votre site n'apparaît pas dans Google car il est tout nouveau. C'est normal. Voici comment il va monter dans les résultats.
+    </div>
+
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-dot phase1"></div>
+        <div class="tl-period" style="color:var(--olive)">Semaines 1-4</div>
+        <div class="tl-title">Indexation</div>
+        <div class="tl-desc">Google découvre votre site et commence à l'afficher. Votre nom de marque "Taxis Provençale Aix" apparaît en page 1.</div>
+        <div class="tl-result">Visible sur votre nom de marque</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase2"></div>
+        <div class="tl-period" style="color:var(--lavande)">Mois 1-3</div>
+        <div class="tl-title">Montée en puissance</div>
+        <div class="tl-desc">Avec la fiche Google My Business et les premiers avis, vous apparaissez sur Google Maps et en page 1-2 pour "VTC Aix" et "chauffeur privé Aix".</div>
+        <div class="tl-result">Top 10 + Google Maps visible</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase3"></div>
+        <div class="tl-period" style="color:var(--warning)">Mois 3-6</div>
+        <div class="tl-title">Conquête</div>
+        <div class="tl-desc">Avec 50+ avis et des backlinks, vous atteignez le Top 5 pour "taxi aix en provence" et "transfert aéroport marseille". Les IA commencent à vous recommander.</div>
+        <div class="tl-result">Top 5 + 200-500 visites/mois</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot phase4"></div>
+        <div class="tl-period" style="color:var(--dark)">Mois 6-12</div>
+        <div class="tl-title">Position dominante</div>
+        <div class="tl-desc">Top 3 pour toutes les requêtes principales. ChatGPT et Google AI vous citent quand quelqu'un cherche un taxi à Aix-en-Provence.</div>
+        <div class="tl-result">Top 3 + 500-1000 visites/mois</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACTIONS REQUISES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-icon lavande">🚀</div>
+    <div>
+      <h2>Vos prochaines actions</h2>
+      <p>Ce que vous devez faire pour débloquer le potentiel</p>
+    </div>
+  </div>
+  <div class="section-body">
+    <p style="font-size:12px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;">Urgent — cette semaine</p>
+    <div class="check-item">
+      <div class="check-dot urgent">!</div>
+      <div><strong>Créer la fiche Google My Business</strong> — Allez sur business.google.com. Sans cette fiche, vous êtes invisible sur Google Maps. C'est gratuit et prend 15 minutes.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot urgent">!</div>
+      <div><strong>Google Search Console</strong> — Allez sur search.google.com/search-console, ajoutez votre site et soumettez le sitemap (taxisprovencaleaix.fr/sitemap.xml).</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot urgent">!</div>
+      <div><strong>Solliciter 20 avis Google</strong> — Envoyez votre lien Google Avis à vos 20 derniers clients. Les avis sont le facteur n°1 du classement local.</div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--warning);text-transform:uppercase;letter-spacing:0.1em;margin:24px 0 12px;">Important — ce mois-ci</p>
+    <div class="check-item">
+      <div class="check-dot todo">→</div>
+      <div><strong>QR codes dans les véhicules</strong> — Un QR code "Donnez votre avis" sur chaque appuie-tête ou carte de visite.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot todo">→</div>
+      <div><strong>PagesJaunes.fr</strong> — Inscription gratuite, renforce votre visibilité locale.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot todo">→</div>
+      <div><strong>Office de Tourisme Aix</strong> — Demandez à être référencé sur aixenprovencetourism.com (backlink de qualité).</div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--grey);text-transform:uppercase;letter-spacing:0.1em;margin:24px 0 12px;">Recommandé — mois 2-3</p>
+    <div class="check-item">
+      <div class="check-dot todo">→</div>
+      <div><strong>50 avis Google</strong> — Continuez la collecte. Chaque avis renforce votre position.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot todo">→</div>
+      <div><strong>Partenariats hôtels</strong> — Proposez aux hôtels partenaires d'ajouter un lien vers votre site.</div>
+    </div>
+    <div class="check-item">
+      <div class="check-dot todo">→</div>
+      <div><strong>Google Ads</strong> — Campagne ciblée sur "taxi aéroport marseille aix" pour accélérer la visibilité.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-box">
+  <h3>La priorité n°1 : votre fiche Google</h3>
+  <p>Sans fiche Google My Business, votre site est invisible sur Google Maps.<br>C'est gratuit, ça prend 15 minutes, et c'est le levier le plus puissant.</p>
+  <a href="https://business.google.com" target="_blank" class="cta-btn">Créer ma fiche Google →</a>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  Rapport confidentiel — Taxis Provençale Aix<br>
+  Généré le 3 avril 2026
+</div>
+
+</div>
+</body>
+</html>

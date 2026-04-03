@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import CharReveal from '../ui/CharReveal'
@@ -45,15 +46,20 @@ export default function Services() {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.strips-container', {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.strips-container',
-          start: 'top 85%',
-          once: true,
-        },
+        y: 60, opacity: 0, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: '.strips-container', start: 'top 85%', once: true },
+      })
+      gsap.from('.srv-line-l', {
+        scaleX: 0, transformOrigin: 'right', duration: 1.2, ease: 'power3.out',
+        scrollTrigger: { trigger: '.srv-discover', start: 'top 95%', once: true },
+      })
+      gsap.from('.srv-line-r', {
+        scaleX: 0, transformOrigin: 'left', duration: 1.2, ease: 'power3.out',
+        scrollTrigger: { trigger: '.srv-discover', start: 'top 95%', once: true },
+      })
+      gsap.from('.srv-discover-txt', {
+        opacity: 0, y: 6, duration: 0.8, delay: 0.5,
+        scrollTrigger: { trigger: '.srv-discover', start: 'top 95%', once: true },
       })
     }, sectionRef)
     return () => ctx.revert()
@@ -65,7 +71,7 @@ export default function Services() {
       id="services"
       style={{ background: 'var(--cream)' }}
     >
-      <div style={{ padding: '80px 0' }}>
+      <div style={{ padding: '80px 0 0' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 56, maxWidth: 1200, margin: '0 auto 56px', padding: '0 24px' }}>
           <span style={{
@@ -306,15 +312,50 @@ export default function Services() {
         </div>
       </div>
 
+      {/* Discover CTA */}
+      <div className="srv-discover" style={{
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        gap: 20, padding: '16px 0 20px',
+      }}>
+        <div className="srv-line-l" style={{
+          height: 1, width: 'clamp(40px,8vw,100px)',
+          background: 'var(--lavande)', opacity: 0.25,
+        }} />
+        <Link
+          to="/services"
+          className="srv-discover-txt"
+          style={{
+            fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 700,
+            letterSpacing: '0.28em', textTransform: 'uppercase',
+            color: 'var(--lavande)', opacity: 0.65, textDecoration: 'none',
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            transition: 'opacity 0.3s ease, gap 0.3s ease',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.opacity = '1'
+            e.currentTarget.style.gap = '16px'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.opacity = '0.65'
+            e.currentTarget.style.gap = '10px'
+          }}
+        >
+          Découvrir tous nos services
+          <span style={{ fontSize: 14, lineHeight: 1 }}>→</span>
+        </Link>
+        <div className="srv-line-r" style={{
+          height: 1, width: 'clamp(40px,8vw,100px)',
+          background: 'var(--lavande)', opacity: 0.25,
+        }} />
+      </div>
+
       {/* Mobile responsive */}
       <style>{`
         @media (max-width: 768px) {
-          .strips-container {
-            height: 360px !important;
-          }
-          .service-strip [style*="padding: 40px 32px"] {
-            padding: 24px 20px !important;
-          }
+          .strips-container { height: 360px !important; }
+          .service-strip [style*="padding: 40px 32px"] { padding: 24px 20px !important; }
+          #services > div:first-child { padding-top: 44px !important; }
+          #services > div:first-child > div:first-child { margin-bottom: 32px !important; }
         }
       `}</style>
     </section>

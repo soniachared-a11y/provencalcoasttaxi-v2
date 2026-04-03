@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, CheckCircle } from '@phosphor-icons/react'
@@ -241,8 +242,8 @@ export default function Hero() {
           {/* CTAs */}
           <div className="hero-actions flex flex-wrap items-center gap-4">
             <MagneticButton
-              as="a"
-              href="#contact"
+              as={Link}
+              to="/contact"
               className="flex items-center gap-2"
               style={{
                 backgroundColor: 'var(--olive)',

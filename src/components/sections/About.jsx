@@ -180,7 +180,7 @@ export default function About() {
           <div style={{ overflow: 'hidden', position: 'relative' }}>
             <img
               ref={imageRef}
-              src="/images/flotte-hotel-luxe.jpg"
+              src="/images/flotte-intercontinental.jpeg"
               alt="Mercedes Classe S devant un hôtel de luxe"
               style={{
                 width: '100%',

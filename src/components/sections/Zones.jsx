@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight } from 'lucide-react'
@@ -181,8 +182,8 @@ export default function Zones() {
                   <span>{z?.duree}</span>
                   <span style={{ color: 'var(--olive)', fontWeight: 600 }}>{z?.prix}</span>
                 </div>
-                <a
-                  href="#contact"
+                <Link
+                  to="/contact"
                   style={{
                     display: 'inline-flex',
                     alignItems: 'center',
@@ -198,7 +199,7 @@ export default function Zones() {
                 >
                   Réserver ce trajet
                   <ArrowRight size={14} strokeWidth={2} />
-                </a>
+                </Link>
               </div>
             </div>
           </div>

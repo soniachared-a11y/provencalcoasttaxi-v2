@@ -209,7 +209,7 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
           clipPath: 'inset(0 0 100% 0)',
         }}
       >
-        <div style={{
+        <div className="faq-answer-content" style={{
           padding: '0 24px 32px 76px',
           lineHeight: 1.8,
         }}>
@@ -311,6 +311,13 @@ export default function FAQ() {
       id="faq"
       style={{ background: 'var(--surface)' }}
     >
+      <style>{`
+        @media (max-width: 600px) {
+          #faq > div { padding: 60px 16px !important; }
+          .faq-answer-content { padding: 0 16px 24px 52px !important; }
+          .faq-item button { padding: 20px 0 20px 16px !important; gap: 12px !important; }
+        }
+      `}</style>
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '100px 24px' }}>
         {/* Header */}
         <div style={{ textAlign: 'center', marginBottom: 64 }}>

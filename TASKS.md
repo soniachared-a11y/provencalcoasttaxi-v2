@@ -182,7 +182,15 @@ t=0.0s  Sainte-Victoire → fade-in opacity 0 → 0.06 en 2s (parallax scrub ens
 - Infos : cards avec icône + label + valeur (tel, email, adresse, horaires, licence)
 - Bouton WhatsApp séparé : border green-500/40, texte vert
 
-**Soumission :** `mailto:` comme en V1 (voir `data/content.js`)
+**Soumission :** Le formulaire POST directement dans Supabase (table `reservations`). Pas de `mailto:`.
+Le site partage le même projet Supabase que le dashboard vtc-dashboard.
+Les clés Supabase (URL + anon key) doivent être dans un `.env` :
+```
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+```
+Installer `@supabase/supabase-js`. Créer un `src/lib/supabase.js` pour initialiser le client.
+Après soumission : message de confirmation + reset du formulaire. Pas de redirection.
 
 **Animation (ScrollTrigger) :**
 - Les deux colonnes : fadeUp avec délai 0.1s entre les deux
@@ -209,10 +217,10 @@ Ajouter dans `<head>` :
 <title>Chauffeur Privé Aix-en-Provence | Provençal Coast Taxi VTC</title>
 <meta name="description" content="Chauffeur privé et taxi à Aix-en-Provence. Transferts aéroport Marseille, voyages d'affaires, événements. Mercedes haut de gamme, tarifs fixes, 24h/24. Licence VTC N°013230073">
 <meta name="keywords" content="chauffeur privé Aix-en-Provence, taxi VTC Aix, transfert aéroport Marseille, taxi Sainte-Victoire">
-<link rel="canonical" href="https://provencalcoasttaxi.fr">
+<link rel="canonical" href="https://taxisprovencaleaix.fr">
 <meta property="og:title" content="Chauffeur Privé Aix-en-Provence | Provençal Coast Taxi VTC">
 <meta property="og:description" content="Mercedes haut de gamme, tarifs fixes, disponible 24h/24. Aix-en-Provence et toute la région PACA.">
-<meta property="og:url" content="https://provencalcoasttaxi.fr">
+<meta property="og:url" content="https://taxisprovencaleaix.fr">
 <meta property="og:type" content="website">
 <meta name="robots" content="index, follow">
 <meta name="geo.region" content="FR-13">

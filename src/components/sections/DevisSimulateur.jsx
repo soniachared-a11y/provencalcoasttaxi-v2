@@ -1,274 +1,325 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, MapPin, CheckCircle, NavigationArrow, Clock } from '@phosphor-icons/react'
+import { ArrowRight, Phone, CheckCircle } from '@phosphor-icons/react'
+import AddressAutocomplete from '../ui/AddressAutocomplete'
+import { CONTACT } from '../../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ── Tarifs ───────────────────────────────────────────────
-const TARIF_JOUR = 2.22    // €/km  — 7h à 19h
-const TARIF_NUIT = 2.88    // €/km  — 19h à 7h
-const PRISE_EN_CHARGE = 4.00
-const MINIMUM = 12
+const TARIF_JOUR  = 2.22
+const TARIF_NUIT  = 2.78
+const PRISE       = 4.00
+const MINIMUM     = 12
 
-// ── Destinations populaires (distances depuis Aix-en-Pce)
-const DESTINATIONS = [
-  { label: 'Aéroport Marseille (MRS)', km: 42 },
-  { label: 'Gare TGV Aix-en-Provence', km: 12 },
-  { label: 'Marseille Centre', km: 35 },
-  { label: 'Aéroport Nice (NCE)', km: 180 },
-  { label: 'Cassis / Calanques', km: 50 },
-  { label: 'Gordes / Luberon', km: 65 },
-  { label: 'Avignon', km: 85 },
-  { label: 'Monaco', km: 210 },
-  { label: 'Cannes', km: 155 },
-  { label: 'Arles', km: 80 },
-  { label: 'Autre destination…', km: null },
-]
-
-const TRUST_ITEMS = ['Tarif fixe garanti', 'Sans engagement', 'Réponse en 15min']
-
-function getTarif(heure) {
-  if (!heure) return TARIF_JOUR
-  const [h] = heure.split(':').map(Number)
-  return h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-}
-
-function calcPrix(km, tarif) {
-  return Math.max(MINIMUM, +(PRISE_EN_CHARGE + km * tarif).toFixed(2))
-}
+const TRUST = ['Tarif fixe garanti', 'Sans engagement', 'Réponse en 15 min']
 
 export default function DevisSimulateur() {
-  const sectionRef = useRef(null)
-  const bgRef = useRef(null)
-
-  const [destination, setDestination] = useState('')
-  const [kmManuel, setKmManuel] = useState('')
-  const [heure, setHeure] = useState('')
-  const [vehicule, setVehicule] = useState('classe-e')
+  const sectionRef  = useRef(null)
+  const [dest, setDest]     = useState(null)
+  const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
 
-  // Km résolu selon sélection
-  const destObj = DESTINATIONS.find(d => d.label === destination)
-  const kmResolu = destObj?.km ?? (kmManuel ? parseFloat(kmManuel) : null)
-  const tarif = getTarif(heure)
-  const isNuit = tarif === TARIF_NUIT
+  function calc() {
+    if (!dest?.km) return
+    const h = new Date().getHours()
+    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
+    const prix = Math.max(MINIMUM, +(PRISE + dest.km * tarif).toFixed(2))
+    setResult({ prix, km: dest.km, isNuit: tarif === TARIF_NUIT })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      if (bgRef.current) {
-        gsap.to(bgRef.current, {
-          yPercent: -15, ease: 'none',
-          scrollTrigger: { trigger: sectionRef.current, start: 'top bottom', end: 'bottom top', scrub: true },
-        })
-      }
-      gsap.from('.devis-card', {
-        y: 60, opacity: 0, scale: 0.97, duration: 1.2, ease: 'power3.out',
-        scrollTrigger: { trigger: '.devis-card', start: 'top 85%', once: true },
+      gsap.from('.dvs-left', {
+        x: -40, opacity: 0, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 88%', once: true },
       })
-      gsap.from('.devis-trust-item', {
-        y: 20, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power2.out',
-        scrollTrigger: { trigger: '.devis-trust', start: 'top 90%', once: true },
+      gsap.from('.dvs-calc', {
+        y: 20, opacity: 0, duration: 0.9, delay: 0.15, ease: 'power3.out',
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 88%', once: true },
+      })
+      gsap.from('.dvs-trust', {
+        y: 12, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out', delay: 0.3,
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 88%', once: true },
       })
     }, sectionRef)
     return () => ctx.revert()
   }, [])
 
-  const handleCalculate = (e) => {
-    e.preventDefault()
-    if (!kmResolu || kmResolu <= 0) return
-    const prix = calcPrix(kmResolu, tarif)
-    setResult({ km: kmResolu, tarif, isNuit, prix })
-    setTimeout(() => {
-      gsap.from('.devis-result', { y: 16, opacity: 0, duration: 0.5, ease: 'power3.out' })
-    }, 30)
-  }
-
-  const inputStyle = {
-    background: 'transparent', border: 'none',
-    borderBottom: '1px solid rgba(255,255,255,0.15)',
-    color: '#fff', fontFamily: 'Sora, sans-serif', fontSize: 14,
-    padding: '14px 0', width: '100%', outline: 'none',
-    transition: 'border-color 0.3s ease',
-  }
-  const labelStyle = {
-    fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 600,
-    textTransform: 'uppercase', letterSpacing: '0.2em',
-    color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: 4,
-  }
-
   return (
-    <section ref={sectionRef} id="devis" style={{ background: 'var(--texte)', position: 'relative', overflow: 'hidden' }}>
-      <img ref={bgRef} src="/images/vignes-provence.jpg" alt="" aria-hidden="true"
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '120%', objectFit: 'cover', opacity: 0.1, pointerEvents: 'none' }} />
+    <section
+      ref={sectionRef}
+      id="devis"
+      style={{
+        background: '#070707',
+        position: 'relative',
+        overflow: 'hidden',
+        borderTop: '1px solid rgba(255,255,255,0.04)',
+        borderBottom: '1px solid rgba(255,255,255,0.04)',
+      }}
+    >
+      <style>{`
+        @keyframes dvs-border-flow {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes dvs-glow-pulse {
+          0%, 100% { opacity: 0.55; }
+          50%       { opacity: 1; }
+        }
+        @keyframes dvs-scan {
+          0%   { transform: translateX(-100%); }
+          100% { transform: translateX(100vw); }
+        }
+        .dvs-calc-btn {
+          transition: background 0.25s, box-shadow 0.25s;
+        }
+        .dvs-calc-btn:not(:disabled):hover {
+          box-shadow: 0 0 14px 2px rgba(107,125,74,0.6), 0 0 28px 6px rgba(107,125,74,0.25) !important;
+        }
+        .dvs-reserve-btn {
+          transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+        }
+        .dvs-reserve-btn:hover {
+          background: rgba(107,125,74,0.22) !important;
+          box-shadow: 0 0 12px 2px rgba(107,125,74,0.5), 0 0 28px 6px rgba(107,125,74,0.2) !important;
+          transform: translateY(-1px);
+        }
+      `}</style>
 
-      <div className="devis-container" style={{ maxWidth: 1200, margin: '0 auto', padding: '100px 24px', position: 'relative', zIndex: 1 }}>
-        <div style={{ maxWidth: 680, margin: '0 auto', textAlign: 'center' }}>
+      {/* Animated neon border top */}
+      <div aria-hidden="true" style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: 1,
+        background: 'linear-gradient(90deg, transparent 0%, var(--olive) 25%, var(--lavande) 50%, var(--olive) 75%, transparent 100%)',
+        backgroundSize: '300% 100%',
+        animation: 'dvs-border-flow 4s ease infinite',
+        opacity: 0.9,
+      }} />
 
-          <span style={{ fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.25em', color: 'var(--olive)', display: 'inline-block', marginBottom: 16 }}>
-            Devis en ligne
-          </span>
-          <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 'clamp(28px, 3.5vw, 42px)', fontWeight: 400, color: '#fff', lineHeight: 1.2, margin: '0 0 16px' }}>
+      {/* Animated neon border bottom */}
+      <div aria-hidden="true" style={{
+        position: 'absolute', bottom: 0, left: 0, right: 0, height: 1,
+        background: 'linear-gradient(90deg, transparent 0%, var(--lavande) 25%, var(--olive) 50%, var(--lavande) 75%, transparent 100%)',
+        backgroundSize: '300% 100%',
+        animation: 'dvs-border-flow 4s ease infinite reverse',
+        opacity: 0.6,
+      }} />
+
+      {/* Scan line */}
+      <div aria-hidden="true" style={{
+        position: 'absolute', top: 0, bottom: 0, width: '120px',
+        background: 'linear-gradient(90deg, transparent, rgba(107,125,74,0.06), transparent)',
+        animation: 'dvs-scan 5s linear infinite',
+        pointerEvents: 'none', zIndex: 0,
+      }} />
+
+      {/* Ambient glows */}
+      <div aria-hidden="true" style={{
+        position: 'absolute', left: '8%', top: '50%', transform: 'translateY(-50%)',
+        width: 200, height: 200,
+        background: 'radial-gradient(circle, rgba(107,125,74,0.12) 0%, transparent 70%)',
+        animation: 'dvs-glow-pulse 3s ease-in-out infinite',
+        pointerEvents: 'none', filter: 'blur(20px)',
+      }} />
+      <div aria-hidden="true" style={{
+        position: 'absolute', right: '8%', top: '50%', transform: 'translateY(-50%)',
+        width: 180, height: 180,
+        background: 'radial-gradient(circle, rgba(122,96,145,0.12) 0%, transparent 70%)',
+        animation: 'dvs-glow-pulse 3s ease-in-out infinite 1.5s',
+        pointerEvents: 'none', filter: 'blur(20px)',
+      }} />
+
+      {/* Main content */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: '1fr 1.6fr',
+        gap: 'clamp(24px,4vw,64px)',
+        alignItems: 'center',
+        padding: 'clamp(32px,4.5vw,52px) clamp(24px,5vw,72px)',
+        position: 'relative', zIndex: 1,
+      }}>
+
+        {/* Left — Title + trust */}
+        <div className="dvs-left">
+          <span style={{
+            fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 700,
+            letterSpacing: '0.3em', textTransform: 'uppercase',
+            color: 'var(--olive)', display: 'block', marginBottom: 8,
+            textShadow: '0 0 10px rgba(107,125,74,0.8), 0 0 20px rgba(107,125,74,0.4)',
+          }}>Devis en ligne</span>
+          <h2 style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 'clamp(22px,3.2vw,42px)',
+            fontWeight: 400, color: '#fff',
+            margin: '0 0 20px', lineHeight: 1.1,
+            letterSpacing: '-0.02em',
+            textShadow: '0 0 30px rgba(255,255,255,0.08)',
+          }}>
             Estimez votre trajet
           </h2>
-          <p style={{ fontFamily: 'Sora, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: 460, margin: '0 auto 48px' }}>
-            Sélectionnez votre destination et obtenez une estimation immédiate à tarif fixe garanti.
-          </p>
-
-          {/* Card */}
-          <div className="devis-card" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', border: '1px solid rgba(255,255,255,0.1)', padding: '48px 40px' }}>
-            <form onSubmit={handleCalculate}>
-
-              {/* Destination populaire */}
-              <div style={{ marginBottom: 32, textAlign: 'left' }}>
-                <label style={labelStyle}>
-                  <MapPin size={10} style={{ display: 'inline', marginRight: 4 }} />
-                  Destination
-                </label>
-                <select
-                  value={destination}
-                  onChange={e => { setDestination(e.target.value); setKmManuel(''); setResult(null) }}
-                  style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
-                  onFocus={e => (e.target.style.borderBottomColor = 'var(--olive)')}
-                  onBlur={e => (e.target.style.borderBottomColor = 'rgba(255,255,255,0.15)')}
-                >
-                  <option value="" style={{ background: '#1a1a2e' }}>— Choisissez une destination —</option>
-                  {DESTINATIONS.map((d, i) => (
-                    <option key={i} value={d.label} style={{ background: '#1a1a2e' }}>
-                      {d.label}{d.km ? ` (${d.km} km)` : ''}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              {/* Km manuel si "Autre" */}
-              {destObj?.km === null && (
-                <div style={{ marginBottom: 32, textAlign: 'left' }}>
-                  <label style={labelStyle}>Distance en kilomètres</label>
-                  <input
-                    type="number"
-                    min="1"
-                    max="2000"
-                    placeholder="Ex : 120"
-                    value={kmManuel}
-                    onChange={e => { setKmManuel(e.target.value); setResult(null) }}
-                    style={inputStyle}
-                    onFocus={e => (e.target.style.borderBottomColor = 'var(--olive)')}
-                    onBlur={e => (e.target.style.borderBottomColor = 'rgba(255,255,255,0.15)')}
-                  />
-                </div>
-              )}
-
-              {/* Row — Heure / Véhicule */}
-              <div className="devis-field-row" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 32, marginBottom: 40 }}>
-                <div style={{ textAlign: 'left' }}>
-                  <label style={labelStyle}>
-                    <Clock size={10} style={{ display: 'inline', marginRight: 4 }} />
-                    Heure de départ
-                  </label>
-                  <input
-                    type="time"
-                    value={heure}
-                    onChange={e => { setHeure(e.target.value); setResult(null) }}
-                    style={{ ...inputStyle, colorScheme: 'dark' }}
-                    onFocus={e => (e.target.style.borderBottomColor = 'var(--olive)')}
-                    onBlur={e => (e.target.style.borderBottomColor = 'rgba(255,255,255,0.15)')}
-                  />
-                  {heure && (
-                    <span style={{ fontFamily: 'Sora, sans-serif', fontSize: 10, color: isNuit ? '#F6AD55' : 'var(--olive)', marginTop: 5, display: 'block' }}>
-                      {isNuit ? `🌙 Tarif nuit — ${TARIF_NUIT} €/km` : `☀️ Tarif jour — ${TARIF_JOUR} €/km`}
-                    </span>
-                  )}
-                </div>
-                <div style={{ textAlign: 'left' }}>
-                  <label style={labelStyle}>Véhicule</label>
-                  <select
-                    value={vehicule}
-                    onChange={e => setVehicule(e.target.value)}
-                    style={{ ...inputStyle, appearance: 'none', cursor: 'pointer' }}
-                    onFocus={e => (e.target.style.borderBottomColor = 'var(--olive)')}
-                    onBlur={e => (e.target.style.borderBottomColor = 'rgba(255,255,255,0.15)')}
-                  >
-                    <option value="classe-e" style={{ background: '#1a1a2e' }}>Classe E — Berline</option>
-                    <option value="classe-s" style={{ background: '#1a1a2e' }}>Classe S — Prestige</option>
-                    <option value="classe-v" style={{ background: '#1a1a2e' }}>Classe V — Van 7 places</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Résultat */}
-              {result && (
-                <div className="devis-result" style={{
-                  background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
-                  padding: '24px 28px', marginBottom: 28,
-                  display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 20, textAlign: 'left',
-                }}>
-                  <div>
-                    <div style={{ fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 6 }}>Distance</div>
-                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 26, color: '#fff' }}>
-                      {result.km} <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)' }}>km</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 6 }}>Tarif appliqué</div>
-                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 26, color: result.isNuit ? '#F6AD55' : 'var(--olive)' }}>
-                      {result.tarif}€ <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.45)' }}>/km</span>
-                    </div>
-                  </div>
-                  <div>
-                    <div style={{ fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 600, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.35)', marginBottom: 6 }}>Estimation</div>
-                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 30, color: 'var(--olive)', fontWeight: 400 }}>
-                      ~{result.prix}€
-                    </div>
-                  </div>
-                  <div style={{ gridColumn: '1/-1', paddingTop: 12, borderTop: '1px solid rgba(255,255,255,0.07)', fontFamily: 'Sora, sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.28)' }}>
-                    Prise en charge {PRISE_EN_CHARGE}€ incluse · Minimum {MINIMUM}€ · Péages non inclus · Prix définitif confirmé à la réservation
-                  </div>
-                </div>
-              )}
-
-              {/* Bouton */}
-              <button
-                type="submit"
-                disabled={!kmResolu}
-                style={{
-                  width: '100%',
-                  background: kmResolu ? 'var(--olive)' : 'rgba(255,255,255,0.08)',
-                  color: kmResolu ? '#fff' : 'rgba(255,255,255,0.3)',
-                  border: 'none', fontFamily: 'Sora, sans-serif', fontSize: 11,
-                  fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.12em',
-                  padding: '18px 32px', cursor: kmResolu ? 'pointer' : 'not-allowed',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-                  transition: 'background 0.3s ease',
-                }}
-                onMouseEnter={e => { if (kmResolu) e.currentTarget.style.background = '#5A6B3A' }}
-                onMouseLeave={e => { if (kmResolu) e.currentTarget.style.background = 'var(--olive)' }}
-              >
-                <NavigationArrow size={14} weight="bold" />
-                {result ? 'RECALCULER' : 'CALCULER MON DEVIS'}
-                <ArrowRight size={14} weight="bold" />
-              </button>
-            </form>
-          </div>
-
-          {/* Trust */}
-          <div className="devis-trust" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, marginTop: 24, flexWrap: 'wrap' }}>
-            {TRUST_ITEMS.map((item, i) => (
-              <div key={i} className="devis-trust-item" style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Sora, sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>
-                <CheckCircle size={12} weight="duotone" style={{ color: 'var(--olive)' }} />
-                {item}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {TRUST.map((item, i) => (
+              <div key={i} className="dvs-trust" style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                <CheckCircle
+                  size={12} weight="duotone"
+                  style={{ color: 'var(--olive)', filter: 'drop-shadow(0 0 4px rgba(107,125,74,0.9))', flexShrink: 0 }}
+                />
+                <span style={{
+                  fontFamily: 'Sora, sans-serif', fontSize: 10,
+                  color: 'rgba(255,255,255,0.4)', letterSpacing: '0.05em',
+                }}>{item}</span>
               </div>
             ))}
           </div>
+        </div>
+
+        {/* Right — Estimator */}
+        <div className="dvs-calc">
+          {/* Input row */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 12, alignItems: 'center' }}>
+            <div style={{ flex: 1 }}>
+              <AddressAutocomplete
+                value={dest}
+                onChange={d => { setDest(d); setResult(null) }}
+                placeholder="Votre destination (ville, adresse…)"
+                dark={true}
+                onLoadingChange={setLoading}
+                inputStyle={{
+                  height: 46, fontSize: 12,
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  borderRadius: 0,
+                }}
+              />
+            </div>
+            <button
+              onClick={calc}
+              disabled={!dest?.km || loading}
+              className="dvs-calc-btn"
+              style={{
+                height: 46, padding: '0 20px', flexShrink: 0,
+                background: (dest?.km && !loading) ? 'var(--olive)' : 'rgba(255,255,255,0.05)',
+                color: (dest?.km && !loading) ? '#fff' : 'rgba(255,255,255,0.2)',
+                border: 'none', fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                cursor: (dest?.km && !loading) ? 'pointer' : 'not-allowed',
+                boxShadow: (dest?.km && !loading) ? '0 0 8px 1px rgba(107,125,74,0.4)' : 'none',
+                whiteSpace: 'nowrap',
+              }}
+            >
+              {loading ? '…' : 'Calculer'}
+            </button>
+          </div>
+
+          {/* Distance hint */}
+          {dest?.km && !result && (
+            <p style={{
+              fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.28)',
+              margin: '0 0 10px', letterSpacing: '0.04em',
+            }}>{dest.km} km depuis Aix-en-Provence</p>
+          )}
+
+          {/* Result + CTAs */}
+          {result ? (
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap',
+              background: 'rgba(255,255,255,0.03)',
+              border: '1px solid rgba(107,125,74,0.25)',
+              padding: '14px 20px',
+            }}>
+              <div style={{ flex: 1, minWidth: 120 }}>
+                <div style={{ fontFamily: 'Sora', fontSize: 8, color: 'rgba(255,255,255,0.3)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
+                  {result.km} km · tarif {result.isNuit ? 'nuit' : 'jour'}
+                </div>
+                <span style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: 'clamp(28px,4vw,40px)',
+                  color: 'var(--olive)',
+                  lineHeight: 1,
+                  textShadow: '0 0 20px rgba(107,125,74,0.6)',
+                }}>~{result.prix}€</span>
+              </div>
+
+              {/* CTAs */}
+              <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap' }}>
+                <Link
+                  to="/contact"
+                  className="dvs-reserve-btn"
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 8,
+                    fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                    letterSpacing: '0.14em', textTransform: 'uppercase',
+                    color: '#fff', textDecoration: 'none',
+                    padding: '11px 22px',
+                    border: '1px solid rgba(107,125,74,0.5)',
+                    background: 'rgba(107,125,74,0.1)',
+                    boxShadow: '0 0 8px 1px rgba(107,125,74,0.2)',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Réserver <ArrowRight size={11} weight="bold" />
+                </Link>
+                <a
+                  href={CONTACT.telHref}
+                  style={{
+                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                    fontFamily: 'Sora', fontSize: 10, fontWeight: 500,
+                    color: 'rgba(255,255,255,0.45)', textDecoration: 'none',
+                    whiteSpace: 'nowrap', transition: 'color 0.2s',
+                  }}
+                  onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                  onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.45)')}
+                >
+                  <Phone size={13} weight="light" /> Appeler
+                </a>
+              </div>
+            </div>
+          ) : (
+            /* Default state — two CTA buttons */
+            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center' }}>
+              <Link
+                to="/contact"
+                className="dvs-reserve-btn"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 8,
+                  fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                  letterSpacing: '0.14em', textTransform: 'uppercase',
+                  color: '#fff', textDecoration: 'none',
+                  padding: '12px 24px',
+                  border: '1px solid rgba(107,125,74,0.5)',
+                  background: 'rgba(107,125,74,0.08)',
+                  boxShadow: '0 0 8px 1px rgba(107,125,74,0.25)',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                Réserver <ArrowRight size={11} weight="bold" />
+              </Link>
+              <a
+                href={CONTACT.telHref}
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6,
+                  fontFamily: 'Sora', fontSize: 10, fontWeight: 500,
+                  color: 'rgba(255,255,255,0.4)', textDecoration: 'none',
+                  whiteSpace: 'nowrap', transition: 'color 0.2s',
+                  letterSpacing: '0.06em',
+                }}
+                onMouseEnter={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.85)')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.4)')}
+              >
+                <Phone size={14} weight="light" /> {CONTACT.tel}
+              </a>
+            </div>
+          )}
         </div>
       </div>
 
       <style>{`
         @media (max-width: 768px) {
-          .devis-container { padding: 80px 24px !important; }
-          .devis-card { padding: 32px 20px !important; }
-          .devis-field-row { grid-template-columns: 1fr !important; }
-          .devis-result { grid-template-columns: 1fr 1fr !important; }
+          #devis > div:last-of-type {
+            grid-template-columns: 1fr !important;
+            padding: 32px 20px !important;
+          }
         }
       `}</style>
     </section>

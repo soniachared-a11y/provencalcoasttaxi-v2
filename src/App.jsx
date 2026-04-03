@@ -30,6 +30,7 @@ import FlottePage from './pages/FlottePage'
 import AProposPage from './pages/AProposPage'
 import ContactPage from './pages/ContactPage'
 import ServicesPage from './pages/ServicesPage'
+import MentionsLegalesPage from './pages/MentionsLegalesPage'
 
 function HomePage() {
   return (
@@ -50,10 +51,6 @@ function HomePage() {
       <Avis />
       <SectionDivider />
       <FAQ />
-      <SectionDivider />
-      <Contact />
-      <SectionDivider />
-      <Hero />
       <BandeauCTA />
     </main>
   )
@@ -74,6 +71,7 @@ export default function App() {
         <Route path="/flotte" element={<FlottePage />} />
         <Route path="/a-propos" element={<AProposPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
       </Routes>
       <Footer />
       <PhoneFloat />

@@ -34,7 +34,7 @@
 → Couleur très subtile (6% opacité or) — décoratif pas distrayant
 
 **Décision : Pas de section dédiée taximalacrida.fr**
-→ Le site est provencalcoasttaxi.fr
+→ Le site est taxisprovencaleaix.fr
 → Malacrida sera uniquement dans le dashboard (back-office)
 → On ne mélange pas les deux marques sur le site public
 

@@ -111,104 +111,108 @@ export default function Avis() {
     <section
       ref={sectionRef}
       id="avis"
-      style={{ background: 'var(--cream)' }}
     >
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px 0' }}>
-        {/* Header */}
-        <div style={{ textAlign: 'center', marginBottom: 56 }}>
-          <span style={{
-            fontFamily: 'Sora, sans-serif',
-            fontSize: 11,
-            fontWeight: 500,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: 'var(--lavande)',
-            display: 'inline-block',
-            marginBottom: 16,
-          }}>
-            Avis clients
-          </span>
-          <CharReveal
-            text="Ils nous font confiance"
-            as="h2"
-            style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: 36,
-              fontWeight: 400,
-              color: 'var(--texte)',
-              lineHeight: 1.2,
-              margin: 0,
-            }}
-          />
-          <p style={{
-            fontFamily: 'Sora, sans-serif',
-            fontSize: 14,
-            color: 'var(--texte-light)',
-            lineHeight: 1.8,
-            maxWidth: 560,
-            margin: '20px auto 0',
-            textAlign: 'center',
-          }}>
-            {SECTION_INTROS.avis}
-          </p>
-        </div>
-
-        {/* Google rating widget */}
-        <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 16,
-          marginBottom: 40,
-        }}>
-          <div style={{ textAlign: 'right' }}>
-            <div style={{
-              fontFamily: "'Instrument Serif', serif",
-              fontSize: 48,
-              color: 'var(--olive)',
-              lineHeight: 1,
-            }}>
-              4.9
-            </div>
-            <div style={{ fontSize: 16, color: 'var(--lavande)', letterSpacing: 2, marginTop: 4 }}>
-              {STARS}
-            </div>
-          </div>
-          <div style={{
-            width: 1,
-            height: 48,
-            background: 'var(--border)',
-          }} />
-          <div>
-            <div style={{
-              fontFamily: 'Sora, sans-serif',
-              fontSize: 13,
-              fontWeight: 600,
-              color: 'var(--texte)',
-            }}>
-              200+ avis vérifiés
-            </div>
-            <div style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 4,
+      {/* Olive header block */}
+      <div style={{ background: 'var(--olive)', padding: '80px 24px 56px' }}>
+        <div style={{ maxWidth: 1200, margin: '0 auto' }}>
+          {/* Header */}
+          <div style={{ textAlign: 'center', marginBottom: 56 }}>
+            <span style={{
               fontFamily: 'Sora, sans-serif',
               fontSize: 11,
-              color: 'var(--texte-light)',
-              marginTop: 4,
+              fontWeight: 500,
+              letterSpacing: '0.12em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.6)',
+              display: 'inline-block',
+              marginBottom: 16,
             }}>
-              <ShieldCheck size={12} weight="duotone" style={{ color: 'var(--olive)' }} />
-              Avis Google vérifiés
+              Avis clients
+            </span>
+            <CharReveal
+              text="Ils nous font confiance"
+              as="h2"
+              style={{
+                fontFamily: "'Instrument Serif', serif",
+                fontSize: 36,
+                fontWeight: 400,
+                color: '#FFFFFF',
+                lineHeight: 1.2,
+                margin: 0,
+              }}
+            />
+            <p style={{
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 14,
+              color: 'rgba(255,255,255,0.65)',
+              lineHeight: 1.8,
+              maxWidth: 560,
+              margin: '20px auto 0',
+              textAlign: 'center',
+            }}>
+              {SECTION_INTROS.avis}
+            </p>
+          </div>
+
+          {/* Google rating widget */}
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 16,
+          }}>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{
+                fontFamily: "'Instrument Serif', serif",
+                fontSize: 48,
+                color: '#FFFFFF',
+                lineHeight: 1,
+              }}>
+                4.9
+              </div>
+              <div style={{ fontSize: 16, color: 'rgba(255,255,255,0.7)', letterSpacing: 2, marginTop: 4 }}>
+                {STARS}
+              </div>
+            </div>
+            <div style={{
+              width: 1,
+              height: 48,
+              background: 'rgba(255,255,255,0.25)',
+            }} />
+            <div>
+              <div style={{
+                fontFamily: 'Sora, sans-serif',
+                fontSize: 13,
+                fontWeight: 600,
+                color: '#FFFFFF',
+              }}>
+                200+ avis vérifiés
+              </div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 4,
+                fontFamily: 'Sora, sans-serif',
+                fontSize: 11,
+                color: 'rgba(255,255,255,0.6)',
+                marginTop: 4,
+              }}>
+                <ShieldCheck size={12} weight="duotone" style={{ color: 'rgba(255,255,255,0.8)' }} />
+                Avis Google vérifiés
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
+      {/* Cream content block */}
+      <div style={{ background: 'var(--cream)' }}>
+      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '0 24px' }}>
         {/* BLOC 1 — Featured review */}
         <div
           className="avis-featured"
           style={{
             position: 'relative',
-            borderTop: '1px solid var(--border)',
             borderBottom: '1px solid var(--border)',
             padding: '64px 0',
             textAlign: 'center',
@@ -284,6 +288,7 @@ export default function Avis() {
           </div>
         </div>
       </div>
+      </div>{/* end cream content block */}
 
       {/* BLOC 2 — Marquee */}
       <div

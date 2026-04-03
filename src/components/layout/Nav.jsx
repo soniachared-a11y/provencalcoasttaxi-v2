@@ -30,7 +30,7 @@ export default function Nav() {
   }, [location.pathname])
 
   useEffect(() => {
-    const hero = document.querySelector('#hero')
+    const hero = document.querySelector('#hero') || document.querySelector('#hero-alt') || document.querySelector('.page-hero')
     if (!hero) return
     const st = ScrollTrigger.create({
       trigger: hero,
@@ -122,12 +122,20 @@ export default function Nav() {
   }
 
   // Renders anchor link or page Link depending on type
-  function NavLink({ item, onClick }) {
+  function NavLink({ item, onClick, inDrawer = false }) {
     const isActive = !item.anchor && location.pathname === item.href
+    const drawerColor = isActive ? 'var(--olive)' : 'var(--texte)'
+    const drawerHover = 'var(--olive)'
     const style = {
       ...linkStyle,
-      color: isActive ? (scrolled && !onDark ? 'var(--olive)' : '#FFFFFF') : linkColor,
+      color: inDrawer
+        ? drawerColor
+        : (isActive ? (scrolled && !onDark ? 'var(--olive)' : '#FFFFFF') : linkColor),
+      fontSize: inDrawer ? '16px' : linkStyle.fontSize,
+      fontWeight: inDrawer ? (isActive ? 600 : 400) : linkStyle.fontWeight,
     }
+    const hoverC = inDrawer ? drawerHover : linkHover
+    const leaveC = inDrawer ? drawerColor : (isActive ? style.color : linkColor)
     if (item.anchor) {
       return (
         <a
@@ -135,8 +143,8 @@ export default function Nav() {
           className="nav-link"
           style={style}
           onClick={onClick}
-          onMouseEnter={e => (e.currentTarget.style.color = linkHover)}
-          onMouseLeave={e => (e.currentTarget.style.color = isActive ? style.color : linkColor)}
+          onMouseEnter={e => (e.currentTarget.style.color = hoverC)}
+          onMouseLeave={e => (e.currentTarget.style.color = leaveC)}
         >
           {item.label}
         </a>
@@ -148,8 +156,8 @@ export default function Nav() {
         className="nav-link"
         style={style}
         onClick={onClick}
-        onMouseEnter={e => (e.currentTarget.style.color = linkHover)}
-        onMouseLeave={e => (e.currentTarget.style.color = isActive ? style.color : linkColor)}
+        onMouseEnter={e => (e.currentTarget.style.color = hoverC)}
+        onMouseLeave={e => (e.currentTarget.style.color = leaveC)}
       >
         {item.label}
       </Link>
@@ -259,7 +267,7 @@ export default function Nav() {
         >
           <div className="px-6 pb-8 pt-4 flex flex-col gap-6">
             {NAV_LINKS.map((item) => (
-              <NavLink key={item.href} item={item} onClick={handleLinkClick} />
+              <NavLink key={item.href} item={item} onClick={handleLinkClick} inDrawer />
             ))}
 
             <a

@@ -3,218 +3,194 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  AirplaneTakeoff, UsersThree, Bag,
-  WifiHigh, Star, ArrowRight, CheckCircle,
-  CarProfile, Seatbelt, Gauge,
+  AirplaneTakeoff, Star, ArrowRight, CheckCircle,
 } from '@phosphor-icons/react'
 import { FLOTTE, CONTACT } from '../data/content'
 import CharReveal from '../components/ui/CharReveal'
+import AddressAutocomplete from '../components/ui/AddressAutocomplete'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// ── Tarif rapide (même logique que DevisSimulateur)
 const TARIF_JOUR = 2.22
-const TARIF_NUIT = 2.88
 const PRISE_EN_CHARGE = 4.00
 const MINIMUM = 12
 
-const DEST_RAPIDES = [
-  { label: 'Aéroport Marseille', km: 42 },
-  { label: 'Gare TGV Aix', km: 12 },
-  { label: 'Aéroport Nice', km: 180 },
-  { label: 'Cassis / Calanques', km: 50 },
-  { label: 'Gordes / Luberon', km: 65 },
-  { label: 'Marseille Centre', km: 35 },
-  { label: 'Avignon', km: 85 },
-  { label: 'Monaco', km: 210 },
-]
-
-// Icônes par véhicule
 const FLOTTE_EXTRAS = [
   {
-    icon: CarProfile,
-    color: 'var(--bleu)',
-    tags: ['Wi-Fi à bord', 'Climatisation bi-zone', '3 passagers max'],
-    detailImg: '/images/classe-s-interieur.jpg',
-    cutout: '/images/classe-s-detour.png',
-    bgImg: '/images/classe-e-provence.jpg',
-    accentColor: 'var(--bleu)',
-    bgAccent: '#3D5A8015',
-  },
-  {
-    icon: Star,
-    color: 'var(--lavande)',
-    tags: ['Sièges massants', 'Isolation phonique', 'Service VIP'],
-    detailImg: '/images/classe-s-interieur.jpg',
-    cutout: '/images/classe-s-detour.png',
-    bgImg: '/images/classe-s-provence.jpg',
     accentColor: 'var(--lavande)',
-    bgAccent: '#7A609115',
+    bgImg: '/images/classe-e-provence.jpg',
+    cutout: '/images/classe-s-detour.png',
+    detailImg: '/images/classe-s-interieur.jpg',
+    equipment: [
+      'Climatisation bi-zone automatique',
+      'Wi-Fi haut débit à bord',
+      'Chargeurs USB-C & USB-A',
+      'Sièges cuir pleine fleur',
+      'Vitres surteintées',
+    ],
   },
   {
-    icon: UsersThree,
-    color: 'var(--olive)',
-    tags: ['7 passagers', 'Grand espace bagages', 'Transferts groupe'],
-    detailImg: '/images/classe-v-interieur.jpg',
-    cutout: '/images/classe-v-detour.png',
-    bgImg: '/images/classe-v-provence.jpg',
     accentColor: 'var(--olive)',
-    bgAccent: '#6B7D4A15',
+    bgImg: '/images/classe-s-provence.jpg',
+    cutout: '/images/classe-s-detour.png',
+    detailImg: '/images/classe-s-interieur.jpg',
+    equipment: [
+      'Sièges massants électriques',
+      'Suspension pneumatique',
+      'Isolation phonique totale',
+      'Écrans arrière intégrés',
+      'Service boissons inclus',
+    ],
+  },
+  {
+    accentColor: '#7EC8C8',
+    bgImg: '/images/classe-v-provence.jpg',
+    cutout: '/images/classe-v-detour.png',
+    detailImg: '/images/classe-v-interieur.jpg',
+    equipment: [
+      '7 sièges configuration modulable',
+      'Coffre XXL pour groupes',
+      'Tables de travail escamotables',
+      'Wi-Fi & USB multi-ports',
+      'Transferts famille / groupe',
+    ],
   },
 ]
 
-function QuickEstimator({ vehicleIndex }) {
-  const [dest, setDest] = useState('')
-  const [heure, setHeure] = useState('')
+function CompactEstimator({ accent }) {
+  const [dest, setDest] = useState(null)   // { label, km } | null
+  const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
-  const destObj = DEST_RAPIDES.find(d => d.label === dest)
 
   function calc() {
-    if (!destObj) return
-    const h = heure ? parseInt(heure.split(':')[0], 10) : 10
-    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-    const prix = Math.max(MINIMUM, +(PRISE_EN_CHARGE + destObj.km * tarif).toFixed(2))
-    setResult({ prix, isNuit: tarif === TARIF_NUIT, km: destObj.km })
-  }
-
-  const iStyle = {
-    background: 'transparent', border: 'none',
-    borderBottom: '1px solid rgba(255,255,255,0.15)',
-    color: '#fff', fontFamily: 'Sora, sans-serif', fontSize: 13,
-    padding: '10px 0', width: '100%', outline: 'none',
-    transition: 'border-color 0.3s',
+    if (!dest?.km) return
+    const prix = Math.max(MINIMUM, +(PRISE_EN_CHARGE + dest.km * TARIF_JOUR).toFixed(2))
+    setResult({ prix, km: dest.km })
   }
 
   return (
     <div style={{
-      background: 'rgba(0,0,0,0.35)',
-      backdropFilter: 'blur(16px)',
-      WebkitBackdropFilter: 'blur(16px)',
-      border: '1px solid rgba(255,255,255,0.1)',
-      padding: '28px 24px',
-      marginTop: 32,
+      borderTop: '1px solid rgba(255,255,255,0.07)',
+      paddingTop: 20,
+      marginTop: 20,
     }}>
-      <div style={{ fontFamily: 'Sora', fontSize: 9, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.4)', marginBottom: 16 }}>
-        Estimer mon trajet
+      <div style={{ fontFamily: 'Sora', fontSize: 8, fontWeight: 700, letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.3)', marginBottom: 12 }}>
+        Estimer ce trajet
       </div>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, marginBottom: 12 }}>
-        <select
-          value={dest}
-          onChange={e => { setDest(e.target.value); setResult(null) }}
-          style={{ ...iStyle, cursor: 'pointer', appearance: 'none' }}
-          onFocus={e => (e.target.style.borderBottomColor = 'var(--olive)')}
-          onBlur={e => (e.target.style.borderBottomColor = 'rgba(255,255,255,0.15)')}
-        >
-          <option value="" style={{ background: '#111' }}>Destination</option>
-          {DEST_RAPIDES.map((d, i) => (
-            <option key={i} value={d.label} style={{ background: '#111' }}>{d.label}</option>
-          ))}
-        </select>
-        <input
-          type="time"
-          value={heure}
-          onChange={e => { setHeure(e.target.value); setResult(null) }}
-          style={{ ...iStyle, colorScheme: 'dark' }}
-          onFocus={e => (e.target.style.borderBottomColor = 'var(--olive)')}
-          onBlur={e => (e.target.style.borderBottomColor = 'rgba(255,255,255,0.15)')}
-        />
-      </div>
-      {result && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 16, padding: '12px 0', marginBottom: 12, borderTop: '1px solid rgba(255,255,255,0.07)', borderBottom: '1px solid rgba(255,255,255,0.07)' }}>
-          <div>
-            <div style={{ fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.15em' }}>{result.km} km</div>
-          </div>
-          <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, color: 'var(--olive)', flex: 1 }}>~{result.prix}€</div>
-          <div style={{ fontFamily: 'Sora', fontSize: 10, color: result.isNuit ? '#F6AD55' : 'rgba(255,255,255,0.4)' }}>
-            {result.isNuit ? '🌙 Nuit' : '☀️ Jour'}
-          </div>
+      <div style={{ display: 'flex', gap: 8, marginBottom: 10, alignItems: 'center' }}>
+        <div style={{ flex: 1 }}>
+          <AddressAutocomplete
+            value={dest}
+            onChange={d => { setDest(d); setResult(null) }}
+            placeholder="Destination…"
+            dark={true}
+            onLoadingChange={setLoading}
+            inputStyle={{ height: 38, fontSize: 11, border: '1px solid rgba(255,255,255,0.1)' }}
+          />
         </div>
-      )}
-      <div style={{ display: 'flex', gap: 10, marginTop: 4 }}>
         <button
           onClick={calc}
-          disabled={!destObj}
+          disabled={!dest?.km || loading}
           style={{
-            flex: 1, background: destObj ? 'var(--olive)' : 'rgba(255,255,255,0.08)',
-            color: destObj ? '#fff' : 'rgba(255,255,255,0.3)',
-            border: 'none', fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
-            letterSpacing: '0.12em', textTransform: 'uppercase',
-            padding: '12px 0', cursor: destObj ? 'pointer' : 'not-allowed',
-            transition: 'background 0.3s',
-          }}
-          onMouseEnter={e => { if (destObj) e.currentTarget.style.background = '#5A6B3A' }}
-          onMouseLeave={e => { if (destObj) e.currentTarget.style.background = 'var(--olive)' }}
-        >
-          Calculer
-        </button>
-        <Link
-          to="/contact"
-          style={{
-            flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-            background: 'transparent', border: '1px solid rgba(255,255,255,0.2)',
-            color: '#fff', fontFamily: 'Sora', fontSize: 10, fontWeight: 600,
+            background: (dest?.km && !loading) ? accent : 'rgba(255,255,255,0.05)',
+            color: (dest?.km && !loading) ? '#fff' : 'rgba(255,255,255,0.2)',
+            border: 'none', fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
             letterSpacing: '0.1em', textTransform: 'uppercase',
-            padding: '12px 0', textDecoration: 'none',
-            transition: 'border-color 0.3s, background 0.3s',
+            padding: '9px 14px', cursor: (dest?.km && !loading) ? 'pointer' : 'not-allowed',
+            transition: 'background 0.3s', whiteSpace: 'nowrap', height: 38, flexShrink: 0,
           }}
-          onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)' }}
-          onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)' }}
         >
-          Réserver <ArrowRight size={12} />
-        </Link>
+          {loading ? '…' : 'Calculer'}
+        </button>
       </div>
+      {dest?.km && !result && (
+        <div style={{ fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.35)', marginBottom: 6 }}>
+          {dest.km} km depuis Aix-en-Provence
+        </div>
+      )}
+      {result && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          background: 'rgba(255,255,255,0.04)',
+          border: `1px solid ${accent}30`,
+          padding: '10px 14px',
+        }}>
+          <span style={{ fontFamily: 'Sora', fontSize: 10, color: 'rgba(255,255,255,0.5)' }}>
+            {result.km} km
+          </span>
+          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: accent }}>
+            ~{result.prix}€
+          </span>
+          <Link to="/contact" style={{
+            fontFamily: 'Sora', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em',
+            textTransform: 'uppercase', color: '#fff', textDecoration: 'none',
+            display: 'flex', alignItems: 'center', gap: 4, opacity: 0.7,
+          }}>
+            Réserver <ArrowRight size={10} />
+          </Link>
+        </div>
+      )}
     </div>
   )
 }
 
 function VehicleSection({ v, extra, index }) {
   const sectionRef = useRef(null)
-  const imageRef = useRef(null)
-  const contentRef = useRef(null)
-  const [tab, setTab] = useState('specs')
-  const isReversed = index % 2 !== 0
-  const Icon = extra.icon
+  const bgRef = useRef(null)
+  const numRef = useRef(null)
+  const panelRef = useRef(null)
+  const num = String(index + 1).padStart(2, '0')
+  const { accentColor } = extra
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Parallax image
-      if (imageRef.current) {
-        gsap.to(imageRef.current, {
-          yPercent: -12,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5,
-          },
-        })
-      }
+      // Parallax background
+      gsap.to(bgRef.current, {
+        yPercent: -18,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.8,
+        },
+      })
 
-      // Content reveal
-      if (contentRef.current) {
-        gsap.from(contentRef.current.querySelectorAll('.reveal-item'), {
-          y: 40,
-          opacity: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: 'top 75%',
-            once: true,
-          },
-        })
-      }
-
-      // Image clip reveal
-      gsap.from(`.vehicle-img-wrap-${index}`, {
-        clipPath: 'inset(100% 0% 0% 0%)',
+      // Giant number clip reveal
+      gsap.from(numRef.current, {
+        clipPath: 'inset(0 100% 0 0)',
         duration: 1.4,
         ease: 'power4.inOut',
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 80%',
+          start: 'top 78%',
+          once: true,
+        },
+      })
+
+      // Panel slide in
+      gsap.from(panelRef.current, {
+        x: 50,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 72%',
+          once: true,
+        },
+      })
+
+      // Content stagger
+      gsap.from(sectionRef.current.querySelectorAll('.vc-item'), {
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.7,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 70%',
           once: true,
         },
       })
@@ -227,303 +203,334 @@ function VehicleSection({ v, extra, index }) {
       ref={sectionRef}
       id={`vehicule-${v.modele.toLowerCase().replace(/\s+/g, '-')}`}
       style={{
-        background: index % 2 === 0 ? 'var(--surface)' : 'var(--surface-alt)',
-        borderTop: v.phare ? `2px solid ${extra.accentColor}` : 'none',
+        position: 'relative',
+        background: '#0D1117',
+        overflow: 'hidden',
+        borderTop: index === 0 ? 'none' : '1px solid rgba(255,255,255,0.05)',
       }}
     >
+      {/* Background atmosphere image */}
+      <img
+        ref={bgRef}
+        src={extra.bgImg}
+        alt=""
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          inset: '-18% 0',
+          width: '100%',
+          height: '136%',
+          objectFit: 'cover',
+          opacity: 0.18,
+          filter: 'saturate(0.6)',
+        }}
+      />
+
+      {/* Gradient overlay */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: isReversed ? '1fr 1fr' : '1fr 1fr',
-        maxWidth: 1200,
-        margin: '0 auto',
-        minHeight: 560,
-      }}
-        className="vehicle-grid"
+        position: 'absolute',
+        inset: 0,
+        background: 'linear-gradient(105deg, rgba(13,17,23,0.97) 30%, rgba(13,17,23,0.55) 65%, rgba(13,17,23,0.92) 100%)',
+        pointerEvents: 'none',
+      }} />
+
+      {/* Giant decorative number */}
+      <div
+        ref={numRef}
+        style={{
+          position: 'absolute',
+          top: '50%',
+          left: '-2%',
+          transform: 'translateY(-55%)',
+          fontFamily: "'Instrument Serif', serif",
+          fontSize: 'clamp(200px, 28vw, 380px)',
+          fontWeight: 400,
+          color: 'rgba(255,255,255,0.028)',
+          lineHeight: 1,
+          userSelect: 'none',
+          pointerEvents: 'none',
+          letterSpacing: '-0.04em',
+        }}
       >
-        {/* IMAGE PANEL */}
-        <div
-          style={{
-            order: isReversed ? 2 : 1,
-            position: 'relative',
-            overflow: 'hidden',
-            background: '#0D1117',
-            minHeight: 480,
-          }}
-          className={`vehicle-img-wrap-${index}`}
-        >
-          {/* Atmosphere bg */}
-          <img
-            ref={imageRef}
-            src={extra.bgImg}
-            alt={v.modele}
-            style={{
-              position: 'absolute',
-              inset: 0,
-              width: '100%',
-              height: '115%',
-              objectFit: 'cover',
-              opacity: 0.25,
-            }}
-          />
+        {num}
+      </div>
 
-          {/* Gradient overlay */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: isReversed
-              ? 'linear-gradient(to right, #0D1117 0%, transparent 60%)'
-              : 'linear-gradient(to left, #0D1117 0%, transparent 60%)',
-          }} />
-
-          {/* Vehicle cutout */}
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '40px 32px',
-          }}>
-            <img
-              src={extra.cutout}
-              alt={`${v.modele} profil`}
-              style={{
-                maxWidth: '100%',
-                maxHeight: 220,
-                objectFit: 'contain',
-                filter: 'drop-shadow(0 20px 60px rgba(0,0,0,0.5))',
-                mixBlendMode: 'luminosity',
-                opacity: 0.9,
-              }}
-            />
-          </div>
-
-          {/* Badge */}
-          <div style={{
-            position: 'absolute',
-            top: 28,
-            left: 28,
-            background: extra.accentColor,
-            color: '#fff',
-            fontFamily: 'Sora',
-            fontSize: 9,
-            fontWeight: 700,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            padding: '6px 14px',
-          }}>
-            {v.badge}
-          </div>
-
-          {/* Phare badge */}
-          {v.phare && (
-            <div style={{
-              position: 'absolute',
-              top: 28,
-              right: 28,
-              display: 'flex',
-              alignItems: 'center',
-              gap: 6,
-              color: 'rgba(255,255,255,0.6)',
-              fontFamily: 'Sora',
-              fontSize: 9,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-            }}>
-              <Star size={12} weight="fill" style={{ color: extra.accentColor }} />
-              Recommandé
-            </div>
-          )}
-
-          {/* Quick interior toggle */}
-          <div style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-            height: 120,
-            overflow: 'hidden',
-          }}>
-            <img
-              src={extra.detailImg}
-              alt={`Intérieur ${v.modele}`}
-              style={{
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                opacity: 0.3,
-              }}
-            />
-            <div style={{
-              position: 'absolute',
-              inset: 0,
-              background: 'linear-gradient(to bottom, #0D1117 0%, transparent 100%)',
-            }} />
-          </div>
-        </div>
-
-        {/* CONTENT PANEL */}
-        <div
-          ref={contentRef}
-          style={{
-            order: isReversed ? 1 : 2,
-            padding: 'clamp(40px, 5vw, 64px)',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            position: 'relative',
-          }}
-        >
+      {/* Main content grid */}
+      <div style={{
+        position: 'relative',
+        zIndex: 1,
+        maxWidth: 1300,
+        margin: '0 auto',
+        padding: 'clamp(60px, 8vh, 100px) 40px',
+        display: 'grid',
+        gridTemplateColumns: '1fr 400px',
+        gap: 'clamp(40px, 5vw, 80px)',
+        alignItems: 'center',
+        minHeight: '85vh',
+      }}
+        className="flotte-grid"
+      >
+        {/* LEFT — editorial content */}
+        <div>
           {/* Eyebrow */}
-          <div className="reveal-item" style={{
+          <div className="vc-item" style={{
             display: 'flex',
             alignItems: 'center',
-            gap: 8,
-            marginBottom: 12,
+            gap: 12,
+            marginBottom: 20,
           }}>
-            <Icon size={16} weight="duotone" style={{ color: extra.accentColor }} />
             <span style={{
               fontFamily: 'Sora',
-              fontSize: 10,
-              fontWeight: 600,
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: '0.28em',
               textTransform: 'uppercase',
-              letterSpacing: '0.2em',
-              color: extra.accentColor,
+              color: accentColor,
+            }}>
+              {num}
+            </span>
+            <div style={{ width: 32, height: 1, background: accentColor, opacity: 0.5 }} />
+            <span style={{
+              fontFamily: 'Sora',
+              fontSize: 9,
+              fontWeight: 700,
+              letterSpacing: '0.22em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.45)',
             }}>
               {v.classe}
             </span>
+            {v.phare && (
+              <>
+                <div style={{ width: 3, height: 3, borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }} />
+                <span style={{
+                  fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+                  letterSpacing: '0.2em', textTransform: 'uppercase',
+                  color: accentColor,
+                  display: 'flex', alignItems: 'center', gap: 4,
+                }}>
+                  <Star size={8} weight="fill" style={{ color: accentColor }} />
+                  Recommandé
+                </span>
+              </>
+            )}
           </div>
 
-          {/* Titre */}
-          <div className="reveal-item">
+          {/* Model name */}
+          <div className="vc-item">
             <CharReveal
               text={v.modele}
               as="h2"
               style={{
                 fontFamily: "'Instrument Serif', serif",
-                fontSize: 'clamp(32px, 3.5vw, 48px)',
+                fontSize: 'clamp(40px, 5vw, 72px)',
                 fontWeight: 400,
-                color: 'var(--texte)',
-                lineHeight: 1.1,
-                margin: '0 0 20px',
+                color: '#fff',
+                lineHeight: 1.05,
+                margin: '0 0 6px',
+                letterSpacing: '-0.02em',
               }}
             />
           </div>
 
+          {/* Badge */}
+          <div className="vc-item" style={{ marginBottom: 28 }}>
+            <span style={{
+              display: 'inline-block',
+              fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
+              letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: '#fff',
+              background: accentColor,
+              padding: '5px 14px',
+            }}>
+              {v.badge}
+            </span>
+          </div>
+
           {/* Description */}
-          <p className="reveal-item" style={{
-            fontFamily: 'Sora',
-            fontSize: 13,
-            color: 'var(--texte-light)',
-            lineHeight: 1.8,
-            margin: '0 0 28px',
-            maxWidth: 400,
+          <p className="vc-item" style={{
+            fontFamily: 'Sora', fontSize: 13, fontWeight: 300,
+            color: 'rgba(255,255,255,0.55)', lineHeight: 1.85,
+            maxWidth: 440, margin: '0 0 36px',
           }}>
             {v.desc}
           </p>
 
-          {/* Tabs specs / équipement */}
-          <div className="reveal-item" style={{ marginBottom: 20 }}>
-            <div style={{ display: 'flex', borderBottom: '1px solid var(--border)', marginBottom: 20, gap: 0 }}>
-              {['specs', 'équipement'].map(t => (
-                <button
-                  key={t}
-                  onClick={() => setTab(t)}
-                  style={{
-                    fontFamily: 'Sora',
-                    fontSize: 10,
-                    fontWeight: 600,
-                    letterSpacing: '0.12em',
-                    textTransform: 'uppercase',
-                    color: tab === t ? extra.accentColor : 'var(--texte-faint)',
-                    background: 'none',
-                    border: 'none',
-                    borderBottom: tab === t ? `2px solid ${extra.accentColor}` : '2px solid transparent',
-                    padding: '0 0 12px',
-                    marginRight: 24,
-                    cursor: 'pointer',
-                    transition: 'color 0.3s',
-                    marginBottom: -1,
-                  }}
-                >
-                  {t}
-                </button>
+          {/* Capacity display — large numbers */}
+          <div className="vc-item" style={{
+            display: 'flex',
+            gap: 0,
+            marginBottom: 40,
+          }}>
+            {[
+              { val: v.pax, label: 'Passagers' },
+              { val: v.bags, label: 'Bagages' },
+            ].map((s, i) => (
+              <div key={i} style={{
+                textAlign: 'center',
+                padding: '24px 36px',
+                borderLeft: i === 0 ? `3px solid ${accentColor}` : '1px solid rgba(255,255,255,0.06)',
+                borderRight: i === 1 ? 'none' : '1px solid rgba(255,255,255,0.06)',
+                background: 'rgba(255,255,255,0.02)',
+              }}>
+                <div style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: 'clamp(36px, 5vw, 56px)',
+                  fontWeight: 400,
+                  color: accentColor,
+                  lineHeight: 1,
+                  marginBottom: 6,
+                }}>
+                  {String(s.val).padStart(2, '0')}
+                </div>
+                <div style={{
+                  fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+                  letterSpacing: '0.2em', textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.3)',
+                }}>
+                  {s.label}
+                </div>
+              </div>
+            ))}
+            <div style={{
+              padding: '24px 36px',
+              borderLeft: '1px solid rgba(255,255,255,0.06)',
+              background: 'rgba(255,255,255,0.02)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: 6,
+            }}>
+              <div style={{
+                fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                color: accentColor, letterSpacing: '0.1em',
+                textAlign: 'center',
+              }}>
+                {v.feature}
+              </div>
+              <div style={{
+                fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+                letterSpacing: '0.2em', textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.3)',
+              }}>
+                {v.featureLabel}
+              </div>
+            </div>
+          </div>
+
+          {/* CTAs */}
+          <div className="vc-item" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+            <Link
+              to="/contact"
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 10,
+                background: accentColor, color: '#fff',
+                fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                letterSpacing: '0.14em', textTransform: 'uppercase',
+                padding: '14px 28px', textDecoration: 'none',
+                transition: 'opacity 0.3s, gap 0.3s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.gap = '14px' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.gap = '10px' }}
+            >
+              Réserver ce véhicule
+              <ArrowRight size={13} weight="bold" />
+            </Link>
+            <a
+              href={CONTACT.telHref}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                background: 'transparent',
+                border: '1px solid rgba(255,255,255,0.18)',
+                color: 'rgba(255,255,255,0.7)',
+                fontFamily: 'Sora', fontSize: 10, fontWeight: 600,
+                letterSpacing: '0.1em', textTransform: 'uppercase',
+                padding: '14px 22px', textDecoration: 'none',
+                transition: 'border-color 0.3s, color 0.3s',
+              }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.color = '#fff' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = 'rgba(255,255,255,0.7)' }}
+            >
+              {CONTACT.tel}
+            </a>
+          </div>
+        </div>
+
+        {/* RIGHT — glass panel */}
+        <div
+          ref={panelRef}
+          style={{
+            background: 'rgba(255,255,255,0.03)',
+            backdropFilter: 'blur(24px)',
+            WebkitBackdropFilter: 'blur(24px)',
+            border: '1px solid rgba(255,255,255,0.07)',
+            padding: '36px 28px',
+            borderTop: `2px solid ${accentColor}`,
+          }}
+        >
+          {/* Vehicle cutout */}
+          <div style={{
+            position: 'relative',
+            marginBottom: 28,
+            minHeight: 140,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
+            <img
+              src={extra.cutout}
+              alt={v.modele}
+              style={{
+                maxWidth: '100%',
+                maxHeight: 150,
+                objectFit: 'contain',
+                filter: `drop-shadow(0 16px 48px rgba(0,0,0,0.7)) drop-shadow(0 0 20px ${accentColor}20)`,
+              }}
+            />
+          </div>
+
+          {/* Thin divider */}
+          <div style={{ height: 1, background: 'rgba(255,255,255,0.06)', marginBottom: 24 }} />
+
+          {/* Equipment list */}
+          <div style={{ marginBottom: 4 }}>
+            <div style={{
+              fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+              letterSpacing: '0.2em', textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.25)', marginBottom: 14,
+            }}>
+              Équipements
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+              {extra.equipment.map((item, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <CheckCircle
+                    size={12}
+                    weight="duotone"
+                    style={{ color: accentColor, flexShrink: 0 }}
+                  />
+                  <span style={{
+                    fontFamily: 'Sora', fontSize: 11, fontWeight: 300,
+                    color: 'rgba(255,255,255,0.6)',
+                  }}>
+                    {item}
+                  </span>
+                </div>
               ))}
             </div>
-
-            {tab === 'specs' && (
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 16 }}>
-                {[
-                  { icon: UsersThree, label: 'Passagers', value: `${v.pax} max` },
-                  { icon: Bag, label: 'Bagages', value: `${v.bags} pièces` },
-                  { icon: Gauge, label: v.featureLabel, value: v.feature },
-                ].map((s, i) => (
-                  <div key={i} style={{
-                    padding: '16px',
-                    border: '1px solid var(--border)',
-                    background: 'var(--surface)',
-                    textAlign: 'center',
-                  }}>
-                    <s.icon size={20} weight="duotone" style={{ color: extra.accentColor, marginBottom: 8 }} />
-                    <div style={{ fontFamily: 'Sora', fontSize: 9, color: 'var(--texte-faint)', textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 4 }}>{s.label}</div>
-                    <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 16, color: 'var(--texte)', fontWeight: 400 }}>{s.value}</div>
-                  </div>
-                ))}
-              </div>
-            )}
-
-            {tab === 'équipement' && (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                {[
-                  'Climatisation bi-zone automatique',
-                  'Wi-Fi haut débit à bord',
-                  'Chargeurs USB-C & USB-A',
-                  'Sièges en cuir pleine fleur',
-                  'Vitres surteintées',
-                  v.feature,
-                ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                    <CheckCircle size={14} weight="duotone" style={{ color: extra.accentColor, flexShrink: 0 }} />
-                    <span style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte-light)' }}>{item}</span>
-                  </div>
-                ))}
-              </div>
-            )}
           </div>
 
-          {/* Tags */}
-          <div className="reveal-item" style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 32 }}>
-            {extra.tags.map((tag, i) => (
-              <span key={i} style={{
-                fontFamily: 'Sora',
-                fontSize: 10,
-                fontWeight: 500,
-                color: extra.accentColor,
-                border: `1px solid ${extra.accentColor}30`,
-                background: `${extra.accentColor}08`,
-                padding: '5px 12px',
-                letterSpacing: '0.05em',
-              }}>
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          {/* Quick estimator */}
-          <div className="reveal-item">
-            <QuickEstimator vehicleIndex={index} />
-          </div>
+          {/* Compact estimator */}
+          <CompactEstimator accent={accentColor} />
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          .vehicle-grid {
+        @media (max-width: 900px) {
+          .flotte-grid {
             grid-template-columns: 1fr !important;
-          }
-          .vehicle-grid > div:first-child,
-          .vehicle-grid > div:last-child {
-            order: unset !important;
+            min-height: auto !important;
           }
         }
       `}</style>
@@ -534,14 +541,14 @@ function VehicleSection({ v, extra, index }) {
 export default function FlottePage() {
   const heroRef = useRef(null)
   const heroBgRef = useRef(null)
-  const heroTitleRef = useRef(null)
+  const heroContentRef = useRef(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Hero parallax
       if (heroBgRef.current) {
         gsap.to(heroBgRef.current, {
-          yPercent: 30,
+          yPercent: 28,
           ease: 'none',
           scrollTrigger: {
             trigger: heroRef.current,
@@ -552,29 +559,41 @@ export default function FlottePage() {
         })
       }
 
-      // Hero title fade on scroll
-      if (heroTitleRef.current) {
-        gsap.to(heroTitleRef.current, {
-          yPercent: 60,
+      // Hero content fade on scroll
+      if (heroContentRef.current) {
+        gsap.to(heroContentRef.current, {
+          yPercent: 40,
           opacity: 0,
           ease: 'none',
           scrollTrigger: {
             trigger: heroRef.current,
             start: 'top top',
-            end: '60% top',
+            end: '55% top',
             scrub: 1,
           },
         })
       }
 
-      // Hero content stagger in
-      gsap.from('.hero-flotte-content > *', {
-        y: 50,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.15,
-        ease: 'power3.out',
-        delay: 0.2,
+      // Hero entrance
+      gsap.from('.hero-flotte-in', {
+        y: 50, opacity: 0, duration: 1, stagger: 0.14, ease: 'power3.out', delay: 0.2,
+      })
+
+      // Stats counter
+      document.querySelectorAll('.stat-num').forEach(el => {
+        const target = parseFloat(el.dataset.target)
+        const isFloat = el.dataset.target.includes('.')
+        gsap.from({ val: 0 }, {
+          val: target,
+          duration: 1.6,
+          ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+          onUpdate() {
+            el.textContent = isFloat
+              ? this.targets()[0].val.toFixed(1) + (el.dataset.suffix || '')
+              : Math.round(this.targets()[0].val) + (el.dataset.suffix || '')
+          },
+        })
       })
     }, heroRef)
     return () => ctx.revert()
@@ -582,10 +601,9 @@ export default function FlottePage() {
 
   return (
     <>
-      {/* ── HERO ───────────────────────────────────────────── */}
+      {/* ── HERO ── */}
       <section
         ref={heroRef}
-        className="page-hero"
         style={{
           position: 'relative',
           height: '100vh',
@@ -594,12 +612,12 @@ export default function FlottePage() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
+          background: '#0D1117',
         }}
       >
-        {/* Background image parallax */}
         <img
           ref={heroBgRef}
-          src="/images/flotte-intercontinental.jpeg"
+          src="/images/flotte-hotel-luxe.jpg"
           alt=""
           aria-hidden="true"
           style={{
@@ -608,117 +626,85 @@ export default function FlottePage() {
             width: '100%',
             height: '120%',
             objectFit: 'cover',
+            opacity: 0.35,
+            filter: 'saturate(0.7)',
           }}
         />
-
-        {/* Gradient overlays */}
         <div style={{
-          position: 'absolute',
-          inset: 0,
-          background: 'linear-gradient(160deg, rgba(13,17,23,0.85) 0%, rgba(13,17,23,0.6) 50%, rgba(13,17,23,0.8) 100%)',
+          position: 'absolute', inset: 0,
+          background: 'linear-gradient(160deg, rgba(13,17,23,0.92) 0%, rgba(13,17,23,0.6) 50%, rgba(13,17,23,0.85) 100%)',
         }} />
         <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 200,
-          background: 'linear-gradient(to top, var(--surface) 0%, transparent 100%)',
+          position: 'absolute', bottom: 0, left: 0, right: 0, height: 180,
+          background: 'linear-gradient(to top, #0D1117 0%, transparent 100%)',
         }} />
 
-        {/* Content */}
         <div
-          ref={heroTitleRef}
-          className="hero-flotte-content"
-          style={{
-            position: 'relative',
-            zIndex: 2,
-            textAlign: 'center',
-            padding: '0 24px',
-            maxWidth: 900,
-          }}
+          ref={heroContentRef}
+          style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 900 }}
         >
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: 12,
-            marginBottom: 24,
+          <div className="hero-flotte-in" style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            gap: 16, marginBottom: 28,
           }}>
-            <div style={{ height: 1, width: 40, background: 'var(--lavande)' }} />
+            <div style={{ height: 1, width: 48, background: 'var(--lavande)', opacity: 0.6 }} />
             <span style={{
-              fontFamily: 'Sora',
-              fontSize: 10,
-              fontWeight: 700,
-              letterSpacing: '0.3em',
-              textTransform: 'uppercase',
-              color: 'var(--lavande)',
+              fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
+              letterSpacing: '0.32em', textTransform: 'uppercase', color: 'var(--lavande)',
             }}>
               Notre Flotte
             </span>
-            <div style={{ height: 1, width: 40, background: 'var(--lavande)' }} />
+            <div style={{ height: 1, width: 48, background: 'var(--lavande)', opacity: 0.6 }} />
           </div>
 
-          <h1 style={{
+          <h1 className="hero-flotte-in" style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: 'clamp(42px, 7vw, 80px)',
-            fontWeight: 400,
-            color: '#FFFFFF',
-            lineHeight: 1.05,
-            margin: '0 0 24px',
-            letterSpacing: '-0.01em',
+            fontSize: 'clamp(44px, 7vw, 84px)',
+            fontWeight: 400, color: '#fff', lineHeight: 1.05,
+            margin: '0 0 20px', letterSpacing: '-0.02em',
           }}>
             Trois Mercedes.
             <br />
-            <span style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.7)' }}>Un seul standard.</span>
+            <span style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.55)' }}>
+              Un seul standard.
+            </span>
           </h1>
 
-          <p style={{
-            fontFamily: 'Sora',
-            fontSize: 15,
-            color: 'rgba(255,255,255,0.55)',
-            lineHeight: 1.7,
-            maxWidth: 520,
-            margin: '0 auto 40px',
+          <p className="hero-flotte-in" style={{
+            fontFamily: 'Sora', fontSize: 14, color: 'rgba(255,255,255,0.45)',
+            lineHeight: 1.8, maxWidth: 480, margin: '0 auto 40px',
           }}>
             Chaque véhicule est entretenu quotidiennement et équipé pour votre confort absolu.
-            Cuir intégral, Wi-Fi, climatisation bi-zone — l'excellence à chaque trajet.
           </p>
 
-          {/* Quick nav to vehicles */}
-          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 12 }}>
+          <div className="hero-flotte-in" style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 10 }}>
             {FLOTTE.map((v, i) => (
               <a
                 key={i}
                 href={`#vehicule-${v.modele.toLowerCase().replace(/\s+/g, '-')}`}
                 style={{
-                  fontFamily: 'Sora',
-                  fontSize: 11,
-                  fontWeight: 600,
-                  letterSpacing: '0.1em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.7)',
-                  textDecoration: 'none',
-                  border: '1px solid rgba(255,255,255,0.2)',
-                  padding: '10px 20px',
+                  fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                  letterSpacing: '0.14em', textTransform: 'uppercase',
+                  color: 'rgba(255,255,255,0.6)', textDecoration: 'none',
+                  border: '1px solid rgba(255,255,255,0.15)',
+                  padding: '11px 22px', display: 'flex', alignItems: 'center', gap: 8,
                   transition: 'all 0.3s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 8,
+                  background: v.phare ? 'rgba(107,125,74,0.15)' : 'transparent',
+                  borderColor: v.phare ? 'var(--olive)' : 'rgba(255,255,255,0.15)',
                 }}
                 onMouseEnter={e => {
                   e.currentTarget.style.color = '#fff'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.6)'
                   e.currentTarget.style.background = 'rgba(255,255,255,0.06)'
+                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.45)'
                 }}
                 onMouseLeave={e => {
-                  e.currentTarget.style.color = 'rgba(255,255,255,0.7)'
-                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'
-                  e.currentTarget.style.background = 'transparent'
+                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)'
+                  e.currentTarget.style.background = v.phare ? 'rgba(107,125,74,0.15)' : 'transparent'
+                  e.currentTarget.style.borderColor = v.phare ? 'var(--olive)' : 'rgba(255,255,255,0.15)'
                 }}
               >
                 {v.modele}
-                {v.phare && <Star size={10} weight="fill" style={{ color: 'var(--lavande)' }} />}
+                {v.phare && <Star size={9} weight="fill" style={{ color: 'var(--olive)' }} />}
               </a>
             ))}
           </div>
@@ -726,110 +712,131 @@ export default function FlottePage() {
 
         {/* Scroll indicator */}
         <div style={{
-          position: 'absolute',
-          bottom: 40,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: 8,
-          color: 'rgba(255,255,255,0.35)',
-          zIndex: 2,
-        }}
-          className="scroll-indicator"
-        >
-          <span style={{ fontFamily: 'Sora', fontSize: 9, letterSpacing: '0.2em', textTransform: 'uppercase' }}>Défiler</span>
+          position: 'absolute', bottom: 36, left: '50%', transform: 'translateX(-50%)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+          color: 'rgba(255,255,255,0.2)', zIndex: 2,
+        }}>
+          <span style={{ fontFamily: 'Sora', fontSize: 8, letterSpacing: '0.25em', textTransform: 'uppercase' }}>
+            Défiler
+          </span>
           <div style={{
-            width: 1,
-            height: 48,
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0.35) 0%, transparent 100%)',
+            width: 1, height: 44,
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 100%)',
           }} />
         </div>
       </section>
 
-      {/* ── STATS RAPIDES ────────────────────────────────────── */}
-      <section style={{ background: 'var(--texte)', padding: '32px 24px' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, textAlign: 'center' }}>
+      {/* ── STATS BAR ── */}
+      <section style={{ background: 'rgba(255,255,255,0.03)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div style={{
+          maxWidth: 1200, margin: '0 auto',
+          display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
+          textAlign: 'center',
+        }}>
           {[
-            { v: '3', l: 'Véhicules Mercedes' },
-            { v: '100%', l: 'Entretien quotidien' },
-            { v: '15 000+', l: 'Trajets réalisés' },
-            { v: '4.9★', l: 'Note Google' },
+            { v: 3, suffix: '', l: 'Véhicules Mercedes' },
+            { v: 100, suffix: '%', l: 'Entretien quotidien' },
+            { v: 15000, suffix: '+', l: 'Trajets réalisés' },
+            { v: 4.9, suffix: '★', l: 'Note Google' },
           ].map((s, i) => (
-            <div key={i} style={{ padding: '20px 16px', borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none' }}>
-              <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, color: '#fff', marginBottom: 4 }}>{s.v}</div>
-              <div style={{ fontFamily: 'Sora', fontSize: 10, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{s.l}</div>
+            <div key={i} style={{
+              padding: '28px 16px',
+              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+            }}>
+              <div
+                className="stat-num"
+                data-target={s.v}
+                data-suffix={s.suffix}
+                style={{
+                  fontFamily: "'Instrument Serif', serif",
+                  fontSize: 'clamp(24px, 3vw, 36px)',
+                  color: '#fff', marginBottom: 4,
+                }}
+              >
+                {s.v}{s.suffix}
+              </div>
+              <div style={{
+                fontFamily: 'Sora', fontSize: 9, fontWeight: 600,
+                color: 'rgba(255,255,255,0.25)',
+                textTransform: 'uppercase', letterSpacing: '0.12em',
+              }}>
+                {s.l}
+              </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* ── VEHICLE SECTIONS ─────────────────────────────────── */}
+      {/* ── VEHICLE SECTIONS ── */}
       {FLOTTE.map((v, i) => (
         <VehicleSection key={i} v={v} extra={FLOTTE_EXTRAS[i]} index={i} />
       ))}
 
-      {/* ── BOTTOM CTA ───────────────────────────────────────── */}
+      {/* ── BOTTOM CTA ── */}
       <section style={{
-        background: 'var(--olive)',
+        background: '#0D1117',
+        borderTop: '1px solid rgba(255,255,255,0.06)',
         padding: '80px 24px',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',
       }}>
         <img
-          src="/images/lavande-provence.jpg"
+          src="/images/lavande-soleil.jpg"
           alt=""
           aria-hidden="true"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
-            objectFit: 'cover', opacity: 0.15, mixBlendMode: 'multiply',
+            objectFit: 'cover', opacity: 0.07, filter: 'saturate(0.3)',
           }}
         />
         <div style={{ position: 'relative', zIndex: 1 }}>
-          <span style={{
-            fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+          <div style={{
+            fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
             letterSpacing: '0.3em', textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.6)', display: 'block', marginBottom: 16,
+            color: 'rgba(255,255,255,0.3)', display: 'block', marginBottom: 20,
           }}>
             Prêt à partir ?
-          </span>
+          </div>
           <h2 style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: 'clamp(28px, 4vw, 48px)',
+            fontSize: 'clamp(28px, 4vw, 52px)',
             fontWeight: 400, color: '#fff', margin: '0 0 16px',
+            letterSpacing: '-0.01em',
           }}>
             Réservez votre Mercedes maintenant
           </h2>
-          <p style={{ fontFamily: 'Sora', fontSize: 13, color: 'rgba(255,255,255,0.6)', margin: '0 auto 36px', maxWidth: 400, lineHeight: 1.7 }}>
+          <p style={{
+            fontFamily: 'Sora', fontSize: 13, color: 'rgba(255,255,255,0.4)',
+            margin: '0 auto 40px', maxWidth: 380, lineHeight: 1.8, fontWeight: 300,
+          }}>
             Tarif fixe garanti, confirmation en 15 minutes, disponible 24h/24.
           </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 16, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 14, flexWrap: 'wrap' }}>
             <Link to="/contact" style={{
-              background: '#fff', color: 'var(--olive)',
+              background: 'var(--olive)', color: '#fff',
               fontFamily: 'Sora', fontSize: 11, fontWeight: 700,
-              letterSpacing: '0.12em', textTransform: 'uppercase',
+              letterSpacing: '0.14em', textTransform: 'uppercase',
               padding: '16px 36px', textDecoration: 'none',
-              display: 'inline-flex', alignItems: 'center', gap: 8,
-              transition: 'transform 0.2s',
+              display: 'inline-flex', alignItems: 'center', gap: 10,
+              transition: 'opacity 0.3s, gap 0.3s',
             }}
-              onMouseEnter={e => (e.currentTarget.style.transform = 'translateY(-2px)')}
-              onMouseLeave={e => (e.currentTarget.style.transform = 'translateY(0)')}
+              onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.gap = '14px' }}
+              onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.gap = '10px' }}
             >
-              Réserver maintenant <ArrowRight size={14} />
+              Réserver maintenant <ArrowRight size={13} weight="bold" />
             </Link>
             <a href={CONTACT.telHref} style={{
-              border: '1px solid rgba(255,255,255,0.4)',
-              color: '#fff',
+              border: '1px solid rgba(255,255,255,0.18)',
+              color: 'rgba(255,255,255,0.65)',
               fontFamily: 'Sora', fontSize: 11, fontWeight: 600,
-              letterSpacing: '0.08em',
-              padding: '16px 36px', textDecoration: 'none',
+              letterSpacing: '0.1em', textTransform: 'uppercase',
+              padding: '16px 32px', textDecoration: 'none',
               display: 'inline-flex', alignItems: 'center', gap: 8,
-              transition: 'border-color 0.3s',
+              transition: 'border-color 0.3s, color 0.3s',
             }}
-              onMouseEnter={e => (e.currentTarget.style.borderColor = '#fff')}
-              onMouseLeave={e => (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)')}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)'; e.currentTarget.style.color = '#fff' }}
+              onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(255,255,255,0.18)'; e.currentTarget.style.color = 'rgba(255,255,255,0.65)' }}
             >
               <AirplaneTakeoff size={14} weight="duotone" />
               {CONTACT.tel}

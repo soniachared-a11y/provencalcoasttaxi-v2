@@ -1,15 +1,56 @@
 // FlotteVideo.jsx — Section vidéo plein écran + mini calculateur hero
 // Véhicules détourés positionnés à CHEVAL entre cette section et la suivante
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { MapPin, ArrowRight } from '@phosphor-icons/react'
+import { ArrowRight, Phone } from '@phosphor-icons/react'
+import AddressAutocomplete from '../ui/AddressAutocomplete'
+import { getRouteKmBetween, AIX } from '../../lib/geo'
+import { CONTACT } from '../../data/content'
+
+const TARIF_JOUR = 2.22
+const TARIF_NUIT = 2.78
+const PRISE = 4.00
+const MINIMUM = 12
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function FlotteVideo() {
   const sectionRef = useRef(null)
+  const [depart, setDepart] = useState(null)
+  const [arrivee, setArrivee] = useState(null)
+  const [heure, setHeure] = useState('')
+  const [calcLoading, setCalcLoading] = useState(false)
+  const [result, setResult] = useState(null)
+
+  async function handleCalculer(e) {
+    e.preventDefault()
+    if (!arrivee) return
+    setCalcLoading(true)
+    setResult(null)
+
+    let km = null
+    const fromLat = depart?.lat ?? AIX.lat
+    const fromLng = depart?.lng ?? AIX.lng
+
+    if (arrivee.lat) {
+      // Photon result — calculate exact route between points
+      km = await getRouteKmBetween(fromLat, fromLng, arrivee.lat, arrivee.lng)
+    } else if (arrivee.km) {
+      // Quick destination — use predefined km (from Aix)
+      km = arrivee.km
+    }
+
+    setCalcLoading(false)
+    if (!km) return
+
+    const h = heure ? parseInt(heure.split(':')[0], 10) : new Date().getHours()
+    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
+    const prix = Math.max(MINIMUM, +(PRISE + km * tarif).toFixed(2))
+    setResult({ km, prix, isNuit: tarif === TARIF_NUIT })
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -108,188 +149,206 @@ export default function FlotteVideo() {
         </p>
 
         {/* Mini calculateur hero */}
-        <form
-          className="fv-btn fv-mini-form"
-          onSubmit={e => e.preventDefault()}
-          style={{
-            display: 'flex',
-            alignItems: 'stretch',
-            gap: 0,
-            background: 'rgba(246,243,238,0.07)',
-            backdropFilter: 'blur(16px)',
-            WebkitBackdropFilter: 'blur(16px)',
-            border: '1px solid rgba(246,243,238,0.15)',
-            maxWidth: 780,
-            margin: '0 auto',
-          }}
-        >
-          {/* Départ */}
-          <div style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
-            <label style={{
-              position: 'absolute', top: 10, left: 16,
-              fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.2em',
-              color: 'var(--olive)',
-            }}>Départ</label>
-            <input
-              type="text"
-              placeholder="Adresse de départ"
-              style={{
-                background: 'transparent', border: 'none', outline: 'none',
-                color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
-                padding: '34px 40px 12px 16px', width: '100%',
-              }}
-              onFocus={e => (e.currentTarget.parentElement.style.background = 'rgba(246,243,238,0.05)')}
-              onBlur={e => (e.currentTarget.parentElement.style.background = 'transparent')}
-            />
-            <MapPin size={14} weight="duotone" style={{
-              position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
-              color: 'var(--olive)', pointerEvents: 'none',
-            }} />
-          </div>
-
-          {/* Arrivée */}
-          <div style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
-            <label style={{
-              position: 'absolute', top: 10, left: 16,
-              fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.2em',
-              color: 'var(--olive)',
-            }}>Arrivée</label>
-            <input
-              type="text"
-              placeholder="Adresse d'arrivée"
-              style={{
-                background: 'transparent', border: 'none', outline: 'none',
-                color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
-                padding: '34px 40px 12px 16px', width: '100%',
-              }}
-              onFocus={e => (e.currentTarget.parentElement.style.background = 'rgba(246,243,238,0.05)')}
-              onBlur={e => (e.currentTarget.parentElement.style.background = 'transparent')}
-            />
-            <MapPin size={14} weight="duotone" style={{
-              position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
-              color: 'var(--olive)', pointerEvents: 'none',
-            }} />
-          </div>
-
-          {/* Date */}
-          <div style={{ flex: '0 0 160px', position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
-            <label style={{
-              position: 'absolute', top: 10, left: 16,
-              fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
-              textTransform: 'uppercase', letterSpacing: '0.2em',
-              color: 'var(--olive)',
-            }}>Date</label>
-            <input
-              type="date"
-              style={{
-                background: 'transparent', border: 'none', outline: 'none',
-                color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
-                padding: '34px 16px 12px 16px', width: '100%', colorScheme: 'dark',
-              }}
-            />
-          </div>
-
-          {/* Bouton */}
-          <button
-            type="submit"
+        {!result ? (
+          <form
+            className="fv-btn fv-mini-form"
+            onSubmit={handleCalculer}
             style={{
-              background: 'var(--olive)',
-              border: 'none',
-              color: '#fff',
-              fontFamily: 'Sora, sans-serif',
-              fontSize: 11,
-              fontWeight: 600,
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              padding: '0 28px',
-              cursor: 'pointer',
               display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              whiteSpace: 'nowrap',
-              transition: 'background 0.25s ease',
-              flexShrink: 0,
+              alignItems: 'stretch',
+              gap: 0,
+              background: 'rgba(246,243,238,0.07)',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              border: '1px solid rgba(246,243,238,0.15)',
+              maxWidth: 780,
+              margin: '0 auto',
+              overflow: 'visible',
+              position: 'relative',
+              zIndex: 10,
             }}
-            onMouseEnter={e => { e.currentTarget.style.background = '#5A6B3A' }}
-            onMouseLeave={e => { e.currentTarget.style.background = 'var(--olive)' }}
           >
-            Calculer <ArrowRight size={14} weight="bold" />
-          </button>
-        </form>
-      </div>
+            {/* Départ */}
+            <div style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)', minWidth: 0 }}>
+              <label style={{
+                position: 'absolute', top: 8, left: 38, zIndex: 2,
+                fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.2em',
+                color: 'var(--olive)', pointerEvents: 'none',
+              }}>Départ</label>
+              <AddressAutocomplete
+                value={depart}
+                onChange={d => { setDepart(d); setResult(null) }}
+                placeholder="Aix-en-Provence (défaut)"
+                isOrigin={true}
+                dark={true}
+                inputStyle={{
+                  border: 'none', borderRadius: 0,
+                  height: 64, paddingTop: 24, paddingBottom: 8,
+                  background: 'transparent', color: '#F6F3EE',
+                }}
+              />
+            </div>
 
-      {/* Contenu mobile — repositionné en haut */}
-      <div className="fv-content fv-content-mobile" style={{ display: 'none' }}>
-        {/* Tag */}
-        <p style={{
-          fontFamily: 'Sora, sans-serif',
-          fontSize: 10,
-          fontWeight: 600,
-          letterSpacing: '0.25em',
-          textTransform: 'uppercase',
-          color: 'rgba(246,243,238,0.55)',
-          margin: '0 0 16px',
-        }}>
-          Chauffeur privé — Provence
-        </p>
+            {/* Arrivée */}
+            <div style={{ flex: 1, position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)', minWidth: 0 }}>
+              <label style={{
+                position: 'absolute', top: 8, left: 38, zIndex: 2,
+                fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.2em',
+                color: 'var(--olive)', pointerEvents: 'none',
+              }}>Arrivée</label>
+              <AddressAutocomplete
+                value={arrivee}
+                onChange={d => { setArrivee(d); setResult(null) }}
+                placeholder="Destination…"
+                dark={true}
+                inputStyle={{
+                  border: 'none', borderRadius: 0,
+                  height: 64, paddingTop: 24, paddingBottom: 8,
+                  background: 'transparent', color: '#F6F3EE',
+                }}
+              />
+            </div>
 
-        <h2
-          className="fv-title"
-          style={{
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 'clamp(32px, 9vw, 48px)',
-            fontWeight: 400,
-            color: '#F6F3EE',
-            lineHeight: 1.1,
-            margin: '0 0 28px',
-          }}
-        >
-          Votre chauffeur<br />privé en Provence
-        </h2>
+            {/* Date */}
+            <div style={{ flex: '0 0 140px', position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
+              <label style={{
+                position: 'absolute', top: 8, left: 16,
+                fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.2em',
+                color: 'var(--olive)',
+              }}>Date</label>
+              <input
+                type="date"
+                style={{
+                  background: 'transparent', border: 'none', outline: 'none',
+                  color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
+                  padding: '28px 12px 8px 16px', width: '100%', height: 64,
+                  colorScheme: 'dark', boxSizing: 'border-box',
+                }}
+              />
+            </div>
 
-        {/* CTA principal — olive, pleine largeur */}
-        <a
-          href="#devis"
-          className="fv-btn"
-          style={{
-            display: 'block',
-            fontFamily: 'Sora, sans-serif',
-            fontSize: 12,
-            fontWeight: 600,
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase',
-            color: '#FFFFFF',
-            background: 'var(--olive)',
-            padding: '17px 24px',
-            textDecoration: 'none',
-            textAlign: 'center',
-            marginBottom: 12,
-          }}
-        >
-          Calculer mon trajet →
-        </a>
+            {/* Heure */}
+            <div style={{ flex: '0 0 110px', position: 'relative', borderRight: '1px solid rgba(246,243,238,0.12)' }}>
+              <label style={{
+                position: 'absolute', top: 8, left: 16,
+                fontFamily: 'Sora, sans-serif', fontSize: 8, fontWeight: 700,
+                textTransform: 'uppercase', letterSpacing: '0.2em',
+                color: 'var(--olive)',
+              }}>Heure</label>
+              <input
+                type="time"
+                value={heure}
+                onChange={e => setHeure(e.target.value)}
+                style={{
+                  background: 'transparent', border: 'none', outline: 'none',
+                  color: '#F6F3EE', fontFamily: 'Sora, sans-serif', fontSize: 13,
+                  padding: '28px 12px 8px 16px', width: '100%', height: 64,
+                  colorScheme: 'dark', boxSizing: 'border-box',
+                }}
+              />
+            </div>
 
-        {/* CTA secondaire — appel direct */}
-        <a
-          href="tel:+33600000000"
-          style={{
-            display: 'block',
-            fontFamily: 'Sora, sans-serif',
-            fontSize: 12,
-            fontWeight: 500,
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
-            color: 'rgba(246,243,238,0.7)',
-            textDecoration: 'none',
-            textAlign: 'center',
-            padding: '14px 24px',
-            border: '1px solid rgba(246,243,238,0.2)',
-          }}
-        >
-          Appeler maintenant
-        </a>
+            {/* Boutons : Calculer + Réserver */}
+            <div className="fv-form-actions" style={{ display: 'flex', flexShrink: 0 }}>
+              <button
+                type="submit"
+                disabled={(!arrivee?.lat && !arrivee?.km) || calcLoading}
+                style={{
+                  background: (arrivee?.lat || arrivee?.km) && !calcLoading ? 'var(--olive)' : 'rgba(255,255,255,0.1)',
+                  border: 'none',
+                  color: '#fff',
+                  fontFamily: 'Sora, sans-serif',
+                  fontSize: 11, fontWeight: 600,
+                  letterSpacing: '0.1em', textTransform: 'uppercase',
+                  padding: '0 20px',
+                  cursor: ((arrivee?.lat || arrivee?.km) && !calcLoading) ? 'pointer' : 'default',
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  whiteSpace: 'nowrap', transition: 'background 0.25s ease',
+                  height: 64, borderRight: '1px solid rgba(246,243,238,0.12)',
+                }}
+                onMouseEnter={e => { if ((arrivee?.lat || arrivee?.km) && !calcLoading) e.currentTarget.style.background = '#5A6B3A' }}
+                onMouseLeave={e => { e.currentTarget.style.background = (arrivee?.lat || arrivee?.km) && !calcLoading ? 'var(--olive)' : 'rgba(255,255,255,0.1)' }}
+              >
+                {calcLoading ? '…' : <><ArrowRight size={14} weight="bold" /> Calculer</>}
+              </button>
+              <Link
+                to="/contact"
+                style={{
+                  background: 'rgba(246,243,238,0.08)',
+                  color: '#fff',
+                  fontFamily: 'Sora, sans-serif',
+                  fontSize: 11, fontWeight: 600,
+                  letterSpacing: '0.1em', textTransform: 'uppercase',
+                  padding: '0 20px',
+                  display: 'flex', alignItems: 'center', gap: 8,
+                  whiteSpace: 'nowrap', textDecoration: 'none',
+                  height: 64, transition: 'background 0.25s ease',
+                }}
+                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(246,243,238,0.15)' }}
+                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(246,243,238,0.08)' }}
+              >
+                Réserver
+              </Link>
+            </div>
+          </form>
+        ) : (
+          /* Result panel */
+          <div
+            className="fv-btn fv-mini-form"
+            style={{
+              display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap',
+              background: 'rgba(246,243,238,0.07)',
+              backdropFilter: 'blur(16px)',
+              border: '1px solid rgba(107,125,74,0.4)',
+              maxWidth: 780, margin: '0 auto',
+              padding: '16px 24px',
+            }}
+          >
+            <div>
+              <div style={{ fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
+                {result.km} km · tarif {result.isNuit ? 'nuit' : 'jour'}
+              </div>
+              <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 36, color: 'var(--olive)', lineHeight: 1 }}>
+                ~{result.prix}€
+              </span>
+            </div>
+            <div style={{ display: 'flex', gap: 10, alignItems: 'center', flexWrap: 'wrap', marginLeft: 'auto' }}>
+              <Link to="/contact" style={{
+                display: 'inline-flex', alignItems: 'center', gap: 8,
+                fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                color: '#fff', textDecoration: 'none',
+                padding: '12px 22px', background: 'var(--olive)',
+                transition: 'background 0.25s',
+              }}
+                onMouseEnter={e => (e.currentTarget.style.background = '#5A6B3A')}
+                onMouseLeave={e => (e.currentTarget.style.background = 'var(--olive)')}
+              >
+                Réserver <ArrowRight size={12} weight="bold" />
+              </Link>
+              <a href={CONTACT.telHref} style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                fontFamily: 'Sora', fontSize: 10, color: 'rgba(255,255,255,0.55)',
+                textDecoration: 'none', transition: 'color 0.2s',
+              }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#fff')}
+                onMouseLeave={e => (e.currentTarget.style.color = 'rgba(255,255,255,0.55)')}
+              >
+                <Phone size={13} weight="light" /> Appeler
+              </a>
+              <button onClick={() => setResult(null)} style={{
+                background: 'none', border: 'none', color: 'rgba(255,255,255,0.3)',
+                fontFamily: 'Sora', fontSize: 10, cursor: 'pointer',
+                textDecoration: 'underline', padding: 0,
+              }}>
+                Modifier
+              </button>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Véhicules — positionnés à CHEVAL sur la frontière section */}
@@ -348,26 +407,52 @@ export default function FlotteVideo() {
       }} />
 
       <style>{`
-        /* Desktop : reset complet */
         @media (min-width: 769px) {
           .fv-section { min-height: 100vh !important; height: auto !important; align-items: center !important; }
-          .fv-content-desktop { display: block !important; }
-          .fv-content-mobile { display: none !important; }
+          .fv-content-desktop { padding: 0 24px !important; }
         }
         @media (max-width: 768px) {
           .fv-section {
-            height: 65dvh !important;
-            min-height: unset !important;
+            min-height: 100dvh !important;
+            height: auto !important;
             align-items: flex-start !important;
           }
-          .fv-content-desktop { display: none !important; }
-          .fv-content-mobile {
-            display: block !important;
-            position: relative;
-            z-index: 3;
-            padding: 80px 28px 0 28px;
-            width: 100%;
-            box-sizing: border-box;
+          .fv-content-desktop {
+            padding: 90px 20px 40px 20px !important;
+            margin-bottom: 180px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+          }
+          .fv-content-desktop h2 {
+            font-size: clamp(30px, 8vw, 42px) !important;
+          }
+          .fv-mini-form {
+            flex-direction: column !important;
+            max-width: 100% !important;
+          }
+          .fv-mini-form > div {
+            border-right: none !important;
+            border-bottom: 1px solid rgba(246,243,238,0.12) !important;
+            flex: none !important;
+            width: 100% !important;
+          }
+          .fv-mini-form input[type="date"],
+          .fv-mini-form input[type="time"] {
+            width: 100% !important;
+          }
+          .fv-form-actions {
+            flex-direction: column !important;
+            width: 100% !important;
+          }
+          .fv-form-actions button[type="submit"],
+          .fv-form-actions a {
+            width: 100% !important;
+            height: 52px !important;
+            justify-content: center !important;
+            border-right: none !important;
+          }
+          .fv-form-actions button[type="submit"] {
+            border-bottom: 1px solid rgba(246,243,238,0.12) !important;
           }
           .fv-vehicles { width: 100% !important; max-width: 100% !important; bottom: -70px !important; }
           .fv-van { margin-right: -30px !important; height: 200px !important; }

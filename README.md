@@ -1,7 +1,7 @@
 # Provençal Coast Taxi — Site V2
 
 ## 🎯 Objectif
-Refonte complète de provencalcoasttaxi.fr. Design premium inspiration Provence / Montagne Sainte-Victoire, animations Awwwards-level (GSAP + Lenis), 100% responsive, SEO/GEO optimisé.
+Refonte complète de taxisprovencaleaix.fr. Design premium inspiration Provence / Montagne Sainte-Victoire, animations Awwwards-level (GSAP + Lenis), 100% responsive, SEO/GEO optimisé.
 
 ## 👤 Client
 - **Nom** : Yassine Ouerfelli
@@ -10,7 +10,7 @@ Refonte complète de provencalcoasttaxi.fr. Design premium inspiration Provence 
 - **Email** : provencalcoastdriver@gmail.com
 - **Adresse** : 82 avenue Henri Mauriat, 13100 Aix-en-Provence
 - **Licence VTC** : N°013230073
-- **Domaine** : provencalcoasttaxi.fr (DNS Hostinger → repointer vers Vercel à la mise en ligne)
+- **Domaine** : taxisprovencaleaix.fr (DNS Hostinger → repointer vers Vercel à la mise en ligne)
 - **Deuxième marque** : taximalacrida.fr — même chauffeur, numéro : 07 84 62 86 40
 
 ## 🛠 Stack technique
@@ -68,6 +68,6 @@ npm run preview  # Preview du build
 - [ ] Responsive validé (375px / 768px / 1440px)
 - [ ] Compte Vercel Yassine créé
 - [ ] Deploy sur Vercel
-- [ ] DNS Hostinger repointe → provencalcoasttaxi.fr
+- [ ] DNS Hostinger repointe → taxisprovencaleaix.fr
 - [ ] GSC configuré + sitemap soumis
 - [ ] Suppression 15 800 pages casino (GSC URL removal tool)

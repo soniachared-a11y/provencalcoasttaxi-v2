@@ -95,12 +95,16 @@ export default function ChiffresImpact() {
       </div>
 
       <style>{`
-        #chiffres > div {
-          grid-template-columns: repeat(4, 1fr) !important;
-        }
-        @media (max-width: 480px) {
-          #chiffres .chiffre-cell { padding: 24px 8px !important; }
-          #chiffres .chiffre-cell div:first-child { font-size: clamp(22px, 6vw, 36px) !important; }
+        @media (max-width: 600px) {
+          #chiffres > div {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+          #chiffres .chiffre-cell:nth-child(2) { border-right: none !important; }
+          #chiffres .chiffre-cell:nth-child(1),
+          #chiffres .chiffre-cell:nth-child(2) {
+            border-bottom: 1px solid rgba(17,17,17,0.1);
+          }
+          #chiffres .chiffre-cell { padding: 24px 12px !important; }
         }
       `}</style>
     </section>

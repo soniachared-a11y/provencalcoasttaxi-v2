@@ -1,8 +1,15 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, CheckCircle } from '@phosphor-icons/react'
+import { ArrowRight, CheckCircle, NavigationArrow } from '@phosphor-icons/react'
 import MagneticButton from '../ui/MagneticButton'
+import AddressAutocomplete from '../ui/AddressAutocomplete'
+
+const TARIF = 2.22
+const PRISE = 4.00
+const MINIMUM = 12
+function calcPrix(km) { return Math.max(MINIMUM, +(PRISE + km * TARIF).toFixed(2)) }
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -28,6 +35,9 @@ function WordReveal({ text, className = '' }) {
 export default function HeroAlt() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
+  const [dest, setDest] = useState(null)
+  const [routeLoading, setRouteLoading] = useState(false)
+  const [prix, setPrix] = useState(null)
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -97,7 +107,7 @@ export default function HeroAlt() {
     <section
       ref={sectionRef}
       id="hero-alt"
-      style={{ position: 'relative', overflow: 'hidden' }}
+      style={{ position: 'relative' }}
     >
       <div className="heroalt-grid" style={{
         display: 'grid',
@@ -189,8 +199,8 @@ export default function HeroAlt() {
             {/* CTAs */}
             <div className="heroalt-actions" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
               <MagneticButton
-                as="a"
-                href="#contact"
+                as={Link}
+                to="/contact"
                 style={{
                   backgroundColor: 'var(--olive)',
                   color: '#FFFFFF',
@@ -248,7 +258,7 @@ export default function HeroAlt() {
             {/* Reassurance */}
             <div
               className="heroalt-reassurance"
-              style={{ display: 'flex', flexWrap: 'wrap', gap: '16px' }}
+              style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '32px' }}
             >
               {REASSURANCE.map((text, i) => (
                 <span
@@ -267,6 +277,77 @@ export default function HeroAlt() {
                   {text}
                 </span>
               ))}
+            </div>
+
+            {/* Mini estimateur */}
+            <div className="heroalt-estimator" style={{
+              borderTop: '1px solid var(--border)',
+              paddingTop: '24px',
+            }}>
+              <p style={{
+                fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 600,
+                textTransform: 'uppercase', letterSpacing: '0.2em',
+                color: 'var(--texte-light)', marginBottom: 12,
+              }}>
+                Estimer votre trajet
+              </p>
+              <div className="heroalt-estimator-inner" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                <AddressAutocomplete
+                  value={dest}
+                  onChange={d => { setDest(d); setPrix(d?.km ? calcPrix(d.km) : null) }}
+                  placeholder="Destination…"
+                  dark={false}
+                  onLoadingChange={setRouteLoading}
+                  inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
+                />
+                {prix && !routeLoading && (
+                  <div style={{
+                    fontFamily: 'Sora', fontSize: 10, color: 'var(--olive)',
+                    display: 'flex', alignItems: 'center', gap: 8,
+                  }}>
+                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: 'var(--texte)' }}>~{prix}€</span>
+                    <span style={{ color: 'var(--texte-light)' }}>· {dest.km} km</span>
+                  </div>
+                )}
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  <button
+                    type="button"
+                    disabled={!dest || routeLoading}
+                    onClick={() => dest?.km && setPrix(calcPrix(dest.km))}
+                    style={{
+                      flex: 1, minWidth: 140,
+                      fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
+                      textTransform: 'uppercase', letterSpacing: '0.1em',
+                      color: dest ? 'var(--texte)' : 'var(--texte-light)',
+                      background: 'var(--surface)', border: '1px solid var(--border)',
+                      padding: '10px 16px', cursor: dest ? 'pointer' : 'default',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                      transition: 'border-color 0.2s',
+                    }}
+                    onMouseEnter={e => { if (dest) e.currentTarget.style.borderColor = 'var(--olive)' }}
+                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)' }}
+                  >
+                    <ArrowRight size={11} weight="bold" />
+                    {routeLoading ? 'Calcul…' : 'Calculer mon trajet'}
+                  </button>
+                  <Link
+                    to="/contact"
+                    style={{
+                      flex: 1, minWidth: 100,
+                      fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
+                      textTransform: 'uppercase', letterSpacing: '0.1em',
+                      color: '#fff', background: 'var(--olive)',
+                      padding: '10px 16px', textDecoration: 'none',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                      transition: 'background 0.2s',
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = '#5A6B3A'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'var(--olive)'}
+                  >
+                    Réserver <ArrowRight size={11} weight="bold" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -308,6 +389,11 @@ export default function HeroAlt() {
 
       {/* Responsive */}
       <style>{`
+        @media (max-width: 1024px) {
+          #hero-alt .heroalt-grid > div:first-child {
+            padding: 120px 40px 60px 40px !important;
+          }
+        }
         @media (max-width: 768px) {
           #hero-alt .heroalt-grid {
             grid-template-columns: 1fr !important;
@@ -315,12 +401,30 @@ export default function HeroAlt() {
           }
           #hero-alt .heroalt-grid > div:first-child {
             order: 1;
-            padding: 150px 24px 60px 24px !important;
+            padding: 110px 20px 48px 20px !important;
           }
           #hero-alt .heroalt-grid > div:last-child {
             order: 2;
-            height: 50vh;
+            height: 45vh;
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+          }
+          .heroalt-actions {
+            gap: 12px !important;
+          }
+          .heroalt-actions a, .heroalt-actions button {
+            width: 100%;
+            justify-content: center !important;
+            box-sizing: border-box;
+          }
+          .heroalt-estimator-inner {
+            flex-direction: column !important;
+          }
+          .heroalt-estimator-inner > div:first-child {
+            width: 100% !important;
+            min-width: unset !important;
+          }
+          .heroalt-reassurance {
+            gap: 10px !important;
           }
         }
       `}</style>

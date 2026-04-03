@@ -38,8 +38,8 @@ function HomePage() {
     <main>
       <SEOHead
         path="/"
-        title="Taxis Provençale Aix — Chauffeur privé VTC Aix-en-Provence | Transfert aéroport Marseille"
-        description="Votre chauffeur privé à Aix-en-Provence. Mercedes Classe S, E et V avec chauffeur. Transferts aéroport Marseille-Provence, gare TGV, tourisme Luberon et Provence. Tarifs fixes garantis, disponible 24h/24 7j/7. Réservation en ligne."
+        title="Taxi Aix-en-Provence | VTC & Chauffeur privé 24h/24 — Taxis Provençale Aix"
+        description="Taxi et chauffeur privé VTC à Aix-en-Provence. Mercedes Classe S, E et V. Transfert aéroport Marseille-Provence Marignane, gare TGV Aix, tourisme Luberon, Gordes, Cassis. Tarif fixe garanti, disponible 24h/24 7j/7. ☎ 06 15 96 32 75."
       />
       <FlotteVideo />
       <HeroAlt />

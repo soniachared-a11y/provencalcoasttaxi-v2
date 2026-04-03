@@ -375,8 +375,8 @@ export default function ServicesPage() {
     <main ref={pageRef} style={{ background: '#0D1117', minHeight: '100vh', paddingTop: 72 }}>
       <SEOHead
         path="/services"
-        title="Services VTC Aix-en-Provence | Transfert aéroport, affaires, tourisme — Taxis Provençale Aix"
-        description="Transfert aéroport Marseille-Provence, déplacements affaires, événements, longue distance et circuits touristiques en Provence. Mercedes avec chauffeur, tarif fixe garanti. Réservation 24h/24."
+        title="Transfert aéroport Marseille, taxi gare TGV Aix, VTC Provence — Taxis Provençale Aix"
+        description="Transfert aéroport Marseille-Provence Marignane, navette gare TGV Aix, taxi Luberon Gordes, déplacements affaires, mariage et événements, longue distance Nice Monaco Cannes. Mercedes avec chauffeur, tarif fixe. ☎ 06 15 96 32 75."
       />
 
       {/* Hero */}

@@ -633,8 +633,8 @@ export default function FlottePage() {
     <>
       <SEOHead
         path="/flotte"
-        title="Flotte Mercedes avec chauffeur Aix-en-Provence | Classe S, E, V — Taxis Provençale Aix"
-        description="Découvrez notre flotte Mercedes haut de gamme : Classe E business, Classe S prestige avec sièges massants, Classe V van 7 places. Véhicules entretenus quotidiennement, Wi-Fi, climatisation. Réservez à Aix-en-Provence."
+        title="Mercedes avec chauffeur Aix-en-Provence | Classe S, E, V 7 places — Taxis Provençale Aix"
+        description="Flotte Mercedes haut de gamme à Aix-en-Provence : Classe E business, Classe S prestige sièges massants, Classe V van 7 places. Wi-Fi, climatisation, cuir. Transfert aéroport Marseille, gare TGV, Luberon. Tarif fixe. ☎ 06 15 96 32 75."
       />
       {/* ── HERO ── */}
       <section

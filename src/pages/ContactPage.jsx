@@ -176,8 +176,8 @@ export default function ContactPage() {
     <>
       <SEOHead
         path="/contact"
-        title="Réserver un taxi à Aix-en-Provence | Devis gratuit — Taxis Provençale Aix"
-        description="Réservez votre chauffeur privé à Aix-en-Provence en ligne. Confirmation en 15 min, tarif fixe, annulation gratuite. Transferts aéroport Marseille, gare TGV, événements. Appelez le 06 15 96 32 75."
+        title="Réserver taxi Aix-en-Provence | Devis gratuit & tarif fixe — Taxis Provençale Aix"
+        description="Réservez votre taxi ou VTC à Aix-en-Provence en ligne. Confirmation en 15 min, tarif fixe garanti, annulation gratuite 24h. Transferts aéroport Marseille Marignane, gare TGV, Luberon, événements. ☎ 06 15 96 32 75 — disponible 24h/24."
       />
       {/* HERO + FORM */}
       <section ref={heroRef} className="page-hero" style={{

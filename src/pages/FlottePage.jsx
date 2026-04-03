@@ -261,9 +261,9 @@ function VehicleSection({ v, extra, index }) {
         zIndex: 1,
         maxWidth: 1300,
         margin: '0 auto',
-        padding: 'clamp(60px, 8vh, 100px) 40px',
+        padding: 'clamp(48px, 8vh, 100px) clamp(16px, 4vw, 40px)',
         display: 'grid',
-        gridTemplateColumns: '1fr 400px',
+        gridTemplateColumns: '1fr clamp(300px, 30vw, 400px)',
         gap: 'clamp(40px, 5vw, 80px)',
         alignItems: 'center',
         minHeight: '85vh',
@@ -357,10 +357,11 @@ function VehicleSection({ v, extra, index }) {
           </p>
 
           {/* Capacity display — large numbers */}
-          <div className="vc-item" style={{
+          <div className="vc-item vc-capacity" style={{
             display: 'flex',
             gap: 0,
             marginBottom: 40,
+            '--vc-accent': accentColor,
           }}>
             {[
               { val: v.pax, label: 'Passagers' },
@@ -420,7 +421,7 @@ function VehicleSection({ v, extra, index }) {
           </div>
 
           {/* CTAs */}
-          <div className="vc-item" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div className="vc-item vc-ctas" style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Link
               to="/contact"
               style={{
@@ -531,6 +532,34 @@ function VehicleSection({ v, extra, index }) {
           .flotte-grid {
             grid-template-columns: 1fr !important;
             min-height: auto !important;
+            padding: 48px 20px !important;
+            gap: 40px !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .flotte-grid {
+            padding: 40px 16px !important;
+          }
+          .vc-capacity {
+            flex-direction: column !important;
+          }
+          .vc-capacity > div {
+            border-left: none !important;
+            border-right: none !important;
+            border-top: 1px solid rgba(255,255,255,0.06) !important;
+            padding: 16px 20px !important;
+          }
+          .vc-capacity > div:first-child {
+            border-top: none !important;
+            border-left: 3px solid var(--vc-accent) !important;
+          }
+          .vc-ctas {
+            flex-direction: column !important;
+          }
+          .vc-ctas a, .vc-ctas button {
+            width: 100% !important;
+            justify-content: center !important;
+            box-sizing: border-box;
           }
         }
       `}</style>
@@ -641,7 +670,7 @@ export default function FlottePage() {
 
         <div
           ref={heroContentRef}
-          style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 24px', maxWidth: 900 }}
+          style={{ position: 'relative', zIndex: 2, textAlign: 'center', padding: '0 clamp(16px,4vw,24px)', maxWidth: 900, width: '100%' }}
         >
           <div className="hero-flotte-in" style={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -728,11 +757,16 @@ export default function FlottePage() {
 
       {/* ── STATS BAR ── */}
       <section style={{ background: 'rgba(255,255,255,0.03)', borderTop: '1px solid rgba(255,255,255,0.06)', borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
-        <div style={{
-          maxWidth: 1200, margin: '0 auto',
-          display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)',
-          textAlign: 'center',
-        }}>
+        <style>{`
+          .stats-bar-grid { display: grid; grid-template-columns: repeat(4,1fr); text-align: center; }
+          @media (max-width: 640px) {
+            .stats-bar-grid { grid-template-columns: repeat(2,1fr) !important; }
+            .stats-bar-grid > div { border-right: none !important; border-bottom: 1px solid rgba(255,255,255,0.07); }
+            .stats-bar-grid > div:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.07) !important; }
+            .stats-bar-grid > div:nth-last-child(-n+2) { border-bottom: none; }
+          }
+        `}</style>
+        <div className="stats-bar-grid" style={{ maxWidth: 1200, margin: '0 auto' }}>
           {[
             { v: 3, suffix: '', l: 'Véhicules Mercedes' },
             { v: 100, suffix: '%', l: 'Entretien quotidien' },
@@ -786,7 +820,7 @@ export default function FlottePage() {
       <section style={{
         background: '#0D1117',
         borderTop: '1px solid rgba(255,255,255,0.06)',
-        padding: '80px 24px',
+        padding: 'clamp(48px,8vw,80px) clamp(16px,4vw,24px)',
         textAlign: 'center',
         position: 'relative',
         overflow: 'hidden',

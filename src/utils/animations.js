@@ -1,4 +1,4 @@
-// Helpers GSAP réutilisables — Taxis Provençal Aix V2
+// Helpers GSAP réutilisables — Taxis Provençale Aix V2
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 

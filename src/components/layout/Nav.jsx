@@ -186,7 +186,7 @@ export default function Nav() {
               transition: 'color 0.3s',
               lineHeight: 1.1,
             }}>
-              Taxis Provençal Aix
+              Taxis Provençale Aix
             </span>
           </Link>
 

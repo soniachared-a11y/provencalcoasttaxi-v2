@@ -100,7 +100,7 @@ export default function MentionsLegalesPage() {
 
         <Section num="01" title="Éditeur du site">
           <Card>
-            <CardRow label="Raison sociale :">Taxis Provençal Aix</CardRow>
+            <CardRow label="Raison sociale :">Taxis Provençale Aix</CardRow>
             <CardRow label="Dirigeant / Responsable de la publication :">Yassine Ouerfelli</CardRow>
             <CardRow label="Licence VTC :">N°013230073</CardRow>
             <CardRow label="Adresse :">82 avenue Henri Mauriat, Building 14, Résidence Saint Benoit, 13100 Aix-en-Provence</CardRow>
@@ -133,7 +133,7 @@ export default function MentionsLegalesPage() {
 
         <Section num="04" title="Propriété intellectuelle">
           <p style={s.p}>L'ensemble des éléments constituant le site taxisprovencaleaix.fr — textes, images, logos, graphismes, icônes, vidéos, mise en page — est protégé par les lois en vigueur relatives à la propriété intellectuelle.</p>
-          <p style={s.p}>Toute reproduction, représentation, modification ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation écrite préalable de Taxis Provençal Aix.</p>
+          <p style={s.p}>Toute reproduction, représentation, modification ou adaptation de tout ou partie des éléments du site, quel que soit le moyen ou le procédé utilisé, est interdite sans l'autorisation écrite préalable de Taxis Provençale Aix.</p>
           <p style={s.p}>Toute exploitation non autorisée sera considérée comme constitutive d'une contrefaçon et poursuivie conformément aux articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
         </Section>
 
@@ -142,7 +142,7 @@ export default function MentionsLegalesPage() {
           <p style={s.p}>Le responsable du traitement des données à caractère personnel est Yassine Ouerfelli, joignable à l'adresse <a href="mailto:provencalcoastdriver@gmail.com" style={s.a}>provencalcoastdriver@gmail.com</a>.</p>
 
           <h3 style={s.h3}>Données collectées</h3>
-          <p style={s.p}>Dans le cadre de son activité, Taxis Provençal Aix est amenée à collecter les données suivantes : nom, prénom, adresse email, numéro de téléphone, adresse de prise en charge et de destination, ainsi que toute information nécessaire à la réalisation d'une prestation de transport.</p>
+          <p style={s.p}>Dans le cadre de son activité, Taxis Provençale Aix est amenée à collecter les données suivantes : nom, prénom, adresse email, numéro de téléphone, adresse de prise en charge et de destination, ainsi que toute information nécessaire à la réalisation d'une prestation de transport.</p>
 
           <h3 style={s.h3}>Finalités du traitement</h3>
           <p style={s.p}>Les données collectées sont utilisées pour la gestion des réservations, l'exécution des prestations de transport, la facturation, la communication avec les clients et l'amélioration des services proposés.</p>
@@ -173,12 +173,12 @@ export default function MentionsLegalesPage() {
         </Section>
 
         <Section num="07" title="Limitation de responsabilité">
-          <p style={s.p}>Les informations diffusées sur le site taxisprovencaleaix.fr sont fournies à titre indicatif et ne sauraient engager la responsabilité de l'éditeur. Malgré les efforts pour maintenir les informations à jour, Taxis Provençal Aix ne peut garantir leur exactitude ou leur complétude.</p>
+          <p style={s.p}>Les informations diffusées sur le site taxisprovencaleaix.fr sont fournies à titre indicatif et ne sauraient engager la responsabilité de l'éditeur. Malgré les efforts pour maintenir les informations à jour, Taxis Provençale Aix ne peut garantir leur exactitude ou leur complétude.</p>
           <p style={s.p}>L'éditeur ne saurait être tenu responsable des dommages directs ou indirects résultant de l'accès ou de l'utilisation du site, y compris l'inaccessibilité, les pertes de données ou les dommages pouvant affecter votre équipement informatique.</p>
         </Section>
 
         <Section num="08" title="Liens hypertextes">
-          <p style={s.p}>Le site peut contenir des liens vers d'autres sites internet. Taxis Provençal Aix n'exerce aucun contrôle sur le contenu de ces sites tiers et décline toute responsabilité quant à leur contenu ou aux dommages pouvant résulter de leur utilisation.</p>
+          <p style={s.p}>Le site peut contenir des liens vers d'autres sites internet. Taxis Provençale Aix n'exerce aucun contrôle sur le contenu de ces sites tiers et décline toute responsabilité quant à leur contenu ou aux dommages pouvant résulter de leur utilisation.</p>
         </Section>
 
         <Section num="09" title="Droit applicable">

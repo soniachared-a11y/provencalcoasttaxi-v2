@@ -5,7 +5,7 @@ export function SchemaOrg() {
   const schema = {
     '@context': 'https://schema.org',
     '@type': ['TaxiService', 'LocalBusiness'],
-    name: 'Taxis Provençal Aix',
+    name: 'Taxis Provençale Aix',
     description: 'Service de chauffeur privé et taxi à Aix-en-Provence. Transferts aéroport Marseille, voyages d\'affaires, événements. Mercedes haut de gamme, tarifs fixes, disponible 24h/24.',
     url: 'https://taxisprovencaleaix.fr',
     telephone: '+33615963275',

@@ -720,7 +720,7 @@ export default function ContactPage() {
             <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, fontWeight: 400, color: 'var(--texte)', margin: '0 0 24px' }}>Aix-en-Provence</h3>
             <div style={{ border: '1px solid var(--border)', overflow: 'hidden', marginBottom: 16 }}>
               <iframe
-                title="Localisation Taxis Provençal Aix"
+                title="Localisation Taxis Provençale Aix"
                 src="https://maps.google.com/maps?q=82+avenue+Henri+Mauriat+13100+Aix-en-Provence+France&output=embed&z=15"
                 width="100%" height="320"
                 style={{ display: 'block', border: 'none' }}

@@ -4,7 +4,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { MapPin, ArrowRight } from 'lucide-react'
+import { MapPin, ArrowRight } from '@phosphor-icons/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -142,7 +142,7 @@ export default function FlotteVideo() {
               onFocus={e => (e.currentTarget.parentElement.style.background = 'rgba(246,243,238,0.05)')}
               onBlur={e => (e.currentTarget.parentElement.style.background = 'transparent')}
             />
-            <MapPin size={14} strokeWidth={1.5} style={{
+            <MapPin size={14} weight="duotone" style={{
               position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
               color: 'var(--olive)', pointerEvents: 'none',
             }} />
@@ -167,7 +167,7 @@ export default function FlotteVideo() {
               onFocus={e => (e.currentTarget.parentElement.style.background = 'rgba(246,243,238,0.05)')}
               onBlur={e => (e.currentTarget.parentElement.style.background = 'transparent')}
             />
-            <MapPin size={14} strokeWidth={1.5} style={{
+            <MapPin size={14} weight="duotone" style={{
               position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)',
               color: 'var(--olive)', pointerEvents: 'none',
             }} />
@@ -215,7 +215,7 @@ export default function FlotteVideo() {
             onMouseEnter={e => { e.currentTarget.style.background = '#5A6B3A' }}
             onMouseLeave={e => { e.currentTarget.style.background = 'var(--olive)' }}
           >
-            Calculer <ArrowRight size={14} strokeWidth={2} />
+            Calculer <ArrowRight size={14} weight="bold" />
           </button>
         </form>
       </div>

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, CheckCircle } from '@phosphor-icons/react'
 import MagneticButton from '../ui/MagneticButton'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -213,7 +213,7 @@ export default function HeroAlt() {
                 onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--olive)' }}
               >
                 R&eacute;server
-                <ArrowRight size={14} strokeWidth={2} />
+                <ArrowRight size={14} weight="bold" />
               </MagneticButton>
               <a
                 href="#services"
@@ -263,7 +263,7 @@ export default function HeroAlt() {
                     color: 'var(--texte-light)',
                   }}
                 >
-                  <Check size={12} strokeWidth={2.5} style={{ color: 'var(--olive)' }} />
+                  <CheckCircle size={12} weight="duotone" style={{ color: 'var(--olive)' }} />
                   {text}
                 </span>
               ))}

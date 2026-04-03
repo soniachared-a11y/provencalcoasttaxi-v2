@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, MapPin, Check, Navigation, Clock } from 'lucide-react'
+import { ArrowRight, MapPin, CheckCircle, NavigationArrow, Clock } from '@phosphor-icons/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -244,9 +244,9 @@ export default function DevisSimulateur() {
                 onMouseEnter={e => { if (kmResolu) e.currentTarget.style.background = '#5A6B3A' }}
                 onMouseLeave={e => { if (kmResolu) e.currentTarget.style.background = 'var(--olive)' }}
               >
-                <Navigation size={14} strokeWidth={2} />
+                <NavigationArrow size={14} weight="bold" />
                 {result ? 'RECALCULER' : 'CALCULER MON DEVIS'}
-                <ArrowRight size={14} strokeWidth={2} />
+                <ArrowRight size={14} weight="bold" />
               </button>
             </form>
           </div>
@@ -255,7 +255,7 @@ export default function DevisSimulateur() {
           <div className="devis-trust" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 32, marginTop: 24, flexWrap: 'wrap' }}>
             {TRUST_ITEMS.map((item, i) => (
               <div key={i} className="devis-trust-item" style={{ display: 'flex', alignItems: 'center', gap: 6, fontFamily: 'Sora, sans-serif', fontSize: 10, color: 'rgba(255,255,255,0.35)' }}>
-                <Check size={12} strokeWidth={2} style={{ color: 'var(--olive)' }} />
+                <CheckCircle size={12} weight="duotone" style={{ color: 'var(--olive)' }} />
                 {item}
               </div>
             ))}

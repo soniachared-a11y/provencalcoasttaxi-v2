@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ArrowRight } from '@phosphor-icons/react'
 import { FLOTTE, SECTION_INTROS } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
@@ -115,6 +117,33 @@ export default function Flotte() {
           }}>
             {SECTION_INTROS.flotte}
           </p>
+        </div>
+
+        {/* Link to full fleet page */}
+        <div style={{ textAlign: 'center', marginBottom: 40 }}>
+          <Link
+            to="/flotte"
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 8,
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 11,
+              fontWeight: 600,
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              color: 'var(--lavande)',
+              textDecoration: 'none',
+              borderBottom: '1px solid var(--lavande)',
+              paddingBottom: 2,
+              transition: 'gap 0.3s ease, color 0.3s ease',
+            }}
+            onMouseEnter={e => { e.currentTarget.style.gap = '12px'; e.currentTarget.style.color = 'var(--texte)' }}
+            onMouseLeave={e => { e.currentTarget.style.gap = '8px'; e.currentTarget.style.color = 'var(--lavande)' }}
+          >
+            Découvrir la flotte complète
+            <ArrowRight size={14} weight="bold" />
+          </Link>
         </div>
 
         {/* Grid */}

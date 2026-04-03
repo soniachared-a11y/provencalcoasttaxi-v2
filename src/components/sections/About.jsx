@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, MapPin } from 'lucide-react'
+import { ArrowRight, MapPin } from '@phosphor-icons/react'
 import { ABOUT } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
@@ -145,7 +145,7 @@ export default function About() {
                     fontFamily: 'Sora, sans-serif', fontSize: 11, fontWeight: 400,
                     color: 'var(--texte-light)', lineHeight: 1.4,
                   }}>
-                    <MapPin size={9} strokeWidth={2} style={{ color: 'var(--lavande)', flexShrink: 0, marginTop: 2 }} />
+                    <MapPin size={9} weight="bold" style={{ color: 'var(--lavande)', flexShrink: 0, marginTop: 2 }} />
                     {zone}
                   </div>
                 ))}
@@ -172,7 +172,7 @@ export default function About() {
               onMouseLeave={e => (e.currentTarget.style.gap = '8px')}
             >
               Découvrir nos services
-              <ArrowRight size={14} strokeWidth={2} />
+              <ArrowRight size={14} weight="bold" />
             </a>
           </div>
 
@@ -218,7 +218,7 @@ export default function About() {
                     fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
                     color: '#F6F3EE',
                   }}>
-                    <MapPin size={10} strokeWidth={2.5} style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    <MapPin size={10} weight="bold" style={{ color: 'var(--lavande)', flexShrink: 0 }} />
                     {zone}
                   </div>
                 ))}
@@ -241,7 +241,7 @@ export default function About() {
                     fontFamily: 'Sora, sans-serif', fontSize: 12, fontWeight: 500,
                     color: '#F6F3EE',
                   }}>
-                    <MapPin size={10} strokeWidth={2.5} style={{ color: 'var(--lavande)', flexShrink: 0 }} />
+                    <MapPin size={10} weight="bold" style={{ color: 'var(--lavande)', flexShrink: 0 }} />
                     {zone}
                   </div>
                 ))}

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Plus, Minus } from 'lucide-react'
+import { Plus, Minus } from '@phosphor-icons/react'
 import { FAQS } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
@@ -193,7 +193,7 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
           transition: 'all 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
           transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
         }}>
-          {isOpen ? <Minus size={14} strokeWidth={2.5} /> : <Plus size={14} strokeWidth={2} />}
+          {isOpen ? <Minus size={14} weight="bold" /> : <Plus size={14} weight="bold" />}
         </span>
       </button>
 

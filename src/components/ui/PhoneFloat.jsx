@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
-import { Phone } from 'lucide-react'
+import { Phone } from '@phosphor-icons/react'
 
 export default function PhoneFloat() {
   const ref = useRef(null)
@@ -51,7 +51,7 @@ export default function PhoneFloat() {
       onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.1)')}
       onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
     >
-      <Phone size={24} color="#fff" strokeWidth={2} />
+      <Phone size={24} color="#fff" weight="fill" />
     </a>
   )
 }

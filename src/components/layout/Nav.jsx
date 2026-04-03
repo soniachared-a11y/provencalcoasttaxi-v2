@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Menu, X, Phone, ArrowRight } from 'lucide-react'
+import { PhoneCall, List, X, ArrowRight } from '@phosphor-icons/react'
 import { CONTACT, NAV_LINKS } from '../../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -11,9 +12,10 @@ export default function Nav() {
   const drawerRef = useRef(null)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [onDark, setOnDark] = useState(true) // Start on hero (dark)
+  const [onDark, setOnDark] = useState(true)
+  const location = useLocation()
+  const isHome = location.pathname === '/'
 
-  // Entrée animée — fromTo pour éviter le bug opacity:0 bloqué
   useEffect(() => {
     gsap.fromTo(navRef.current,
       { y: -20, opacity: 0 },
@@ -21,7 +23,12 @@ export default function Nav() {
     )
   }, [])
 
-  // Changement de fond au scroll — via ScrollTrigger pour Lenis compat
+  useEffect(() => {
+    // Reset scroll state on route change
+    setScrolled(false)
+    setOnDark(true)
+  }, [location.pathname])
+
   useEffect(() => {
     const hero = document.querySelector('#hero')
     if (!hero) return
@@ -32,11 +39,10 @@ export default function Nav() {
       onLeaveBack: () => setScrolled(false),
     })
     return () => st.kill()
-  }, [])
+  }, [location.pathname])
 
-  // Couleur contextuelle — détecter les sections dark
   useEffect(() => {
-    const darkSections = document.querySelectorAll('#hero, #hero-alt, #partners, #experience, #chiffres, #devis, #avis-alt')
+    const darkSections = document.querySelectorAll('#hero, #hero-alt, #partners, #experience, #chiffres, #devis, #avis-alt, .page-hero')
     const triggers = []
     darkSections.forEach(section => {
       if (!section) return
@@ -51,7 +57,7 @@ export default function Nav() {
       }))
     })
     return () => triggers.forEach(t => t.kill())
-  }, [])
+  }, [location.pathname])
 
   useEffect(() => {
     if (!navRef.current) return
@@ -74,7 +80,6 @@ export default function Nav() {
     }
   }, [scrolled])
 
-  // Drawer mobile animation
   useEffect(() => {
     if (!drawerRef.current) return
     if (open) {
@@ -101,31 +106,69 @@ export default function Nav() {
     if (open) closeDrawer()
   }
 
-  // Couleurs contextuelles — adapte la nav aux sections dark/light
-  const isDark = !scrolled || onDark
   const textColor = scrolled && !onDark ? 'var(--texte)' : '#FFFFFF'
-  const linkColor = scrolled && !onDark ? 'var(--texte-light)' : 'rgba(255,255,255,0.5)'
+  const linkColor = scrolled && !onDark ? 'var(--texte-light)' : 'rgba(255,255,255,0.55)'
   const linkHover = scrolled && !onDark ? 'var(--texte)' : '#FFFFFF'
+
+  const linkStyle = {
+    fontFamily: "'Sora', sans-serif",
+    fontSize: '11px',
+    fontWeight: 400,
+    letterSpacing: '0.06em',
+    color: linkColor,
+    textDecoration: 'none',
+    transition: 'color 0.3s',
+    position: 'relative',
+  }
+
+  // Renders anchor link or page Link depending on type
+  function NavLink({ item, onClick }) {
+    const isActive = !item.anchor && location.pathname === item.href
+    const style = {
+      ...linkStyle,
+      color: isActive ? (scrolled && !onDark ? 'var(--olive)' : '#FFFFFF') : linkColor,
+    }
+    if (item.anchor) {
+      return (
+        <a
+          href={item.href}
+          className="nav-link"
+          style={style}
+          onClick={onClick}
+          onMouseEnter={e => (e.currentTarget.style.color = linkHover)}
+          onMouseLeave={e => (e.currentTarget.style.color = isActive ? style.color : linkColor)}
+        >
+          {item.label}
+        </a>
+      )
+    }
+    return (
+      <Link
+        to={item.href}
+        className="nav-link"
+        style={style}
+        onClick={onClick}
+        onMouseEnter={e => (e.currentTarget.style.color = linkHover)}
+        onMouseLeave={e => (e.currentTarget.style.color = isActive ? style.color : linkColor)}
+      >
+        {item.label}
+      </Link>
+    )
+  }
 
   return (
     <nav
       ref={navRef}
       className="fixed top-0 left-0 right-0 z-[100]"
-      style={{
-        borderBottom: '1px solid transparent',
-        backgroundColor: 'transparent',
-      }}
+      style={{ borderBottom: '1px solid transparent', backgroundColor: 'transparent' }}
       role="navigation"
       aria-label="Navigation principale"
     >
       <div className="mx-auto max-w-[1200px] px-6 md:px-8">
-        {/* Bar principale */}
-        <div
-          className="flex items-center justify-between"
-          style={{ height: 'clamp(64px, 8vw, 72px)' }}
-        >
-          {/* Logo texte */}
-          <a href="#" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div className="flex items-center justify-between" style={{ height: 'clamp(64px, 8vw, 72px)' }}>
+
+          {/* Logo */}
+          <Link to="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 10 }}>
             <span style={{
               fontFamily: "'Instrument Serif', serif",
               fontSize: 'clamp(16px, 2vw, 20px)',
@@ -137,35 +180,17 @@ export default function Nav() {
             }}>
               Taxis Provençal Aix
             </span>
-          </a>
+          </Link>
 
           {/* Liens desktop */}
           <div className="hidden md:flex items-center gap-8">
-            {NAV_LINKS.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                className="nav-link"
-                style={{
-                  fontFamily: "'Sora', sans-serif",
-                  fontSize: '11px',
-                  fontWeight: 400,
-                  letterSpacing: '0.06em',
-                  color: linkColor,
-                  textDecoration: 'none',
-                  transition: 'color 0.3s',
-                }}
-                onMouseEnter={e => (e.currentTarget.style.color = linkHover)}
-                onMouseLeave={e => (e.currentTarget.style.color = linkColor)}
-              >
-                {label}
-              </a>
+            {NAV_LINKS.map((item) => (
+              <NavLink key={item.href} item={item} />
             ))}
           </div>
 
           {/* Droite : CTA + Téléphone */}
           <div className="hidden md:flex items-center gap-6">
-            {/* Téléphone */}
             <a
               href={CONTACT.telHref}
               className="flex items-center gap-2"
@@ -175,25 +200,18 @@ export default function Nav() {
                 transition: 'color 0.3s',
               }}
             >
-              <Phone size={16} strokeWidth={1.5} />
-              <span
-                className="font-serif"
-                style={{ fontSize: '15px' }}
-              >
-                {CONTACT.tel}
-              </span>
+              <PhoneCall size={16} weight="light" />
+              <span className="font-serif" style={{ fontSize: '15px' }}>{CONTACT.tel}</span>
             </a>
 
-            {/* CTA Réserver */}
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               className="flex items-center gap-2"
               style={{
                 backgroundColor: scrolled ? 'var(--olive)' : 'transparent',
                 border: scrolled ? 'none' : '1px solid rgba(255,255,255,0.3)',
                 color: '#FFFFFF',
                 padding: '12px 24px',
-                borderRadius: '0px',
                 fontFamily: "'Sora', sans-serif",
                 fontSize: '11px',
                 fontWeight: 600,
@@ -212,8 +230,8 @@ export default function Nav() {
               }}
             >
               Réserver
-              <ArrowRight size={14} strokeWidth={2} />
-            </a>
+              <ArrowRight size={14} weight="regular" />
+            </Link>
           </div>
 
           {/* Hamburger mobile */}
@@ -222,9 +240,12 @@ export default function Nav() {
             onClick={() => (open ? closeDrawer() : setOpen(true))}
             aria-label="Menu"
             aria-expanded={open}
-            style={{ color: textColor, transition: 'color 0.3s' }}
+            style={{ color: textColor, transition: 'color 0.3s', cursor: 'pointer' }}
           >
-            {open ? <X size={24} strokeWidth={1.5} /> : <Menu size={24} strokeWidth={1.5} />}
+            {open
+              ? <X size={24} weight="light" />
+              : <List size={24} weight="light" />
+            }
           </button>
         </div>
       </div>
@@ -237,24 +258,10 @@ export default function Nav() {
           style={{ backgroundColor: 'var(--cream)' }}
         >
           <div className="px-6 pb-8 pt-4 flex flex-col gap-6">
-            {NAV_LINKS.map(({ href, label }) => (
-              <a
-                key={href}
-                href={href}
-                onClick={handleLinkClick}
-                style={{
-                  fontFamily: "'Sora', sans-serif",
-                  fontSize: '14px',
-                  fontWeight: 400,
-                  color: 'var(--texte)',
-                  textDecoration: 'none',
-                }}
-              >
-                {label}
-              </a>
+            {NAV_LINKS.map((item) => (
+              <NavLink key={item.href} item={item} onClick={handleLinkClick} />
             ))}
 
-            {/* Téléphone mobile */}
             <a
               href={CONTACT.telHref}
               className="flex items-center gap-3"
@@ -265,20 +272,18 @@ export default function Nav() {
                 textDecoration: 'none',
               }}
             >
-              <Phone size={18} strokeWidth={1.5} />
+              <PhoneCall size={18} weight="light" />
               {CONTACT.tel}
             </a>
 
-            {/* CTA mobile */}
-            <a
-              href="#contact"
+            <Link
+              to="/contact"
               onClick={handleLinkClick}
               className="flex items-center justify-center gap-2"
               style={{
                 backgroundColor: 'var(--olive)',
                 color: '#FFFFFF',
                 padding: '16px 32px',
-                borderRadius: '0px',
                 fontFamily: "'Sora', sans-serif",
                 fontSize: '11px',
                 fontWeight: 600,
@@ -288,8 +293,8 @@ export default function Nav() {
               }}
             >
               Réserver
-              <ArrowRight size={14} strokeWidth={2} />
-            </a>
+              <ArrowRight size={14} weight="regular" />
+            </Link>
           </div>
         </div>
       )}

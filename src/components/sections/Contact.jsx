@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, Shield, Star, Clock } from 'lucide-react'
+import { ArrowRight, ShieldCheck, Star, Clock } from '@phosphor-icons/react'
 import { SECTION_INTROS, IMAGES } from '../../data/content'
 import { supabase } from '../../lib/supabase'
 
@@ -14,7 +14,7 @@ const INFO_BLOCKS = [
 ]
 
 const TRUST_ITEMS = [
-  { Icon: Shield, text: 'Licence VTC officielle' },
+  { Icon: ShieldCheck, text: 'Licence VTC officielle' },
   { Icon: Star, text: '4.9/5 — 200+ avis Google' },
   { Icon: Clock, text: 'Disponible 24h/24' },
 ]
@@ -257,7 +257,7 @@ export default function Contact() {
                     gap: 8,
                     marginBottom: 10,
                   }}>
-                    <Icon size={14} strokeWidth={1.5} style={{ color: 'rgba(255,255,255,0.45)' }} />
+                    <Icon size={14} weight="duotone" style={{ color: 'rgba(255,255,255,0.45)' }} />
                     <span style={{
                       fontFamily: 'Sora, sans-serif',
                       fontSize: 11,
@@ -433,7 +433,7 @@ export default function Contact() {
                 onMouseLeave={e => { if (!loading) { e.currentTarget.style.backgroundColor = 'var(--olive)'; e.currentTarget.style.transform = 'translateY(0)' } }}
               >
                 {loading ? 'Envoi...' : 'Envoyer la demande'}
-                {!loading && <ArrowRight size={14} strokeWidth={2} />}
+                {!loading && <ArrowRight size={14} weight="bold" />}
               </button>
             </form>
             )}

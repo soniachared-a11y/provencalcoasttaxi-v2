@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Shield } from 'lucide-react'
+import { ShieldCheck } from '@phosphor-icons/react'
 import { AVIS, SECTION_INTROS } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
@@ -197,7 +197,7 @@ export default function Avis() {
               color: 'var(--texte-light)',
               marginTop: 4,
             }}>
-              <Shield size={12} strokeWidth={2} style={{ color: 'var(--olive)' }} />
+              <ShieldCheck size={12} weight="duotone" style={{ color: 'var(--olive)' }} />
               Avis Google vérifiés
             </div>
           </div>

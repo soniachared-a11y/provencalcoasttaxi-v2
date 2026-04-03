@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { Phone, ArrowRight } from 'lucide-react'
+import { Phone, ArrowRight } from '@phosphor-icons/react'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -132,7 +132,7 @@ export default function BandeauCTA() {
               e.currentTarget.style.transform = 'translateY(0)'
             }}
           >
-            <Phone size={14} strokeWidth={2} />
+            <Phone size={14} weight="duotone" />
             06 15 96 32 75
           </a>
 
@@ -164,7 +164,7 @@ export default function BandeauCTA() {
             }}
           >
             Réserver en ligne
-            <ArrowRight size={14} strokeWidth={2} />
+            <ArrowRight size={14} weight="bold" />
           </a>
         </div>
       </div>

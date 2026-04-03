@@ -1,15 +1,19 @@
 // App.jsx — Provençal Coast Taxi V2
-// Point d'entrée principal — importe et orchestre toutes les sections
+import { Routes, Route } from 'react-router-dom'
 import { useLenis } from './hooks/useLenis'
 import { useAnimations } from './hooks/useAnimations'
 import { SchemaOrg } from './seo/SchemaOrg'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
+import ScrollToTop from './components/ui/ScrollToTop'
+import PhoneFloat from './components/ui/PhoneFloat'
+import CursorFollower from './components/ui/CursorFollower'
+
+// Homepage sections
 import Hero from './components/sections/Hero'
 import About from './components/sections/About'
 import Services from './components/sections/Services'
 import Flotte from './components/sections/Flotte'
-import Zones from './components/sections/Zones'
 import Avis from './components/sections/Avis'
 import FAQ from './components/sections/FAQ'
 import Contact from './components/sections/Contact'
@@ -19,45 +23,58 @@ import PartnersBar from './components/sections/PartnersBar'
 import FlotteVideo from './components/sections/FlotteVideo'
 import DevisSimulateur from './components/sections/DevisSimulateur'
 import ChiffresImpact from './components/sections/ChiffresImpact'
-import PhoneFloat from './components/ui/PhoneFloat'
 import SectionDivider from './components/ui/SectionDivider'
-import CursorFollower from './components/ui/CursorFollower'
+
+// Dedicated pages
+import FlottePage from './pages/FlottePage'
+import AProposPage from './pages/AProposPage'
+import ContactPage from './pages/ContactPage'
+import ServicesPage from './pages/ServicesPage'
+
+function HomePage() {
+  return (
+    <main>
+      <FlotteVideo />
+      <HeroAlt />
+      <ChiffresImpact />
+      <SectionDivider />
+      <About />
+      <SectionDivider />
+      <PartnersBar />
+      <Services />
+      <SectionDivider />
+      <Flotte />
+      <SectionDivider />
+      <DevisSimulateur />
+      <SectionDivider />
+      <Avis />
+      <SectionDivider />
+      <FAQ />
+      <SectionDivider />
+      <Contact />
+      <SectionDivider />
+      <Hero />
+      <BandeauCTA />
+    </main>
+  )
+}
 
 export default function App() {
-  // Initialise Lenis smooth scroll + GSAP ticker
   useLenis()
-  // Animations globales Awwwards (parallaxe, reveals, fade-ups, stagger)
   useAnimations()
 
   return (
     <>
       <SchemaOrg />
+      <ScrollToTop />
       <Nav />
-      <main>
-        <FlotteVideo />
-        <HeroAlt />
-        <ChiffresImpact />
-        <SectionDivider />
-        <About />
-        <SectionDivider />
-        <PartnersBar />
-        <Services />
-        <SectionDivider />
-        <Flotte />
-        <SectionDivider />
-        <Zones />
-        <SectionDivider />
-        <DevisSimulateur />
-        <SectionDivider />
-        <Avis />
-        <SectionDivider />
-        <FAQ />
-        <SectionDivider />
-        <Contact />
-        <SectionDivider />
-        <Hero />
-        <BandeauCTA />
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/flotte" element={<FlottePage />} />
+        <Route path="/a-propos" element={<AProposPage />} />
+        <Route path="/contact" element={<ContactPage />} />
+      </Routes>
       <Footer />
       <PhoneFloat />
       <CursorFollower />

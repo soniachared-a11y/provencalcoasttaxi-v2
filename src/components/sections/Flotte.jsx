@@ -68,13 +68,13 @@ const VEHICLES = [
 ]
 
 export default function Flotte() {
-  const sectionRef      = useRef(null)
-  const imgRef          = useRef(null)
-  const contentRef      = useRef(null)
-  const timerBarRef     = useRef(null)
-  const timerTweenRef   = useRef(null)
-  const hovering        = useRef(false)
-  const hasEnteredRef   = useRef(false)
+  const sectionRef    = useRef(null)
+  const imgRef        = useRef(null)
+  const contentRef    = useRef(null)
+  const timerBarRef   = useRef(null)
+  const timerTweenRef = useRef(null)
+  const hovering      = useRef(false)
+  const hasEnteredRef = useRef(false)
 
   const [active, setActive]               = useState(0)
   const [transitioning, setTransitioning] = useState(false)
@@ -107,8 +107,11 @@ export default function Flotte() {
           if (hasEnteredRef.current) return
           hasEnteredRef.current = true
 
+          gsap.from('.flt-header', {
+            y: 20, opacity: 0, duration: 0.9, ease: 'power3.out',
+          })
           gsap.from('.flt-tabs', {
-            y: 16, opacity: 0, duration: 0.8, ease: 'power3.out',
+            y: 16, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.1,
           })
           gsap.from('.flt-feature', {
             y: 36, duration: 1, ease: 'power3.out', delay: 0.2,
@@ -117,7 +120,6 @@ export default function Flotte() {
             y: 10, opacity: 0, duration: 0.6, ease: 'power2.out', delay: 0.35,
           })
 
-          // Start timer after entrance animations settle
           setTimeout(startTimer, 900)
         },
       })
@@ -183,46 +185,132 @@ export default function Flotte() {
         .flt-img-cover {
           animation: flt-kenburns 9s ease-in-out infinite alternate;
         }
-        .flt-chip {
-          transition: transform 0.22s ease, box-shadow 0.22s ease, background 0.22s ease;
-          cursor: default;
+        .flt-tab-btn {
+          background: none;
+          border: none;
+          cursor: pointer;
+          transition: opacity 0.2s;
         }
-        .flt-chip:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .flt-tab-btn:hover .flt-tab-label {
+          color: #fff !important;
         }
-        .flt-cta-glass {
-          transition: box-shadow 0.3s ease, background 0.3s ease, transform 0.2s ease;
+        .flt-cta-primary {
+          transition: filter 0.25s ease, transform 0.2s ease;
         }
-        .flt-cta-glass:hover {
+        .flt-cta-primary:hover {
+          filter: brightness(1.12);
           transform: translateY(-1px);
         }
-        .flt-tab-btn:hover .flt-tab-label { color: var(--texte) !important; }
+        .flt-cta-secondary {
+          transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+        }
+        .flt-cta-secondary:hover {
+          border-color: rgba(255,255,255,0.35) !important;
+          color: rgba(255,255,255,0.85) !important;
+          transform: translateY(-1px);
+        }
+        .flt-amenity-pill {
+          transition: background 0.2s ease, border-color 0.2s ease;
+        }
+        .flt-amenity-pill:hover {
+          background: rgba(255,255,255,0.1) !important;
+          border-color: rgba(255,255,255,0.2) !important;
+        }
+
+        /* ── Responsive */
+        @media (max-width: 900px) {
+          .flt-feature {
+            flex-direction: column !important;
+            height: auto !important;
+          }
+          .flt-feature-img {
+            height: 260px !important;
+            flex: none !important;
+          }
+          .flt-feature-panel {
+            padding: 28px 24px !important;
+          }
+          .flt-tab-btn {
+            padding: 10px 12px !important;
+          }
+          .flt-amenity-row {
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+          }
+          .flt-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 6px !important;
+          }
+        }
+        @media (max-width: 480px) {
+          .flt-feature-img {
+            height: 220px !important;
+          }
+          .flt-feature-panel {
+            padding: 20px 16px !important;
+          }
+        }
       `}</style>
 
-      {/* Ambient glow — top-right olive */}
-      <div aria-hidden="true" style={{
-        position: 'absolute', top: 0, right: 0,
-        width: 'clamp(200px,26vw,360px)', height: 'clamp(200px,26vw,360px)',
-        background: 'radial-gradient(circle at top right, rgba(107,125,74,0.13) 0%, transparent 68%)',
-        pointerEvents: 'none', zIndex: 0,
-      }} />
-      {/* Ambient glow — bottom-left lavande */}
-      <div aria-hidden="true" style={{
-        position: 'absolute', bottom: 0, left: 0,
-        width: 'clamp(160px,20vw,280px)', height: 'clamp(160px,20vw,280px)',
-        background: 'radial-gradient(circle at bottom left, rgba(122,96,145,0.1) 0%, transparent 68%)',
-        pointerEvents: 'none', zIndex: 0,
-      }} />
+      {/* ── Section header */}
+      <div
+        className="flt-header"
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'flex-end',
+          padding: 'clamp(32px,4vw,56px) clamp(28px,5vw,72px) 0',
+          position: 'relative',
+          zIndex: 2,
+        }}
+      >
+        <div>
+          <span style={{
+            display: 'block',
+            fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
+            letterSpacing: '0.3em', textTransform: 'uppercase',
+            color: 'var(--olive)',
+            marginBottom: 10,
+          }}>
+            Notre flotte
+          </span>
+          <h2 style={{
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 'clamp(28px,3.5vw,48px)',
+            fontWeight: 400,
+            color: 'var(--texte)',
+            margin: 0,
+            lineHeight: 1.05,
+            letterSpacing: '-0.02em',
+          }}>
+            Nos véhicules
+          </h2>
+        </div>
+        <span style={{
+          fontFamily: 'Sora', fontSize: 9,
+          color: 'rgba(0,0,0,0.3)',
+          fontStyle: 'italic',
+          letterSpacing: '0.08em',
+          paddingBottom: 4,
+        }}>
+          03 véhicules premium
+        </span>
+      </div>
 
       {/* ── Tab navigation */}
-      <div className="flt-tabs" style={{
-        display: 'flex', alignItems: 'center',
-        padding: '0 clamp(28px,5vw,72px)',
-        borderBottom: '1px solid rgba(0,0,0,0.08)',
-        background: 'rgba(255,255,255,0.45)',
-        position: 'relative', zIndex: 2,
-      }}>
+      <div
+        className="flt-tabs"
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          padding: '0 clamp(28px,5vw,72px)',
+          borderBottom: '1px solid rgba(0,0,0,0.08)',
+          marginTop: 'clamp(20px,2.5vw,32px)',
+          position: 'relative',
+          zIndex: 2,
+        }}
+      >
         {VEHICLES.map((veh, i) => {
           const isActive = active === i
           return (
@@ -232,29 +320,46 @@ export default function Flotte() {
               className="flt-tab-btn"
               onClick={() => handleTab(i)}
               style={{
-                background: 'none', border: 'none', cursor: 'pointer',
                 padding: 'clamp(12px,1.8vw,20px) clamp(16px,2.5vw,32px)',
-                display: 'flex', alignItems: 'center', gap: 10,
-                borderBottom: isActive ? `2px solid ${veh.accent}` : '2px solid transparent',
-                marginBottom: -1, position: 'relative',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 10,
+                borderBottom: isActive
+                  ? `2px solid ${veh.accent}`
+                  : '2px solid transparent',
+                marginBottom: -1,
+                position: 'relative',
               }}
             >
               <span style={{
                 fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
                 color: isActive ? veh.accent : 'rgba(0,0,0,0.2)',
-                letterSpacing: '0.15em', transition: 'color 0.3s',
-              }}>{veh.num}</span>
-              <span className="flt-tab-label" style={{
-                fontFamily: 'Sora', fontSize: 10, fontWeight: isActive ? 700 : 400,
-                letterSpacing: '0.08em', textTransform: 'uppercase',
-                color: isActive ? 'var(--texte)' : 'rgba(0,0,0,0.32)',
+                letterSpacing: '0.15em',
                 transition: 'color 0.3s',
-              }}>{veh.modele}</span>
+              }}>
+                {veh.num}
+              </span>
+              <span
+                className="flt-tab-label"
+                style={{
+                  fontFamily: 'Sora', fontSize: 10,
+                  fontWeight: isActive ? 700 : 400,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  color: isActive ? 'var(--texte)' : 'rgba(0,0,0,0.32)',
+                  transition: 'color 0.3s',
+                }}
+              >
+                {veh.modele}
+              </span>
               <span style={{
                 fontFamily: 'Sora', fontSize: 8,
                 color: isActive ? 'rgba(0,0,0,0.35)' : 'rgba(0,0,0,0.16)',
-                letterSpacing: '0.06em', transition: 'color 0.3s',
-              }}>· {veh.classe}</span>
+                letterSpacing: '0.06em',
+                transition: 'color 0.3s',
+              }}>
+                · {veh.classe}
+              </span>
             </button>
           )
         })}
@@ -277,18 +382,26 @@ export default function Flotte() {
         </div>
       </div>
 
-      {/* ── Feature card */}
-      <div className="flt-feature" style={{
-        display: 'flex', position: 'relative', zIndex: 2,
-        height: 'clamp(380px,52vh,580px)',
-        borderBottom: '1px solid rgba(0,0,0,0.07)',
-      }}>
+      {/* ── Feature card: LEFT image + RIGHT dark panel */}
+      <div
+        className="flt-feature"
+        style={{
+          display: 'flex',
+          position: 'relative',
+          zIndex: 2,
+          height: 'clamp(460px,62vh,680px)',
+        }}
+      >
 
-        {/* LEFT — Image with Ken Burns */}
-        <div style={{
-          flex: '0 0 46%', position: 'relative', overflow: 'hidden',
-          borderRight: '1px solid rgba(0,0,0,0.07)',
-        }}>
+        {/* LEFT — Full-bleed image, no right fade */}
+        <div
+          className="flt-feature-img"
+          style={{
+            flex: '0 0 46%',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
           <img
             ref={imgRef}
             src={v.img}
@@ -300,82 +413,108 @@ export default function Flotte() {
               objectFit: 'cover', objectPosition: 'center',
             }}
           />
-          {/* Edge fade to right */}
+          {/* Subtle bottom gradient for badge only */}
           <div style={{
-            position: 'absolute', inset: 0,
-            background: 'linear-gradient(to right, transparent 50%, #F4F3EF 100%)',
+            position: 'absolute', bottom: 0, left: 0, right: 0, height: 100,
+            background: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 100%)',
             pointerEvents: 'none',
           }} />
-          {/* Bottom gradient for badge */}
+          {/* num badge — top left */}
           <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0, height: 80,
-            background: 'linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%)',
-            pointerEvents: 'none',
-          }} />
-          {/* Badge bottom-left */}
+            position: 'absolute', top: 24, left: 28,
+            fontFamily: "'Instrument Serif', serif",
+            fontSize: 13, fontStyle: 'italic',
+            color: 'rgba(255,255,255,0.55)',
+            letterSpacing: '0.1em',
+          }}>
+            {v.num} / 03
+          </div>
+          {/* Class badge — bottom left */}
           <div style={{
-            position: 'absolute', bottom: 20, left: 24,
+            position: 'absolute', bottom: 24, left: 28,
             display: 'flex', alignItems: 'center', gap: 8,
           }}>
             <div style={{ width: 16, height: 1, background: v.accent }} />
             <span style={{
-              fontFamily: 'Sora', fontSize: 8, letterSpacing: '0.18em',
-              color: 'rgba(255,255,255,0.65)', textTransform: 'uppercase',
-            }}>{v.classe}</span>
+              fontFamily: 'Sora', fontSize: 8, letterSpacing: '0.2em',
+              color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase',
+            }}>
+              {v.classe}
+            </span>
           </div>
-          {/* Num badge top-left */}
-          <div style={{
-            position: 'absolute', top: 20, left: 24,
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 13, fontStyle: 'italic',
-            color: 'rgba(255,255,255,0.5)',
-            letterSpacing: '0.1em',
-          }}>{v.num} / 03</div>
         </div>
 
-        {/* RIGHT — Info panel */}
+        {/* RIGHT — Dark editorial panel */}
         <div
           ref={contentRef}
+          className="flt-feature-panel"
           style={{
             flex: 1,
-            padding: 'clamp(28px,3.5vw,52px)',
-            display: 'flex', flexDirection: 'column', justifyContent: 'center',
+            background: '#0F0F0D',
+            padding: 'clamp(32px,4vw,56px)',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
             position: 'relative',
-            background: 'rgba(255,255,255,0.5)',
+            overflow: 'hidden',
           }}
         >
-          {/* Ghost number */}
-          <span style={{
-            position: 'absolute', top: 'clamp(16px,2.5vw,32px)', right: 'clamp(16px,3.5vw,48px)',
-            fontFamily: "'Instrument Serif', serif",
-            fontSize: 'clamp(72px,11vw,140px)',
-            color: 'rgba(0,0,0,0.04)',
-            lineHeight: 1, fontStyle: 'italic',
-            userSelect: 'none', pointerEvents: 'none',
-          }}>{v.num}</span>
+          {/* Ghost number — top right, absolute */}
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'absolute',
+              top: '-0.1em', right: 'clamp(16px,3vw,40px)',
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 140,
+              color: 'rgba(255,255,255,0.025)',
+              lineHeight: 1,
+              fontStyle: 'italic',
+              userSelect: 'none',
+              pointerEvents: 'none',
+              letterSpacing: '-0.04em',
+            }}
+          >
+            {v.num}
+          </span>
 
-          {/* Class badge */}
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, marginBottom: 16 }}>
-            <div style={{ width: 18, height: 1, background: v.accentVar }} />
+          {/* Category badge row */}
+          <div style={{
+            display: 'inline-flex', alignItems: 'center', gap: 10,
+            marginBottom: 20,
+          }}>
+            <div style={{ width: 20, height: 1, background: v.accent, flexShrink: 0 }} />
             <span style={{
               fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
-              letterSpacing: '0.28em', textTransform: 'uppercase',
-              color: v.accentVar,
-            }}>{v.classe}</span>
+              letterSpacing: '0.3em', textTransform: 'uppercase',
+              color: v.accent,
+            }}>
+              {v.classe}
+            </span>
             <span style={{
               fontFamily: 'Sora', fontSize: 8,
-              letterSpacing: '0.12em', textTransform: 'uppercase',
-              color: 'rgba(0,0,0,0.22)',
-            }}>· {v.sub}</span>
+              color: 'rgba(255,255,255,0.18)',
+            }}>
+              ·
+            </span>
+            <span style={{
+              fontFamily: 'Sora', fontSize: 8,
+              color: 'rgba(255,255,255,0.3)',
+              letterSpacing: '0.1em',
+            }}>
+              {v.sub}
+            </span>
           </div>
 
-          {/* Title */}
+          {/* Vehicle name */}
           <h2 style={{
             fontFamily: "'Instrument Serif', serif",
-            fontSize: 'clamp(34px,4.5vw,62px)',
-            fontWeight: 400, color: 'var(--texte)',
-            margin: '0 0 14px', lineHeight: 0.94,
-            letterSpacing: '-0.025em',
+            fontSize: 'clamp(36px,5vw,68px)',
+            fontWeight: 400,
+            color: '#F6F3EE',
+            margin: '0 0 18px',
+            lineHeight: 0.92,
+            letterSpacing: '-0.03em',
           }}>
             Mercedes<br />
             <em style={{ color: v.accent, fontStyle: 'italic' }}>{v.modele}</em>
@@ -383,128 +522,128 @@ export default function Flotte() {
 
           {/* Description */}
           <p style={{
-            fontFamily: 'Sora', fontSize: 12,
-            color: 'rgba(0,0,0,0.42)', lineHeight: 1.78,
-            margin: '0 0 20px', maxWidth: 380,
-          }}>{v.desc}</p>
+            fontFamily: 'Sora', fontSize: 13,
+            color: 'rgba(255,255,255,0.45)',
+            lineHeight: 1.8,
+            margin: '0 0 22px',
+            maxWidth: 400,
+          }}>
+            {v.desc}
+          </p>
 
-          {/* Specs row — with icons */}
+          {/* Specs row */}
           <div style={{
-            display: 'flex', gap: 0,
-            borderTop: '1px solid rgba(0,0,0,0.08)',
-            borderBottom: '1px solid rgba(0,0,0,0.08)',
-            marginBottom: 18,
+            display: 'flex',
+            gap: 0,
+            borderTop: '1px solid rgba(255,255,255,0.07)',
+            borderBottom: '1px solid rgba(255,255,255,0.07)',
+            marginBottom: 22,
           }}>
             {[
               { Icon: Users,    label: 'Passagers', val: v.pax },
               { Icon: Suitcase, label: 'Bagages',   val: v.bags },
             ].map((s, si) => (
-              <div key={si} style={{
-                display: 'flex', alignItems: 'center', gap: 10,
-                padding: '10px 20px 10px 0',
-                marginRight: si < 1 ? 20 : 0,
-                borderRight: si < 1 ? '1px solid rgba(0,0,0,0.08)' : 'none',
-                paddingRight: si < 1 ? 20 : 0,
-              }}>
-                <s.Icon size={14} color={v.accent} weight="duotone" style={{ flexShrink: 0 }} />
+              <div
+                key={si}
+                style={{
+                  display: 'flex', alignItems: 'center', gap: 12,
+                  padding: '14px 0',
+                  paddingRight: si === 0 ? 28 : 0,
+                  marginRight: si === 0 ? 28 : 0,
+                  borderRight: si === 0 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+                }}
+              >
+                <s.Icon size={16} color={v.accent} weight="duotone" style={{ flexShrink: 0 }} />
                 <div>
                   <div style={{
-                    fontFamily: 'Sora', fontSize: 7.5, letterSpacing: '0.16em',
-                    textTransform: 'uppercase', color: 'rgba(0,0,0,0.26)', marginBottom: 2,
-                  }}>{s.label}</div>
+                    fontFamily: 'Sora', fontSize: 7, letterSpacing: '0.2em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.3)',
+                    marginBottom: 3,
+                  }}>
+                    {s.label}
+                  </div>
                   <div style={{
                     fontFamily: "'Instrument Serif', serif",
-                    fontSize: 26, color: 'var(--texte)', lineHeight: 1,
-                  }}>{s.val}</div>
+                    fontSize: 32,
+                    color: '#fff',
+                    lineHeight: 1,
+                  }}>
+                    {s.val}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Amenity icon grid */}
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: `repeat(${v.amenities.length <= 4 ? 2 : 3}, 1fr)`,
-            gap: '10px 8px',
-            marginBottom: 24,
-          }}>
+          {/* Amenity strip — horizontal pills */}
+          <div
+            className="flt-amenity-row"
+            style={{
+              display: 'flex',
+              flexWrap: 'nowrap',
+              gap: 8,
+              marginBottom: 28,
+              overflow: 'visible',
+            }}
+          >
             {v.amenities.map(({ Icon, label }, ai) => (
-              <div key={ai} className="flt-chip" style={{
-                display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                padding: '10px 8px',
-                border: `1px solid ${v.accent}28`,
-                background: `${v.accent}09`,
-                textAlign: 'center',
-              }}>
-                <div style={{
-                  width: 36, height: 36, borderRadius: '50%',
-                  background: `${v.accent}14`,
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  border: `1px solid ${v.accent}22`,
-                }}>
-                  <Icon size={18} weight="duotone" color={v.accent} />
-                </div>
+              <div
+                key={ai}
+                className="flt-amenity-pill"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 7,
+                  padding: '6px 12px',
+                  background: 'rgba(255,255,255,0.05)',
+                  border: '1px solid rgba(255,255,255,0.1)',
+                  flexShrink: 0,
+                }}
+              >
+                <Icon size={16} weight="duotone" color={v.accent} />
                 <span style={{
-                  fontFamily: 'Sora', fontSize: 8, fontWeight: 500,
-                  color: 'rgba(0,0,0,0.5)', letterSpacing: '0.04em',
-                  lineHeight: 1.3,
-                }}>{label}</span>
+                  fontFamily: 'Sora', fontSize: 9,
+                  color: 'rgba(255,255,255,0.5)',
+                  letterSpacing: '0.06em',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {label}
+                </span>
               </div>
             ))}
           </div>
 
-          {/* CTAs — glass morphism */}
-          <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
-            {/* Primary — glass filled */}
+          {/* CTAs */}
+          <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+            {/* Primary */}
             <Link
               to="/contact"
-              className="flt-cta-glass"
+              className="flt-cta-primary"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: 8,
-                background: `${v.accent}1a`,
-                backdropFilter: 'blur(14px)',
-                WebkitBackdropFilter: 'blur(14px)',
-                color: v.accent,
-                border: `1px solid ${v.accent}50`,
+                display: 'inline-flex', alignItems: 'center', gap: 9,
+                background: v.accent,
+                color: '#fff',
+                padding: '12px 28px',
                 fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
-                letterSpacing: '0.14em', textTransform: 'uppercase',
-                padding: '11px 22px', textDecoration: 'none',
-                boxShadow: `0 4px 18px ${v.accent}1a, inset 0 0 0 1px ${v.accent}10`,
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = `${v.accent}2e`
-                e.currentTarget.style.boxShadow = `0 6px 26px ${v.accent}30, inset 0 0 0 1px ${v.accent}20`
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = `${v.accent}1a`
-                e.currentTarget.style.boxShadow = `0 4px 18px ${v.accent}1a, inset 0 0 0 1px ${v.accent}10`
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                textDecoration: 'none',
               }}
             >
               Réserver <ArrowRight size={11} weight="bold" />
             </Link>
 
-            {/* Secondary — ghost */}
+            {/* Secondary */}
             <Link
               to="/flotte"
-              className="flt-cta-glass"
+              className="flt-cta-secondary"
               style={{
-                display: 'inline-flex', alignItems: 'center', gap: 6,
-                fontFamily: 'Sora', fontSize: 10, color: 'rgba(0,0,0,0.35)',
-                textDecoration: 'none', letterSpacing: '0.08em',
-                background: 'rgba(255,255,255,0.5)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                border: '1px solid rgba(0,0,0,0.1)',
-                padding: '11px 18px',
-                boxShadow: '0 2px 10px rgba(0,0,0,0.05)',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.color = 'var(--texte)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.85)'
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.color = 'rgba(0,0,0,0.35)'
-                e.currentTarget.style.background = 'rgba(255,255,255,0.5)'
+                display: 'inline-flex', alignItems: 'center', gap: 9,
+                background: 'transparent',
+                color: 'rgba(255,255,255,0.5)',
+                border: '1px solid rgba(255,255,255,0.15)',
+                padding: '12px 28px',
+                fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                textDecoration: 'none',
               }}
             >
               Voir la flotte <ArrowUpRight size={11} weight="bold" />
@@ -514,16 +653,20 @@ export default function Flotte() {
       </div>
 
       {/* ── Bottom strip */}
-      <div className="flt-bottom-strip" style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: 'clamp(12px,1.5vw,18px) clamp(28px,5vw,72px)',
-        position: 'relative', zIndex: 2,
-      }}>
+      <div
+        className="flt-bottom-strip"
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+          padding: 'clamp(12px,1.5vw,18px) clamp(28px,5vw,72px)',
+          position: 'relative', zIndex: 2,
+        }}
+      >
         {/* Dot indicators */}
         <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
           {VEHICLES.map((veh, i) => (
             <button
-              key={i} type="button"
+              key={i}
+              type="button"
               onClick={() => handleTab(i)}
               style={{
                 width: active === i ? 28 : 7, height: 2,
@@ -535,6 +678,7 @@ export default function Flotte() {
             />
           ))}
         </div>
+
         {/* Flotte link */}
         <Link
           to="/flotte"
@@ -551,16 +695,6 @@ export default function Flotte() {
           Voir toute la flotte <ArrowRight size={10} weight="bold" />
         </Link>
       </div>
-
-      {/* ── Mobile */}
-      <style>{`
-        @media (max-width: 768px) {
-          .flt-feature { flex-direction: column !important; height: auto !important; }
-          .flt-feature > div:first-child { flex: 0 0 220px !important; border-right: none !important; border-bottom: 1px solid rgba(0,0,0,0.07) !important; }
-          .flt-feature > div:last-child { padding: 28px 20px !important; }
-          .flt-tabs button { padding: 12px 14px !important; }
-        }
-      `}</style>
     </section>
   )
 }

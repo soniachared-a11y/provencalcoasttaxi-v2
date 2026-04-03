@@ -41,7 +41,12 @@ export default function Footer() {
   }, [])
 
   return (
-    <footer ref={footerRef} style={{ background: '#0D1117', position: 'relative', zIndex: 5 }}>
+    <footer ref={footerRef} style={{
+      background: '#0D1117',
+      position: 'relative',
+      zIndex: 5,
+      boxShadow: '0 -24px 80px rgba(0,0,0,0.75)',
+    }}>
 
       {/* ── CTA Band ── */}
       <div style={{

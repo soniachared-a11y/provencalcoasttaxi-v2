@@ -35,6 +35,8 @@ const GRID_ITEMS = [
   { idx: 4, span: 1 },
 ]
 
+const ACCENT_COLORS = ['var(--olive)', 'var(--lavande)', 'var(--olive)', 'var(--lavande)', 'var(--olive)']
+
 function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
   const service = SERVICES[serviceIdx]
   const Icon = ICON_MAP[service.icon]
@@ -42,6 +44,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
   const panelRef = useRef(null)
   const isOpen = openIdx === serviceIdx
   const num = String(serviceIdx + 1).padStart(2, '0')
+  const accent = ACCENT_COLORS[serviceIdx]
 
   // Animate panel open/close
   useEffect(() => {
@@ -155,7 +158,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
           <span style={{
             fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 700,
-            letterSpacing: '0.2em', color: 'var(--lavande)', flexShrink: 0,
+            letterSpacing: '0.2em', color: accent, flexShrink: 0,
           }}>
             {num}
           </span>
@@ -170,7 +173,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         <div style={{
           height: 1,
           background: isOpen
-            ? 'linear-gradient(to right, var(--lavande) 0%, transparent 100%)'
+            ? `linear-gradient(to right, ${accent} 0%, transparent 100%)`
             : 'linear-gradient(to right, rgba(255,255,255,0.25) 0%, transparent 100%)',
           transition: 'background 0.4s ease',
           width: '100%',
@@ -214,7 +217,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
       }}>
         {Icon && (
           <div style={{ marginBottom: 8 }}>
-            <Icon size={span === 2 ? 20 : 17} weight="duotone" style={{ color: 'var(--lavande)' }} />
+            <Icon size={span === 2 ? 20 : 17} weight="duotone" style={{ color: accent }} />
           </div>
         )}
         <h2 style={{
@@ -228,15 +231,15 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
           <span style={{
             fontFamily: "'Instrument Serif', serif",
             fontSize: span === 2 ? 16 : 13,
-            fontStyle: 'italic', color: 'var(--lavande)',
+            fontStyle: 'italic', color: accent,
           }}>
             {service.prix}
           </span>
           <div style={{
             width: 32, height: 32, borderRadius: '50%', display: 'flex',
             alignItems: 'center', justifyContent: 'center', color: '#fff',
-            background: isOpen ? 'var(--olive)' : 'transparent',
-            border: isOpen ? '1px solid var(--olive)' : '1px solid rgba(255,255,255,0.25)',
+            background: isOpen ? accent : 'transparent',
+            border: isOpen ? `1px solid ${accent}` : '1px solid rgba(255,255,255,0.25)',
             transition: 'background 0.3s, border-color 0.3s',
           }}>
             <ArrowRight
@@ -269,7 +272,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
       >
         {/* Icon + title */}
         <div className="panel-item" style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-          {Icon && <Icon size={20} weight="duotone" style={{ color: 'var(--lavande)', flexShrink: 0 }} />}
+          {Icon && <Icon size={20} weight="duotone" style={{ color: accent, flexShrink: 0 }} />}
           <h3 style={{
             fontFamily: "'Instrument Serif', serif",
             fontSize: span === 2 ? 28 : 22,
@@ -307,7 +310,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         <div className="panel-item" style={{ display: 'flex', alignItems: 'center', gap: 16, flexWrap: 'wrap' }}>
           <span style={{
             fontFamily: "'Instrument Serif', serif", fontSize: 17,
-            fontStyle: 'italic', color: 'var(--lavande)',
+            fontStyle: 'italic', color: accent,
           }}>
             {service.prix}
           </span>
@@ -316,15 +319,15 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
             onClick={e => e.stopPropagation()}
             style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
-              backgroundColor: 'var(--olive)', color: '#fff',
+              backgroundColor: accent, color: '#fff',
               padding: '11px 24px',
               fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 700,
               letterSpacing: '0.14em', textTransform: 'uppercase',
               textDecoration: 'none', borderRadius: 2,
               transition: 'background-color 0.3s, gap 0.3s',
             }}
-            onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#5A6B3A'; e.currentTarget.style.gap = '14px' }}
-            onMouseLeave={e => { e.currentTarget.style.backgroundColor = 'var(--olive)'; e.currentTarget.style.gap = '10px' }}
+            onMouseEnter={e => { e.currentTarget.style.opacity = '0.85'; e.currentTarget.style.gap = '14px' }}
+            onMouseLeave={e => { e.currentTarget.style.opacity = '1'; e.currentTarget.style.gap = '10px' }}
           >
             Réserver ce service
             <ArrowRight size={12} weight="bold" />
@@ -431,12 +434,12 @@ export default function ServicesPage() {
       }}>
         <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
           {[
-            { icon: CheckCircle, label: 'Tarif fixe garanti' },
-            { icon: Clock, label: 'Disponible 24h/24' },
-            { icon: AirplaneTilt, label: 'Suivi des vols en temps réel' },
-          ].map(({ icon: Icon, label }, i) => (
+            { icon: CheckCircle, label: 'Tarif fixe garanti', color: 'var(--olive)' },
+            { icon: Clock, label: 'Disponible 24h/24', color: 'var(--lavande)' },
+            { icon: AirplaneTilt, label: 'Suivi des vols en temps réel', color: 'var(--olive)' },
+          ].map(({ icon: Icon, label, color }, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-              <Icon size={18} weight="duotone" style={{ color: 'var(--lavande)' }} />
+              <Icon size={18} weight="duotone" style={{ color }} />
               <span style={{ fontFamily: 'Sora, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>
                 {label}
               </span>

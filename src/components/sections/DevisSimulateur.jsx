@@ -162,7 +162,7 @@ export default function DevisSimulateur() {
               <div key={i} className="dvs-trust" style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                 <CheckCircle
                   size={12} weight="duotone"
-                  style={{ color: 'var(--olive)', filter: 'drop-shadow(0 0 4px rgba(107,125,74,0.9))', flexShrink: 0 }}
+                  style={{ color: 'var(--lavande)', filter: 'drop-shadow(0 0 4px rgba(122,96,145,0.9))', flexShrink: 0 }}
                 />
                 <span style={{
                   fontFamily: 'Sora, sans-serif', fontSize: 10,

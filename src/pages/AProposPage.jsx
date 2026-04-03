@@ -166,7 +166,7 @@ export default function AProposPage() {
         <img
           ref={heroBgRef}
           src="/images/lavande-provence.jpg"
-          alt=""
+          alt="" aria-hidden="true"
           aria-hidden="true"
           style={{
             position: 'absolute',
@@ -695,7 +695,7 @@ export default function AProposPage() {
       }}>
         <img
           src="/images/classe-s-bastide.jpg"
-          alt=""
+          alt="" aria-hidden="true"
           aria-hidden="true"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',

@@ -1,5 +1,5 @@
-// Schema.org JSON-LD — TaxiService + LocalBusiness
-import { CONTACT } from '../data/content'
+// Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage
+import { CONTACT, FAQS } from '../data/content'
 
 export function SchemaOrg() {
   const schema = {
@@ -57,10 +57,29 @@ export function SchemaOrg() {
     },
   }
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map(faq => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.r,
+      },
+    })),
+  }
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema, null, 2) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema, null, 2) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema, null, 2) }}
+      />
+    </>
   )
 }

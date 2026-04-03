@@ -43,6 +43,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
   const Icon = ICON_MAP[service.icon]
   const imgRef = useRef(null)
   const panelRef = useRef(null)
+  const cardRef = useRef(null)
   const isOpen = openIdx === serviceIdx
   const num = String(serviceIdx + 1).padStart(2, '0')
   const accent = ACCENT_COLORS[serviceIdx]
@@ -59,7 +60,6 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         duration: 0.55,
         ease: 'power3.out',
       })
-      // Fade in inner elements
       gsap.from(panel.querySelectorAll('.panel-item'), {
         y: 14,
         opacity: 0,
@@ -68,6 +68,12 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         delay: 0.15,
         ease: 'power2.out',
       })
+      // Auto-scroll to card top on mobile
+      setTimeout(() => {
+        if (cardRef.current) {
+          cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 80)
     } else {
       gsap.to(panel, {
         clipPath: 'inset(100% 0 0 0)',
@@ -83,7 +89,6 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
       onClose()
     } else {
       onOpen(serviceIdx)
-      // zoom image on open
       if (imgRef.current) gsap.to(imgRef.current, { scale: 1.05, filter: 'saturate(1)', duration: 0.6, ease: 'power2.out' })
     }
   }, [isOpen, serviceIdx, onOpen, onClose])
@@ -99,7 +104,9 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
 
   return (
     <div
+      ref={cardRef}
       className="svc-card"
+      data-open={isOpen}
       onClick={handleCardClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
@@ -262,11 +269,12 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
           display: 'none',
           position: 'absolute',
           inset: 0,
-          background: 'linear-gradient(to top, rgba(10,12,18,0.97) 0%, rgba(10,12,18,0.88) 100%)',
+          background: 'linear-gradient(to bottom, rgba(10,12,18,0.97) 0%, rgba(10,12,18,0.92) 100%)',
           backdropFilter: 'blur(8px)',
           flexDirection: 'column',
-          justifyContent: 'flex-end',
-          padding: span === 2 ? '100px 36px 32px' : '80px 28px 28px',
+          justifyContent: 'flex-start',
+          overflowY: 'auto',
+          padding: span === 2 ? '64px 36px 32px' : '56px 24px 24px',
           clipPath: 'inset(100% 0 0 0)',
         }}
         onClick={e => e.stopPropagation()}
@@ -469,10 +477,12 @@ export default function ServicesPage() {
         @media (max-width: 900px) {
           .svc-grid { grid-template-columns: repeat(2, 1fr) !important; margin: 0 20px 60px !important; }
           .svc-card { height: 42vh !important; }
+          .svc-card[data-open="true"] { height: auto !important; min-height: 480px !important; }
         }
         @media (max-width: 600px) {
           .svc-grid { grid-template-columns: 1fr !important; margin: 0 16px 56px !important; }
-          .svc-card { height: 56vw !important; min-height: 260px !important; grid-column: span 1 !important; }
+          .svc-card { height: 56vw !important; min-height: 240px !important; grid-column: span 1 !important; }
+          .svc-card[data-open="true"] { height: auto !important; min-height: 420px !important; }
         }
       `}</style>
     </main>

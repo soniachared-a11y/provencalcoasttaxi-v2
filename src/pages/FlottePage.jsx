@@ -738,32 +738,42 @@ export default function FlottePage() {
             { v: 100, suffix: '%', l: 'Entretien quotidien' },
             { v: 15000, suffix: '+', l: 'Trajets réalisés' },
             { v: 4.9, suffix: '★', l: 'Note Google' },
-          ].map((s, i) => (
+          ].map((s, i) => {
+            const accent = i % 2 === 0 ? 'var(--olive)' : 'var(--lavande)'
+            const accentRgb = i % 2 === 0 ? '107,125,74' : '122,96,145'
+            return (
             <div key={i} style={{
               padding: '28px 16px',
-              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.05)' : 'none',
+              borderRight: i < 3 ? '1px solid rgba(255,255,255,0.07)' : 'none',
+              position: 'relative',
             }}>
+              {/* Bottom accent line */}
+              <div style={{
+                position: 'absolute', bottom: 0, left: '20%', right: '20%', height: 1,
+                background: `linear-gradient(90deg, transparent, rgba(${accentRgb},0.5), transparent)`,
+              }} />
               <div
                 className="stat-num"
                 data-target={s.v}
                 data-suffix={s.suffix}
                 style={{
                   fontFamily: "'Instrument Serif', serif",
-                  fontSize: 'clamp(24px, 3vw, 36px)',
-                  color: '#fff', marginBottom: 4,
+                  fontSize: 'clamp(28px, 3.5vw, 44px)',
+                  color: accent, marginBottom: 6,
+                  textShadow: `0 0 24px rgba(${accentRgb},0.45)`,
                 }}
               >
                 {s.v}{s.suffix}
               </div>
               <div style={{
                 fontFamily: 'Sora', fontSize: 9, fontWeight: 600,
-                color: 'rgba(255,255,255,0.25)',
+                color: 'rgba(255,255,255,0.55)',
                 textTransform: 'uppercase', letterSpacing: '0.12em',
               }}>
                 {s.l}
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </section>
 

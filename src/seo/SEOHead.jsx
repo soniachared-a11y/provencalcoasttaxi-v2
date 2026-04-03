@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-const DOMAIN = 'https://taxisprovencaleaix.fr'
+const DOMAIN = 'https://www.taxisprovencaleaix.fr'
 
 const DEFAULTS = {
   title: 'Taxis Provençale Aix — Chauffeur privé Aix-en-Provence | VTC Provence',

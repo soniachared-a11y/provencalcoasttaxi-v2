@@ -1,7 +1,7 @@
 // Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage + Services + Breadcrumbs
 import { CONTACT, FAQS, SERVICES, AVIS } from '../data/content'
 
-const DOMAIN = 'https://taxisprovencaleaix.fr'
+const DOMAIN = 'https://www.taxisprovencaleaix.fr'
 
 export function SchemaOrg() {
   // ── 1. LocalBusiness + TaxiService (core)

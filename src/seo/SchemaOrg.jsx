@@ -1,5 +1,5 @@
 // Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage + Services + Breadcrumbs
-import { CONTACT, FAQS, SERVICES } from '../data/content'
+import { CONTACT, FAQS, SERVICES, AVIS } from '../data/content'
 
 const DOMAIN = 'https://taxisprovencaleaix.fr'
 
@@ -70,6 +70,29 @@ export function SchemaOrg() {
       ratingCount: '200',
       reviewCount: '200',
     },
+    potentialAction: [
+      {
+        '@type': 'ReserveAction',
+        target: {
+          '@type': 'EntryPoint',
+          urlTemplate: `${DOMAIN}/contact`,
+          actionPlatform: ['http://schema.org/DesktopWebPlatform', 'http://schema.org/MobileWebPlatform'],
+        },
+        name: 'Réserver un chauffeur privé',
+        description: 'Réservez votre taxi Mercedes à Aix-en-Provence en ligne. Confirmation sous 15 minutes.',
+      },
+      {
+        '@type': 'CommunicateAction',
+        target: { '@type': 'EntryPoint', urlTemplate: 'tel:+33615963275' },
+        name: 'Appeler maintenant',
+      },
+    ],
+    review: AVIS.slice(0, 3).map(a => ({
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      author: { '@type': 'Person', name: a.nom },
+      reviewBody: a.texte,
+    })),
     // Keywords pour AI crawlers
     knowsAbout: [
       'transfert aéroport Marseille Provence',

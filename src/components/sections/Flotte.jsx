@@ -608,7 +608,6 @@ export default function Flotte() {
               flexWrap: 'wrap',
               gap: 8,
               marginBottom: 28,
-              overflow: 'hidden',
             }}
           >
             {v.amenities.map(({ Icon, label }, ai) => (

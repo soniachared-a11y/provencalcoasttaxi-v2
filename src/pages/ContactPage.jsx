@@ -8,6 +8,7 @@ import {
   CalendarBlank, Clock, SealCheck, MapPin,
   WifiHigh, Drop, Baby, Snowflake, Lightning, Users, Briefcase,
 } from '@phosphor-icons/react'
+import emailjs from '@emailjs/browser'
 import { CONTACT } from '../data/content'
 import { supabase } from '../lib/supabase'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
@@ -154,6 +155,7 @@ export default function ContactPage() {
     e.preventDefault()
     setLoading(true)
     try {
+      // 1. Enregistrement en base Supabase (dashboard)
       await supabase.from('reservations').insert([{
         nom_client: `${form.prenom} ${form.nom}`.trim(),
         tel_client: form.tel,
@@ -167,6 +169,29 @@ export default function ContactPage() {
         message: form.message || null,
         source: 'site-contact', statut: 'nouvelle',
       }])
+
+      // 2. Notification email vers provencalcoastdriver@gmail.com
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          client_nom:     `${form.prenom} ${form.nom}`.trim(),
+          client_tel:     form.tel,
+          trajet_type:    TRIP_TYPES[form.tripType],
+          depart:         form.depart,
+          destination:    form.destination?.label || '—',
+          distance:       form.destination?.km ? `${form.destination.km} km` : '—',
+          date:           form.date || '—',
+          heure:          form.heure || '—',
+          vehicule:       form.vehicule,
+          passagers:      form.passagers,
+          prix_estime:    prix ? `${prix.montant} € ${prix.isNuit ? '(tarif nuit)' : ''}` : '—',
+          message:        form.message || '(aucun message)',
+          to_email:       'provencalcoastdriver@gmail.com',
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+
       setSuccess(true)
     } catch (err) { console.error(err) }
     setLoading(false)

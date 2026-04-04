@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { Phone } from '@phosphor-icons/react'
 
-export default function PhoneFloat() {
+export default function PhoneFloat({ hide = false }) {
   const ref = useRef(null)
 
   useEffect(() => {
@@ -25,6 +25,8 @@ export default function PhoneFloat() {
       delay: 2.6,
     })
   }, [])
+
+  if (hide) return null
 
   return (
     <a

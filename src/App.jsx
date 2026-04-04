@@ -80,8 +80,8 @@ export default function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
       </Routes>
-      {pathname === '/' && <Footer />}
-      <PhoneFloat />
+      <Footer />
+      <PhoneFloat hide={pathname === '/contact'} />
       <CursorFollower />
     </>
   )

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://taxisprovencaleaix.fr/sitemap.xml
+Sitemap: https://www.taxisprovencaleaix.fr/sitemap.xml

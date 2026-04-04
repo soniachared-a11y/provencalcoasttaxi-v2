@@ -1,7 +1,12 @@
 // App.jsx — Taxis Provençale Aix V2
+import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLenis } from './hooks/useLenis'
 import { useAnimations } from './hooks/useAnimations'
+
+gsap.registerPlugin(ScrollTrigger)
 import { SchemaOrg } from './seo/SchemaOrg'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
@@ -66,6 +71,15 @@ export default function App() {
   useLenis()
   useAnimations()
   const { pathname } = useLocation()
+
+  // Refresh ScrollTrigger après chaque changement de route
+  // (les positions sont recalculées pour la nouvelle page)
+  useEffect(() => {
+    const t = setTimeout(() => {
+      ScrollTrigger.refresh()
+    }, 250)
+    return () => clearTimeout(t)
+  }, [pathname])
 
   return (
     <>

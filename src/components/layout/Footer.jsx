@@ -34,7 +34,12 @@ export default function Footer() {
     const ctx = gsap.context(() => {
       gsap.from('.ft-col', {
         y: 30, opacity: 0, duration: 0.7, stagger: 0.1, ease: 'power2.out',
-        scrollTrigger: { trigger: footerRef.current, start: 'top bottom', once: true },
+        scrollTrigger: {
+          trigger: footerRef.current,
+          start: 'top bottom',
+          once: true,
+          invalidateOnRefresh: true,
+        },
       })
     }, footerRef)
     return () => ctx.revert()

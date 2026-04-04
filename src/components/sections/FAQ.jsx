@@ -23,6 +23,16 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
     if (!el) return
 
     if (isOpen) {
+      // Scroll automatique vers l'item ouvert
+      setTimeout(() => {
+        if (!itemRef.current) return
+        if (window.__lenis) {
+          window.__lenis.scrollTo(itemRef.current, { duration: 0.8, offset: -100 })
+        } else {
+          itemRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+        }
+      }, 80)
+
       // Kill any running tweens on this element first
       gsap.killTweensOf([el, bar, numEl])
 

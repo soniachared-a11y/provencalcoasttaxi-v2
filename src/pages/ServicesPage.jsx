@@ -68,12 +68,20 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         delay: 0.15,
         ease: 'power2.out',
       })
-      // Auto-scroll to card top on mobile
-      setTimeout(() => {
-        if (cardRef.current) {
-          cardRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      // Scroll vers le haut de la carte via Lenis (compatibilité smooth scroll)
+      // On le fait immédiatement, avant que l'animation parte
+      const card = cardRef.current
+      if (card) {
+        const rect = card.getBoundingClientRect()
+        // Ne scroll que si la carte n'est pas déjà bien visible en haut
+        if (rect.top > window.innerHeight * 0.35 || rect.top < 0) {
+          if (window.__lenis) {
+            window.__lenis.scrollTo(card, { duration: 0.7, offset: -90 })
+          } else {
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' })
+          }
         }
-      }, 80)
+      }
     } else {
       gsap.to(panel, {
         clipPath: 'inset(100% 0 0 0)',

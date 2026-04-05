@@ -163,9 +163,7 @@ export default function ContactPage() {
         destination: form.destination?.label || '',
         date_heure: form.date && form.heure ? `${form.date}T${form.heure}` : null,
         marque: form.vehicule,
-        passagers: form.passagers,
-        aller_retour: form.tripType === 1,
-        prix_estime: prix?.montant || null,
+        montant: prix?.montant || null,
         message: form.message || null,
         source: 'site-contact', statut: 'nouvelle',
       }])

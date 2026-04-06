@@ -107,8 +107,8 @@ export default function Nav() {
   }
 
   const textColor = scrolled ? 'var(--texte)' : (onDark ? '#FFFFFF' : 'var(--texte)')
-  const linkColor = scrolled ? 'var(--olive)' : (onDark ? 'rgba(255,255,255,0.55)' : 'var(--olive)')
-  const linkHover = scrolled ? 'var(--texte)' : (onDark ? '#FFFFFF' : 'var(--texte)')
+  const linkColor = 'var(--olive)'
+  const linkHover = 'var(--texte)'
 
   const linkStyle = {
     fontFamily: "'Sora', sans-serif",
@@ -237,7 +237,7 @@ export default function Nav() {
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
-              Devis gratuit
+              Calculer mon trajet
               <ArrowRight size={14} weight="regular" />
             </Link>
           </div>
@@ -300,7 +300,7 @@ export default function Nav() {
                 textDecoration: 'none',
               }}
             >
-              Devis gratuit
+              Calculer mon trajet
               <ArrowRight size={14} weight="regular" />
             </Link>
           </div>

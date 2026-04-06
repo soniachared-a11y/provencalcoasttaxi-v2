@@ -156,7 +156,7 @@ export default function Avis() {
 
           {/* Google rating widget */}
           <a
-            href="https://www.google.com/maps/search/?api=1&query=Taxis+Proven%C3%A7al+Aix+Aix-en-Provence"
+            href="https://www.google.com/maps?q=Taxis+Provencale+Aix#lrd=0x12c98d006ea539cd:0x67c84de7447f12d5,1"
             target="_blank"
             rel="noopener noreferrer"
             style={{

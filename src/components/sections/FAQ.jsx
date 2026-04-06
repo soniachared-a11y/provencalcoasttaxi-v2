@@ -100,7 +100,7 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
 
       if (numEl) {
         tl.to(numEl, {
-          color: 'var(--texte-faint)',
+          color: 'var(--lavande)',
           duration: 0.3,
         }, 0)
       }
@@ -171,7 +171,7 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
           style={{
             fontFamily: "'Instrument Serif', serif",
             fontSize: 20,
-            color: isOpen ? 'var(--olive)' : 'var(--texte-faint)',
+            color: isOpen ? 'var(--olive)' : 'var(--lavande)',
             minWidth: 32,
             transition: 'color 0.3s',
           }}

@@ -11,7 +11,6 @@ gsap.registerPlugin(ScrollTrigger)
 const TARIF_JOUR  = 2.22
 const TARIF_NUIT  = 2.88
 const PRISE       = 4.00
-const MINIMUM     = 12
 
 const TRUST = ['Tarif fixe garanti', 'Sans engagement', 'Réponse en 15 min']
 
@@ -25,7 +24,7 @@ export default function DevisSimulateur() {
     if (!dest?.km) return
     const h = new Date().getHours()
     const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-    const prix = Math.max(MINIMUM, +(PRISE + dest.km * tarif).toFixed(2))
+    const prix = +(PRISE + dest.km * tarif).toFixed(2)
     setResult({ prix, km: dest.km, isNuit: tarif === TARIF_NUIT })
   }
 

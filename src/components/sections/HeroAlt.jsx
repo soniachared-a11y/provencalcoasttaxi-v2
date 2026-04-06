@@ -5,16 +5,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, CheckCircle, NavigationArrow } from '@phosphor-icons/react'
 import MagneticButton from '../ui/MagneticButton'
 import AddressAutocomplete from '../ui/AddressAutocomplete'
+import { getRouteKmBetween, AIX } from '../../lib/geo'
 
 const TARIF_JOUR = 2.22
 const TARIF_NUIT = 2.88
 const PRISE = 4.00
-const MINIMUM = 12
-function calcPrix(km) {
-  const h = new Date().getHours()
-  const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-  return Math.max(MINIMUM, +(PRISE + km * tarif).toFixed(2))
-}
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -40,9 +35,31 @@ function WordReveal({ text, className = '' }) {
 export default function HeroAlt() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
+  const [depart, setDepart] = useState({ label: 'Aix-en-Provence Centre', lat: AIX.lat, lng: AIX.lng })
   const [dest, setDest] = useState(null)
-  const [routeLoading, setRouteLoading] = useState(false)
+  const [calcLoading, setCalcLoading] = useState(false)
   const [prix, setPrix] = useState(null)
+  const [km, setKm] = useState(null)
+
+  async function handleCalculer() {
+    if (!dest?.lat && !dest?.km) return
+    setCalcLoading(true)
+    setPrix(null)
+    const fromLat = depart?.lat ?? AIX.lat
+    const fromLng = depart?.lng ?? AIX.lng
+    let distance = null
+    if (dest.lat) {
+      distance = await getRouteKmBetween(fromLat, fromLng, dest.lat, dest.lng)
+    } else if (dest.km) {
+      distance = dest.km
+    }
+    setCalcLoading(false)
+    if (!distance) return
+    const h = new Date().getHours()
+    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
+    setKm(distance)
+    setPrix(+(PRISE + distance * tarif).toFixed(2))
+  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -244,34 +261,34 @@ export default function HeroAlt() {
               </p>
               <div className="heroalt-estimator-inner" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <AddressAutocomplete
-                  value={dest}
-                  onChange={d => { setDest(d); setPrix(d?.km ? calcPrix(d.km) : null) }}
-                  placeholder="Destination…"
+                  value={depart}
+                  onChange={d => { setDepart(d); setPrix(null); setKm(null) }}
+                  placeholder="Départ…"
                   dark={false}
-                  onLoadingChange={setRouteLoading}
+                  isOrigin={true}
                   inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
                 />
-                {prix && !routeLoading && (
+                <AddressAutocomplete
+                  value={dest}
+                  onChange={d => { setDest(d); setPrix(null); setKm(null) }}
+                  placeholder="Destination…"
+                  dark={false}
+                  inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
+                />
+                {prix && km && (
                   <div style={{
                     fontFamily: 'Sora', fontSize: 10, color: 'var(--olive)',
                     display: 'flex', alignItems: 'center', gap: 8,
                   }}>
                     <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: 'var(--texte)' }}>~{prix}€</span>
-                    <span style={{ color: 'var(--texte-light)' }}>· {dest.km} km</span>
+                    <span style={{ color: 'var(--texte-light)' }}>· {km} km</span>
                   </div>
                 )}
-                <p style={{
-                  fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 400,
-                  fontStyle: 'italic', color: 'var(--texte-light)', opacity: 0.65,
-                  margin: '2px 0 0', lineHeight: 1.5,
-                }}>
-                  * Estimation calculée au départ d'Aix-en-Provence centre
-                </p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <button
                     type="button"
-                    disabled={!dest || routeLoading}
-                    onClick={() => dest?.km && setPrix(calcPrix(dest.km))}
+                    disabled={!dest || calcLoading}
+                    onClick={handleCalculer}
                     style={{
                       flex: 1, minWidth: 140,
                       fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
@@ -286,7 +303,7 @@ export default function HeroAlt() {
                     onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)' }}
                   >
                     <ArrowRight size={11} weight="bold" />
-                    {routeLoading ? 'Calcul…' : 'Calculer mon trajet'}
+                    {calcLoading ? 'Calcul…' : 'Calculer mon trajet'}
                   </button>
                   <Link
                     to="/contact"

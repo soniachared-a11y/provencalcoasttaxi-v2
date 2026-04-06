@@ -13,7 +13,6 @@ import { CONTACT } from '../../data/content'
 const TARIF_JOUR = 2.22
 const TARIF_NUIT = 2.88
 const PRISE = 4.00
-const MINIMUM = 12
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -48,7 +47,7 @@ export default function FlotteVideo() {
 
     const h = heure ? parseInt(heure.split(':')[0], 10) : new Date().getHours()
     const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-    const prix = Math.max(MINIMUM, +(PRISE + km * tarif).toFixed(2))
+    const prix = +(PRISE + km * tarif).toFixed(2)
     setResult({ km, prix, isNuit: tarif === TARIF_NUIT })
   }
 

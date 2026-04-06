@@ -23,19 +23,6 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
     if (!el) return
 
     if (isOpen) {
-      // Scroll vers l'item uniquement s'il n'est pas déjà bien visible
-      const item = itemRef.current
-      if (item) {
-        const rect = item.getBoundingClientRect()
-        if (rect.top > window.innerHeight * 0.4 || rect.top < 0) {
-          if (window.__lenis) {
-            window.__lenis.scrollTo(item, { duration: 0.7, offset: -90 })
-          } else {
-            item.scrollIntoView({ behavior: 'smooth', block: 'start' })
-          }
-        }
-      }
-
       // Kill any running tweens on this element first
       gsap.killTweensOf([el, bar, numEl])
 

@@ -9,7 +9,7 @@ import { CONTACT } from '../../data/content'
 gsap.registerPlugin(ScrollTrigger)
 
 const TARIF_JOUR  = 2.22
-const TARIF_NUIT  = 2.78
+const TARIF_NUIT  = 2.88
 const PRISE       = 4.00
 const MINIMUM     = 12
 

@@ -16,21 +16,21 @@ const QUICK_ORIGINS = [
 
 // Popular predefined destinations (instant km, no routing needed)
 const QUICK_DESTINATIONS = [
-  { label: 'Aéroport Marseille-Provence (MRS)', km: 42 },
-  { label: 'Gare TGV Aix-en-Provence', km: 12 },
-  { label: 'Marseille Centre', km: 35 },
-  { label: "Aéroport Nice Côte d'Azur (NCE)", km: 180 },
-  { label: 'Cassis / Calanques', km: 50 },
-  { label: 'Gordes / Luberon', km: 65 },
-  { label: 'Avignon Centre', km: 85 },
-  { label: 'Monaco', km: 210 },
-  { label: 'Cannes', km: 155 },
-  { label: 'Arles', km: 80 },
-  { label: 'Saint-Rémy-de-Provence', km: 30 },
-  { label: 'Les Baux-de-Provence', km: 35 },
-  { label: 'Salon-de-Provence', km: 35 },
-  { label: 'Pertuis', km: 25 },
-  { label: 'Manosque', km: 60 },
+  { label: 'Aéroport Marseille-Provence (MRS)', km: 26, lat: 43.4358, lng: 5.2214 },
+  { label: 'Gare TGV Aix-en-Provence', km: 16, lat: 43.4539, lng: 5.3234 },
+  { label: 'Marseille Centre', km: 32, lat: 43.2965, lng: 5.3698 },
+  { label: "Aéroport Nice Côte d'Azur (NCE)", km: 175, lat: 43.6654, lng: 7.2153 },
+  { label: 'Cassis / Calanques', km: 52, lat: 43.2135, lng: 5.5383 },
+  { label: 'Gordes / Luberon', km: 75, lat: 43.9109, lng: 5.1981 },
+  { label: 'Avignon Centre', km: 82, lat: 43.9493, lng: 4.8055 },
+  { label: 'Monaco', km: 200, lat: 43.7384, lng: 7.4246 },
+  { label: 'Cannes', km: 150, lat: 43.5528, lng: 7.0174 },
+  { label: 'Arles', km: 75, lat: 43.6762, lng: 4.6272 },
+  { label: 'Saint-Rémy-de-Provence', km: 74, lat: 43.7891, lng: 4.8316 },
+  { label: 'Les Baux-de-Provence', km: 72, lat: 43.7442, lng: 4.7974 },
+  { label: 'Salon-de-Provence', km: 35, lat: 43.6405, lng: 5.0972 },
+  { label: 'Pertuis', km: 22, lat: 43.6919, lng: 5.5031 },
+  { label: 'Manosque', km: 58, lat: 43.8348, lng: 5.7872 },
 ]
 
 /**
@@ -115,7 +115,7 @@ export default function AddressAutocomplete({
     setPhotonResults([])
     onChange(isOrigin
       ? { label: d.label, lat: d.lat, lng: d.lng }
-      : { label: d.label, km: d.km })
+      : { label: d.label, km: d.km, lat: d.lat, lng: d.lng })
   }, [onChange, isOrigin])
 
   // Select a Photon result → fetch OSRM distance

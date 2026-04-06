@@ -11,7 +11,7 @@ import { getRouteKmBetween, AIX } from '../../lib/geo'
 import { CONTACT } from '../../data/content'
 
 const TARIF_JOUR = 2.22
-const TARIF_NUIT = 2.78
+const TARIF_NUIT = 2.88
 const PRISE = 4.00
 const MINIMUM = 12
 
@@ -36,10 +36,10 @@ export default function FlotteVideo() {
     const fromLng = depart?.lng ?? AIX.lng
 
     if (arrivee.lat) {
-      // Photon result — calculate exact route between points
+      // Coordonnées disponibles (Photon ou destination rapide) — route exacte
       km = await getRouteKmBetween(fromLat, fromLng, arrivee.lat, arrivee.lng)
     } else if (arrivee.km) {
-      // Quick destination — use predefined km (from Aix)
+      // Fallback : km précalculé depuis Aix (départ Aix uniquement)
       km = arrivee.km
     }
 

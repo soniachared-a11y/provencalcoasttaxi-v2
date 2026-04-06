@@ -106,9 +106,9 @@ export default function Nav() {
     if (open) closeDrawer()
   }
 
-  const textColor = scrolled && !onDark ? 'var(--texte)' : '#FFFFFF'
-  const linkColor = scrolled && !onDark ? 'var(--texte-light)' : 'rgba(255,255,255,0.55)'
-  const linkHover = scrolled && !onDark ? 'var(--texte)' : '#FFFFFF'
+  const textColor = scrolled ? 'var(--texte)' : (onDark ? '#FFFFFF' : 'var(--texte)')
+  const linkColor = scrolled ? 'var(--olive)' : (onDark ? 'rgba(255,255,255,0.55)' : 'var(--olive)')
+  const linkHover = scrolled ? 'var(--texte)' : (onDark ? '#FFFFFF' : 'var(--texte)')
 
   const linkStyle = {
     fontFamily: "'Sora', sans-serif",
@@ -130,7 +130,7 @@ export default function Nav() {
       ...linkStyle,
       color: inDrawer
         ? drawerColor
-        : (isActive ? (scrolled && !onDark ? 'var(--olive)' : '#FFFFFF') : linkColor),
+        : (isActive ? (scrolled ? 'var(--olive)' : (onDark ? '#FFFFFF' : 'var(--olive)')) : linkColor),
       fontSize: inDrawer ? '16px' : linkStyle.fontSize,
       fontWeight: inDrawer ? (isActive ? 600 : 400) : linkStyle.fontWeight,
     }

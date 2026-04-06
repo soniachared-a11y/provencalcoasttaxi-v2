@@ -6,10 +6,15 @@ import { ArrowRight, CheckCircle, NavigationArrow } from '@phosphor-icons/react'
 import MagneticButton from '../ui/MagneticButton'
 import AddressAutocomplete from '../ui/AddressAutocomplete'
 
-const TARIF = 2.22
+const TARIF_JOUR = 2.22
+const TARIF_NUIT = 2.88
 const PRISE = 4.00
 const MINIMUM = 12
-function calcPrix(km) { return Math.max(MINIMUM, +(PRISE + km * TARIF).toFixed(2)) }
+function calcPrix(km) {
+  const h = new Date().getHours()
+  const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
+  return Math.max(MINIMUM, +(PRISE + km * tarif).toFixed(2))
+}
 
 gsap.registerPlugin(ScrollTrigger)
 

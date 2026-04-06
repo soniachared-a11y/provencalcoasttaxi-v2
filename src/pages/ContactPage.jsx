@@ -4,7 +4,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   PhoneCall, EnvelopeSimple, ArrowRight,
-  NavigationArrow, CheckCircle, WhatsappLogo,
+  NavigationArrow, CheckCircle, ChatCircleText,
   CalendarBlank, Clock, SealCheck, MapPin,
   WifiHigh, Drop, Baby, Snowflake, Lightning, Users, Briefcase,
 } from '@phosphor-icons/react'
@@ -268,7 +268,7 @@ export default function ContactPage() {
                 onMouseLeave={e => (e.currentTarget.style.background = 'var(--olive)')}>
                 <PhoneCall size={13} weight="duotone" />{CONTACT.tel}
               </a>
-              <a href={CONTACT.whatsappHref} target="_blank" rel="noreferrer" style={{
+              <a href="#form" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 border: '1px solid rgba(255,255,255,0.2)', color: 'rgba(255,255,255,0.7)',
                 fontFamily: 'Sora', fontSize: 10, fontWeight: 600,
@@ -277,7 +277,7 @@ export default function ContactPage() {
               }}
                 onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.07)' }}
                 onMouseLeave={e => { e.currentTarget.style.background = 'transparent' }}>
-                <WhatsappLogo size={13} weight="duotone" />WhatsApp
+                <ChatCircleText size={13} weight="duotone" />Formulaire
               </a>
             </div>
           </div>
@@ -596,17 +596,16 @@ export default function ContactPage() {
                 badge: '24/7',
               },
               {
-                icon: WhatsappLogo,
-                accentColor: '#22c55e',
-                accentRgb: '34,197,94',
-                titre: 'WhatsApp',
-                valeur: CONTACT.tel,
-                detail: 'Message lu sous 5 min',
-                sub: 'Réponse rapide garantie',
-                href: CONTACT.whatsappHref,
-                cta: 'Envoyer un message',
-                badge: '< 5 min',
-                target: '_blank',
+                icon: ChatCircleText,
+                accentColor: 'var(--olive)',
+                accentRgb: '107,125,74',
+                titre: 'Formulaire',
+                valeur: 'Réponse en 15 min',
+                detail: 'Disponible 24h/24 · 7j/7',
+                sub: 'Confirmation garantie sous 15 min',
+                href: '#form',
+                cta: 'Remplir le formulaire',
+                badge: '15 min',
               },
               {
                 icon: EnvelopeSimple,
@@ -614,8 +613,8 @@ export default function ContactPage() {
                 accentRgb: '122,96,145',
                 titre: 'Email',
                 valeur: CONTACT.email,
-                detail: 'Réponse en moins de 2h',
-                sub: 'Pour les demandes détaillées',
+                detail: 'Devis longue distance & tarifs',
+                sub: 'Modalités de paiement, demandes spécifiques',
                 href: `mailto:${CONTACT.email}`,
                 cta: 'Écrire un email',
                 badge: '< 2h',

@@ -72,7 +72,7 @@ export function SchemaOrg() {
     currenciesAccepted: 'EUR',
     paymentAccepted: 'Cash, Credit Card, Visa, Mastercard, American Express',
     hasMap: 'https://maps.google.com/?q=82+avenue+Henri+Mauriat+Aix-en-Provence',
-    sameAs: [CONTACT.whatsappHref],
+    sameAs: [],
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',

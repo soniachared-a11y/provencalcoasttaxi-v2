@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  Phone, Envelope, WhatsappLogo, MapPin,
+  Phone, Envelope, MapPin,
   InstagramLogo, FacebookLogo,
   ShieldCheck, CreditCard, Clock,
   ArrowRight,
@@ -97,7 +97,7 @@ export default function Footer() {
               <Phone size={16} weight="fill" />
               Appeler
             </a>
-            <a href={CONTACT.whatsappHref} target="_blank" rel="noopener noreferrer" style={{
+            <Link to="/contact" style={{
               display: 'inline-flex', alignItems: 'center', gap: 10,
               background: 'transparent', color: 'var(--texte)',
               border: '1px solid var(--border)',
@@ -106,12 +106,12 @@ export default function Footer() {
               letterSpacing: '0.12em', textTransform: 'uppercase',
               textDecoration: 'none', transition: 'all 0.3s',
             }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = '#25D366'; e.currentTarget.style.color = '#25D366' }}
+              onMouseEnter={e => { e.currentTarget.style.borderColor = 'var(--olive)'; e.currentTarget.style.color = 'var(--olive)' }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.color = 'var(--texte)' }}
             >
-              <WhatsappLogo size={16} weight="fill" />
-              WhatsApp
-            </a>
+              <Envelope size={16} weight="fill" />
+              Formulaire
+            </Link>
           </div>
         </div>
       </div>
@@ -329,7 +329,6 @@ export default function Footer() {
             {[
               { Icon: InstagramLogo, label: 'Instagram' },
               { Icon: FacebookLogo, label: 'Facebook' },
-              { Icon: WhatsappLogo, label: 'WhatsApp', href: CONTACT.whatsappHref },
             ].map(({ Icon, label, href }, i) => (
               <a key={i} href={href || '#'} aria-label={label}
                 target={href ? '_blank' : undefined} rel={href ? 'noopener noreferrer' : undefined}

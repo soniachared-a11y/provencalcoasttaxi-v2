@@ -237,7 +237,7 @@ export default function Nav() {
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
-              Réserver
+              Devis gratuit
               <ArrowRight size={14} weight="regular" />
             </Link>
           </div>
@@ -300,7 +300,7 @@ export default function Nav() {
                 textDecoration: 'none',
               }}
             >
-              Réserver
+              Devis gratuit
               <ArrowRight size={14} weight="regular" />
             </Link>
           </div>

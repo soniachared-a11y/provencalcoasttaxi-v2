@@ -4,7 +4,6 @@
 export const CONTACT = {
   tel: '06 15 96 32 75',
   telHref: 'tel:+33615963275',
-  whatsappHref: 'https://wa.me/33615963275',
   email: 'provencalcoastdriver@gmail.com',
   adresse: '82 avenue Henri Mauriat, 13100 Aix-en-Provence',
   licence: 'N°013230073',

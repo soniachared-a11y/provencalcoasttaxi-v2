@@ -242,6 +242,9 @@ export default function FlotteAlt() {
                 src={FLOTTE[0].image}
                 alt={FLOTTE[0].modele}
                 className="flotte-alt-img"
+                width={1200}
+                height={800}
+                loading="lazy"
                 style={{
                   position: 'absolute',
                   inset: 0,
@@ -255,6 +258,9 @@ export default function FlotteAlt() {
                 ref={imgNextRef}
                 src={FLOTTE[0].image}
                 alt=""
+                width={1200}
+                height={800}
+                loading="lazy"
                 style={{
                   position: 'absolute',
                   inset: 0,

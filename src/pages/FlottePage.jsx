@@ -216,6 +216,9 @@ function VehicleSection({ v, extra, index }) {
         src={extra.bgImg}
         alt="" aria-hidden="true"
         aria-hidden="true"
+        width={1200}
+        height={800}
+        loading="lazy"
         style={{
           position: 'absolute',
           inset: '-18% 0',
@@ -484,6 +487,9 @@ function VehicleSection({ v, extra, index }) {
             <img
               src={extra.cutout}
               alt={v.modele}
+              width={600}
+              height={400}
+              loading="lazy"
               style={{
                 maxWidth: '100%',
                 maxHeight: 150,
@@ -660,6 +666,8 @@ export default function FlottePage() {
           src="/images/flotte-hotel-luxe.jpg"
           alt="" aria-hidden="true"
           aria-hidden="true"
+          width={1200}
+          height={800}
           style={{
             position: 'absolute',
             inset: '-10% 0',
@@ -840,6 +848,9 @@ export default function FlottePage() {
           src="/images/lavande-soleil.jpg"
           alt="" aria-hidden="true"
           aria-hidden="true"
+          width={1200}
+          height={800}
+          loading="lazy"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover', opacity: 0.07, filter: 'saturate(0.3)',

@@ -82,6 +82,7 @@ export default function BandeauCTA() {
         }}
       >
         <source src="/video-voiture.mp4" type="video/mp4" />
+        <track kind="captions" />
       </video>
 
       {/* Dark overlay */}

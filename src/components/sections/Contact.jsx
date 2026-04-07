@@ -139,7 +139,9 @@ export default function Contact() {
             position: 'relative', overflow: 'hidden',
           }}>
             {/* Bg image */}
-            <img src={IMAGES.contactFond} alt="" aria-hidden="true" style={{
+            <img src={IMAGES.contactFond} alt="" aria-hidden="true"
+              width={1200} height={800} loading="lazy"
+              style={{
               position: 'absolute', inset: 0, width: '100%', height: '100%',
               objectFit: 'cover', opacity: 0.07, pointerEvents: 'none',
             }} />
@@ -204,6 +206,18 @@ export default function Contact() {
                   <span style={{ fontFamily: 'Sora', fontSize: 10, color: 'rgba(255,255,255,0.4)' }}>{t}</span>
                 </div>
               ))}
+              <a
+                href="https://search.google.com/local/writereview?placeid=ChIJzTmlbgCNyRIR1RJ_ROdNyGc"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 10,
+                  fontFamily: 'Sora', fontSize: 10, fontWeight: 600,
+                  color: 'var(--olive)', textDecoration: 'none', letterSpacing: '0.05em',
+                }}
+              >
+                ★ Laisser un avis Google
+              </a>
             </div>
 
             <p style={{
@@ -231,6 +245,17 @@ export default function Contact() {
                   Nous vous confirmons sous 15 minutes.<br />
                   Urgent&nbsp;: <a href="tel:+33615963275" style={{ color: 'var(--olive)' }}>06 15 96 32 75</a>
                 </p>
+                <a
+                  href="https://search.google.com/local/writereview?placeid=ChIJzTmlbgCNyRIR1RJ_ROdNyGc"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{
+                    fontFamily: 'Sora', fontSize: 10, fontWeight: 600,
+                    color: 'var(--olive)', textDecoration: 'none',
+                  }}
+                >
+                  ★ Laisser un avis Google
+                </a>
                 <button onClick={() => setSuccess(false)} style={{
                   fontFamily: 'Sora', fontSize: 10, color: 'var(--texte-light)',
                   background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline',
@@ -293,7 +318,9 @@ export default function Contact() {
                         >
                           {/* Image */}
                           <div style={{ overflow: 'hidden', height: 72 }}>
-                            <img src={v.img} alt={v.nom} style={{
+                            <img src={v.img} alt={v.nom}
+                              width={1200} height={800} loading="lazy"
+                              style={{
                               width: '100%', height: '100%', objectFit: 'cover',
                               transition: 'transform 0.4s ease',
                               transform: sel ? 'scale(1.06)' : 'scale(1)',

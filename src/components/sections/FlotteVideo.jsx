@@ -100,6 +100,7 @@ export default function FlotteVideo() {
           }}
         >
           <source src="/video-voiture.mp4" type="video/mp4" />
+          <track kind="captions" />
         </video>
       </div>
 
@@ -372,6 +373,9 @@ export default function FlotteVideo() {
           src="/images/classe-v-detour.png"
           alt="Mercedes Classe V — Van premium"
           className="fv-van"
+          width={600}
+          height={400}
+          loading="lazy"
           style={{
             height: 'clamp(200px, 30vw, 340px)',
             width: 'auto',
@@ -384,6 +388,9 @@ export default function FlotteVideo() {
           src="/images/classe-s-detour.png"
           alt="Mercedes Classe S — Berline prestige"
           className="fv-berline"
+          width={600}
+          height={400}
+          loading="lazy"
           style={{
             height: 'clamp(160px, 24vw, 280px)',
             width: 'auto',

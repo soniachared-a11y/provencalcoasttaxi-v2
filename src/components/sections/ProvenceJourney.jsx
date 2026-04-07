@@ -72,6 +72,9 @@ export default function ProvenceJourney() {
           src="/images/route-provence.svg"
           alt=""
           aria-hidden="true"
+          width={400}
+          height={300}
+          loading="lazy"
           style={{
             position: 'absolute',
             bottom: 0,
@@ -89,6 +92,9 @@ export default function ProvenceJourney() {
           alt=""
           aria-hidden="true"
           className="pj-trees-4"
+          width={200}
+          height={300}
+          loading="lazy"
           style={{
             position: 'absolute',
             bottom: 0,
@@ -104,6 +110,9 @@ export default function ProvenceJourney() {
           alt=""
           aria-hidden="true"
           className="pj-trees-3"
+          width={200}
+          height={300}
+          loading="lazy"
           style={{
             position: 'absolute',
             bottom: 0,
@@ -119,6 +128,9 @@ export default function ProvenceJourney() {
           alt=""
           aria-hidden="true"
           className="pj-trees-2"
+          width={200}
+          height={300}
+          loading="lazy"
           style={{
             position: 'absolute',
             bottom: 0,
@@ -134,6 +146,9 @@ export default function ProvenceJourney() {
           alt=""
           aria-hidden="true"
           className="pj-trees-1"
+          width={200}
+          height={300}
+          loading="lazy"
           style={{
             position: 'absolute',
             bottom: 0,

@@ -267,6 +267,8 @@ export default function HeroAlt() {
                   dark={false}
                   isOrigin={true}
                   inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
+                  aria-label="Adresse de départ"
+                  id="hero-depart"
                 />
                 <AddressAutocomplete
                   value={dest}
@@ -274,6 +276,8 @@ export default function HeroAlt() {
                   placeholder="Destination…"
                   dark={false}
                   inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
+                  aria-label="Adresse de destination"
+                  id="hero-destination"
                 />
                 {prix && km && (
                   <div style={{
@@ -351,6 +355,8 @@ export default function HeroAlt() {
             ref={imageRef}
             src="/images/classe-s-provence.jpg"
             alt="Mercedes Classe S en Provence"
+            width={1200}
+            height={800}
             style={{
               width: '100%',
               height: '100%',

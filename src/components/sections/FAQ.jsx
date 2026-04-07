@@ -181,8 +181,8 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
         {/* Icon morph: Plus ↔ Minus */}
         <span style={{
           flexShrink: 0,
-          width: 32,
-          height: 32,
+          width: 40,
+          height: 40,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',

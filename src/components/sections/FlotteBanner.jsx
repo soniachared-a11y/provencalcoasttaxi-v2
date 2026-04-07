@@ -41,6 +41,9 @@ export default function FlotteBanner() {
             src="/images/classe-s-detour.png"
             alt="Mercedes Classe S — Berline prestige"
             className="fb-berline"
+            width={600}
+            height={400}
+            loading="lazy"
             style={{
               position: 'absolute',
               right: '-4%',

@@ -133,6 +133,9 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
         ref={imgRef}
         src={SERVICE_IMAGES[serviceIdx]}
         alt={service.titre}
+        width={1200}
+        height={800}
+        loading="lazy"
         style={{
           position: 'absolute',
           inset: 0,

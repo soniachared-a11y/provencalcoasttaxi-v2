@@ -431,6 +431,9 @@ export default function Flotte() {
             src={v.img}
             alt={v.modele}
             className="flt-img-cover"
+            width={1200}
+            height={800}
+            loading="lazy"
             style={{
               position: 'absolute', inset: 0,
               width: '100%', height: '100%',

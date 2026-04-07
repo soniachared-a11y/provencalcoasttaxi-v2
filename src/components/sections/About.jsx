@@ -182,6 +182,9 @@ export default function About() {
               ref={imageRef}
               src="/images/flotte-intercontinental.jpeg"
               alt="Mercedes Classe S devant un hôtel de luxe"
+              width={1200}
+              height={800}
+              loading="lazy"
               style={{
                 width: '100%',
                 height: '100%',

@@ -144,6 +144,7 @@ export default function Hero() {
         style={{ willChange: 'transform', display: videoFailed ? 'none' : 'block' }}
       >
         <source src="/hero-video.mp4" type="video/mp4" />
+        <track kind="captions" />
       </video>
 
       {/* Fallback image if video fails */}

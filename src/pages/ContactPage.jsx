@@ -208,6 +208,7 @@ export default function ContactPage() {
         overflow: 'hidden', display: 'flex', alignItems: 'stretch',
       }}>
         <img ref={heroBgRef} src="/images/flotte-hotel-luxe.jpg" alt="" aria-hidden="true"
+          width={1200} height={800}
           style={{ position: 'absolute', inset: '-10% 0', width: '100%', height: '120%', objectFit: 'cover' }} />
         <div style={{
           position: 'absolute', inset: 0,
@@ -422,6 +423,7 @@ export default function ContactPage() {
                               {/* Car image */}
                               <div style={{ height: 72, background: '#F6F3EE', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                                 <img src={v.img} alt={v.id}
+                                  width={1200} height={800} loading="lazy"
                                   style={{
                                     width: '100%', height: '100%',
                                     transition: 'transform 0.4s ease',
@@ -545,7 +547,11 @@ export default function ContactPage() {
         {/* Background image */}
         <img
           src="/images/flotte-hotel-luxe.jpg"
+          alt=""
           aria-hidden="true"
+          width={1200}
+          height={800}
+          loading="lazy"
           style={{
             position: 'absolute', inset: 0,
             width: '100%', height: '100%',

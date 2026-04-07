@@ -53,6 +53,8 @@ export default function AddressAutocomplete({
   inputStyle = {},
   onLoadingChange,
   isOrigin = false,
+  'aria-label': ariaLabel = 'Adresse',
+  id,
 }) {
   const [query, setQuery] = useState(value?.label || '')
   const [photonResults, setPhotonResults] = useState([])
@@ -187,6 +189,8 @@ export default function AddressAutocomplete({
           e.target.style.borderColor = borderColor
         }}
         style={baseInput}
+        aria-label={ariaLabel}
+        {...(id ? { id } : {})}
       />
 
       {/* Spinner */}

@@ -42,6 +42,9 @@ export default function Experience() {
         src="/images/lavande-provence.jpg"
         alt=""
         aria-hidden="true"
+        width={1200}
+        height={800}
+        loading="lazy"
         style={{
           position: 'absolute',
           inset: 0,

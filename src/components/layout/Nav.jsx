@@ -248,7 +248,7 @@ export default function Nav() {
             onClick={() => (open ? closeDrawer() : setOpen(true))}
             aria-label="Menu"
             aria-expanded={open}
-            style={{ color: textColor, transition: 'color 0.3s', cursor: 'pointer' }}
+            style={{ color: textColor, transition: 'color 0.3s', cursor: 'pointer', minWidth: 48, minHeight: 48, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'none', border: 'none' }}
           >
             {open
               ? <X size={24} weight="light" />
@@ -265,9 +265,11 @@ export default function Nav() {
           className="md:hidden overflow-hidden"
           style={{ backgroundColor: 'var(--cream)' }}
         >
-          <div className="px-6 pb-8 pt-4 flex flex-col gap-6">
+          <div className="px-6 pb-8 pt-4 flex flex-col gap-0">
             {NAV_LINKS.map((item) => (
-              <NavLink key={item.href} item={item} onClick={handleLinkClick} inDrawer />
+              <div key={item.href} style={{ minHeight: 48, display: 'flex', alignItems: 'center' }}>
+                <NavLink item={item} onClick={handleLinkClick} inDrawer />
+              </div>
             ))}
 
             <a
@@ -278,6 +280,7 @@ export default function Nav() {
                 fontSize: '18px',
                 color: 'var(--olive)',
                 textDecoration: 'none',
+                minHeight: 48,
               }}
             >
               <PhoneCall size={18} weight="light" />

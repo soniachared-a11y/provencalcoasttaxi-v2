@@ -244,7 +244,7 @@ export default function Services() {
                   <span style={{
                     fontFamily: 'Sora, sans-serif',
                     fontSize: 14,
-                    color: 'rgba(255,255,255,0.4)',
+                    color: 'rgba(255,255,255,0.7)',
                     marginBottom: 12,
                   }}>
                     {num}
@@ -275,7 +275,7 @@ export default function Services() {
                   <span style={{
                     fontFamily: 'Sora, sans-serif',
                     fontSize: 12,
-                    color: 'rgba(255,255,255,0.4)',
+                    color: 'rgba(255,255,255,0.7)',
                     marginBottom: 12,
                   }}>
                     {num} / 05
@@ -295,7 +295,7 @@ export default function Services() {
                   <p style={{
                     fontFamily: 'Sora, sans-serif',
                     fontSize: 13,
-                    color: 'rgba(255,255,255,0.65)',
+                    color: 'rgba(255,255,255,0.85)',
                     lineHeight: 1.6,
                     margin: '0 0 20px 0',
                     maxWidth: 360,
@@ -395,7 +395,7 @@ export default function Services() {
           style={{
             fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 700,
             letterSpacing: '0.28em', textTransform: 'uppercase',
-            color: 'var(--lavande)', opacity: 0.65, textDecoration: 'none',
+            color: 'var(--lavande)', opacity: 1, textDecoration: 'none',
             display: 'inline-flex', alignItems: 'center', gap: 10,
             transition: 'opacity 0.3s ease, gap 0.3s ease',
           }}
@@ -404,7 +404,7 @@ export default function Services() {
             e.currentTarget.style.gap = '16px'
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.opacity = '0.65'
+            e.currentTarget.style.opacity = '1'
             e.currentTarget.style.gap = '10px'
           }}
         >

@@ -174,6 +174,8 @@ export default function AProposPage() {
           src="/images/lavande-provence.jpg"
           alt="" aria-hidden="true"
           aria-hidden="true"
+          width={1200}
+          height={800}
           style={{
             position: 'absolute',
             inset: '-10% 0',
@@ -204,7 +206,7 @@ export default function AProposPage() {
         >
           {/* Breadcrumb */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 24 }}>
-            <Link to="/" style={{ fontFamily: 'Sora', fontSize: 10, color: 'rgba(255,255,255,0.4)', textDecoration: 'none', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
+            <Link to="/" style={{ fontFamily: 'Sora', fontSize: 10, color: 'rgba(255,255,255,0.7)', textDecoration: 'none', letterSpacing: '0.15em', textTransform: 'uppercase' }}>
               Accueil
             </Link>
             <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 12 }}>/</span>
@@ -234,13 +236,13 @@ export default function AProposPage() {
           }}>
             Votre chauffeur privé
             <br />
-            <span style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.65)' }}>en Provence depuis 10 ans</span>
+            <span style={{ fontStyle: 'italic', color: 'rgba(255,255,255,0.85)' }}>en Provence depuis 10 ans</span>
           </h1>
 
           <p style={{
             fontFamily: 'Sora',
             fontSize: 14,
-            color: 'rgba(255,255,255,0.55)',
+            color: 'rgba(255,255,255,0.85)',
             lineHeight: 1.7,
             maxWidth: 520,
             margin: 0,
@@ -347,6 +349,9 @@ export default function AProposPage() {
               <img
                 src="/images/flotte-hotel-luxe.jpg"
                 alt="Chauffeur Taxis Provençale Aix"
+                width={1200}
+                height={800}
+                loading="lazy"
                 style={{
                   width: '100%',
                   aspectRatio: '4/5',
@@ -372,7 +377,7 @@ export default function AProposPage() {
                   ))}
                 </div>
                 <div style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: '#fff' }}>4.9 / 5</div>
-                <div style={{ fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>200+ avis Google</div>
+                <div style={{ fontFamily: 'Sora', fontSize: 9, color: 'rgba(255,255,255,0.7)', letterSpacing: '0.15em', textTransform: 'uppercase' }}>200+ avis Google</div>
               </div>
             </div>
           </div>
@@ -520,7 +525,7 @@ export default function AProposPage() {
                 }}>
                   {c.label}
                 </div>
-                <div style={{ fontFamily: 'Sora', fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
+                <div style={{ fontFamily: 'Sora', fontSize: 11, color: 'rgba(255,255,255,0.7)' }}>
                   {c.desc}
                 </div>
               </div>
@@ -569,6 +574,9 @@ export default function AProposPage() {
               <img
                 src="/images/vignes-provence.jpg"
                 alt="Provence"
+                width={1200}
+                height={800}
+                loading="lazy"
                 style={{
                   width: '100%',
                   aspectRatio: '16/9',
@@ -703,6 +711,9 @@ export default function AProposPage() {
           src="/images/classe-s-bastide.jpg"
           alt="" aria-hidden="true"
           aria-hidden="true"
+          width={1200}
+          height={800}
+          loading="lazy"
           style={{
             position: 'absolute', inset: 0, width: '100%', height: '100%',
             objectFit: 'cover', opacity: 0.08,
@@ -719,7 +730,7 @@ export default function AProposPage() {
             Vivez l'expérience Taxis Provençale Aix
           </h2>
           <p style={{
-            fontFamily: 'Sora', fontSize: 14, color: 'rgba(255,255,255,0.5)',
+            fontFamily: 'Sora', fontSize: 14, color: 'rgba(255,255,255,0.85)',
             lineHeight: 1.7, margin: '0 auto 36px', maxWidth: 440,
           }}>
             Réservez en 2 minutes. Confirmation immédiate. Chauffeur disponible 24h/24.

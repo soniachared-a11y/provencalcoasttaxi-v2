@@ -263,7 +263,7 @@ export default function Nav() {
         <div
           ref={drawerRef}
           className="md:hidden overflow-hidden"
-          style={{ backgroundColor: 'var(--cream)' }}
+          style={{ backgroundColor: 'var(--cream)', willChange: 'height' }}
         >
           <div className="px-6 pb-8 pt-4 flex flex-col gap-0">
             {NAV_LINKS.map((item) => (

@@ -191,6 +191,7 @@ export default function About() {
                 objectFit: 'cover',
                 display: 'block',
                 minHeight: 400,
+                willChange: 'clip-path',
               }}
             />
 

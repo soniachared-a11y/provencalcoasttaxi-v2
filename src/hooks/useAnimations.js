@@ -76,6 +76,8 @@ function initImageReveals() {
     if (img.dataset.revealed) return
     img.dataset.revealed = 'true'
 
+    gsap.set(img, { willChange: 'clip-path' })
+
     gsap.fromTo(img,
       { clipPath: 'inset(30% 0% 0% 0%)', scale: 1.15 },
       {
@@ -88,6 +90,7 @@ function initImageReveals() {
           start: 'top 85%',
           toggleActions: 'play none none none',
         },
+        onComplete: () => gsap.set(img, { willChange: 'auto' }),
       }
     )
   })

@@ -338,6 +338,7 @@ export default function HeroAlt() {
             position: 'relative',
             overflow: 'hidden',
             clipPath: 'polygon(12% 0, 100% 0, 100% 100%, 0 100%)',
+            willChange: 'clip-path',
           }}
         >
           {/* Olive accent line */}

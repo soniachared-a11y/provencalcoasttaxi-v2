@@ -254,6 +254,7 @@ function VehicleSection({ v, extra, index }) {
           userSelect: 'none',
           pointerEvents: 'none',
           letterSpacing: '-0.04em',
+          willChange: 'clip-path',
         }}
       >
         {num}

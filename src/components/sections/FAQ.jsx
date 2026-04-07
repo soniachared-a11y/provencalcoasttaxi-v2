@@ -207,6 +207,7 @@ function FAQItem({ faq, index, isOpen, onToggle, total }) {
           height: 0,
           display: 'none',
           clipPath: 'inset(0 0 100% 0)',
+          willChange: 'height, clip-path',
         }}
       >
         <div className="faq-answer-content" style={{

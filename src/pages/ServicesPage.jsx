@@ -287,6 +287,7 @@ function ServiceCard({ serviceIdx, span, openIdx, onOpen, onClose }) {
           overflowY: 'auto',
           padding: span === 2 ? '64px 36px 32px' : '56px 24px 24px',
           clipPath: 'inset(100% 0 0 0)',
+          willChange: 'clip-path',
         }}
         onClick={e => e.stopPropagation()}
       >

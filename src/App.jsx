@@ -1,5 +1,5 @@
 // App.jsx — Taxis Provençale Aix V2
-import { useEffect } from 'react'
+import { useEffect, lazy, Suspense } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -14,29 +14,29 @@ import ScrollToTop from './components/ui/ScrollToTop'
 import PhoneFloat from './components/ui/PhoneFloat'
 import CursorFollower from './components/ui/CursorFollower'
 
-// Homepage sections
-import Hero from './components/sections/Hero'
-import About from './components/sections/About'
-import Services from './components/sections/Services'
-import Flotte from './components/sections/Flotte'
-import Avis from './components/sections/Avis'
-import FAQ from './components/sections/FAQ'
-import Contact from './components/sections/Contact'
-import BandeauCTA from './components/sections/BandeauCTA'
-import HeroAlt from './components/sections/HeroAlt'
-import PartnersBar from './components/sections/PartnersBar'
+// Homepage — above-the-fold (eagerly loaded)
 import FlotteVideo from './components/sections/FlotteVideo'
-import DevisSimulateur from './components/sections/DevisSimulateur'
-import ChiffresImpact from './components/sections/ChiffresImpact'
+import HeroAlt from './components/sections/HeroAlt'
 import SectionDivider from './components/ui/SectionDivider'
 import SEOHead from './seo/SEOHead'
 
-// Dedicated pages
-import FlottePage from './pages/FlottePage'
-import AProposPage from './pages/AProposPage'
-import ContactPage from './pages/ContactPage'
-import ServicesPage from './pages/ServicesPage'
-import MentionsLegalesPage from './pages/MentionsLegalesPage'
+// Homepage — below-the-fold (lazy loaded)
+const About = lazy(() => import('./components/sections/About'))
+const Services = lazy(() => import('./components/sections/Services'))
+const Flotte = lazy(() => import('./components/sections/Flotte'))
+const Avis = lazy(() => import('./components/sections/Avis'))
+const FAQ = lazy(() => import('./components/sections/FAQ'))
+const BandeauCTA = lazy(() => import('./components/sections/BandeauCTA'))
+const PartnersBar = lazy(() => import('./components/sections/PartnersBar'))
+const DevisSimulateur = lazy(() => import('./components/sections/DevisSimulateur'))
+const ChiffresImpact = lazy(() => import('./components/sections/ChiffresImpact'))
+
+// Dedicated pages — lazy loaded (code-split)
+const FlottePage = lazy(() => import('./pages/FlottePage'))
+const AProposPage = lazy(() => import('./pages/AProposPage'))
+const ContactPage = lazy(() => import('./pages/ContactPage'))
+const ServicesPage = lazy(() => import('./pages/ServicesPage'))
+const MentionsLegalesPage = lazy(() => import('./pages/MentionsLegalesPage'))
 
 function HomePage() {
   return (
@@ -48,21 +48,23 @@ function HomePage() {
       />
       <FlotteVideo />
       <HeroAlt />
-      <ChiffresImpact />
-      <SectionDivider />
-      <About />
-      <SectionDivider />
-      <PartnersBar />
-      <Services />
-      <SectionDivider />
-      <Flotte />
-      <SectionDivider />
-      <DevisSimulateur />
-      <SectionDivider />
-      <Avis />
-      <SectionDivider />
-      <FAQ />
-      <BandeauCTA />
+      <Suspense fallback={null}>
+        <ChiffresImpact />
+        <SectionDivider />
+        <About />
+        <SectionDivider />
+        <PartnersBar />
+        <Services />
+        <SectionDivider />
+        <Flotte />
+        <SectionDivider />
+        <DevisSimulateur />
+        <SectionDivider />
+        <Avis />
+        <SectionDivider />
+        <FAQ />
+        <BandeauCTA />
+      </Suspense>
     </main>
   )
 }
@@ -86,14 +88,16 @@ export default function App() {
       <SchemaOrg />
       <ScrollToTop />
       <Nav />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/services" element={<ServicesPage />} />
-        <Route path="/flotte" element={<FlottePage />} />
-        <Route path="/a-propos" element={<AProposPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
-      </Routes>
+      <Suspense fallback={null}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/flotte" element={<FlottePage />} />
+          <Route path="/a-propos" element={<AProposPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
+        </Routes>
+      </Suspense>
       <Footer />
       <PhoneFloat hide={pathname === '/contact'} />
       <CursorFollower />

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -39,15 +39,49 @@ const SERVICES = [
   },
 ]
 
+const CYCLE_DURATION = 5 // seconds per strip
+
 export default function Services() {
   const [active, setActive] = useState(0)
+  const [autoPlay, setAutoPlay] = useState(false)
   const sectionRef = useRef(null)
+  const timerRef = useRef(null)
+  const progressRef = useRef(null)
+
+  const stopAuto = useCallback(() => {
+    setAutoPlay(false)
+    if (timerRef.current) clearInterval(timerRef.current)
+    if (progressRef.current) gsap.killTweensOf(progressRef.current)
+  }, [])
+
+  const handleClick = useCallback((i) => {
+    stopAuto()
+    setActive(i)
+  }, [stopAuto])
+
+  const animateProgress = useCallback(() => {
+    if (!progressRef.current) return
+    gsap.fromTo(progressRef.current,
+      { scaleX: 0 },
+      { scaleX: 1, duration: CYCLE_DURATION, ease: 'none', transformOrigin: 'left' }
+    )
+  }, [])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.from('.strips-container', {
         y: 60, opacity: 0, duration: 1, ease: 'power3.out',
-        scrollTrigger: { trigger: '.strips-container', start: 'top 85%', once: true },
+        scrollTrigger: {
+          trigger: '.strips-container',
+          start: 'top 85%',
+          once: true,
+          onEnter: () => {
+            setTimeout(() => {
+              setActive(0)
+              setAutoPlay(true)
+            }, 900)
+          },
+        },
       })
       gsap.from('.srv-line-l', {
         scaleX: 0, transformOrigin: 'right', duration: 1.2, ease: 'power3.out',
@@ -64,6 +98,19 @@ export default function Services() {
     }, sectionRef)
     return () => ctx.revert()
   }, [])
+
+  useEffect(() => {
+    if (!autoPlay) return
+    animateProgress()
+    timerRef.current = setInterval(() => {
+      setActive(prev => {
+        const next = (prev + 1) % SERVICES.length
+        animateProgress()
+        return next
+      })
+    }, CYCLE_DURATION * 1000)
+    return () => clearInterval(timerRef.current)
+  }, [autoPlay, animateProgress])
 
   return (
     <section
@@ -132,7 +179,7 @@ export default function Services() {
                 key={i}
                 className="service-strip"
                 data-active={String(isActive)}
-                onClick={() => setActive(i)}
+                onClick={() => handleClick(i)}
                 style={{
                   flex: isActive ? 5 : 1,
                   minWidth: isActive ? 0 : 160,
@@ -311,6 +358,26 @@ export default function Services() {
             )
           })}
         </div>
+
+        {/* Progress bar */}
+        {autoPlay && (
+          <div style={{
+            width: '100%',
+            height: 2,
+            background: 'var(--border)',
+            overflow: 'hidden',
+          }}>
+            <div
+              ref={progressRef}
+              style={{
+                height: '100%',
+                background: 'var(--olive)',
+                transformOrigin: 'left',
+                transform: 'scaleX(0)',
+              }}
+            />
+          </div>
+        )}
       </div>
 
       {/* Discover CTA */}

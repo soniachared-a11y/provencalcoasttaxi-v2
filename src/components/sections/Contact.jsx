@@ -69,14 +69,15 @@ export default function Contact() {
     setError('')
     if (!form.nom.trim()) return setError('Votre nom est obligatoire.')
     setLoading(true)
+    const extras = [form.vehicule && `Véhicule: ${form.vehicule}`, form.service && `Service: ${form.service}`].filter(Boolean).join(' | ')
+    const messageComplet = [form.message.trim(), extras].filter(Boolean).join(' — ')
     const { error: insertError } = await supabase.from('reservations').insert({
       nom_client: form.nom.trim(),
       tel_client: form.tel.trim() || null,
-      depart: form.message.trim() || null,
+      depart: messageComplet || null,
       destination: form.destination?.label || null,
       date_heure: form.date_heure ? new Date(form.date_heure).toISOString() : new Date().toISOString(),
       marque: 'provencal', source: 'site', statut: 'nouvelle', user_id: null,
-      notes: [form.vehicule && `Véhicule: ${form.vehicule}`, form.service && `Service: ${form.service}`].filter(Boolean).join(' | ') || null,
     })
     setLoading(false)
     if (insertError) { setError('Une erreur est survenue. Appelez-nous directement.'); return }

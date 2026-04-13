@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, CheckCircle, Phone, EnvelopeSimple, Users } from '@phosphor-icons/react'
 import { SECTION_INTROS, IMAGES } from '../../data/content'
 import { supabase } from '../../lib/supabase'
+import emailjs from '@emailjs/browser'
 import AddressAutocomplete from '../ui/AddressAutocomplete'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -79,6 +80,29 @@ export default function Contact() {
       date_heure: form.date_heure ? new Date(form.date_heure).toISOString() : new Date().toISOString(),
       marque: 'provencal', source: 'site', statut: 'nouvelle', user_id: null,
     })
+    // 2. Notification email vers provencalcoastdriver@gmail.com
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          client_nom:   form.nom.trim(),
+          client_tel:   form.tel.trim() || '—',
+          depart:       messageComplet || '—',
+          destination:  form.destination?.label || '—',
+          distance:     form.destination?.km ? `${form.destination.km} km` : '—',
+          date:         form.date_heure || '—',
+          heure:        '—',
+          vehicule:     form.vehicule || '—',
+          message:      form.message || '(aucun message)',
+          to_email:     'provencalcoastdriver@gmail.com',
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+    } catch (emailErr) {
+      console.error('EmailJS error:', emailErr)
+    }
+
     setLoading(false)
     if (insertError) { setError('Une erreur est survenue. Appelez-nous directement.'); return }
     setSuccess(true)

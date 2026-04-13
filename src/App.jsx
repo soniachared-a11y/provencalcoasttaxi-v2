@@ -28,7 +28,6 @@ const Avis = lazy(() => import('./components/sections/Avis'))
 const FAQ = lazy(() => import('./components/sections/FAQ'))
 const BandeauCTA = lazy(() => import('./components/sections/BandeauCTA'))
 const PartnersBar = lazy(() => import('./components/sections/PartnersBar'))
-const DevisSimulateur = lazy(() => import('./components/sections/DevisSimulateur'))
 const ChiffresImpact = lazy(() => import('./components/sections/ChiffresImpact'))
 
 // Dedicated pages — lazy loaded (code-split)
@@ -57,8 +56,6 @@ function HomePage() {
         <Services />
         <SectionDivider />
         <Flotte />
-        <SectionDivider />
-        <DevisSimulateur />
         <SectionDivider />
         <Avis />
         <SectionDivider />

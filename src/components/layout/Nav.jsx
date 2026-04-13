@@ -42,7 +42,7 @@ export default function Nav() {
   }, [location.pathname])
 
   useEffect(() => {
-    const darkSections = document.querySelectorAll('#hero, #hero-alt, #partners, #experience, #chiffres, #devis, #avis-alt, .page-hero')
+    const darkSections = document.querySelectorAll('#hero, #hero-alt, #partners, #experience, #chiffres, #avis-alt, .page-hero')
     const triggers = []
     darkSections.forEach(section => {
       if (!section) return
@@ -237,7 +237,7 @@ export default function Nav() {
                 e.currentTarget.style.transform = 'translateY(0)'
               }}
             >
-              Calculer mon trajet
+              Réserver
               <ArrowRight size={14} weight="regular" />
             </Link>
           </div>
@@ -303,7 +303,7 @@ export default function Nav() {
                 textDecoration: 'none',
               }}
             >
-              Calculer mon trajet
+              Réserver
               <ArrowRight size={14} weight="regular" />
             </Link>
           </div>

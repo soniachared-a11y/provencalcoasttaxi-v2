@@ -1,15 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, CheckCircle, NavigationArrow } from '@phosphor-icons/react'
+import { ArrowRight, CheckCircle, Phone } from '@phosphor-icons/react'
 import MagneticButton from '../ui/MagneticButton'
-import AddressAutocomplete from '../ui/AddressAutocomplete'
-import { getRouteKmBetween, AIX } from '../../lib/geo'
-
-const TARIF_JOUR = 2.22
-const TARIF_NUIT = 2.88
-const PRISE = 4.00
+import { CONTACT } from '../../data/content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -35,31 +30,6 @@ function WordReveal({ text, className = '' }) {
 export default function HeroAlt() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
-  const [depart, setDepart] = useState({ label: 'Aix-en-Provence Centre', lat: AIX.lat, lng: AIX.lng })
-  const [dest, setDest] = useState(null)
-  const [calcLoading, setCalcLoading] = useState(false)
-  const [prix, setPrix] = useState(null)
-  const [km, setKm] = useState(null)
-
-  async function handleCalculer() {
-    if (!dest?.lat && !dest?.km) return
-    setCalcLoading(true)
-    setPrix(null)
-    const fromLat = depart?.lat ?? AIX.lat
-    const fromLng = depart?.lng ?? AIX.lng
-    let distance = null
-    if (dest.lat) {
-      distance = await getRouteKmBetween(fromLat, fromLng, dest.lat, dest.lng)
-    } else if (dest.km) {
-      distance = dest.km
-    }
-    setCalcLoading(false)
-    if (!distance) return
-    const h = new Date().getHours()
-    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-    setKm(distance)
-    setPrix(+(PRISE + distance * tarif).toFixed(2))
-  }
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -247,86 +217,41 @@ export default function HeroAlt() {
               ))}
             </div>
 
-            {/* Mini estimateur */}
-            <div className="heroalt-estimator" style={{
-              borderTop: '1px solid var(--border)',
-              paddingTop: '24px',
-            }}>
-              <p style={{
-                fontFamily: 'Sora, sans-serif', fontSize: 9, fontWeight: 600,
-                textTransform: 'uppercase', letterSpacing: '0.2em',
-                color: 'var(--texte-light)', marginBottom: 12,
-              }}>
-                Estimer votre trajet
-              </p>
-              <div className="heroalt-estimator-inner" style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-                <AddressAutocomplete
-                  value={depart}
-                  onChange={d => { setDepart(d); setPrix(null); setKm(null) }}
-                  placeholder="Départ…"
-                  dark={false}
-                  isOrigin={true}
-                  inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
-                  aria-label="Adresse de départ"
-                  id="hero-depart"
-                />
-                <AddressAutocomplete
-                  value={dest}
-                  onChange={d => { setDest(d); setPrix(null); setKm(null) }}
-                  placeholder="Destination…"
-                  dark={false}
-                  inputStyle={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 2 }}
-                  aria-label="Adresse de destination"
-                  id="hero-destination"
-                />
-                {prix && km && (
-                  <div style={{
-                    fontFamily: 'Sora', fontSize: 10, color: 'var(--olive)',
-                    display: 'flex', alignItems: 'center', gap: 8,
-                  }}>
-                    <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: 'var(--texte)' }}>~{prix}€</span>
-                    <span style={{ color: 'var(--texte-light)' }}>· {km} km</span>
-                  </div>
-                )}
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  <button
-                    type="button"
-                    disabled={!dest || calcLoading}
-                    onClick={handleCalculer}
-                    style={{
-                      flex: 1, minWidth: 140,
-                      fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
-                      textTransform: 'uppercase', letterSpacing: '0.1em',
-                      color: dest ? 'var(--texte)' : 'var(--texte-light)',
-                      background: 'var(--surface)', border: '1px solid var(--border)',
-                      padding: '10px 16px', cursor: dest ? 'pointer' : 'default',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                      transition: 'border-color 0.2s',
-                    }}
-                    onMouseEnter={e => { if (dest) e.currentTarget.style.borderColor = 'var(--olive)' }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)' }}
-                  >
-                    <ArrowRight size={11} weight="bold" />
-                    {calcLoading ? 'Calcul…' : 'Calculer mon trajet'}
-                  </button>
-                  <Link
-                    to="/contact"
-                    style={{
-                      flex: 1, minWidth: 100,
-                      fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
-                      textTransform: 'uppercase', letterSpacing: '0.1em',
-                      color: '#fff', background: 'var(--olive)',
-                      padding: '10px 16px', textDecoration: 'none',
-                      display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
-                      transition: 'background 0.2s',
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = '#5A6B3A'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'var(--olive)'}
-                  >
-                    Réserver <ArrowRight size={11} weight="bold" />
-                  </Link>
-                </div>
-              </div>
+            {/* CTAs */}
+            <div style={{ borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
+              <Link
+                to="/contact"
+                style={{
+                  flex: 1, minWidth: 140,
+                  fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
+                  textTransform: 'uppercase', letterSpacing: '0.1em',
+                  color: '#fff', background: 'var(--olive)',
+                  padding: '12px 20px', textDecoration: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                  transition: 'background 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.background = '#5A6B3A'}
+                onMouseLeave={e => e.currentTarget.style.background = 'var(--olive)'}
+              >
+                Réserver <ArrowRight size={11} weight="bold" />
+              </Link>
+              <a
+                href={CONTACT.telHref}
+                style={{
+                  flex: 1, minWidth: 120,
+                  fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 500,
+                  textTransform: 'uppercase', letterSpacing: '0.1em',
+                  color: 'var(--texte)', background: 'var(--surface)',
+                  border: '1px solid var(--border)',
+                  padding: '12px 20px', textDecoration: 'none',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+                  transition: 'border-color 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--olive)'}
+                onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
+              >
+                <Phone size={12} weight="light" /> {CONTACT.tel}
+              </a>
             </div>
           </div>
         </div>

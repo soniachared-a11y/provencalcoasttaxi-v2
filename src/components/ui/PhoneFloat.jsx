@@ -33,6 +33,7 @@ export default function PhoneFloat({ hide = false }) {
       ref={ref}
       href="tel:+33615963275"
       aria-label="Appeler"
+      data-cta
       style={{
         position: 'fixed',
         bottom: 24,

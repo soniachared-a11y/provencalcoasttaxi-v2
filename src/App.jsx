@@ -23,7 +23,7 @@ import SEOHead from './seo/SEOHead'
 // Homepage — below-the-fold (lazy loaded)
 const About = lazy(() => import('./components/sections/About'))
 const Services = lazy(() => import('./components/sections/Services'))
-const Flotte = lazy(() => import('./components/sections/Flotte'))
+const Flotte = lazy(() => import('./components/sections/FlotteCards'))
 const Avis = lazy(() => import('./components/sections/Avis'))
 const FAQ = lazy(() => import('./components/sections/FAQ'))
 const BandeauCTA = lazy(() => import('./components/sections/BandeauCTA'))

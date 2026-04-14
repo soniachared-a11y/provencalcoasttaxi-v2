@@ -201,6 +201,7 @@ export default function Nav() {
           <div className="hidden md:flex items-center gap-6">
             <a
               href={CONTACT.telHref}
+              data-cta
               className="flex items-center gap-2"
               style={{
                 color: scrolled ? 'var(--olive)' : 'rgba(255,255,255,0.7)',
@@ -214,6 +215,7 @@ export default function Nav() {
 
             <Link
               to="/contact"
+              data-cta
               className="flex items-center gap-2"
               style={{
                 backgroundColor: scrolled ? 'var(--olive)' : 'transparent',
@@ -274,6 +276,7 @@ export default function Nav() {
 
             <a
               href={CONTACT.telHref}
+              data-cta
               className="flex items-center gap-3"
               style={{
                 fontFamily: "'Instrument Serif', serif",
@@ -290,6 +293,7 @@ export default function Nav() {
             <Link
               to="/contact"
               onClick={handleLinkClick}
+              data-cta
               className="flex items-center justify-center gap-2"
               style={{
                 backgroundColor: 'var(--olive)',

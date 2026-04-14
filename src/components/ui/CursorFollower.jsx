@@ -1,166 +1,31 @@
-import { useEffect, useRef } from 'react'
-import { gsap } from 'gsap'
+// CursorFollower.jsx — Curseur custom thème transport
+// Flèche olive par défaut, pin GPS lavande uniquement sur les vrais CTAs
 
 export default function CursorFollower() {
-  const dotRef = useRef(null)
-  const ringRef = useRef(null)
-  const labelRef = useRef(null)
+  // SVG flèche classique olive (#6B7F4A) — légèrement plus grande
+  const arrowSVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='28' viewBox='0 0 24 28'%3E%3Cdefs%3E%3Cfilter id='s' x='-20%25' y='-10%25' width='140%25' height='130%25'%3E%3CfeDropShadow dx='0.5' dy='1' stdDeviation='0.8' flood-color='%23000' flood-opacity='0.3'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M2 1L2 22L7.5 17L13 26L16 24.5L10.5 15.5L18 14.5Z' fill='%236B7F4A' stroke='%23F6F3EE' stroke-width='1.2' stroke-linejoin='round' filter='url(%23s)'/%3E%3C/svg%3E") 2 1, default`
 
-  useEffect(() => {
-    const dot = dotRef.current
-    const ring = ringRef.current
-    const label = labelRef.current
-    if (!dot || !ring || !label) return
-
-    // Skip on touch devices
-    if ('ontouchstart' in window || window.matchMedia('(pointer: coarse)').matches) {
-      return
-    }
-
-    dot.style.display = 'block'
-    ring.style.display = 'block'
-
-    const pos = { x: -100, y: -100 }
-    const smooth = { x: -100, y: -100 }
-    let raf
-
-    const onMouseMove = (e) => {
-      pos.x = e.clientX
-      pos.y = e.clientY
-    }
-
-    const setCursorState = (state) => {
-      switch (state) {
-        case 'button':
-          gsap.to(ring, { scale: 2.2, opacity: 0.5, duration: 0.3, ease: 'power2.out' })
-          gsap.to(dot, { scale: 0, duration: 0.2 })
-          label.textContent = ''
-          break
-        case 'image':
-          gsap.to(ring, { scale: 3, opacity: 0.6, duration: 0.3, ease: 'power2.out' })
-          gsap.to(dot, { scale: 0, duration: 0.2 })
-          label.textContent = 'VIEW'
-          label.style.opacity = '1'
-          break
-        case 'link':
-          gsap.to(ring, { scale: 1.8, opacity: 0.4, duration: 0.3, ease: 'power2.out' })
-          gsap.to(dot, { scale: 0.5, duration: 0.2 })
-          label.textContent = ''
-          break
-        default:
-          gsap.to(ring, { scale: 1, opacity: 0.2, duration: 0.4, ease: 'power2.out' })
-          gsap.to(dot, { scale: 1, duration: 0.3 })
-          label.textContent = ''
-          label.style.opacity = '0'
-      }
-    }
-
-    const onOver = (e) => {
-      const target = e.target.closest('button, [type="submit"]')
-      if (target) return setCursorState('button')
-
-      const img = e.target.closest('.flotte-image, .sa-panel, .service-strip, #hero-alt img, #about img:not([aria-hidden])')
-      if (img) return setCursorState('image')
-
-      const link = e.target.closest('a, [role="button"], .interactive')
-      if (link) return setCursorState('link')
-    }
-
-    const onOut = (e) => {
-      const relatedTarget = e.relatedTarget
-      if (relatedTarget && e.currentTarget.contains(relatedTarget)) return
-      setCursorState('default')
-    }
-
-    const loop = () => {
-      smooth.x += (pos.x - smooth.x) * 0.15
-      smooth.y += (pos.y - smooth.y) * 0.15
-
-      gsap.set(dot, { x: pos.x, y: pos.y, xPercent: -50, yPercent: -50 })
-      gsap.set(ring, { x: smooth.x, y: smooth.y, xPercent: -50, yPercent: -50 })
-      gsap.set(label, { x: smooth.x, y: smooth.y, xPercent: -50, yPercent: -50 })
-
-      raf = requestAnimationFrame(loop)
-    }
-
-    window.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseover', onOver)
-    document.addEventListener('mouseout', onOut)
-    raf = requestAnimationFrame(loop)
-
-    return () => {
-      window.removeEventListener('mousemove', onMouseMove)
-      document.removeEventListener('mouseover', onOver)
-      document.removeEventListener('mouseout', onOut)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
-
-  const base = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    pointerEvents: 'none',
-    zIndex: 99999,
-    display: 'none',
-    willChange: 'transform',
-  }
+  // SVG pin GPS — lavande (#7B6FA6) — uniquement sur les CTAs
+  const pinSVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='38' viewBox='0 0 28 38'%3E%3Cdefs%3E%3Cfilter id='s' x='-20%25' y='-10%25' width='140%25' height='130%25'%3E%3CfeDropShadow dx='0' dy='1' stdDeviation='1.5' flood-color='%23000' flood-opacity='0.25'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M14 0C6.27 0 0 6.27 0 14c0 10.5 14 24 14 24s14-13.5 14-24C28 6.27 21.73 0 14 0z' fill='%237B6FA6' filter='url(%23s)'/%3E%3Ccircle cx='14' cy='13' r='5.5' fill='%23F6F3EE'/%3E%3C/svg%3E") 14 38, pointer`
 
   return (
-    <>
-      <style>{`
-        @media (pointer: fine) {
-          html, html * { cursor: none !important; }
+    <style>{`
+      @media (pointer: fine) {
+        /* Flèche olive partout — classique, branded, pas de I-beam */
+        html, html * {
+          cursor: ${arrowSVG} !important;
         }
-      `}</style>
-      {/* Dot */}
-      <div
-        ref={dotRef}
-        style={{
-          ...base,
-          width: 8,
-          height: 8,
-          borderRadius: '50%',
-          background: 'var(--olive)',
-          mixBlendMode: 'difference',
-        }}
-      />
-      {/* Ring follower */}
-      <div
-        ref={ringRef}
-        style={{
-          ...base,
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          border: '1.5px solid var(--olive)',
-          opacity: 0.2,
-          zIndex: 99998,
-          mixBlendMode: 'difference',
-        }}
-      />
-      {/* Label */}
-      <div
-        ref={labelRef}
-        style={{
-          ...base,
-          zIndex: 99997,
-          fontFamily: 'Sora, sans-serif',
-          fontSize: 9,
-          fontWeight: 600,
-          letterSpacing: '0.15em',
-          textTransform: 'uppercase',
-          color: '#fff',
-          mixBlendMode: 'difference',
-          opacity: 0,
-          transition: 'opacity 0.3s ease',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: 40,
-          height: 40,
-        }}
-      />
-    </>
+        /* Pin GPS lavande UNIQUEMENT sur les vrais CTAs (data-cta) */
+        [data-cta], [data-cta] * {
+          cursor: ${pinSVG} !important;
+        }
+        /* Curseur texte classique dans les champs de saisie */
+        input[type="text"], input[type="email"], input[type="tel"],
+        input[type="search"], input[type="url"], input[type="number"],
+        input[type="date"], input[type="time"], textarea {
+          cursor: text !important;
+        }
+      }
+    `}</style>
   )
 }

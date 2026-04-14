@@ -123,6 +123,7 @@ export default function FlotteVideo() {
         >
           <Link
             to="/contact"
+            data-cta
             style={{
               background: 'var(--olive)',
               color: '#fff',
@@ -141,6 +142,7 @@ export default function FlotteVideo() {
           </Link>
           <a
             href={CONTACT.telHref}
+            data-cta
             style={{
               background: 'rgba(246,243,238,0.08)',
               border: '1px solid rgba(246,243,238,0.2)',

@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ShieldCheck } from '@phosphor-icons/react'
+import { ShieldCheck, Star } from '@phosphor-icons/react'
 import { AVIS, SECTION_INTROS } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
@@ -212,6 +212,88 @@ export default function Avis() {
               </div>
             </div>
           </a>
+
+          {/* ── Incitation : laisser un avis Google ── */}
+          <div className="avis-cta" style={{
+            marginTop: 48,
+            padding: '32px 28px',
+            border: '1px solid rgba(255,255,255,0.18)',
+            borderRadius: 4,
+            background: 'rgba(255,255,255,0.04)',
+            maxWidth: 640,
+            marginLeft: 'auto',
+            marginRight: 'auto',
+            textAlign: 'center',
+            backdropFilter: 'blur(4px)',
+          }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: 4,
+              marginBottom: 14,
+            }}>
+              {[0, 1, 2, 3, 4].map(i => (
+                <Star key={i} size={16} weight="fill" style={{ color: '#FBBC04' }} />
+              ))}
+            </div>
+            <h3 style={{
+              fontFamily: "'Instrument Serif', serif",
+              fontSize: 24,
+              fontWeight: 400,
+              color: '#FFFFFF',
+              lineHeight: 1.3,
+              margin: '0 0 10px',
+            }}>
+              Vous avez voyagé avec nous&nbsp;?
+            </h3>
+            <p style={{
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 13,
+              color: 'rgba(255,255,255,0.65)',
+              lineHeight: 1.7,
+              margin: '0 0 22px',
+              maxWidth: 480,
+              marginLeft: 'auto',
+              marginRight: 'auto',
+            }}>
+              Votre retour aide d'autres voyageurs à nous faire confiance.
+              Laissez un avis en moins d'une minute.
+            </p>
+            <a
+              href="https://search.google.com/local/writereview?placeid=ChIJzTmlbgCNyRIR1RJ_ROdNyGc"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-cta
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 10,
+                background: '#FFFFFF',
+                color: 'var(--olive)',
+                padding: '14px 28px',
+                borderRadius: 2,
+                fontFamily: 'Sora, sans-serif',
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '0.12em',
+                textTransform: 'uppercase',
+                textDecoration: 'none',
+                transition: 'all 0.3s ease',
+                boxShadow: '0 2px 12px rgba(0,0,0,0.15)',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translateY(-2px)'
+                e.currentTarget.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'translateY(0)'
+                e.currentTarget.style.boxShadow = '0 2px 12px rgba(0,0,0,0.15)'
+              }}
+            >
+              <Star size={14} weight="fill" style={{ color: '#FBBC04' }} />
+              Laisser un avis Google
+            </a>
+          </div>
         </div>
       </div>
 

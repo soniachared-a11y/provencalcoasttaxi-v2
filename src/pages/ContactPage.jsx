@@ -538,10 +538,10 @@ export default function ContactPage() {
         `}</style>
       </section>
 
-      {/* CONTACT CHANNELS */}
+      {/* CONTACT CHANNELS — strip compact */}
       <section className="channels-section" style={{
         position: 'relative',
-        padding: 'clamp(72px,9vw,100px) clamp(24px,4vw,60px)',
+        padding: 'clamp(56px,6vw,80px) clamp(24px,4vw,60px)',
         overflow: 'hidden',
       }}>
         {/* Background image */}
@@ -561,249 +561,392 @@ export default function ContactPage() {
         {/* Dark overlay */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'linear-gradient(135deg, rgba(7,9,13,0.93) 0%, rgba(7,9,13,0.82) 60%, rgba(7,9,13,0.88) 100%)',
+          background: 'linear-gradient(135deg, rgba(7,9,13,0.94) 0%, rgba(7,9,13,0.84) 60%, rgba(7,9,13,0.9) 100%)',
         }} />
 
         {/* Decorative accent lines */}
         <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(107,125,74,0.5), transparent)' }} />
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 1, background: 'linear-gradient(90deg, transparent, rgba(122,96,145,0.4), transparent)' }} />
 
-        <div style={{ maxWidth: 1200, margin: '0 auto', position: 'relative', zIndex: 1 }}>
-          {/* Header */}
-          <div style={{ textAlign: 'center', marginBottom: 'clamp(40px,6vw,64px)' }}>
-            <span style={{
-              fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
-              letterSpacing: '0.35em', textTransform: 'uppercase',
-              color: 'var(--olive)', display: 'block', marginBottom: 14,
-            }}>Nous contacter</span>
+        <div style={{ maxWidth: 1080, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+          {/* Header — compact */}
+          <div style={{ textAlign: 'center', marginBottom: 'clamp(32px,4vw,44px)' }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
+              <span style={{ width: 24, height: 1, background: 'rgba(107,125,74,0.7)' }} />
+              <span style={{
+                fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
+                letterSpacing: '0.28em', textTransform: 'uppercase',
+                color: 'var(--olive)',
+              }}>Nous joindre</span>
+              <span style={{ width: 24, height: 1, background: 'rgba(107,125,74,0.7)' }} />
+            </div>
             <h2 style={{
               fontFamily: "'Instrument Serif', serif",
-              fontSize: 'clamp(26px,3.2vw,40px)',
+              fontSize: 'clamp(24px,2.8vw,34px)',
               fontWeight: 400, color: '#fff',
               margin: 0, letterSpacing: '-0.01em',
             }}>
-              Choisissez votre canal
+              Trois façons, <em style={{ fontStyle: 'italic', color: 'var(--lavande)' }}>une même exigence.</em>
             </h2>
-            <div style={{ width: 40, height: 1, background: 'linear-gradient(90deg, transparent, var(--lavande), transparent)', margin: '20px auto 0' }} />
           </div>
 
-          <div className="channels-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 20 }}>
+          {/* Strip unifiée : 3 canaux en ligne avec séparateurs */}
+          <div className="channels-strip" style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(3, 1fr)',
+            background: 'rgba(255,255,255,0.03)',
+            border: '1px solid rgba(255,255,255,0.1)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          }}>
             {[
               {
                 icon: PhoneCall,
-                accentColor: 'var(--olive)',
-                accentRgb: '107,125,74',
                 titre: 'Téléphone',
                 valeur: CONTACT.tel,
-                detail: 'Disponible 24h/24 · 7j/7',
-                sub: 'Réponse immédiate',
                 href: CONTACT.telHref,
-                cta: 'Appeler maintenant',
-                badge: '24/7',
+                accent: 'var(--olive)',
+                accentRgb: '107,125,74',
               },
               {
                 icon: ChatCircleText,
-                accentColor: 'var(--olive)',
-                accentRgb: '107,125,74',
                 titre: 'Formulaire',
-                valeur: 'Réponse en 15 min',
-                detail: 'Disponible 24h/24 · 7j/7',
-                sub: 'Confirmation garantie sous 15 min',
+                valeur: 'Demande en ligne',
                 href: '#form',
-                cta: 'Remplir le formulaire',
-                badge: '15 min',
+                accent: 'var(--olive)',
+                accentRgb: '107,125,74',
               },
               {
                 icon: EnvelopeSimple,
-                accentColor: 'var(--lavande)',
-                accentRgb: '122,96,145',
                 titre: 'Email',
                 valeur: CONTACT.email,
-                detail: 'Devis longue distance & tarifs',
-                sub: 'Modalités de paiement, demandes spécifiques',
                 href: `mailto:${CONTACT.email}`,
-                cta: 'Écrire un email',
-                badge: '< 2h',
+                accent: 'var(--lavande)',
+                accentRgb: '181,166,205',
               },
             ].map((ch, i) => {
               const Icon = ch.icon
               return (
-                <div
+                <a
                   key={i}
-                  className="channel-card"
+                  href={ch.href}
+                  className="channel-cell"
+                  data-cta
                   style={{
                     position: 'relative',
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    backdropFilter: 'blur(12px)',
-                    display: 'flex', flexDirection: 'column',
-                    overflow: 'hidden',
-                    transition: 'background 0.3s, border-color 0.3s, transform 0.3s',
+                    display: 'flex', alignItems: 'center', gap: 16,
+                    padding: '22px 24px',
+                    textDecoration: 'none',
+                    borderLeft: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.08)',
+                    transition: 'background 0.3s ease',
                   }}
                   onMouseEnter={e => {
                     e.currentTarget.style.background = `rgba(${ch.accentRgb},0.08)`
-                    e.currentTarget.style.borderColor = `rgba(${ch.accentRgb},0.35)`
-                    e.currentTarget.style.transform = 'translateY(-4px)'
+                    const arr = e.currentTarget.querySelector('.channel-arrow')
+                    if (arr) arr.style.transform = 'translateX(4px)'
+                    const bar = e.currentTarget.querySelector('.channel-bar')
+                    if (bar) bar.style.transform = 'scaleX(1)'
                   }}
                   onMouseLeave={e => {
-                    e.currentTarget.style.background = 'rgba(255,255,255,0.04)'
-                    e.currentTarget.style.borderColor = 'rgba(255,255,255,0.08)'
-                    e.currentTarget.style.transform = 'translateY(0)'
+                    e.currentTarget.style.background = 'transparent'
+                    const arr = e.currentTarget.querySelector('.channel-arrow')
+                    if (arr) arr.style.transform = ''
+                    const bar = e.currentTarget.querySelector('.channel-bar')
+                    if (bar) bar.style.transform = 'scaleX(0)'
                   }}
                 >
-                  {/* Top accent bar */}
+                  {/* Barre olive qui scale au hover */}
+                  <span
+                    className="channel-bar"
+                    aria-hidden
+                    style={{
+                      position: 'absolute', bottom: 0, left: 0, right: 0, height: 2,
+                      background: ch.accent,
+                      transform: 'scaleX(0)',
+                      transformOrigin: 'left',
+                      transition: 'transform 0.45s cubic-bezier(0.65,0,0.35,1)',
+                    }}
+                  />
+                  {/* Icon circle */}
                   <div style={{
-                    position: 'absolute', top: 0, left: 0, right: 0, height: 2,
-                    background: `linear-gradient(90deg, transparent, ${ch.accentColor}, transparent)`,
-                    opacity: 0.8,
-                  }} />
-
-                  <div style={{ padding: 'clamp(28px,3vw,40px)' }}>
-                    {/* Icon + badge row */}
-                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 28 }}>
-                      <div style={{
-                        width: 56, height: 56,
-                        background: `rgba(${ch.accentRgb},0.12)`,
-                        border: `1px solid rgba(${ch.accentRgb},0.25)`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      }}>
-                        <Icon size={26} weight="duotone" style={{ color: ch.accentColor }} />
-                      </div>
-                      <span style={{
-                        fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
-                        letterSpacing: '0.12em', textTransform: 'uppercase',
-                        color: ch.accentColor,
-                        border: `1px solid rgba(${ch.accentRgb},0.35)`,
-                        padding: '4px 8px',
-                        background: `rgba(${ch.accentRgb},0.08)`,
-                      }}>{ch.badge}</span>
-                    </div>
-
-                    {/* Label */}
-                    <div style={{
-                      fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
-                      textTransform: 'uppercase', letterSpacing: '0.28em',
-                      color: 'rgba(255,255,255,0.35)', marginBottom: 10,
-                    }}>{ch.titre}</div>
-
-                    {/* Value */}
-                    <div style={{
-                      fontFamily: "'Instrument Serif', serif",
-                      fontSize: 'clamp(16px,1.6vw,22px)',
-                      color: '#fff', lineHeight: 1.2, marginBottom: 14,
-                      wordBreak: 'break-all',
-                    }}>{ch.valeur}</div>
-
-                    {/* Detail */}
-                    <div style={{
-                      fontFamily: 'Sora', fontSize: 12,
-                      color: 'rgba(255,255,255,0.55)', marginBottom: 4, lineHeight: 1.5,
-                    }}>{ch.detail}</div>
-                    <div style={{
-                      fontFamily: 'Sora', fontSize: 11,
-                      color: 'rgba(255,255,255,0.28)',
-                      marginBottom: 32,
-                    }}>{ch.sub}</div>
-
-                    {/* CTA */}
-                    <a
-                      href={ch.href}
-                      target={ch.target}
-                      rel={ch.target ? 'noreferrer' : undefined}
-                      style={{
-                        display: 'inline-flex', alignItems: 'center', gap: 10,
-                        fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
-                        textTransform: 'uppercase', letterSpacing: '0.15em',
-                        color: '#fff', textDecoration: 'none',
-                        background: `rgba(${ch.accentRgb},0.15)`,
-                        border: `1px solid rgba(${ch.accentRgb},0.4)`,
-                        padding: '12px 20px',
-                        transition: 'background 0.25s, gap 0.25s',
-                        width: '100%', justifyContent: 'center',
-                        boxSizing: 'border-box',
-                      }}
-                      onMouseEnter={e => {
-                        e.currentTarget.style.background = `rgba(${ch.accentRgb},0.3)`
-                        e.currentTarget.style.gap = '14px'
-                      }}
-                      onMouseLeave={e => {
-                        e.currentTarget.style.background = `rgba(${ch.accentRgb},0.15)`
-                        e.currentTarget.style.gap = '10px'
-                      }}
-                    >
-                      {ch.cta} <ArrowRight size={12} weight="bold" />
-                    </a>
+                    width: 44, height: 44, borderRadius: '50%',
+                    background: `rgba(${ch.accentRgb},0.1)`,
+                    border: `1px solid rgba(${ch.accentRgb},0.28)`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0,
+                  }}>
+                    <Icon size={18} weight="duotone" style={{ color: ch.accent }} />
                   </div>
-                </div>
+                  {/* Label + value */}
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{
+                      fontFamily: 'Sora', fontSize: 9, fontWeight: 700,
+                      letterSpacing: '0.22em', textTransform: 'uppercase',
+                      color: 'rgba(255,255,255,0.38)', marginBottom: 4,
+                    }}>{ch.titre}</div>
+                    <div style={{
+                      fontFamily: 'Sora', fontSize: 13, fontWeight: 500,
+                      color: '#fff', lineHeight: 1.3,
+                      whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                    }}>{ch.valeur}</div>
+                  </div>
+                  {/* Arrow */}
+                  <ArrowRight
+                    className="channel-arrow"
+                    size={14} weight="bold"
+                    style={{
+                      color: ch.accent, flexShrink: 0,
+                      transition: 'transform 0.35s ease',
+                    }}
+                  />
+                </a>
               )
             })}
           </div>
         </div>
         <style>{`
           @media (max-width: 768px) {
-            .channels-grid { grid-template-columns: 1fr !important; gap: 14px !important; }
+            .channels-strip { grid-template-columns: 1fr !important; }
+            .channels-strip .channel-cell {
+              border-left: none !important;
+              border-top: 1px solid rgba(255,255,255,0.08);
+              padding: 18px 20px !important;
+            }
+            .channels-strip .channel-cell:first-child {
+              border-top: none;
+            }
           }
         `}</style>
       </section>
 
       {/* MAP + FAQ */}
-      <section className="map-section" style={{ background: 'var(--cream)', padding: 'clamp(64px,8vw,88px) clamp(24px,4vw,60px)' }}>
-        <div style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 56, alignItems: 'start' }} className="map-grid">
+      <section className="map-section" style={{ background: 'var(--cream)', padding: 'clamp(72px,9vw,112px) clamp(24px,4vw,60px)', position: 'relative', overflow: 'hidden' }}>
+        {/* Halos décoratifs en arrière-plan */}
+        <div aria-hidden style={{
+          position: 'absolute', top: -160, right: -160, width: 500, height: 500,
+          background: 'radial-gradient(circle, rgba(181,166,205,0.22) 0%, transparent 60%)',
+          pointerEvents: 'none', zIndex: 0,
+        }} />
+        <div aria-hidden style={{
+          position: 'absolute', bottom: -200, left: -160, width: 520, height: 520,
+          background: 'radial-gradient(circle, rgba(107,125,74,0.12) 0%, transparent 60%)',
+          pointerEvents: 'none', zIndex: 0,
+        }} />
+
+        <div className="map-grid" style={{ maxWidth: 1200, margin: '0 auto', display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 64, alignItems: 'start', position: 'relative', zIndex: 1 }}>
+          {/* LEFT — Map column */}
           <div>
-            <div style={{ fontFamily: 'Sora', fontSize: 9, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--olive)', marginBottom: 16 }}>Notre adresse</div>
-            <h3 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 28, fontWeight: 400, color: 'var(--texte)', margin: '0 0 24px' }}>Aix-en-Provence</h3>
-            <div style={{ border: '1px solid var(--border)', overflow: 'hidden', marginBottom: 16 }}>
-              <iframe
-                title="Localisation Taxis Provençale Aix"
-                src="https://maps.google.com/maps?q=82+avenue+Henri+Mauriat+13100+Aix-en-Provence+France&output=embed&z=15"
-                width="100%" height="320"
-                style={{ display: 'block', border: 'none' }}
-                loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 14 }}>
+              <span style={{ width: 28, height: 1, background: 'var(--olive)', opacity: 0.55 }} />
+              <span style={{ fontFamily: 'Sora', fontSize: 10, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--olive)' }}>Notre adresse</span>
             </div>
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
-              <MapPin size={15} weight="duotone" style={{ color: 'var(--lavande)', marginTop: 2, flexShrink: 0 }} />
-              <span style={{ fontFamily: 'Sora', fontSize: 13, color: 'var(--texte-light)', lineHeight: 1.6 }}>
-                {CONTACT.adresse}
-              </span>
+            <h3 className="map-heading" style={{ fontFamily: "'Instrument Serif', serif", fontSize: 40, fontWeight: 400, color: 'var(--texte)', margin: '0 0 10px', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
+              Aix-<em style={{ fontStyle: 'italic', color: 'var(--olive)' }}>en</em>-Provence
+            </h3>
+            <p style={{ fontFamily: 'Sora', fontSize: 13, color: 'var(--texte-light)', margin: '0 0 32px', lineHeight: 1.7, maxWidth: 440 }}>
+              Notre point d'ancrage au cœur de la Provence — à quelques minutes
+              du Cours Mirabeau et de la Gare TGV.
+            </p>
+
+            {/* Map framed card */}
+            <div className="map-frame" style={{
+              position: 'relative',
+              background: '#fff',
+              padding: 10,
+              border: '1px solid var(--border)',
+              boxShadow: '0 40px 80px -40px rgba(107,125,74,0.3)',
+            }}>
+              {/* Corner accents olive */}
+              {[
+                { top: -7, left: -7, borderTop: '2px solid var(--olive)', borderLeft: '2px solid var(--olive)' },
+                { top: -7, right: -7, borderTop: '2px solid var(--olive)', borderRight: '2px solid var(--olive)' },
+                { bottom: -7, left: -7, borderBottom: '2px solid var(--olive)', borderLeft: '2px solid var(--olive)' },
+                { bottom: -7, right: -7, borderBottom: '2px solid var(--olive)', borderRight: '2px solid var(--olive)' },
+              ].map((s, i) => (
+                <span key={i} aria-hidden style={{ position: 'absolute', width: 18, height: 18, ...s }} />
+              ))}
+
+              <div style={{ overflow: 'hidden', position: 'relative' }}>
+                <iframe
+                  title="Localisation Taxis Provençale Aix"
+                  src="https://maps.google.com/maps?q=82+avenue+Henri+Mauriat+13100+Aix-en-Provence+France&output=embed&z=15"
+                  width="100%" height="380"
+                  style={{ display: 'block', border: 'none', filter: 'saturate(0.88) contrast(1.03)' }}
+                  loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+
+                {/* Floating address pill */}
+                <div className="map-pill" style={{
+                  position: 'absolute', left: 16, bottom: 16, right: 16, maxWidth: 340,
+                  background: 'rgba(246,243,238,0.96)', backdropFilter: 'blur(10px)',
+                  WebkitBackdropFilter: 'blur(10px)',
+                  padding: '14px 16px',
+                  border: '1px solid rgba(107,125,74,0.22)',
+                  display: 'flex', alignItems: 'flex-start', gap: 12,
+                  boxShadow: '0 16px 40px -16px rgba(0,0,0,0.25)',
+                }}>
+                  <div style={{
+                    width: 38, height: 38, borderRadius: '50%',
+                    background: 'var(--olive)',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    flexShrink: 0, boxShadow: '0 4px 10px rgba(107,125,74,0.4)',
+                  }}>
+                    <MapPin size={16} weight="fill" style={{ color: '#F6F3EE' }} />
+                  </div>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: 'Sora', fontSize: 9, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.18em', color: 'var(--olive)', marginBottom: 4 }}>
+                      Taxis Provençale Aix
+                    </div>
+                    <div style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte)', lineHeight: 1.5 }}>
+                      {CONTACT.adresse}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
+            {/* Itinéraire CTA */}
+            <a
+              href="https://www.google.com/maps/dir//82+avenue+Henri+Mauriat+13100+Aix-en-Provence"
+              target="_blank" rel="noopener noreferrer"
+              data-cta
+              style={{
+                marginTop: 28, display: 'inline-flex', alignItems: 'center', gap: 10,
+                background: 'var(--olive)', color: '#F6F3EE',
+                padding: '16px 26px', fontFamily: 'Sora', fontSize: 11,
+                fontWeight: 700, letterSpacing: '0.15em', textTransform: 'uppercase',
+                textDecoration: 'none',
+                transition: 'gap 0.3s ease, background 0.3s ease, transform 0.3s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.gap = '14px'
+                e.currentTarget.style.background = 'var(--texte)'
+                e.currentTarget.style.transform = 'translateY(-2px)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.gap = '10px'
+                e.currentTarget.style.background = 'var(--olive)'
+                e.currentTarget.style.transform = ''
+              }}
+            >
+              <NavigationArrow size={14} weight="fill" />
+              Obtenir l'itinéraire
+            </a>
           </div>
 
+          {/* RIGHT — Dispo + FAQ */}
           <div>
-            <div style={{ marginBottom: 40 }}>
-              <div style={{ fontFamily: 'Sora', fontSize: 9, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--olive)', marginBottom: 16 }}>Disponibilité</div>
-              {[
-                { label: 'Lundi — Dimanche', value: '24h / 24' },
-                { label: 'Aéroport & Gare', value: 'Tous les vols / TGV' },
-                { label: 'Confirmations', value: '< 15 minutes' },
-              ].map((r, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
-                  <span style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte-light)' }}>{r.label}</span>
-                  <span style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte)', fontWeight: 600 }}>{r.value}</span>
-                </div>
-              ))}
+            {/* Disponibilité card */}
+            <div className="dispo-card" style={{
+              background: 'var(--olive)',
+              padding: '36px 32px',
+              position: 'relative',
+              overflow: 'hidden',
+              marginBottom: 40,
+              boxShadow: '0 30px 60px -30px rgba(107,125,74,0.5)',
+            }}>
+              {/* Watermark 24 */}
+              <div aria-hidden style={{
+                position: 'absolute', top: -30, right: -14,
+                fontFamily: "'Instrument Serif', serif", fontSize: 220,
+                fontStyle: 'italic',
+                color: 'rgba(255,255,255,0.06)', lineHeight: 1, pointerEvents: 'none',
+                userSelect: 'none',
+              }}>24</div>
+
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 18, position: 'relative' }}>
+                <span style={{ width: 24, height: 1, background: 'rgba(255,255,255,0.4)' }} />
+                <span style={{ fontFamily: 'Sora', fontSize: 10, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.75)' }}>
+                  Disponibilité
+                </span>
+              </div>
+              <h4 style={{
+                fontFamily: "'Instrument Serif', serif", fontSize: 28, fontWeight: 400,
+                color: '#F6F3EE', margin: '0 0 28px', lineHeight: 1.2, position: 'relative',
+              }}>
+                Toujours disponibles, <em style={{ fontStyle: 'italic', color: 'var(--lavande)' }}>pour vous.</em>
+              </h4>
+
+              <div style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                {[
+                  { icon: Clock, label: 'Lundi — Dimanche', value: '24h / 24' },
+                  { icon: NavigationArrow, label: 'Aéroport & Gare', value: 'Tous les vols / TGV' },
+                  { icon: SealCheck, label: 'Confirmations', value: '< 15 minutes' },
+                ].map(({ icon: Icon, label, value }, i) => (
+                  <div key={i} style={{
+                    display: 'flex', alignItems: 'center', gap: 14,
+                    padding: '16px 0',
+                    borderTop: i === 0 ? 'none' : '1px solid rgba(255,255,255,0.14)',
+                  }}>
+                    <div style={{
+                      width: 38, height: 38, borderRadius: '50%',
+                      background: 'rgba(255,255,255,0.08)',
+                      border: '1px solid rgba(255,255,255,0.22)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      flexShrink: 0,
+                    }}>
+                      <Icon size={15} weight="duotone" style={{ color: 'var(--lavande)' }} />
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ fontFamily: 'Sora', fontSize: 10, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginBottom: 3 }}>
+                        {label}
+                      </div>
+                      <div style={{ fontFamily: 'Sora', fontSize: 13, fontWeight: 600, color: '#F6F3EE' }}>
+                        {value}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div>
-              <div style={{ fontFamily: 'Sora', fontSize: 9, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--olive)', marginBottom: 16 }}>Questions fréquentes</div>
-              {[
-                { q: 'Le tarif est-il définitif ?', a: 'Oui. Le prix communiqué lors de votre réservation est ferme et définitif — pas de supplément.' },
-                { q: 'Comment payer ?', a: 'Paiement à bord : espèces, carte bancaire (Visa, Mastercard, Amex).' },
-                { q: 'Délai de réservation ?', a: "De quelques heures à plusieurs semaines à l'avance. Réponse garantie sous 15 min." },
-              ].map((faq, i) => (
-                <div key={i} style={{ marginBottom: 18, paddingBottom: 18, borderBottom: i < 2 ? '1px solid var(--border)' : 'none' }}>
-                  <div style={{ fontFamily: 'Sora', fontSize: 12, fontWeight: 600, color: 'var(--texte)', marginBottom: 6 }}>{faq.q}</div>
-                  <div style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte-light)', lineHeight: 1.65 }}>{faq.a}</div>
-                </div>
-              ))}
+            {/* FAQ header */}
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 12, marginBottom: 18 }}>
+              <span style={{ width: 24, height: 1, background: 'var(--olive)', opacity: 0.55 }} />
+              <span style={{ fontFamily: 'Sora', fontSize: 10, fontWeight: 700, letterSpacing: '0.25em', textTransform: 'uppercase', color: 'var(--olive)' }}>
+                Questions fréquentes
+              </span>
             </div>
 
-            <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid var(--border)' }}>
+            {/* FAQ cards */}
+            {[
+              { q: 'Le tarif est-il définitif ?', a: 'Oui. Le prix communiqué lors de votre réservation est ferme et définitif — pas de supplément.' },
+              { q: 'Comment payer ?', a: 'Paiement à bord : espèces, carte bancaire (Visa, Mastercard, Amex).' },
+              { q: 'Délai de réservation ?', a: "De quelques heures à plusieurs semaines à l'avance. Réponse garantie sous 15 min." },
+            ].map((faq, i) => (
+              <div
+                key={i}
+                className="faq-card"
+                style={{
+                  background: '#fff',
+                  border: '1px solid var(--border)',
+                  borderLeft: '2px solid var(--lavande)',
+                  padding: '16px 20px',
+                  marginBottom: 10,
+                  transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-left-color 0.3s ease',
+                }}
+                onMouseEnter={e => {
+                  e.currentTarget.style.transform = 'translateX(4px)'
+                  e.currentTarget.style.boxShadow = '0 14px 36px -20px rgba(107,125,74,0.35)'
+                  e.currentTarget.style.borderLeftColor = 'var(--olive)'
+                }}
+                onMouseLeave={e => {
+                  e.currentTarget.style.transform = ''
+                  e.currentTarget.style.boxShadow = ''
+                  e.currentTarget.style.borderLeftColor = 'var(--lavande)'
+                }}
+              >
+                <div style={{ fontFamily: 'Sora', fontSize: 12, fontWeight: 600, color: 'var(--texte)', marginBottom: 6 }}>{faq.q}</div>
+                <div style={{ fontFamily: 'Sora', fontSize: 12, color: 'var(--texte-light)', lineHeight: 1.65 }}>{faq.a}</div>
+              </div>
+            ))}
+
+            <div style={{ marginTop: 28 }}>
               <Link to="/flotte" style={{
                 display: 'inline-flex', alignItems: 'center', gap: 8,
                 fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
                 textTransform: 'uppercase', letterSpacing: '0.15em',
-                color: 'var(--lavande)', textDecoration: 'none',
-                borderBottom: '1px solid var(--lavande)',
+                color: 'var(--olive)', textDecoration: 'none',
+                borderBottom: '1px solid var(--olive)',
                 paddingBottom: 2, transition: 'gap 0.3s',
               }}
                 onMouseEnter={e => (e.currentTarget.style.gap = '12px')}
@@ -813,7 +956,17 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
-        <style>{`@media (max-width: 768px) { .map-grid { grid-template-columns: 1fr !important; } }`}</style>
+
+        <style>{`
+          @media (max-width: 900px) {
+            .map-grid { grid-template-columns: 1fr !important; gap: 48px !important; }
+          }
+          @media (max-width: 768px) {
+            .map-heading { font-size: 32px !important; }
+            .dispo-card { padding: 28px 22px !important; }
+            .map-pill { left: 10px !important; right: 10px !important; bottom: 10px !important; padding: 12px 14px !important; }
+          }
+        `}</style>
       </section>
     </>
   )

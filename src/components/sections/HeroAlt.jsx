@@ -221,6 +221,7 @@ export default function HeroAlt() {
             <div style={{ borderTop: '1px solid var(--border)', paddingTop: '24px', display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               <Link
                 to="/contact"
+                data-cta
                 style={{
                   flex: 1, minWidth: 140,
                   fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 600,
@@ -237,6 +238,7 @@ export default function HeroAlt() {
               </Link>
               <a
                 href={CONTACT.telHref}
+                data-cta
                 style={{
                   flex: 1, minWidth: 120,
                   fontFamily: 'Sora, sans-serif', fontSize: 10, fontWeight: 500,

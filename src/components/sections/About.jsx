@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { ArrowRight, MapPin } from '@phosphor-icons/react'
+import { ArrowRight, MapPin, Plus, Minus } from '@phosphor-icons/react'
 import { ABOUT } from '../../data/content'
 import CharReveal from '../ui/CharReveal'
 
@@ -10,6 +10,28 @@ gsap.registerPlugin(ScrollTrigger)
 export default function About() {
   const sectionRef = useRef(null)
   const imageRef = useRef(null)
+  const extraRef = useRef(null)
+  const [expanded, setExpanded] = useState(false)
+
+  // Anim douce d'ouverture/fermeture du contenu déroulant
+  useEffect(() => {
+    const el = extraRef.current
+    if (!el) return
+    if (expanded) {
+      gsap.set(el, { display: 'block', height: 'auto' })
+      const h = el.offsetHeight
+      gsap.fromTo(el,
+        { height: 0, opacity: 0 },
+        { height: h, opacity: 1, duration: 0.55, ease: 'power3.out',
+          onComplete: () => gsap.set(el, { height: 'auto' }) }
+      )
+    } else {
+      gsap.to(el, {
+        height: 0, opacity: 0, duration: 0.45, ease: 'power3.inOut',
+        onComplete: () => gsap.set(el, { display: 'none' }),
+      })
+    }
+  }, [expanded])
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -76,7 +98,7 @@ export default function About() {
       id="about"
       style={{ background: 'var(--surface)' }}
     >
-      <div style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px' }}>
+      <div className="about-container" style={{ maxWidth: 1200, margin: '0 auto', padding: '80px 24px' }}>
         <div
           className="about-grid"
           style={{
@@ -113,17 +135,69 @@ export default function About() {
               }}
             />
 
-            {ABOUT.paragraphs.map((p, i) => (
-              <p key={i} style={{
+            {/* Premier paragraphe — toujours visible */}
+            <p style={{
+              fontFamily: 'Sora, sans-serif',
+              fontSize: 14,
+              color: 'var(--texte-light)',
+              lineHeight: 1.8,
+              margin: '0 0 20px 0',
+            }}>
+              {ABOUT.paragraphs[0]}
+            </p>
+
+            {/* Paragraphes 2 & 3 — déroulants */}
+            <div
+              ref={extraRef}
+              style={{
+                overflow: 'hidden',
+                height: 0,
+                opacity: 0,
+                display: 'none',
+              }}
+            >
+              {ABOUT.paragraphs.slice(1).map((p, i) => (
+                <p key={i} style={{
+                  fontFamily: 'Sora, sans-serif',
+                  fontSize: 14,
+                  color: 'var(--texte-light)',
+                  lineHeight: 1.8,
+                  margin: '0 0 20px 0',
+                }}>
+                  {p}
+                </p>
+              ))}
+            </div>
+
+            {/* Toggle Lire plus / Lire moins */}
+            <button
+              onClick={() => setExpanded(v => !v)}
+              aria-expanded={expanded}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 8,
                 fontFamily: 'Sora, sans-serif',
-                fontSize: 14,
-                color: 'var(--texte-light)',
-                lineHeight: 1.8,
-                margin: '0 0 20px 0',
-              }}>
-                {p}
-              </p>
-            ))}
+                fontSize: 11,
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                color: 'var(--olive)',
+                background: 'transparent',
+                border: 'none',
+                padding: 0,
+                cursor: 'pointer',
+                marginTop: 4,
+                transition: 'gap 0.3s ease',
+              }}
+              onMouseEnter={e => (e.currentTarget.style.gap = '12px')}
+              onMouseLeave={e => (e.currentTarget.style.gap = '8px')}
+            >
+              {expanded ? 'Lire moins' : 'Lire plus'}
+              {expanded
+                ? <Minus size={14} weight="bold" />
+                : <Plus size={14} weight="bold" />}
+            </button>
 
 
             {/* Zones desservies — desktop uniquement, sous le CTA */}
@@ -152,32 +226,11 @@ export default function About() {
               </div>
             </div>
 
-            {/* CTA */}
-            <a
-              href="#services"
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: 8,
-                fontFamily: 'Sora, sans-serif',
-                fontSize: 11,
-                fontWeight: 600,
-                textTransform: 'uppercase',
-                letterSpacing: '0.1em',
-                color: 'var(--lavande)',
-                textDecoration: 'none',
-                transition: 'gap 0.3s ease',
-              }}
-              onMouseEnter={e => (e.currentTarget.style.gap = '12px')}
-              onMouseLeave={e => (e.currentTarget.style.gap = '8px')}
-            >
-              Découvrir nos services
-              <ArrowRight size={14} weight="bold" />
-            </a>
           </div>
 
-          {/* Right — Image avec overlay zones */}
-          <div style={{ overflow: 'hidden', position: 'relative' }}>
+          {/* Right — Image avec overlay zones + CTA en dessous */}
+          <div className="about-image-col" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div style={{ overflow: 'hidden', position: 'relative', flex: 1 }}>
             <img
               ref={imageRef}
               src="/images/flotte-intercontinental.jpeg"
@@ -251,6 +304,40 @@ export default function About() {
                 ))}
               </div>
             </div>
+            </div>
+
+            {/* CTA — sous l'image, en cohérence avec le bloc zones */}
+            <a
+              href="#services"
+              data-cta
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 8,
+                fontFamily: 'Sora, sans-serif',
+                fontSize: 11,
+                fontWeight: 600,
+                textTransform: 'uppercase',
+                letterSpacing: '0.1em',
+                color: '#F6F3EE',
+                background: 'var(--olive)',
+                textDecoration: 'none',
+                padding: '18px 24px',
+                transition: 'gap 0.3s ease, background 0.3s ease',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.gap = '12px'
+                e.currentTarget.style.background = 'var(--texte)'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.gap = '8px'
+                e.currentTarget.style.background = 'var(--olive)'
+              }}
+            >
+              Découvrir nos services
+              <ArrowRight size={14} weight="bold" />
+            </a>
           </div>
         </div>
       </div>
@@ -262,6 +349,9 @@ export default function About() {
         .zones-grid-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 7px 16px; }
         .about-zones-desktop { display: block; }
         @media (max-width: 768px) {
+          .about-container {
+            padding: 40px 16px !important;
+          }
           .about-zones-desktop { display: none !important; }
           .zones-top { display: none !important; }
           .zones-bottom { display: block !important; }
@@ -282,11 +372,19 @@ export default function About() {
             order: 1;
           }
           .about-grid > div:last-child img {
-            min-height: 240px !important;
-            max-height: 300px !important;
+            min-height: 220px !important;
+            max-height: 260px !important;
           }
           .about-text {
-            padding: 28px 20px !important;
+            padding: 28px 22px !important;
+          }
+          .about-text h2 {
+            font-size: 26px !important;
+            margin-bottom: 20px !important;
+          }
+          .about-text p {
+            font-size: 13px !important;
+            line-height: 1.7 !important;
           }
         }
       `}</style>

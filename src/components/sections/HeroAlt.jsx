@@ -281,8 +281,8 @@ export default function HeroAlt() {
 
           <img
             ref={imageRef}
-            src="/images/classe-s-provence.jpg"
-            alt="Mercedes Classe S en Provence"
+            src="/images/passager-happy.jpg"
+            alt="Passagère à l'arrière d'un véhicule Taxis Provençale Aix, installée confortablement"
             width={1200}
             height={800}
             style={{

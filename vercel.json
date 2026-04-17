@@ -1,5 +1,20 @@
 {
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
+    { "source": "/services", "destination": "/services/index.html" },
+    { "source": "/flotte", "destination": "/flotte/index.html" },
+    { "source": "/a-propos", "destination": "/a-propos/index.html" },
+    { "source": "/contact", "destination": "/contact/index.html" },
+    { "source": "/mentions-legales", "destination": "/mentions-legales/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
   ]
 }

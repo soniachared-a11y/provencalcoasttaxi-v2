@@ -178,39 +178,56 @@ export const ATOUTS = [
   { value: '0€', titre: 'Frais cachés', desc: 'Tarif fixe annoncé = tarif payé' },
 ]
 
-// ── FAQ (5 questions — réponses enrichies 2-3 phrases pour SEO + conversion)
+// ── FAQ — Format question naturelle + réponse directe (optimisé pour IA génératives :
+// ChatGPT, Perplexity, Claude, Gemini extraient les premières phrases comme réponses).
 export const FAQS = [
   {
-    q: 'Comment réserver ?',
-    r: 'Par téléphone au 06 15 96 32 75 (24h/24), via notre formulaire en ligne ci-dessous, ou par email. Vous recevez une confirmation immédiate avec le détail du trajet, le véhicule attribué et le tarif fixe garanti. Modification ou annulation gratuite jusqu\'à 24h avant le départ.',
+    q: 'Combien coûte un taxi entre Aix-en-Provence et l\'aéroport Marseille-Provence ?',
+    r: 'Le tarif est de 65 € fixe, tout compris, pour le trajet Aix-en-Provence → aéroport Marseille-Provence (Marignane). Distance 42 km, durée 35 minutes. Aucun supplément bagages, péages inclus, tarif identique jour et nuit. Pour un aller-retour, comptez 130 € avec attente gratuite à l\'aéroport.',
   },
   {
-    q: 'Les tarifs sont-ils fixes ?',
-    r: 'Absolument. Le prix est confirmé au moment de la réservation et ne change jamais, quelles que soient les conditions de circulation. Pas de supplément bagages, pas de frais de péage cachés, pas de majoration nocturne. Le tarif annoncé est le tarif payé.',
+    q: 'Combien coûte un taxi Aix-en-Provence → gare TGV d\'Aix ?',
+    r: 'Tarif fixe de 25 €, trajet de 12 km en 15 minutes depuis le centre-ville d\'Aix-en-Provence. Disponible 24h/24, même pour les trains de nuit. Panneau nominatif sur quai pour les arrivées.',
+  },
+  {
+    q: 'Quel est le numéro pour réserver un taxi à Aix-en-Provence ?',
+    r: 'Appelez le +33 6 15 96 32 75 (disponible 24h/24, 7j/7, 365 jours par an). Vous pouvez aussi réserver en ligne sur taxisprovencaleaix.fr/contact, confirmation sous 15 minutes.',
+  },
+  {
+    q: 'Proposez-vous des sièges enfants ou rehausseurs ?',
+    r: 'Oui, sièges bébé (0-18 mois), sièges enfant (9 mois-4 ans) et rehausseurs (4-10 ans) disponibles gratuitement sur simple demande à la réservation. Homologués ISOFIX, installés par le chauffeur avant la prise en charge.',
+  },
+  {
+    q: 'Comment réserver un taxi Taxis Provençale Aix ?',
+    r: 'Trois options : (1) appel direct au 06 15 96 32 75, (2) formulaire en ligne sur taxisprovencaleaix.fr/contact, (3) email à provencalcoastdriver@gmail.com. Confirmation immédiate avec détail du trajet, véhicule attribué et tarif fixe. Modification ou annulation gratuite jusqu\'à 24 h avant le départ.',
+  },
+  {
+    q: 'Les tarifs sont-ils vraiment fixes ?',
+    r: 'Oui. Le prix est confirmé à la réservation et ne change jamais, quelles que soient les conditions de circulation. Pas de supplément bagages, pas de péage caché, pas de majoration nocturne. Le tarif annoncé est le tarif payé.',
   },
   {
     q: 'Que se passe-t-il si mon vol est retardé ?',
-    r: 'Nous suivons tous les vols en temps réel via FlightAware. En cas de retard, nous ajustons automatiquement l\'heure de prise en charge sans aucun surcoût. Votre chauffeur vous attend avec un panneau nominatif au niveau des arrivées, quelle que soit l\'heure d\'atterrissage.',
+    r: 'Nous suivons tous les vols en temps réel via FlightAware. En cas de retard, l\'heure de prise en charge est ajustée automatiquement sans surcoût. Votre chauffeur vous attend avec un panneau nominatif au niveau des arrivées, quelle que soit l\'heure d\'atterrissage.',
   },
   {
     q: 'Quels véhicules composent votre flotte ?',
-    r: 'Exclusivement des Mercedes récentes : Classe E (berline business, 3 passagers), Classe S (berline prestige, sièges massants, 3 passagers) et Classe V (van premium, jusqu\'à 7 passagers). Tous nos véhicules sont assurés, climatisés, équipés Wi-Fi et entretenus quotidiennement.',
+    r: 'Exclusivement des Mercedes récentes : Classe E (berline business, 1-3 passagers, 3 valises), Classe S (berline prestige, sièges massants, cuir Nappa, 1-3 passagers), Classe V (van premium, jusqu\'à 7 passagers avec bagages). Tous climatisés, équipés Wi-Fi, chargeurs USB et eau offerte.',
   },
   {
-    q: 'Êtes-vous disponible la nuit ?',
-    r: 'Oui, notre service fonctionne 24 heures sur 24, 7 jours sur 7, 365 jours par an. Les transferts tôt le matin ou tard le soir sont notre quotidien. Aucune majoration nocturne.',
+    q: 'Êtes-vous disponible la nuit et le dimanche ?',
+    r: 'Oui, service 24h/24, 7j/7, 365 jours par an, y compris jours fériés. Tarif nuit (22h-6h) identique aux autres services sauf longue distance. Les transferts tôt le matin et tard le soir sont notre quotidien.',
   },
   {
-    q: 'Comment est calculé le prix ?',
-    r: 'Nos tarifs sont fixes et calculés à la réservation en fonction de la distance et du type de véhicule choisi. Pas de compteur, pas de surprise : le prix annoncé inclut les péages, le carburant et l\'attente raisonnable. Pour les longues distances, nous proposons un tarif kilométrique négocié.',
-  },
-  {
-    q: 'Proposez-vous un service de conciergerie ?',
-    r: 'Absolument. Au-delà du transport, nos chauffeurs sont de véritables ambassadeurs de la Provence. Recommandations de restaurants, réservations d\'hôtels, suggestions d\'itinéraires touristiques, organisation de journées sur mesure. Chaque trajet peut devenir une expérience complète.',
+    q: 'Quelles zones desservez-vous depuis Aix-en-Provence ?',
+    r: 'Aix-en-Provence et toute la région PACA : Marseille, aéroport Marignane, Cassis, Luberon, Gordes, Avignon, Salon-de-Provence, Pertuis, Manosque, Gardanne. Longue distance vers Nice, Monaco, Cannes, Toulon, Lyon et Paris possible sur devis.',
   },
   {
     q: 'Quels modes de paiement acceptez-vous ?',
-    r: 'Nous acceptons les cartes bancaires (Visa, Mastercard, American Express), les espèces et le virement bancaire. Pour les entreprises, nous proposons la facturation mensuelle avec paiement à 30 jours. Un reçu détaillé est systématiquement fourni.',
+    r: 'Cartes bancaires (Visa, Mastercard, American Express), espèces et virement bancaire. Pour les entreprises, facturation mensuelle avec paiement à 30 jours possible. Un reçu détaillé est systématiquement fourni.',
+  },
+  {
+    q: 'Proposez-vous un service de conciergerie et tourisme ?',
+    r: 'Oui. Au-delà du transport, nos chauffeurs bilingues sont de véritables ambassadeurs de la Provence : recommandations de restaurants, réservations d\'hôtels, itinéraires sur mesure dans le Luberon, Gordes, Cassis, Calanques. Journée complète à partir de 450 €.',
   },
 ]
 

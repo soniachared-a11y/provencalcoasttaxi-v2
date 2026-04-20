@@ -131,15 +131,16 @@ export default function Hero() {
       className="relative overflow-hidden"
       style={{ minHeight: '100vh' }}
     >
-      {/* Video background */}
+      {/* Video background — preload metadata seulement pour ne pas tuer le LCP */}
       <video
         ref={videoRef}
         autoPlay
         muted
         loop
         playsInline
-        preload="auto"
+        preload="metadata"
         poster="/images/mercedes-motion.jpeg"
+        aria-hidden="true"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ willChange: 'transform', display: videoFailed ? 'none' : 'block' }}
       >

@@ -1,0 +1,10 @@
+/* TEAM */
+Fondateur & chauffeur principal : Yassine Ouerfelli
+Localisation : Aix-en-Provence, France
+Contact : provencalcoastdriver@gmail.com / +33 6 15 96 32 75
+
+/* SITE */
+Dernière mise à jour : 2026-04-20
+Langue : Français
+Standards : HTML5, WCAG 2.1 AA, Schema.org
+Tech : React 19, Vite, Tailwind CSS, Vercel

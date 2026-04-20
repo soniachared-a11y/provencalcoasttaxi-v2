@@ -7,11 +7,15 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Phone } from '@phosphor-icons/react'
 import { CONTACT } from '../../data/content'
+import { useLazyVideo } from '../../hooks/useLazyVideo'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function FlotteVideo() {
   const sectionRef = useRef(null)
+  // Lazy-load de la vidéo : elle ne démarre que quand la section entre dans le viewport.
+  // Le poster image s'affiche immédiatement, sert de LCP et ne bloque pas le rendu.
+  const videoRef = useLazyVideo({ rootMargin: '100px' })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -51,10 +55,13 @@ export default function FlotteVideo() {
       {/* Wrapper vidéo — overflow hidden ici pour contenir la vidéo */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
         <video
-          autoPlay
+          ref={videoRef}
           muted
           loop
           playsInline
+          preload="none"
+          poster="/images/provence-image.jpg"
+          aria-hidden="true"
           style={{
             width: '100%',
             height: '100%',

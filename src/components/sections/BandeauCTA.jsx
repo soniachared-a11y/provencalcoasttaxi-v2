@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { useLazyVideo } from '../../hooks/useLazyVideo'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -10,6 +11,8 @@ export default function BandeauCTA() {
   const sectionRef = useRef(null)
   const wordRef    = useRef(null)
   const tlRef      = useRef(null)
+  // Vidéo background en lazy-load
+  const videoRef   = useLazyVideo()
   const [idx, setIdx]       = useState(0)
   const [active, setActive] = useState(false)
 
@@ -71,9 +74,13 @@ export default function BandeauCTA() {
         justifyContent: 'center',
       }}
     >
-      {/* Video background */}
+      {/* Video background — lazy-loaded + poster pour éviter de bloquer LCP */}
       <video
-        autoPlay muted loop playsInline
+        ref={videoRef}
+        muted loop playsInline
+        preload="none"
+        poster="/images/mercedes-motion.jpeg"
+        aria-hidden="true"
         style={{
           position: 'absolute', inset: 0,
           width: '100%', height: '100%',

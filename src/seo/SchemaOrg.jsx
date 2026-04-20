@@ -1,5 +1,5 @@
-// Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage + Services + Breadcrumbs
-import { CONTACT, FAQS, SERVICES, AVIS } from '../data/content'
+// Schema.org JSON-LD — TaxiService + LocalBusiness + FAQPage + Services + Breadcrumbs + HowTo + ItemList
+import { CONTACT, FAQS, SERVICES, AVIS, FLOTTE } from '../data/content'
 
 const DOMAIN = 'https://www.taxisprovencaleaix.fr'
 
@@ -72,7 +72,11 @@ export function SchemaOrg() {
     currenciesAccepted: 'EUR',
     paymentAccepted: 'Cash, Credit Card, Visa, Mastercard, American Express',
     hasMap: 'https://maps.google.com/?q=82+avenue+Henri+Mauriat+Aix-en-Provence',
-    sameAs: [],
+    // Liens d'autorité externes — essentiel pour E-E-A-T et GEO (ChatGPT, Perplexity, Claude).
+    // Compléter au fur et à mesure que la fiche GBP / profils sociaux sont créés.
+    sameAs: [
+      'https://maps.google.com/?q=Taxis+Proven%C3%A7ale+Aix+82+avenue+Henri+Mauriat+13100+Aix-en-Provence',
+    ],
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
@@ -139,16 +143,88 @@ export function SchemaOrg() {
     ...(s.prix ? { offers: { '@type': 'Offer', price: s.prix.replace(/[^0-9]/g, ''), priceCurrency: 'EUR', description: s.prix } } : {}),
   }))
 
-  // ── 3. FAQPage
+  // ── 3. FAQPage avec @id uniques pour chaque Question (mieux cité par les IA)
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: FAQS.map(faq => ({
+    '@id': `${DOMAIN}/#faq`,
+    mainEntity: FAQS.map((faq, i) => ({
       '@type': 'Question',
+      '@id': `${DOMAIN}/#faq-${i + 1}`,
       name: faq.q,
       acceptedAnswer: {
         '@type': 'Answer',
         text: faq.r,
+      },
+    })),
+  }
+
+  // ── 3bis. HowTo — "Comment réserver un taxi à Aix-en-Provence"
+  // Ce schema permet aux IA d'extraire les étapes précises et de les citer.
+  const howToReserver = {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': `${DOMAIN}/#howto-reserver`,
+    name: 'Comment réserver un taxi ou VTC à Aix-en-Provence avec Taxis Provençale Aix',
+    description: 'Réservation simple et rapide en moins de 15 minutes, avec tarif fixe confirmé avant le départ.',
+    totalTime: 'PT15M',
+    supply: { '@type': 'HowToSupply', name: 'Date, heure, adresse de départ et de destination' },
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: 'Choisir votre trajet',
+        text: 'Indiquez votre adresse de départ, votre destination, la date et l\'heure de prise en charge.',
+        url: `${DOMAIN}/contact#step-trajet`,
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: 'Sélectionner votre véhicule',
+        text: 'Mercedes Classe E (confort, 1-3 personnes), Classe S (prestige, 1-3 personnes) ou Classe V (van 7 places).',
+        url: `${DOMAIN}/flotte`,
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: 'Recevoir votre tarif fixe',
+        text: 'Tarif estimé immédiatement. Confirmé en 15 minutes, valable à la minute du départ, aucune surprise.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: 'Confirmation de réservation',
+        text: 'Confirmation par SMS et email avec les coordonnées du chauffeur et la plaque du véhicule.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 5,
+        name: 'Prise en charge et paiement',
+        text: 'Le chauffeur arrive 5 minutes avant. Paiement sur place (espèces, CB, AmEx) ou facturation entreprise.',
+      },
+    ],
+  }
+
+  // ── 3ter. ItemList — Flotte Mercedes (utilisé par ChatGPT/Perplexity pour décrire les véhicules)
+  const flotteItemList = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${DOMAIN}/flotte#list`,
+    name: 'Flotte Mercedes — Taxis Provençale Aix',
+    description: 'Flotte premium Mercedes disponible à Aix-en-Provence : Classe E, Classe S, Classe V 7 places.',
+    numberOfItems: FLOTTE.length,
+    itemListElement: FLOTTE.map((v, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Vehicle',
+        '@id': `${DOMAIN}/flotte#${v.modele?.toLowerCase().replace(/\s+/g, '-') || `v-${i}`}`,
+        name: v.modele,
+        brand: { '@type': 'Brand', name: 'Mercedes-Benz' },
+        vehicleConfiguration: v.type || 'Berline',
+        numberOfSeats: v.places || 4,
+        description: v.desc || '',
+        ...(v.image ? { image: v.image.startsWith('http') ? v.image : `${DOMAIN}${v.image}` } : {}),
       },
     })),
   }
@@ -176,7 +252,7 @@ export function SchemaOrg() {
     publisher: { '@id': `${DOMAIN}/#organization` },
   }
 
-  const allSchemas = [business, ...serviceSchemas, faqSchema, breadcrumbs, webSite]
+  const allSchemas = [business, ...serviceSchemas, faqSchema, howToReserver, flotteItemList, breadcrumbs, webSite]
 
   return (
     <>

@@ -240,6 +240,10 @@ export function SchemaOrg() {
       { '@type': 'ListItem', position: 3, name: 'Flotte', item: `${DOMAIN}/flotte` },
       { '@type': 'ListItem', position: 4, name: 'À propos', item: `${DOMAIN}/a-propos` },
       { '@type': 'ListItem', position: 5, name: 'Contact', item: `${DOMAIN}/contact` },
+      { '@type': 'ListItem', position: 6, name: 'Taxi aéroport Marseille', item: `${DOMAIN}/taxi-aeroport-marseille-aix-en-provence` },
+      { '@type': 'ListItem', position: 7, name: 'Taxi gare TGV', item: `${DOMAIN}/taxi-gare-tgv-aix-en-provence` },
+      { '@type': 'ListItem', position: 8, name: 'VTC Luberon Gordes Cassis', item: `${DOMAIN}/vtc-luberon-gordes-cassis` },
+      { '@type': 'ListItem', position: 9, name: 'Chauffeur mariage', item: `${DOMAIN}/chauffeur-prive-mariage-aix` },
     ],
   }
 

@@ -47,6 +47,31 @@ const ROUTES = [
     title: 'Mentions légales — Taxis Provençale Aix',
     description: 'Mentions légales, politique de confidentialité et conditions d\'utilisation du site taxisprovencaleaix.fr. Taxis Provençale Aix, 82 avenue Henri Mauriat, 13100 Aix-en-Provence.',
   },
+  // ── Pages longue-traîne SEO ────────────────────────────────────────────────
+  {
+    path: '/taxi-aeroport-marseille-aix-en-provence',
+    file: 'taxi-aeroport-marseille-aix-en-provence/index.html',
+    title: 'Taxi aéroport Marseille ↔ Aix-en-Provence | 65 € fixe 24h/24 — Taxis Provençale Aix',
+    description: 'Taxi et VTC Aix-en-Provence → aéroport Marseille-Provence (Marignane) à 65 € fixe, 42 km en 35 min. Suivi de vol, panneau nominatif, disponible 24h/24. Réservez au 06 15 96 32 75.',
+  },
+  {
+    path: '/taxi-gare-tgv-aix-en-provence',
+    file: 'taxi-gare-tgv-aix-en-provence/index.html',
+    title: 'Taxi gare TGV Aix-en-Provence | 25 € fixe 24h/24 — Taxis Provençale Aix',
+    description: 'Taxi et VTC entre Aix-en-Provence centre et la gare TGV d\'Aix à 25 € fixe. 12 km en 15 min. Disponible 24h/24, panneau nominatif à l\'arrivée du train. Réservation au 06 15 96 32 75.',
+  },
+  {
+    path: '/vtc-luberon-gordes-cassis',
+    file: 'vtc-luberon-gordes-cassis/index.html',
+    title: 'VTC Luberon, Gordes, Cassis | Chauffeur privé Provence — Taxis Provençale Aix',
+    description: 'VTC privé au départ d\'Aix-en-Provence pour le Luberon (Gordes, Roussillon, Ménerbes), Cassis et les Calanques. Mercedes avec chauffeur bilingue, journée sur mesure dès 450 €.',
+  },
+  {
+    path: '/chauffeur-prive-mariage-aix',
+    file: 'chauffeur-prive-mariage-aix/index.html',
+    title: 'Chauffeur privé mariage Aix-en-Provence | Mercedes cérémonie — Taxis Provençale Aix',
+    description: 'Chauffeur privé pour mariage à Aix-en-Provence et alentours. Mercedes Classe S avec rubans, navettes invités, transferts aéroport et hôtel. Devis personnalisé, équipes dédiées.',
+  },
 ]
 
 const IMAGE = `${DOMAIN}/images/classe-s-provence.jpg`

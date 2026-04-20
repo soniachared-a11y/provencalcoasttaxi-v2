@@ -573,7 +573,7 @@ export default function AProposPage() {
               </p>
               <img
                 src="/images/vignes-provence.jpg"
-                alt="Provence"
+                alt="Vignobles de Provence au soleil couchant"
                 width={1200}
                 height={800}
                 loading="lazy"

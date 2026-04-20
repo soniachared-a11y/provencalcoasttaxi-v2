@@ -30,7 +30,7 @@ export function SchemaOrg() {
       `${DOMAIN}/images/classe-e-provence.jpg`,
       `${DOMAIN}/images/flotte-intercontinental.jpeg`,
     ],
-    logo: `${DOMAIN}/images/favicon.png`,
+    logo: `${DOMAIN}/images/logo.png`,
     address: {
       '@type': 'PostalAddress',
       streetAddress: '82 avenue Henri Mauriat',

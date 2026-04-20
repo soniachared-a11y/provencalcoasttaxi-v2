@@ -214,7 +214,7 @@ function VehicleSection({ v, extra, index }) {
       <img
         ref={bgRef}
         src={extra.bgImg}
-        alt="" aria-hidden="true"
+        alt=""
         aria-hidden="true"
         width={1200}
         height={800}
@@ -665,7 +665,7 @@ export default function FlottePage() {
         <img
           ref={heroBgRef}
           src="/images/flotte-hotel-luxe.jpg"
-          alt="" aria-hidden="true"
+          alt=""
           aria-hidden="true"
           width={1200}
           height={800}
@@ -847,7 +847,7 @@ export default function FlottePage() {
       }}>
         <img
           src="/images/lavande-soleil.jpg"
-          alt="" aria-hidden="true"
+          alt=""
           aria-hidden="true"
           width={1200}
           height={800}

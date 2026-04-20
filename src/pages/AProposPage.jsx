@@ -172,7 +172,7 @@ export default function AProposPage() {
         <img
           ref={heroBgRef}
           src="/images/lavande-provence.jpg"
-          alt="" aria-hidden="true"
+          alt=""
           aria-hidden="true"
           width={1200}
           height={800}
@@ -709,7 +709,7 @@ export default function AProposPage() {
       }}>
         <img
           src="/images/classe-s-bastide.jpg"
-          alt="" aria-hidden="true"
+          alt=""
           aria-hidden="true"
           width={1200}
           height={800}

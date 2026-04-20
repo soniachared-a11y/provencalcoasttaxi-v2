@@ -335,7 +335,6 @@ export default function ContactPage() {
                     <div
                       id="form-errors"
                       role="alert"
-                      aria-live="polite"
                       style={{
                         margin: '0 28px', marginTop: 16,
                         padding: '14px 18px',

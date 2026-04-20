@@ -9,7 +9,7 @@ export default defineConfig({
     tailwindcss(),
   ],
   esbuild: {
-    // Supprime les console.* et debugger en production
     drop: ['console', 'debugger'],
+    legalComments: 'none',
   },
 })

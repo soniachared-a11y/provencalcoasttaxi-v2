@@ -36,6 +36,7 @@ const AProposPage = lazy(() => import('./pages/AProposPage'))
 const ContactPage = lazy(() => import('./pages/ContactPage'))
 const ServicesPage = lazy(() => import('./pages/ServicesPage'))
 const MentionsLegalesPage = lazy(() => import('./pages/MentionsLegalesPage'))
+const LongTailPage = lazy(() => import('./pages/LongTailPage'))
 
 function HomePage() {
   return (
@@ -93,6 +94,11 @@ export default function App() {
           <Route path="/a-propos" element={<AProposPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
+          {/* Pages longue-traîne SEO — un slug dédié par requête business */}
+          <Route path="/taxi-aeroport-marseille-aix-en-provence" element={<LongTailPage slug="taxi-aeroport-marseille-aix-en-provence" />} />
+          <Route path="/taxi-gare-tgv-aix-en-provence" element={<LongTailPage slug="taxi-gare-tgv-aix-en-provence" />} />
+          <Route path="/vtc-luberon-gordes-cassis" element={<LongTailPage slug="vtc-luberon-gordes-cassis" />} />
+          <Route path="/chauffeur-prive-mariage-aix" element={<LongTailPage slug="chauffeur-prive-mariage-aix" />} />
         </Routes>
       </Suspense>
       <Footer />

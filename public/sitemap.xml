@@ -36,4 +36,29 @@
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+  <!-- Pages longue-traîne SEO — une URL par requête business ciblée -->
+  <url>
+    <loc>https://www.taxisprovencaleaix.fr/taxi-aeroport-marseille-aix-en-provence</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://www.taxisprovencaleaix.fr/taxi-gare-tgv-aix-en-provence</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.taxisprovencaleaix.fr/vtc-luberon-gordes-cassis</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://www.taxisprovencaleaix.fr/chauffeur-prive-mariage-aix</loc>
+    <lastmod>2026-04-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

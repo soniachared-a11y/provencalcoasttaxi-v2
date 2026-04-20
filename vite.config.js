@@ -8,4 +8,8 @@ export default defineConfig({
     react(),
     tailwindcss(),
   ],
+  esbuild: {
+    // Supprime les console.* et debugger en production
+    drop: ['console', 'debugger'],
+  },
 })

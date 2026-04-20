@@ -110,6 +110,7 @@ export default function ContactPage() {
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [errors, setErrors] = useState({})
   const set = (k) => (v) => setForm(f => ({ ...f, [k]: v }))
 
   const prix = (() => {
@@ -153,6 +154,27 @@ export default function ContactPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    // Validation côté client — UX + sécurité avant envoi réseau
+    const errs = {}
+    if (!form.prenom?.trim() || form.prenom.trim().length < 2) errs.prenom = 'Prénom requis (2 caractères min)'
+    if (!form.nom?.trim() || form.nom.trim().length < 2) errs.nom = 'Nom requis (2 caractères min)'
+    const telClean = (form.tel || '').replace(/[\s.\-]/g, '')
+    if (!/^(\+33|0)[1-9]\d{8}$/.test(telClean)) errs.tel = 'Téléphone invalide (ex. 06 12 34 56 78)'
+    if (form.tripType !== 2 && !form.destination?.label) errs.destination = 'Destination requise'
+    if (form.date) {
+      const today = new Date(); today.setHours(0, 0, 0, 0)
+      const picked = new Date(form.date)
+      if (picked < today) errs.date = 'La date ne peut pas être dans le passé'
+    }
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs)
+      // Remonter en haut du formulaire pour que l'utilisateur voie les erreurs
+      document.getElementById('form-errors')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+      return
+    }
+    setErrors({})
+
     setLoading(true)
     try {
       // 1. Enregistrement en base Supabase (dashboard)
@@ -306,7 +328,31 @@ export default function ContactPage() {
                   </a>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} noValidate>
+
+                  {/* Bloc erreurs de validation */}
+                  {Object.keys(errors).length > 0 && (
+                    <div
+                      id="form-errors"
+                      role="alert"
+                      aria-live="polite"
+                      style={{
+                        margin: '0 28px', marginTop: 16,
+                        padding: '14px 18px',
+                        background: '#FEF2F2',
+                        border: '1px solid #FCA5A5',
+                        borderRadius: 10,
+                        color: '#991B1B',
+                        fontFamily: 'Sora, sans-serif',
+                        fontSize: 13, lineHeight: 1.5,
+                      }}
+                    >
+                      <strong style={{ display: 'block', marginBottom: 6 }}>Veuillez corriger :</strong>
+                      <ul style={{ margin: 0, paddingLeft: 18 }}>
+                        {Object.values(errors).map((msg, i) => <li key={i}>{msg}</li>)}
+                      </ul>
+                    </div>
+                  )}
 
                   {/* Header */}
                   <div style={{

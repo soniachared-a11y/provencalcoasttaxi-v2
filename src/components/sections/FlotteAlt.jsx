@@ -258,6 +258,7 @@ export default function FlotteAlt() {
                 ref={imgNextRef}
                 src={FLOTTE[0].image}
                 alt=""
+                aria-hidden="true"
                 width={1200}
                 height={800}
                 loading="lazy"

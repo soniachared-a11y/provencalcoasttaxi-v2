@@ -71,11 +71,12 @@ export function SchemaOrg() {
     priceRange: '€€',
     currenciesAccepted: 'EUR',
     paymentAccepted: 'Cash, Credit Card, Visa, Mastercard, American Express',
-    hasMap: 'https://maps.google.com/?q=82+avenue+Henri+Mauriat+Aix-en-Provence',
+    hasMap: 'https://share.google/NEimAiCPMZ9wycfl4',
     // Liens d'autorité externes — essentiel pour E-E-A-T et GEO (ChatGPT, Perplexity, Claude).
-    // Compléter au fur et à mesure que la fiche GBP / profils sociaux sont créés.
+    // Le Knowledge Graph ID /g/11lnkg41kq identifie officiellement le business pour Google.
     sameAs: [
-      'https://maps.google.com/?q=Taxis+Proven%C3%A7ale+Aix+82+avenue+Henri+Mauriat+13100+Aix-en-Provence',
+      'https://share.google/NEimAiCPMZ9wycfl4',
+      'https://www.google.com/search?kgmid=/g/11lnkg41kq',
     ],
     aggregateRating: {
       '@type': 'AggregateRating',

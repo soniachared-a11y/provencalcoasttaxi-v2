@@ -36,6 +36,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="preconnect" href="https://maps.googleapis.com" />
+    <!-- Preload LCP : image fond hero (FlotteVideo / poster vidéo).
+         Version mobile WebP 80 KB pour les connexions lentes, desktop fallback imagerect -->
+    <link rel="preload" as="image" href="/images/provence-image-mobile.webp"
+          imagesrcset="/images/provence-image-mobile.webp 828w, /images/provence-image.webp 1920w"
+          imagesizes="100vw" fetchpriority="high" />
     <!-- Google Fonts chargées async : media="print" + onload pour ne pas bloquer le rendu -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" /></noscript>

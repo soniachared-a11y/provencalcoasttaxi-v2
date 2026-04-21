@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && node scripts/prerender.mjs && (node scripts/ssr-prerender.mjs || echo 'SSR skipped')",
+    "build": "vite build && node scripts/prerender.mjs",
+    "build:ssr": "vite build && node scripts/ssr-prerender.mjs && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "postinstall": "playwright install chromium --only-shell || true"
+    "postinstall": "echo 'skipping playwright install (only needed locally for build:ssr)'"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLazyVideo } from '../../hooks/useLazyVideo'
+import { useIsMobile } from '../../hooks/useIsMobile'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -11,7 +12,8 @@ export default function BandeauCTA() {
   const sectionRef = useRef(null)
   const wordRef    = useRef(null)
   const tlRef      = useRef(null)
-  // Vidéo background en lazy-load
+  // Sur mobile : image statique uniquement. Desktop : vidéo lazy.
+  const isMobile   = useIsMobile(768)
   const videoRef   = useLazyVideo()
   const [idx, setIdx]       = useState(0)
   const [active, setActive] = useState(false)
@@ -74,23 +76,39 @@ export default function BandeauCTA() {
         justifyContent: 'center',
       }}
     >
-      {/* Video background — lazy-loaded + poster pour éviter de bloquer LCP */}
-      <video
-        ref={videoRef}
-        muted loop playsInline
-        preload="none"
-        poster="/images/mercedes-motion.jpeg"
-        aria-hidden="true"
-        style={{
-          position: 'absolute', inset: 0,
-          width: '100%', height: '100%',
-          objectFit: 'cover',
-          objectPosition: 'center 40%',
-        }}
-      >
-        <source src="/video-voiture.mp4" type="video/mp4" />
-        <track kind="captions" />
-      </video>
+      {/* Background : image statique sur mobile, vidéo lazy sur desktop */}
+      {isMobile ? (
+        <img
+          src="/images/mercedes-motion.jpeg"
+          alt=""
+          aria-hidden="true"
+          width={1600}
+          height={420}
+          loading="lazy"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover', objectPosition: 'center 40%',
+          }}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          muted loop playsInline
+          preload="none"
+          poster="/images/mercedes-motion.jpeg"
+          aria-hidden="true"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover',
+            objectPosition: 'center 40%',
+          }}
+        >
+          <source src="/video-voiture.mp4" type="video/mp4" />
+          <track kind="captions" />
+        </video>
+      )}
 
       {/* Dark overlay */}
       <div style={{

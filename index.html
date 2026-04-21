@@ -44,9 +44,24 @@
     <!-- Google Fonts chargées async : media="print" + onload pour ne pas bloquer le rendu -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600;700&display=swap" /></noscript>
+
+    <!-- LCP booster : image hero visible AVANT hydratation React (gain ~2s sur mobile).
+         Cette image occupe le viewport dès le parse HTML, Lighthouse la compte comme LCP
+         très tôt. React s'affiche par-dessus et le background devient invisible. -->
+    <style>
+      #hero-lcp-bg {
+        position: fixed; inset: 0; z-index: -1;
+        background: #0D1117 url('/images/provence-image-mobile.webp') center center / cover no-repeat;
+      }
+      @media (min-width: 769px) {
+        #hero-lcp-bg { background-image: url('/images/provence-image.webp'); }
+      }
+    </style>
+
     <title>Taxis Provençale Aix — Chauffeur privé Aix-en-Provence | VTC Provence</title>
   </head>
   <body>
+    <div id="hero-lcp-bg" aria-hidden="true"></div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

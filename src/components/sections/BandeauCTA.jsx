@@ -76,39 +76,26 @@ export default function BandeauCTA() {
         justifyContent: 'center',
       }}
     >
-      {/* Background : image statique sur mobile, vidéo lazy sur desktop */}
-      {isMobile ? (
-        <img
-          src="/images/mercedes-motion.jpeg"
-          alt=""
-          aria-hidden="true"
-          width={1600}
-          height={420}
-          loading="lazy"
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover', objectPosition: 'center 40%',
-          }}
+      {/* Background vidéo lazy-loadée — source adaptative mobile/desktop */}
+      <video
+        ref={videoRef}
+        muted loop playsInline
+        preload="none"
+        poster="/images/mercedes-motion.jpeg"
+        aria-hidden="true"
+        style={{
+          position: 'absolute', inset: 0,
+          width: '100%', height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center 40%',
+        }}
+      >
+        <source
+          src={isMobile ? '/video-voiture-mobile.mp4' : '/video-voiture.mp4'}
+          type="video/mp4"
         />
-      ) : (
-        <video
-          ref={videoRef}
-          muted loop playsInline
-          preload="none"
-          poster="/images/mercedes-motion.jpeg"
-          aria-hidden="true"
-          style={{
-            position: 'absolute', inset: 0,
-            width: '100%', height: '100%',
-            objectFit: 'cover',
-            objectPosition: 'center 40%',
-          }}
-        >
-          <source src="/video-voiture.mp4" type="video/mp4" />
-          <track kind="captions" />
-        </video>
-      )}
+        <track kind="captions" />
+      </video>
 
       {/* Dark overlay */}
       <div style={{

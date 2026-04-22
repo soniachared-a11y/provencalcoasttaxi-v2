@@ -131,7 +131,7 @@ export default function Hero() {
       className="relative overflow-hidden"
       style={{ minHeight: '100vh' }}
     >
-      {/* Video background — preload metadata seulement pour ne pas tuer le LCP */}
+      {/* Video background — preload metadata + sources adaptatives mobile/desktop */}
       <video
         ref={videoRef}
         autoPlay
@@ -144,6 +144,7 @@ export default function Hero() {
         className="absolute inset-0 w-full h-full object-cover"
         style={{ willChange: 'transform', display: videoFailed ? 'none' : 'block' }}
       >
+        <source media="(max-width: 768px)" src="/hero-video-mobile.mp4" type="video/mp4" />
         <source src="/hero-video.mp4" type="video/mp4" />
         <track kind="captions" />
       </video>

@@ -1,37 +1,59 @@
-// Hook : déclenche la lecture d'une vidéo uniquement quand elle entre dans le viewport.
-// Améliore drastiquement LCP/TBT car le navigateur ne télécharge pas la vidéo avant
-// qu'elle soit visible, et les premières frames rendues sont remplacées par le poster.
-import { useEffect, useRef } from 'react'
+// Hook : n'injecte la source vidéo dans le DOM qu'au moment où la section est
+// visible ET après que la page soit chargée (idle). Ça évite que le navigateur
+// télécharge la vidéo pendant le chargement critique, ce qui tue le LCP mobile.
+//
+// Usage :
+//   const { ref, src } = useLazyVideo(videoUrl)
+//   return <video ref={ref}><source src={src} type="video/mp4" /></video>
+//
+// Tant que `src` est vide, aucune requête réseau n'est faite pour la vidéo.
+import { useEffect, useRef, useState } from 'react'
 
-export function useLazyVideo({ rootMargin = '200px' } = {}) {
+export function useLazyVideo(url, { rootMargin = '200px', idleDelay = 1500 } = {}) {
   const ref = useRef(null)
+  const [src, setSrc] = useState('')
 
   useEffect(() => {
+    if (!url || src) return // déjà activé ou pas d'URL
     const video = ref.current
     if (!video) return
 
-    // Safari iOS : playsInline obligatoire, on force l'attribut si jamais oublié
     video.playsInline = true
 
-    const tryPlay = () => {
-      // Le .play() peut échouer si l'utilisateur n'a pas interagi, on ignore silencieusement
-      const p = video.play()
-      if (p && typeof p.catch === 'function') p.catch(() => {})
+    let io
+    let idleTimer
+    let activated = false
+
+    const activate = () => {
+      if (activated) return
+      activated = true
+      // Injecte la source + reload → commence le download
+      setSrc(url)
+      // Petit délai pour laisser React appliquer le src, puis play
+      setTimeout(() => {
+        try {
+          video.load()
+          const p = video.play()
+          if (p && typeof p.catch === 'function') p.catch(() => {})
+        } catch {}
+      }, 50)
     }
 
-    // Si l'API IntersectionObserver n'est pas dispo (très rare) → fallback : play direct
+    // Fallback SSR / anciens navigateurs
     if (typeof IntersectionObserver === 'undefined') {
-      video.preload = 'auto'
-      tryPlay()
-      return
+      idleTimer = setTimeout(activate, idleDelay)
+      return () => clearTimeout(idleTimer)
     }
 
-    const io = new IntersectionObserver(
+    io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Visible → on upgrade le preload et on déclenche le play
-          if (video.preload === 'none' || video.preload === '') video.preload = 'auto'
-          if (video.paused) tryPlay()
+          // Visible → on attend que la page soit idle (LCP mesuré) avant d'activer
+          if ('requestIdleCallback' in window) {
+            window.requestIdleCallback(activate, { timeout: idleDelay + 500 })
+          } else {
+            idleTimer = setTimeout(activate, idleDelay)
+          }
           io.disconnect()
         }
       },
@@ -39,8 +61,11 @@ export function useLazyVideo({ rootMargin = '200px' } = {}) {
     )
 
     io.observe(video)
-    return () => io.disconnect()
-  }, [rootMargin])
+    return () => {
+      io?.disconnect()
+      clearTimeout(idleTimer)
+    }
+  }, [url, src, rootMargin, idleDelay])
 
-  return ref
+  return { ref, src }
 }

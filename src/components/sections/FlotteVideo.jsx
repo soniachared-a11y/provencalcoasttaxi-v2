@@ -14,10 +14,11 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function FlotteVideo() {
   const sectionRef = useRef(null)
-  // Vidéo lazy-loadée sur mobile ET desktop, mais avec des sources différentes
-  // selon la taille d'écran (mobile = 835 KB, desktop = 2.7 MB).
+  // Vidéo lazy-loadée : la source n'est injectée qu'après le LCP (idle callback).
+  // Source mobile (1,6 MB) ou desktop (5,7 MB) selon la taille d'écran.
   const isMobile = useIsMobile(768)
-  const videoRef = useLazyVideo({ rootMargin: '100px' })
+  const videoUrl = isMobile ? '/video-voiture-mobile.mp4' : '/video-voiture.mp4'
+  const { ref: videoRef, src: videoSrc } = useLazyVideo(videoUrl, { rootMargin: '100px' })
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -67,10 +68,7 @@ export default function FlotteVideo() {
           aria-hidden="true"
           style={{ width: '100%', height: '100%', objectFit: 'cover' }}
         >
-          <source
-            src={isMobile ? '/video-voiture-mobile.mp4' : '/video-voiture.mp4'}
-            type="video/mp4"
-          />
+          {videoSrc && <source src={videoSrc} type="video/mp4" />}
           <track kind="captions" />
         </video>
       </div>

@@ -14,8 +14,8 @@ gsap.registerPlugin(ScrollTrigger)
 
 export default function FlotteVideo() {
   const sectionRef = useRef(null)
-  // Sur mobile : on n'affiche QUE l'image (économie ~10 MB de bande passante + LCP
-  // instantané). Sur desktop : lazy-load de la vidéo avec poster en fallback.
+  // Vidéo lazy-loadée sur mobile ET desktop, mais avec des sources différentes
+  // selon la taille d'écran (mobile = 835 KB, desktop = 2.7 MB).
   const isMobile = useIsMobile(768)
   const videoRef = useLazyVideo({ rootMargin: '100px' })
 
@@ -54,36 +54,25 @@ export default function FlotteVideo() {
         zIndex: 2,
       }}
     >
-      {/* Background : image statique sur mobile (perf), vidéo lazy sur desktop */}
+      {/* Background : vidéo lazy-loadée avec source adaptative (mobile 1.6 MB / desktop 5.7 MB),
+          poster image affiché instantanément en attendant le début de la vidéo. */}
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0 }}>
-        {isMobile ? (
-          <picture>
-            <source type="image/webp" srcSet="/images/provence-image-mobile.webp 828w, /images/provence-image.webp 1920w" sizes="100vw" />
-            <img
-              src="/images/provence-image.jpg"
-              alt=""
-              aria-hidden="true"
-              width={1600}
-              height={900}
-              fetchpriority="high"
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-            />
-          </picture>
-        ) : (
-          <video
-            ref={videoRef}
-            muted
-            loop
-            playsInline
-            preload="none"
-            poster="/images/provence-image.jpg"
-            aria-hidden="true"
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-          >
-            <source src="/video-voiture.mp4" type="video/mp4" />
-            <track kind="captions" />
-          </video>
-        )}
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="none"
+          poster="/images/provence-image.jpg"
+          aria-hidden="true"
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        >
+          <source
+            src={isMobile ? '/video-voiture-mobile.mp4' : '/video-voiture.mp4'}
+            type="video/mp4"
+          />
+          <track kind="captions" />
+        </video>
       </div>
 
       {/* Overlay sombre */}

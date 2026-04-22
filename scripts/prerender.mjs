@@ -141,13 +141,30 @@ if (!existsSync(DIST)) {
 }
 
 const shell = readFileSync(join(DIST, 'index.html'), 'utf8')
+// Les HTML SSR pré-générés (via scripts/ssr-prerender.mjs) sont commités dans
+// public/_ssr/. Si disponibles, on les utilise (HTML complet avec image hero
+// visible → LCP mobile instantané).
+const SSR_SOURCE = join(ROOT, 'public', '_ssr')
+
+let ssrCount = 0
+let shellCount = 0
 
 for (const route of ROUTES) {
-  const out = replaceMeta(shell, route)
+  const ssrPath = join(SSR_SOURCE, route.file)
+  let out
+  if (existsSync(ssrPath)) {
+    // HTML SSR pré-généré disponible → on l'utilise (LCP mobile optimal)
+    out = readFileSync(ssrPath, 'utf8')
+    ssrCount++
+  } else {
+    // Fallback : shell vide + meta tags replacés
+    out = replaceMeta(shell, route)
+    shellCount++
+  }
   const outPath = join(DIST, route.file)
   mkdirSync(dirname(outPath), { recursive: true })
   writeFileSync(outPath, out, 'utf8')
-  console.log(`[prerender] ✓ ${route.file}  →  ${route.title.slice(0, 60)}…`)
+  console.log(`[prerender] ✓ ${existsSync(ssrPath) ? 'SSR' : 'shell'}  ${route.file}  →  ${route.title.slice(0, 55)}…`)
 }
 
-console.log(`[prerender] ${ROUTES.length} pages pré-rendues dans dist/`)
+console.log(`[prerender] ${ROUTES.length} pages (${ssrCount} SSR + ${shellCount} shell) dans dist/`)

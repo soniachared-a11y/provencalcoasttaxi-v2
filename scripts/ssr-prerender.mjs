@@ -14,6 +14,9 @@ import { spawn } from 'node:child_process'
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
 const DIST = join(ROOT, 'dist')
+// Les HTML SSR sont aussi copiés dans public/_ssr/ pour être commités dans Git
+// et utilisés par Vercel (qui ne peut pas exécuter Playwright au build).
+const SSR_CACHE = join(ROOT, 'public', '_ssr')
 
 // ── Routes à pré-rendre (mêmes que prerender.mjs) ────────────────────────────
 const ROUTES = [
@@ -107,9 +110,14 @@ try {
     const start = Date.now()
     try {
       const html = await renderRoute(browser, route)
+      // 1. Écrit dans dist/ pour le build local
       const outPath = join(DIST, route.file)
       mkdirSync(dirname(outPath), { recursive: true })
       writeFileSync(outPath, html, 'utf8')
+      // 2. Écrit aussi dans public/_ssr/ pour commit Git (Vercel utilise cela)
+      const cachePath = join(SSR_CACHE, route.file)
+      mkdirSync(dirname(cachePath), { recursive: true })
+      writeFileSync(cachePath, html, 'utf8')
       const size = (html.length / 1024).toFixed(1)
       const duration = Date.now() - start
       console.log(`[ssr] ✓ ${route.file.padEnd(55)} ${size} KB  (${duration}ms)`)

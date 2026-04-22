@@ -12,9 +12,10 @@ export default function BandeauCTA() {
   const sectionRef = useRef(null)
   const wordRef    = useRef(null)
   const tlRef      = useRef(null)
-  // Sur mobile : image statique uniquement. Desktop : vidéo lazy.
+  // Vidéo lazy (source injectée après le LCP) avec source adaptative.
   const isMobile   = useIsMobile(768)
-  const videoRef   = useLazyVideo()
+  const videoUrl   = isMobile ? '/video-voiture-mobile.mp4' : '/video-voiture.mp4'
+  const { ref: videoRef, src: videoSrc } = useLazyVideo(videoUrl)
   const [idx, setIdx]       = useState(0)
   const [active, setActive] = useState(false)
 
@@ -90,10 +91,7 @@ export default function BandeauCTA() {
           objectPosition: 'center 40%',
         }}
       >
-        <source
-          src={isMobile ? '/video-voiture-mobile.mp4' : '/video-voiture.mp4'}
-          type="video/mp4"
-        />
+        {videoSrc && <source src={videoSrc} type="video/mp4" />}
         <track kind="captions" />
       </video>
 

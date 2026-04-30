@@ -13,37 +13,40 @@ import { CONTACT } from '../data/content'
 import { supabase } from '../lib/supabase'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
 import SEOHead from '../seo/SEOHead'
+import { TIERS, pricesAll, priceFor, isNightHour } from '../lib/pricing'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const TARIF_JOUR = 2.22
-const TARIF_NUIT = 2.88
-const PRISE_EN_CHARGE = 4.00
-const MINIMUM = 12
-
 const TRIP_TYPES = ['Aller simple', 'Aller-retour', 'À l\'heure']
 
+// Catalogue véhicules basé sur les 3 paliers tarifaires
 const VEHICLES = [
   {
-    id: 'Classe E',
-    tag: 'Business',
-    pax: 4,
-    bagages: 3,
-    img: '/images/classe-e-provence.jpg',
-    imgStyle: { objectFit: 'cover', objectPosition: 'center 60%' },
+    id: 'eco',
+    label: 'Éco',
+    vehicule: 'Tesla',
+    tag: 'Écologique',
+    pax: TIERS.eco.pax,
+    bagages: TIERS.eco.bagages,
+    img: '/images/tesla-eco.png',
+    imgStyle: { objectFit: 'contain', objectPosition: 'center center' },
+    iconAccent: Lightning,
     amenities: [
       { icon: WifiHigh, label: 'Wi-Fi' },
       { icon: Drop, label: 'Eau' },
       { icon: Snowflake, label: 'Clim' },
+      { icon: Lightning, label: 'Électrique' },
     ],
   },
   {
-    id: 'Classe S',
-    tag: 'Prestige',
-    pax: 4,
-    bagages: 4,
-    img: '/images/classe-s-detour.png',
-    imgStyle: { objectFit: 'contain', objectPosition: 'center bottom' },
+    id: 'berline',
+    label: 'Berline',
+    vehicule: 'Mercedes Classe E',
+    tag: 'Confort premium',
+    pax: TIERS.berline.pax,
+    bagages: TIERS.berline.bagages,
+    img: '/images/classe-e-provence.jpg',
+    imgStyle: { objectFit: 'cover', objectPosition: 'center 60%' },
     recommended: true,
     amenities: [
       { icon: WifiHigh, label: 'Wi-Fi' },
@@ -54,10 +57,12 @@ const VEHICLES = [
     ],
   },
   {
-    id: 'Classe V',
+    id: 'van',
+    label: 'Van',
+    vehicule: 'Mercedes Classe V',
     tag: 'Grand format',
-    pax: 7,
-    bagages: 7,
+    pax: TIERS.van.pax,
+    bagages: TIERS.van.bagages,
     img: '/images/classe-v-detour.png',
     imgStyle: { objectFit: 'contain', objectPosition: 'center bottom' },
     amenities: [
@@ -103,7 +108,7 @@ export default function ContactPage() {
     depart: 'Aix-en-Provence',
     destination: null,
     date: '', heure: '',
-    vehicule: 'Classe S',
+    vehicule: 'berline',
     passagers: 1,
     message: '',
     tripType: 0, // 0=aller simple, 1=aller-retour, 2=à l'heure
@@ -113,13 +118,18 @@ export default function ContactPage() {
   const [errors, setErrors] = useState({})
   const set = (k) => (v) => setForm(f => ({ ...f, [k]: v }))
 
+  // Heure utilisée pour le calcul (par défaut midi = jour)
+  const hour = form.heure ? parseInt(form.heure.split(':')[0], 10) : 12
+
+  // Les 3 prix Eco/Berline/Van pour la destination
+  const allPrices = form.destination?.km ? pricesAll(form.destination.km, hour) : null
+
+  // Prix retenu pour le véhicule sélectionné (avec multiplicateur aller-retour)
   const prix = (() => {
-    if (!form.destination?.km) return null
-    const h = form.heure ? parseInt(form.heure.split(':')[0], 10) : 12
-    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-    const base = Math.max(MINIMUM, +(PRISE_EN_CHARGE + form.destination.km * tarif).toFixed(2))
-    const total = form.tripType === 1 ? +(base * 1.95).toFixed(2) : base
-    return { montant: total, isNuit: tarif === TARIF_NUIT, km: form.destination.km }
+    if (!allPrices) return null
+    const base = allPrices[form.vehicule] ?? allPrices.berline
+    const total = form.tripType === 1 ? Math.round(base * 1.95) : base
+    return { montant: total, isNuit: isNightHour(hour), km: form.destination.km }
   })()
 
   useEffect(() => {
@@ -176,44 +186,106 @@ export default function ContactPage() {
     setErrors({})
 
     setLoading(true)
+    // Libellé véhicule pour les notifs (Berline → "Berline (Mercedes Classe E)")
+    const tier = TIERS[form.vehicule]
+    const vehiculeLabel = tier ? `${tier.label} (${tier.vehicule})` : form.vehicule
+    const fullName = `${form.prenom} ${form.nom}`.trim()
+    const dateHeure = form.date && form.heure ? `${form.date} ${form.heure}` : (form.date || '—')
+
+    // Suivi des canaux — au moins un doit réussir pour afficher le succès
+    const results = { supabase: false, whatsapp: false, email: false }
+
+    // 1. Supabase — dashboard webapp (indépendant)
+    // ⚠️ marque = tag tenant (provencal/malacrida) pour filtrage dashboard, PAS le véhicule
+    // Le type de véhicule + détails trajet vont dans `message` puisque pas de colonne dédiée
+    const messageParts = [
+      `Véhicule : ${vehiculeLabel}`,
+      `Trajet : ${TRIP_TYPES[form.tripType]}`,
+      form.destination?.km ? `Distance : ${form.destination.km} km` : null,
+      prix ? `Prix estimé : ${prix.montant}€${prix.isNuit ? ' (nuit)' : ''}` : null,
+      form.message ? `\nMessage client : ${form.message}` : null,
+    ].filter(Boolean).join(' · ')
+
     try {
-      // 1. Enregistrement en base Supabase (dashboard)
-      await supabase.from('reservations').insert([{
-        nom_client: `${form.prenom} ${form.nom}`.trim(),
+      const { error } = await supabase.from('reservations').insert([{
+        nom_client: fullName,
         tel_client: form.tel,
         depart: form.depart,
-        destination: form.destination?.label || '',
+        destination: form.destination?.label || (form.tripType === 2 ? 'À l\'heure' : ''),
         date_heure: form.date && form.heure ? `${form.date}T${form.heure}` : null,
-        marque: form.vehicule,
+        marque: 'provencal',
         montant: prix?.montant || null,
-        message: form.message || null,
-        source: 'site-contact', statut: 'nouvelle',
+        message: messageParts,
+        source: 'site',
+        statut: 'nouvelle',
       }])
+      if (error) throw error
+      results.supabase = true
+    } catch (err) {
+      console.error('[resa] Supabase échec:', err)
+    }
 
-      // 2. Notification email vers provencalcoastdriver@gmail.com
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          client_nom:     `${form.prenom} ${form.nom}`.trim(),
-          client_tel:     form.tel,
-          trajet_type:    TRIP_TYPES[form.tripType],
-          depart:         form.depart,
-          destination:    form.destination?.label || '—',
-          distance:       form.destination?.km ? `${form.destination.km} km` : '—',
-          date:           form.date || '—',
-          heure:          form.heure || '—',
-          vehicule:       form.vehicule,
-          passagers:      form.passagers,
-          prix_estime:    prix ? `${prix.montant} € ${prix.isNuit ? '(tarif nuit)' : ''}` : '—',
-          message:        form.message || '(aucun message)',
-          to_email:       'provencalcoastdriver@gmail.com',
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
+    // 2. WhatsApp via CallMeBot (fire-and-forget, n'attend pas la réponse)
+    const waMsg = [
+      '🚖 NOUVELLE RÉSERVATION',
+      `👤 ${fullName}`,
+      `📞 ${form.tel}`,
+      `🚗 ${vehiculeLabel}`,
+      `📍 ${form.depart} → ${form.destination?.label || (form.tripType === 2 ? 'À l\'heure' : '—')}`,
+      form.destination?.km ? `📏 ${form.destination.km} km` : null,
+      `🗓 ${dateHeure}`,
+      `💶 ${prix ? `${prix.montant}€${prix.isNuit ? ' (nuit)' : ''}` : 'à calculer'}`,
+      `🎫 ${TRIP_TYPES[form.tripType]}`,
+      form.message ? `💬 ${form.message}` : null,
+    ].filter(Boolean).join('\n')
 
+    try {
+      const r = await fetch('/api/notify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: waMsg }),
+      })
+      results.whatsapp = r.ok
+      if (!r.ok) console.warn('[resa] WhatsApp HTTP', r.status)
+    } catch (err) {
+      console.warn('[resa] WhatsApp échec:', err)
+    }
+
+    // 3. Email via EmailJS (canal historique — indépendant)
+    try {
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+      const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      if (!serviceId || !templateId || !publicKey) {
+        throw new Error('EmailJS env vars manquantes')
+      }
+      await emailjs.send(serviceId, templateId, {
+        client_nom:     fullName,
+        client_tel:     form.tel,
+        trajet_type:    TRIP_TYPES[form.tripType],
+        depart:         form.depart,
+        destination:    form.destination?.label || '—',
+        distance:       form.destination?.km ? `${form.destination.km} km` : '—',
+        date:           form.date || '—',
+        heure:          form.heure || '—',
+        vehicule:       vehiculeLabel,
+        passagers:      form.passagers,
+        prix_estime:    prix ? `${prix.montant} € ${prix.isNuit ? '(tarif nuit)' : ''}` : '—',
+        message:        form.message || '(aucun message)',
+        to_email:       'provencalcoastdriver@gmail.com',
+      }, publicKey)
+      results.email = true
+    } catch (err) {
+      console.error('[resa] EmailJS échec:', err)
+    }
+
+    // Au moins un canal a marché → succès. Sinon → erreur globale.
+    if (results.supabase || results.whatsapp || results.email) {
       setSuccess(true)
-    } catch (err) { console.error(err) }
+    } else {
+      setErrors({ global: 'Envoi impossible. Merci d\'appeler directement le 06 15 96 32 75.' })
+      document.getElementById('form-errors')?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
     setLoading(false)
   }
 
@@ -441,6 +513,8 @@ export default function ContactPage() {
                       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
                         {VEHICLES.map(v => {
                           const sel = form.vehicule === v.id
+                          // Prix pour ce tier (si destination renseignée)
+                          const tierPrice = allPrices ? allPrices[v.id] : null
                           return (
                             <button
                               key={v.id} type="button"
@@ -463,11 +537,22 @@ export default function ContactPage() {
                                   fontFamily: 'Sora', fontSize: 6.5, fontWeight: 700,
                                   letterSpacing: '0.1em', textTransform: 'uppercase',
                                   padding: '2px 5px',
-                                }}>Prestige</div>
+                                }}>Recommandé</div>
+                              )}
+                              {/* Price badge (si calculé) */}
+                              {tierPrice != null && (
+                                <div style={{
+                                  position: 'absolute', top: 5, right: 5, zIndex: 2,
+                                  background: sel ? 'var(--olive)' : 'rgba(13,17,23,0.9)',
+                                  color: '#fff',
+                                  fontFamily: "'Instrument Serif', serif", fontSize: 14,
+                                  padding: '2px 7px',
+                                  lineHeight: 1.2,
+                                }}>{tierPrice}€</div>
                               )}
                               {/* Car image */}
                               <div style={{ height: 72, background: '#F6F3EE', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <img src={v.img} alt={v.id}
+                                <img src={v.img} alt={v.label}
                                   width={1200} height={800} loading="lazy"
                                   style={{
                                     width: '100%', height: '100%',
@@ -480,7 +565,8 @@ export default function ContactPage() {
                               {sel && <div style={{ position: 'absolute', inset: 0, background: 'rgba(107,125,74,0.06)', pointerEvents: 'none' }} />}
                               {/* Info */}
                               <div style={{ padding: '6px 7px 7px', background: sel ? 'var(--olive)' : '#fff', transition: 'background 0.2s' }}>
-                                <p style={{ fontFamily: 'Sora', fontSize: 9.5, fontWeight: 700, color: sel ? '#fff' : 'var(--texte)', margin: '0 0 3px' }}>{v.id}</p>
+                                <p style={{ fontFamily: 'Sora', fontSize: 9.5, fontWeight: 700, color: sel ? '#fff' : 'var(--texte)', margin: '0 0 1px' }}>{v.label}</p>
+                                <p style={{ fontFamily: 'Sora', fontSize: 7.5, color: sel ? 'rgba(255,255,255,0.7)' : 'var(--texte-light)', margin: '0 0 4px', letterSpacing: '0.04em' }}>{v.vehicule}</p>
                                 {/* Pax + baggage */}
                                 <div style={{ display: 'flex', gap: 7, marginBottom: 5 }}>
                                   <span style={{ display: 'flex', alignItems: 'center', gap: 2, fontFamily: 'Sora', fontSize: 8, color: sel ? 'rgba(255,255,255,0.7)' : 'var(--texte-light)' }}>
@@ -548,7 +634,7 @@ export default function ContactPage() {
                             {prix.isNuit ? 'Nuit' : 'Jour'} · {prix.km} km
                           </span>
                           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 20, color: '#fff', lineHeight: 1 }}>
-                            ~{prix.montant}€
+                            {prix.montant}€
                           </span>
                         </div>
                       )}

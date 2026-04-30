@@ -9,12 +9,12 @@ import { FLOTTE, CONTACT } from '../data/content'
 import CharReveal from '../components/ui/CharReveal'
 import SEOHead from '../seo/SEOHead'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
+import { priceFor } from '../lib/pricing'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const TARIF_JOUR = 2.22
-const PRISE_EN_CHARGE = 4.00
-const MINIMUM = 12
+// Mapping fleet → tier tarifaire (3 cards : E, S, V → berline, berline, van)
+const FLEET_TIERS = ['berline', 'berline', 'van']
 
 const FLOTTE_EXTRAS = [
   {
@@ -58,14 +58,15 @@ const FLOTTE_EXTRAS = [
   },
 ]
 
-function CompactEstimator({ accent }) {
+function CompactEstimator({ accent, tierId = 'berline' }) {
   const [dest, setDest] = useState(null)   // { label, km } | null
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState(null)
 
   function calc() {
     if (!dest?.km) return
-    const prix = Math.max(MINIMUM, +(PRISE_EN_CHARGE + dest.km * TARIF_JOUR).toFixed(2))
+    const h = new Date().getHours()
+    const prix = priceFor(tierId, dest.km, h)
     setResult({ prix, km: dest.km })
   }
 
@@ -120,7 +121,7 @@ function CompactEstimator({ accent }) {
             {result.km} km
           </span>
           <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 22, color: accent }}>
-            ~{result.prix}€
+            {result.prix}€
           </span>
           <Link to="/contact" style={{
             fontFamily: 'Sora', fontSize: 9, fontWeight: 700, letterSpacing: '0.1em',
@@ -532,7 +533,7 @@ function VehicleSection({ v, extra, index }) {
           </div>
 
           {/* Compact estimator */}
-          <CompactEstimator accent={accentColor} />
+          <CompactEstimator accent={accentColor} tierId={FLEET_TIERS[index] || 'berline'} />
         </div>
       </div>
 

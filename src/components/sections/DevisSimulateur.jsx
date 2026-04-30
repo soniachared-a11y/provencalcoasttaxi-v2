@@ -5,12 +5,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, Phone, CheckCircle } from '@phosphor-icons/react'
 import AddressAutocomplete from '../ui/AddressAutocomplete'
 import { CONTACT } from '../../data/content'
+import { pricesAll, TIER_LIST } from '../../lib/pricing'
 
 gsap.registerPlugin(ScrollTrigger)
-
-const TARIF_JOUR  = 2.22
-const TARIF_NUIT  = 2.88
-const PRISE       = 4.00
 
 const TRUST = ['Tarif fixe garanti', 'Sans engagement', 'Réponse en 15 min']
 
@@ -23,9 +20,7 @@ export default function DevisSimulateur() {
   function calc() {
     if (!dest?.km) return
     const h = new Date().getHours()
-    const tarif = h >= 7 && h < 19 ? TARIF_JOUR : TARIF_NUIT
-    const prix = +(PRISE + dest.km * tarif).toFixed(2)
-    setResult({ prix, km: dest.km, isNuit: tarif === TARIF_NUIT })
+    setResult(pricesAll(dest.km, h))
   }
 
   useEffect(() => {
@@ -233,17 +228,28 @@ export default function DevisSimulateur() {
               border: '1px solid var(--border)',
               padding: '14px 20px',
             }}>
-              <div style={{ flex: 1, minWidth: 120 }}>
-                <div style={{ fontFamily: 'Sora', fontSize: 8, color: 'var(--texte-light)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 4 }}>
+              <div style={{ flex: 1, minWidth: 240 }}>
+                <div style={{ fontFamily: 'Sora', fontSize: 8, color: 'var(--texte-light)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 8 }}>
                   {result.km} km · tarif {result.isNuit ? 'nuit' : 'jour'}
                 </div>
-                <span style={{
-                  fontFamily: "'Instrument Serif', serif",
-                  fontSize: 'clamp(28px,4vw,40px)',
-                  color: 'var(--olive)',
-                  lineHeight: 1,
-                  textShadow: '0 0 20px rgba(107,125,74,0.6)',
-                }}>~{result.prix}€</span>
+                <div style={{ display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+                  {TIER_LIST.map(tier => (
+                    <div key={tier.id} style={{ display: 'flex', flexDirection: 'column' }}>
+                      <span style={{
+                        fontFamily: 'Sora', fontSize: 8, fontWeight: 700,
+                        letterSpacing: '0.18em', textTransform: 'uppercase',
+                        color: 'var(--texte-light)', marginBottom: 2,
+                      }}>{tier.label}</span>
+                      <span style={{
+                        fontFamily: "'Instrument Serif', serif",
+                        fontSize: 'clamp(22px,3.2vw,32px)',
+                        color: 'var(--olive)',
+                        lineHeight: 1,
+                        textShadow: '0 0 20px rgba(107,125,74,0.5)',
+                      }}>{result[tier.id]}€</span>
+                    </div>
+                  ))}
+                </div>
               </div>
 
               {/* CTAs */}

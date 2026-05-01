@@ -11,7 +11,7 @@
     { "source": "/taxi-gare-tgv-aix-en-provence", "destination": "/taxi-gare-tgv-aix-en-provence/index.html" },
     { "source": "/vtc-luberon-gordes-cassis", "destination": "/vtc-luberon-gordes-cassis/index.html" },
     { "source": "/chauffeur-prive-mariage-aix", "destination": "/chauffeur-prive-mariage-aix/index.html" },
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {

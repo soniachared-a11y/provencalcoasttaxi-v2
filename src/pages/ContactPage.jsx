@@ -108,7 +108,7 @@ export default function ContactPage() {
     depart: 'Aix-en-Provence',
     destination: null,
     date: '', heure: '',
-    vehicule: 'berline',
+    vehicule: null, // pas de pré-sélection — l'utilisateur choisit explicitement
     passagers: 1,
     message: '',
     tripType: 0, // 0=aller simple, 1=aller-retour, 2=à l'heure
@@ -116,6 +116,8 @@ export default function ContactPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [errors, setErrors] = useState({})
+  // Étape courante : 1=trajet, 2=véhicule, 3=coordonnées
+  const [step, setStep] = useState(1)
   const set = (k) => (v) => setForm(f => ({ ...f, [k]: v }))
 
   // Heure utilisée pour le calcul (par défaut midi = jour)
@@ -146,10 +148,7 @@ export default function ContactPage() {
       if (formCardRef.current) {
         gsap.from(formCardRef.current, { x: 60, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.3 })
       }
-      gsap.from('.cp-vehicle-card', {
-        y: 20, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out',
-        scrollTrigger: { trigger: '.cp-vehicles', start: 'top 90%', once: true },
-      })
+      // Note : les véhicules apparaissent maintenant en step 2 avec animation CSS
       gsap.from('.channel-card', {
         y: 50, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out',
         scrollTrigger: { trigger: '.channels-section', start: 'top 80%', once: true },
@@ -161,6 +160,29 @@ export default function ContactPage() {
     }, heroRef)
     return () => ctx.revert()
   }, [])
+
+  // Validation Étape 1 → passage Étape 2 (calcul prix)
+  const handleCalcPrix = () => {
+    const errs = {}
+    if (form.tripType !== 2 && !form.destination?.label) errs.destination = 'Destination requise'
+    if (!form.date) errs.date = 'Date requise'
+    if (!form.heure) errs.heure = 'Heure requise'
+    if (Object.keys(errs).length > 0) {
+      setErrors(errs)
+      return
+    }
+    setErrors({})
+    setStep(s => Math.max(s, 2))
+    // Smooth scroll vers section véhicule
+    setTimeout(() => document.getElementById('step-vehicule')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
+  }
+
+  // Sélection d'un véhicule → passage Étape 3
+  const handleSelectVehicule = (id) => {
+    set('vehicule')(id)
+    setStep(s => Math.max(s, 3))
+    setTimeout(() => document.getElementById('step-coords')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 80)
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -425,162 +447,157 @@ export default function ContactPage() {
                     </div>
                   )}
 
-                  {/* Header */}
-                  <div style={{
-                    padding: '20px 28px 16px',
-                    borderBottom: '1px solid var(--border)',
-                    display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  }}>
-                    <div>
-                      <span style={{ fontFamily: 'Sora', fontSize: 8, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--olive)', display: 'block', marginBottom: 3 }}>Réservation</span>
-                      <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19, fontWeight: 400, color: 'var(--texte)', margin: 0 }}>
-                        Votre trajet sur mesure
-                      </h2>
-                    </div>
-                    {/* Accent line */}
-                    <div style={{ width: 28, height: 2, background: 'linear-gradient(90deg, var(--olive), var(--lavande))' }} />
-                  </div>
-
-                  {/* Trip type tabs */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', borderBottom: '1px solid var(--border)' }}>
-                    {TRIP_TYPES.map((t, i) => (
-                      <button
-                        key={t} type="button"
-                        onClick={() => set('tripType')(i)}
-                        style={{
-                          padding: '10px 4px',
-                          background: form.tripType === i ? 'var(--texte)' : 'transparent',
-                          border: 'none',
-                          borderRight: i < 2 ? '1px solid var(--border)' : 'none',
-                          cursor: 'pointer',
-                          fontFamily: 'Sora', fontSize: 10, fontWeight: form.tripType === i ? 700 : 400,
-                          color: form.tripType === i ? '#fff' : 'var(--texte-light)',
-                          letterSpacing: '0.05em',
-                          transition: 'all 0.2s',
-                        }}
-                      >{t}</button>
+                  {/* Stepped banner — 3 chevrons (Modifier / Choisir / Réserver) */}
+                  <div className="cp-steps">
+                    {[
+                      { n: 1, label: 'Modifier le parcours' },
+                      { n: 2, label: 'Choisir un véhicule' },
+                      { n: 3, label: 'Réservation en ligne' },
+                    ].map((s, i) => (
+                      <div key={s.n} className={`cp-step ${step >= s.n ? 'is-active' : ''} ${step === s.n ? 'is-current' : ''}`}>
+                        <span className="cp-step-num">{String(s.n).padStart(2, '0')}</span>
+                        <span className="cp-step-label">{s.label}</span>
+                      </div>
                     ))}
                   </div>
 
-                  <div style={{ padding: '16px 28px 20px', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  {/* ─────── ÉTAPE 1 — TRAJET ─────── */}
+                  <section className="cp-section" id="step-trajet">
+                    {/* Tabs Aller simple / Aller-retour / À l'heure */}
+                    <div className="cp-tabs">
+                      {TRIP_TYPES.map((t, i) => (
+                        <button
+                          key={t} type="button"
+                          onClick={() => set('tripType')(i)}
+                          className={`cp-tab ${form.tripType === i ? 'is-sel' : ''}`}
+                        >{t}</button>
+                      ))}
+                    </div>
 
-                    {/* Départ + Destination */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                      <div>
-                        <Lbl>Départ</Lbl>
-                        <div style={{ position: 'relative' }}>
-                          <NavigationArrow size={12} weight="duotone" style={{ position: 'absolute', left: 9, top: '50%', transform: 'translateY(-50%)', color: 'var(--olive)', pointerEvents: 'none', zIndex: 1 }} />
-                          <input type="text" value={form.depart} onChange={e => set('depart')(e.target.value)}
-                            style={{ ...fs, paddingLeft: 28 }} onFocus={focus} onBlur={blur} />
-                        </div>
-                      </div>
-                      <div>
-                        <Lbl>{form.tripType === 2 ? 'Durée souhaitée' : 'Destination *'}</Lbl>
-                        {form.tripType === 2 ? (
-                          <input type="text" placeholder="2h, 4h, journée…" value={form.destination?.label || ''} onChange={e => set('destination')({ label: e.target.value })}
-                            style={fs} onFocus={focus} onBlur={blur} />
-                        ) : (
-                          <AddressAutocomplete value={form.destination} onChange={set('destination')}
-                            placeholder="Aéroport, ville…" dark={false}
-                            inputStyle={{ background: '#F6F3EE', border: '1px solid transparent', borderRadius: 0, height: 36, fontSize: 12 }} />
-                        )}
-                      </div>
+                    {/* Départ */}
+                    <div className="cp-field">
+                      <MapPin size={16} weight="fill" className="cp-field-icon" style={{ color: 'var(--olive)' }} />
+                      <input
+                        type="text"
+                        value={form.depart}
+                        onChange={e => set('depart')(e.target.value)}
+                        placeholder="Adresse de départ"
+                        className="cp-input-big"
+                      />
+                    </div>
+
+                    {/* Destination ou Durée si à l'heure */}
+                    <div className="cp-field">
+                      <MapPin size={16} weight="fill" className="cp-field-icon" style={{ color: 'var(--lavande)' }} />
+                      {form.tripType === 2 ? (
+                        <input
+                          type="text"
+                          value={form.destination?.label || ''}
+                          onChange={e => set('destination')({ label: e.target.value })}
+                          placeholder="Durée souhaitée (2h, 4h, journée…)"
+                          className="cp-input-big"
+                        />
+                      ) : (
+                        <AddressAutocomplete
+                          value={form.destination}
+                          onChange={set('destination')}
+                          placeholder="Adresse d'arrivée"
+                          dark={false}
+                          inputStyle={{
+                            background: 'transparent', border: 'none', borderRadius: 0,
+                            height: 48, fontSize: 14, paddingLeft: 38, paddingRight: 12,
+                            fontFamily: 'Sora', color: 'var(--texte)',
+                            width: '100%',
+                          }}
+                        />
+                      )}
                     </div>
 
                     {/* Date + Heure */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-                      <div>
-                        <Lbl>Date *</Lbl>
-                        <div style={{ position: 'relative' }}>
-                          <CalendarBlank size={12} weight="duotone" style={{ position: 'absolute', left: 9, top: '50%', transform: 'translateY(-50%)', color: 'var(--texte-light)', pointerEvents: 'none', zIndex: 1 }} />
-                          <input type="date" value={form.date} onChange={e => set('date')(e.target.value)} required
-                            style={{ ...fs, paddingLeft: 28 }} onFocus={focus} onBlur={blur} />
-                        </div>
+                    <div className="cp-row-2">
+                      <div className="cp-field">
+                        <CalendarBlank size={16} weight="duotone" className="cp-field-icon" style={{ color: 'var(--texte-light)' }} />
+                        <input
+                          type="date"
+                          value={form.date}
+                          onChange={e => set('date')(e.target.value)}
+                          required
+                          className="cp-input-big"
+                        />
                       </div>
-                      <div>
-                        <Lbl>Heure *</Lbl>
-                        <div style={{ position: 'relative' }}>
-                          <Clock size={12} weight="duotone" style={{ position: 'absolute', left: 9, top: '50%', transform: 'translateY(-50%)', color: 'var(--texte-light)', pointerEvents: 'none', zIndex: 1 }} />
-                          <input type="time" value={form.heure} onChange={e => set('heure')(e.target.value)} required
-                            style={{ ...fs, paddingLeft: 28 }} onFocus={focus} onBlur={blur} />
-                        </div>
+                      <div className="cp-field">
+                        <Clock size={16} weight="duotone" className="cp-field-icon" style={{ color: 'var(--texte-light)' }} />
+                        <input
+                          type="time"
+                          value={form.heure}
+                          onChange={e => set('heure')(e.target.value)}
+                          required
+                          className="cp-input-big"
+                        />
                       </div>
                     </div>
 
-                    {/* Véhicule */}
-                    <div className="cp-vehicles">
-                      <Lbl>Votre véhicule</Lbl>
-                      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 8 }}>
+                    {/* Options discrètes : voyage retour */}
+                    <div className="cp-options">
+                      <button
+                        type="button"
+                        onClick={() => set('tripType')(form.tripType === 1 ? 0 : 1)}
+                        className={`cp-option-link ${form.tripType === 1 ? 'is-on' : ''}`}
+                      >
+                        ↕ Un voyage de retour ?
+                      </button>
+                    </div>
+
+                    {/* CTA Calculer le prix → step 2 */}
+                    <button
+                      type="button"
+                      onClick={handleCalcPrix}
+                      className="cp-cta-primary"
+                    >
+                      Calculer le prix
+                      <ArrowRight size={14} weight="bold" />
+                    </button>
+                  </section>
+
+                  {/* ─────── ÉTAPE 2 — VÉHICULE ─────── */}
+                  {step >= 2 && allPrices && (
+                    <section className="cp-section cp-section--reveal" id="step-vehicule">
+                      <div className="cp-section-head">
+                        <span className="cp-section-eyebrow">Étape 2</span>
+                        <h3 className="cp-section-title">Choisissez votre véhicule</h3>
+                        <p className="cp-section-sub">{allPrices.km} km · tarif {allPrices.isNuit ? 'nuit (19h–6h)' : 'jour (6h–19h)'} · prix fixe garanti</p>
+                      </div>
+
+                      <div className="cp-vehicles-grid">
                         {VEHICLES.map(v => {
                           const sel = form.vehicule === v.id
-                          // Prix pour ce tier (si destination renseignée)
-                          const tierPrice = allPrices ? allPrices[v.id] : null
+                          const tierPrice = allPrices[v.id]
                           return (
                             <button
                               key={v.id} type="button"
-                              className="cp-vehicle-card"
-                              onClick={() => set('vehicule')(v.id)}
-                              style={{
-                                position: 'relative', padding: 0, cursor: 'pointer',
-                                background: '#fff', border: 'none',
-                                outline: sel ? '2px solid var(--olive)' : '1px solid var(--border)',
-                                outlineOffset: sel ? 2 : 0,
-                                transition: 'outline 0.2s, box-shadow 0.2s',
-                                boxShadow: sel ? '0 4px 16px rgba(107,125,74,0.18)' : 'none',
-                              }}
+                              onClick={() => handleSelectVehicule(v.id)}
+                              className={`cp-vehicle ${sel ? 'is-sel' : ''}`}
                             >
-                              {/* Recommended badge */}
                               {v.recommended && (
-                                <div style={{
-                                  position: 'absolute', top: 5, left: 5, zIndex: 2,
-                                  background: 'var(--lavande)', color: '#fff',
-                                  fontFamily: 'Sora', fontSize: 6.5, fontWeight: 700,
-                                  letterSpacing: '0.1em', textTransform: 'uppercase',
-                                  padding: '2px 5px',
-                                }}>Recommandé</div>
+                                <div className="cp-vehicle-tag">Recommandé</div>
                               )}
-                              {/* Price badge (si calculé) */}
-                              {tierPrice != null && (
-                                <div style={{
-                                  position: 'absolute', top: 5, right: 5, zIndex: 2,
-                                  background: sel ? 'var(--olive)' : 'rgba(13,17,23,0.9)',
-                                  color: '#fff',
-                                  fontFamily: "'Instrument Serif', serif", fontSize: 14,
-                                  padding: '2px 7px',
-                                  lineHeight: 1.2,
-                                }}>{tierPrice}€</div>
-                              )}
-                              {/* Car image */}
-                              <div style={{ height: 72, background: '#F6F3EE', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <img src={v.img} alt={v.label}
-                                  width={1200} height={800} loading="lazy"
-                                  style={{
-                                    width: '100%', height: '100%',
-                                    transition: 'transform 0.4s ease',
-                                    transform: sel ? 'scale(1.05)' : 'scale(1)',
-                                    ...v.imgStyle,
-                                  }} />
+                              <div className="cp-vehicle-img">
+                                <img src={v.img} alt={v.label} loading="lazy" style={v.imgStyle} />
                               </div>
-                              {/* Selected tint */}
-                              {sel && <div style={{ position: 'absolute', inset: 0, background: 'rgba(107,125,74,0.06)', pointerEvents: 'none' }} />}
-                              {/* Info */}
-                              <div style={{ padding: '6px 7px 7px', background: sel ? 'var(--olive)' : '#fff', transition: 'background 0.2s' }}>
-                                <p style={{ fontFamily: 'Sora', fontSize: 9.5, fontWeight: 700, color: sel ? '#fff' : 'var(--texte)', margin: '0 0 1px' }}>{v.label}</p>
-                                <p style={{ fontFamily: 'Sora', fontSize: 7.5, color: sel ? 'rgba(255,255,255,0.7)' : 'var(--texte-light)', margin: '0 0 4px', letterSpacing: '0.04em' }}>{v.vehicule}</p>
-                                {/* Pax + baggage */}
-                                <div style={{ display: 'flex', gap: 7, marginBottom: 5 }}>
-                                  <span style={{ display: 'flex', alignItems: 'center', gap: 2, fontFamily: 'Sora', fontSize: 8, color: sel ? 'rgba(255,255,255,0.7)' : 'var(--texte-light)' }}>
-                                    <Users size={8} />{v.pax}
-                                  </span>
-                                  <span style={{ display: 'flex', alignItems: 'center', gap: 2, fontFamily: 'Sora', fontSize: 8, color: sel ? 'rgba(255,255,255,0.7)' : 'var(--texte-light)' }}>
-                                    <Briefcase size={8} />{v.bagages}
-                                  </span>
+                              <div className="cp-vehicle-body">
+                                <div className="cp-vehicle-head">
+                                  <h4>{v.label}</h4>
+                                  <span className="cp-vehicle-price">{tierPrice}€</span>
                                 </div>
-                                {/* Amenity icons */}
-                                <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+                                <p className="cp-vehicle-vehicule">{v.vehicule}</p>
+                                <div className="cp-vehicle-meta">
+                                  <span><Users size={11} weight="duotone" /> {v.pax}</span>
+                                  <span><Briefcase size={11} weight="duotone" /> {v.bagages}</span>
+                                </div>
+                                <div className="cp-vehicle-amenities">
                                   {v.amenities.map((a, ai) => (
                                     <span key={ai} title={a.label}>
-                                      <a.icon size={10} weight="duotone" style={{ color: sel ? 'rgba(255,255,255,0.65)' : 'var(--lavande)', display: 'block' }} />
+                                      <a.icon size={12} weight="duotone" />
                                     </span>
                                   ))}
                                 </div>
@@ -589,72 +606,96 @@ export default function ContactPage() {
                           )
                         })}
                       </div>
-                    </div>
+                    </section>
+                  )}
 
-                    {/* Prénom / Nom / Téléphone */}
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 10 }}>
-                      <div>
-                        <Lbl>Prénom *</Lbl>
-                        <input type="text" placeholder="Jean" value={form.prenom} onChange={e => set('prenom')(e.target.value)} required style={fs} onFocus={focus} onBlur={blur} />
+                  {/* ─────── ÉTAPE 3 — COORDONNÉES ─────── */}
+                  {step >= 3 && form.vehicule && (
+                    <section className="cp-section cp-section--reveal" id="step-coords">
+                      <div className="cp-section-head">
+                        <span className="cp-section-eyebrow">Étape 3</span>
+                        <h3 className="cp-section-title">Vos coordonnées</h3>
+                        <p className="cp-section-sub">Confirmation en moins de 15 minutes</p>
                       </div>
-                      <div>
-                        <Lbl>Nom *</Lbl>
-                        <input type="text" placeholder="Dupont" value={form.nom} onChange={e => set('nom')(e.target.value)} required style={fs} onFocus={focus} onBlur={blur} />
-                      </div>
-                      <div>
-                        <Lbl>Téléphone *</Lbl>
-                        <input type="tel" placeholder="06 00 00 00" value={form.tel} onChange={e => set('tel')(e.target.value)} required style={fs} onFocus={focus} onBlur={blur} />
-                      </div>
-                    </div>
 
-                    {/* Message */}
-                    <div>
-                      <Lbl>Message (optionnel)</Lbl>
-                      <textarea value={form.message} onChange={e => set('message')(e.target.value)}
-                        placeholder="Numéro de vol, adresse précise, demande particulière…"
-                        rows={2}
-                        style={{
-                          width: '100%', background: '#F6F3EE', border: '1px solid transparent',
-                          padding: '8px 10px', fontFamily: 'Sora', fontSize: 12, color: 'var(--texte)',
-                          outline: 'none', resize: 'none', lineHeight: 1.6, transition: 'border-color 0.2s',
-                          boxSizing: 'border-box',
-                        }}
-                        onFocus={focus} onBlur={blur} />
-                    </div>
-
-                    {/* Submit row — price + button */}
-                    <div style={{ display: 'flex', gap: 0, alignItems: 'stretch', marginTop: 4 }}>
+                      {/* Récap résumé */}
                       {prix && (
-                        <div style={{
-                          background: 'var(--texte)', padding: '0 16px',
-                          display: 'flex', flexDirection: 'column', justifyContent: 'center',
-                          flexShrink: 0,
-                        }}>
-                          <span style={{ fontFamily: 'Sora', fontSize: 7, color: 'rgba(255,255,255,0.35)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 2 }}>
-                            {prix.isNuit ? 'Nuit' : 'Jour'} · {prix.km} km
-                          </span>
-                          <span style={{ fontFamily: "'Instrument Serif', serif", fontSize: 20, color: '#fff', lineHeight: 1 }}>
-                            {prix.montant}€
-                          </span>
+                        <div className="cp-recap">
+                          <div className="cp-recap-line">
+                            <span className="cp-recap-label">Trajet</span>
+                            <span className="cp-recap-value">{form.depart} → {form.destination?.label}</span>
+                          </div>
+                          <div className="cp-recap-line">
+                            <span className="cp-recap-label">Date</span>
+                            <span className="cp-recap-value">{form.date} · {form.heure}</span>
+                          </div>
+                          <div className="cp-recap-line">
+                            <span className="cp-recap-label">Véhicule</span>
+                            <span className="cp-recap-value">{TIERS[form.vehicule]?.label} — {TIERS[form.vehicule]?.vehicule}</span>
+                          </div>
+                          <div className="cp-recap-total">
+                            <span>Total estimé</span>
+                            <span className="cp-recap-price">{prix.montant}€</span>
+                          </div>
                         </div>
                       )}
-                      <button type="submit" disabled={loading} style={{
-                        flex: 1, height: 46,
-                        background: loading ? 'rgba(107,125,74,0.5)' : 'var(--olive)',
-                        color: '#fff', border: 'none',
-                        cursor: loading ? 'not-allowed' : 'pointer',
-                        fontFamily: 'Sora', fontSize: 10, fontWeight: 700,
-                        letterSpacing: '0.15em', textTransform: 'uppercase',
-                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
-                        transition: 'background 0.3s',
-                      }}
-                        onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#5A6B3A' }}
-                        onMouseLeave={e => { e.currentTarget.style.background = 'var(--olive)' }}>
-                        {loading ? 'Envoi…' : <><span>Envoyer ma demande</span><ArrowRight size={12} weight="bold" /></>}
-                      </button>
-                    </div>
 
-                  </div>
+                      {/* Coordonnées */}
+                      <div className="cp-row-2">
+                        <div className="cp-field">
+                          <input
+                            type="text"
+                            placeholder="Prénom"
+                            value={form.prenom}
+                            onChange={e => set('prenom')(e.target.value)}
+                            required
+                            className="cp-input-big cp-input-big--pad-left"
+                          />
+                        </div>
+                        <div className="cp-field">
+                          <input
+                            type="text"
+                            placeholder="Nom"
+                            value={form.nom}
+                            onChange={e => set('nom')(e.target.value)}
+                            required
+                            className="cp-input-big cp-input-big--pad-left"
+                          />
+                        </div>
+                      </div>
+
+                      <div className="cp-field">
+                        <PhoneCall size={16} weight="duotone" className="cp-field-icon" style={{ color: 'var(--olive)' }} />
+                        <input
+                          type="tel"
+                          placeholder="Téléphone (06 12 34 56 78)"
+                          value={form.tel}
+                          onChange={e => set('tel')(e.target.value)}
+                          required
+                          className="cp-input-big"
+                        />
+                      </div>
+
+                      <div className="cp-field cp-field--ta">
+                        <textarea
+                          value={form.message}
+                          onChange={e => set('message')(e.target.value)}
+                          placeholder="Message (optionnel) — n° de vol, demandes particulières…"
+                          rows={2}
+                          className="cp-textarea"
+                        />
+                      </div>
+
+                      {/* CTA finale */}
+                      <button type="submit" disabled={loading} className="cp-cta-primary cp-cta-primary--final">
+                        {loading ? 'Envoi…' : <>Confirmer la réservation <ArrowRight size={14} weight="bold" /></>}
+                      </button>
+
+                      <p className="cp-fineprint">
+                        <SealCheck size={11} weight="duotone" /> Tarif fixe · annulation gratuite jusqu'à 24h avant · paiement à bord
+                      </p>
+                    </section>
+                  )}
                 </form>
               )}
             </div>
@@ -665,6 +706,390 @@ export default function ContactPage() {
           @media (max-width: 900px) {
             .contact-hero-grid { grid-template-columns: 1fr !important; }
             .hero-contact-text { padding-top: 0 !important; }
+          }
+
+          /* ─── Stepped banner (chevrons étapes 01/02/03) ─── */
+          .cp-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: var(--cream);
+            border-bottom: 1px solid var(--border);
+          }
+          .cp-step {
+            position: relative;
+            padding: 14px 22px 14px 18px;
+            display: flex; align-items: center; gap: 10px;
+            background: #EDE7DA;
+            color: var(--texte-light);
+            font-family: 'Sora', sans-serif;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%, 12px 50%);
+            margin-right: -8px;
+          }
+          .cp-step:first-child { clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 0 100%); padding-left: 22px; }
+          .cp-step:last-child { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 12px 50%); margin-right: 0; }
+          .cp-step.is-active {
+            background: var(--olive);
+            color: #fff;
+          }
+          .cp-step.is-current {
+            background: linear-gradient(95deg, var(--olive) 0%, #7A8B5A 100%);
+            box-shadow: inset 0 -2px 0 rgba(255,255,255,0.2);
+          }
+          .cp-step-num {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            opacity: 0.6;
+            font-variant-numeric: tabular-nums;
+          }
+          .cp-step.is-active .cp-step-num { opacity: 0.85; }
+          .cp-step-label {
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 1.2;
+          }
+
+          /* ─── Sections ─── */
+          .cp-section {
+            padding: 22px 28px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex; flex-direction: column; gap: 12px;
+          }
+          .cp-section:last-of-type { border-bottom: none; padding-bottom: 28px; }
+          .cp-section--reveal {
+            animation: cpReveal 0.5s ease-out both;
+          }
+          @keyframes cpReveal {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          .cp-section-head {
+            display: flex; flex-direction: column; gap: 2px;
+            margin-bottom: 4px;
+          }
+          .cp-section-eyebrow {
+            font-family: 'Sora', sans-serif;
+            font-size: 8px; font-weight: 700;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--olive);
+            margin-bottom: 4px;
+          }
+          .cp-section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px; font-weight: 400;
+            color: var(--texte);
+            margin: 0;
+            letter-spacing: -0.01em;
+            line-height: 1.15;
+          }
+          .cp-section-sub {
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            color: var(--texte-light);
+            margin: 0;
+            letter-spacing: 0.02em;
+          }
+
+          /* ─── Tabs ─── */
+          .cp-tabs {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            background: #F6F3EE;
+            padding: 4px;
+            gap: 2px;
+            border-radius: 0;
+          }
+          .cp-tab {
+            padding: 10px 6px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-family: 'Sora', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: var(--texte-light);
+            transition: all 0.25s ease;
+          }
+          .cp-tab:hover { color: var(--texte); }
+          .cp-tab.is-sel {
+            background: var(--texte);
+            color: #fff;
+            font-weight: 700;
+          }
+
+          /* ─── Inputs ─── */
+          .cp-field {
+            position: relative;
+            background: #F6F3EE;
+            transition: box-shadow 0.2s, background 0.2s;
+          }
+          .cp-field:focus-within {
+            background: #fff;
+            box-shadow: inset 0 0 0 1.5px var(--olive);
+          }
+          .cp-field-icon {
+            position: absolute;
+            left: 13px; top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 1;
+          }
+          .cp-input-big {
+            width: 100%;
+            height: 48px;
+            background: transparent;
+            border: none;
+            padding: 0 14px 0 38px;
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            color: var(--texte);
+            outline: none;
+            box-sizing: border-box;
+            font-weight: 500;
+          }
+          .cp-input-big::placeholder {
+            color: rgba(0,0,0,0.35);
+            font-weight: 400;
+          }
+          .cp-input-big--pad-left { padding-left: 14px; }
+          .cp-row-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+          }
+          .cp-field--ta { padding: 0; }
+          .cp-textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 12px 14px;
+            font-family: 'Sora', sans-serif;
+            font-size: 13px;
+            color: var(--texte);
+            outline: none;
+            resize: vertical;
+            min-height: 60px;
+            line-height: 1.5;
+            box-sizing: border-box;
+          }
+          .cp-textarea::placeholder { color: rgba(0,0,0,0.35); }
+
+          /* ─── Options links (voyage retour) ─── */
+          .cp-options {
+            display: flex; gap: 18px; padding: 4px 2px;
+          }
+          .cp-option-link {
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            color: var(--texte-light);
+            cursor: pointer;
+            letter-spacing: 0.02em;
+            transition: color 0.2s;
+          }
+          .cp-option-link:hover { color: var(--olive); }
+          .cp-option-link.is-on { color: var(--olive); font-weight: 700; }
+
+          /* ─── CTA primary ─── */
+          .cp-cta-primary {
+            width: 100%;
+            height: 54px;
+            background: linear-gradient(95deg, var(--olive) 0%, #7A8B5A 100%);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-family: 'Sora', sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            transition: all 0.3s ease;
+            margin-top: 6px;
+            box-shadow: 0 6px 20px rgba(107,125,74,0.25);
+          }
+          .cp-cta-primary:hover:not(:disabled) {
+            background: linear-gradient(95deg, #5A6B3A 0%, #6B7C4A 100%);
+            box-shadow: 0 10px 28px rgba(107,125,74,0.4);
+            transform: translateY(-1px);
+          }
+          .cp-cta-primary:disabled {
+            opacity: 0.6; cursor: not-allowed;
+          }
+          .cp-cta-primary--final {
+            background: linear-gradient(95deg, var(--texte) 0%, #1F252E 100%);
+            box-shadow: 0 6px 20px rgba(13,17,23,0.3);
+          }
+          .cp-cta-primary--final:hover:not(:disabled) {
+            background: linear-gradient(95deg, #1F252E 0%, var(--texte) 100%);
+            box-shadow: 0 10px 28px rgba(13,17,23,0.45);
+          }
+
+          /* ─── Vehicle cards (étape 2) ─── */
+          .cp-vehicles-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+          }
+          .cp-vehicle {
+            position: relative;
+            padding: 0;
+            background: #fff;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: left;
+            overflow: hidden;
+          }
+          .cp-vehicle:hover {
+            border-color: var(--olive);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+          }
+          .cp-vehicle.is-sel {
+            border-color: var(--olive);
+            border-width: 2px;
+            box-shadow: 0 8px 24px rgba(107,125,74,0.25), inset 0 0 0 1px var(--olive);
+          }
+          .cp-vehicle-tag {
+            position: absolute;
+            top: 8px; left: 8px;
+            background: var(--lavande);
+            color: #fff;
+            font-family: 'Sora', sans-serif;
+            font-size: 8px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            z-index: 2;
+          }
+          .cp-vehicle-img {
+            height: 90px;
+            background: #F6F3EE;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+          }
+          .cp-vehicle-img img {
+            width: 100%; height: 100%;
+            transition: transform 0.4s ease;
+          }
+          .cp-vehicle:hover .cp-vehicle-img img,
+          .cp-vehicle.is-sel .cp-vehicle-img img { transform: scale(1.06); }
+          .cp-vehicle-body { padding: 10px 12px 12px; }
+          .cp-vehicle-head {
+            display: flex; align-items: baseline; justify-content: space-between;
+            gap: 6px; margin-bottom: 2px;
+          }
+          .cp-vehicle-head h4 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 18px; font-weight: 400;
+            color: var(--texte);
+            margin: 0;
+            letter-spacing: -0.01em;
+          }
+          .cp-vehicle-price {
+            font-family: 'Instrument Serif', serif;
+            font-size: 22px;
+            color: var(--olive);
+            font-weight: 400;
+            line-height: 1;
+            letter-spacing: -0.02em;
+          }
+          .cp-vehicle.is-sel .cp-vehicle-price { color: var(--olive); }
+          .cp-vehicle-vehicule {
+            font-family: 'Sora', sans-serif;
+            font-size: 9px;
+            color: var(--texte-light);
+            margin: 0 0 8px;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+          }
+          .cp-vehicle-meta {
+            display: flex; gap: 10px;
+            margin-bottom: 6px;
+          }
+          .cp-vehicle-meta span {
+            display: flex; align-items: center; gap: 3px;
+            font-family: 'Sora', sans-serif;
+            font-size: 10px;
+            color: var(--texte-light);
+            font-weight: 500;
+          }
+          .cp-vehicle-amenities {
+            display: flex; gap: 6px;
+            color: var(--lavande);
+          }
+
+          /* ─── Récap card (étape 3) ─── */
+          .cp-recap {
+            background: var(--cream);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--olive);
+            padding: 14px 16px;
+            display: flex; flex-direction: column; gap: 6px;
+          }
+          .cp-recap-line {
+            display: flex; align-items: baseline; gap: 10px;
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+          }
+          .cp-recap-label {
+            color: var(--texte-light);
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 9px;
+            font-weight: 700;
+            min-width: 64px;
+          }
+          .cp-recap-value {
+            color: var(--texte);
+            font-weight: 500;
+            flex: 1;
+          }
+          .cp-recap-total {
+            display: flex; align-items: baseline; justify-content: space-between;
+            margin-top: 6px;
+            padding-top: 10px;
+            border-top: 1px dashed var(--border);
+            font-family: 'Sora', sans-serif;
+            font-size: 11px;
+            color: var(--texte-light);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+          }
+          .cp-recap-price {
+            font-family: 'Instrument Serif', serif;
+            font-size: 28px;
+            color: var(--olive);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+          }
+
+          .cp-fineprint {
+            margin: 12px 0 0;
+            font-family: 'Sora', sans-serif;
+            font-size: 10px;
+            color: var(--texte-light);
+            text-align: center;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            letter-spacing: 0.02em;
+          }
+
+          /* Responsive */
+          @media (max-width: 600px) {
+            .cp-step-label { font-size: 8px; }
+            .cp-step { padding: 12px 16px 12px 12px; gap: 6px; }
+            .cp-vehicles-grid { grid-template-columns: 1fr; }
+            .cp-row-2 { grid-template-columns: 1fr; }
           }
         `}</style>
       </section>

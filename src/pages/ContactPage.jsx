@@ -8,9 +8,8 @@ import {
   CalendarBlank, Clock, SealCheck, MapPin,
   WifiHigh, Drop, Baby, Snowflake, Lightning, Users, Briefcase,
 } from '@phosphor-icons/react'
-import emailjs from '@emailjs/browser'
 import { CONTACT } from '../data/content'
-import { supabase } from '../lib/supabase'
+import { sendReservation } from '../lib/sendReservation'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
 import SEOHead from '../seo/SEOHead'
 
@@ -176,45 +175,45 @@ export default function ContactPage() {
     setErrors({})
 
     setLoading(true)
-    try {
-      // 1. Enregistrement en base Supabase (dashboard)
-      await supabase.from('reservations').insert([{
-        nom_client: `${form.prenom} ${form.nom}`.trim(),
-        tel_client: form.tel,
-        depart: form.depart,
-        destination: form.destination?.label || '',
-        date_heure: form.date && form.heure ? `${form.date}T${form.heure}` : null,
-        marque: form.vehicule,
-        montant: prix?.montant || null,
-        message: form.message || null,
-        source: 'site-contact', statut: 'nouvelle',
-      }])
 
-      // 2. Notification email vers provencalcoastdriver@gmail.com
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          client_nom:     `${form.prenom} ${form.nom}`.trim(),
-          client_tel:     form.tel,
-          trajet_type:    TRIP_TYPES[form.tripType],
-          depart:         form.depart,
-          destination:    form.destination?.label || '—',
-          distance:       form.destination?.km ? `${form.destination.km} km` : '—',
-          date:           form.date || '—',
-          heure:          form.heure || '—',
-          vehicule:       form.vehicule,
-          passagers:      form.passagers,
-          prix_estime:    prix ? `${prix.montant} € ${prix.isNuit ? '(tarif nuit)' : ''}` : '—',
-          message:        form.message || '(aucun message)',
-          to_email:       'provencalcoastdriver@gmail.com',
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
+    // Construction message complet (préserve le détail métier)
+    const messageMeta = [
+      `Trajet: ${TRIP_TYPES[form.tripType]}`,
+      form.vehicule && `Véhicule: ${form.vehicule}`,
+      form.passagers && `Passagers: ${form.passagers}`,
+      prix ? `Prix estimé: ${prix.montant} € ${prix.isNuit ? '(tarif nuit)' : ''}` : null,
+    ].filter(Boolean).join(' | ')
+    const messageComplet = [form.message, messageMeta].filter(Boolean).join(' — ')
 
-      setSuccess(true)
-    } catch (err) { console.error(err) }
+    const dateIso = form.date && form.heure ? `${form.date}T${form.heure}` : ''
+    const dateLisible = form.date && form.heure
+      ? `${form.date} à ${form.heure}`
+      : (form.date || '—')
+
+    // Triple sécu : Supabase + EmailJS + WhatsApp en parallèle
+    const result = await sendReservation({
+      nom: `${form.prenom} ${form.nom}`.trim(),
+      telephone: form.tel,
+      email: form.email || '',
+      depart: form.depart,
+      arrivee: form.destination?.label || '',
+      dateHeure: dateIso,
+      dateHeureLisible: dateLisible,
+      prix: prix?.montant,
+      distanceKm: form.destination?.km,
+      message: messageComplet,
+      marque: 'provencale',
+      driverEmail: 'provencalcoastdriver@gmail.com',
+      source: 'site-contact-page',
+    })
+
     setLoading(false)
+
+    if (result.ok) {
+      setSuccess(true)
+    } else {
+      setErrors({ submit: 'Connexion impossible. Merci de nous appeler au 06 15 96 32 75.' })
+    }
   }
 
   return (

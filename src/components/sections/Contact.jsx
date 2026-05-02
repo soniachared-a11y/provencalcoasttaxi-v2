@@ -3,8 +3,7 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, CheckCircle, Phone, EnvelopeSimple, Users } from '@phosphor-icons/react'
 import { SECTION_INTROS, IMAGES } from '../../data/content'
-import { supabase } from '../../lib/supabase'
-import emailjs from '@emailjs/browser'
+import { sendReservation } from '../../lib/sendReservation'
 import AddressAutocomplete from '../ui/AddressAutocomplete'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -70,43 +69,38 @@ export default function Contact() {
     setError('')
     if (!form.nom.trim()) return setError('Votre nom est obligatoire.')
     setLoading(true)
+
     const extras = [form.vehicule && `Véhicule: ${form.vehicule}`, form.service && `Service: ${form.service}`].filter(Boolean).join(' | ')
     const messageComplet = [form.message.trim(), extras].filter(Boolean).join(' — ')
-    const { error: insertError } = await supabase.from('reservations').insert({
-      nom_client: form.nom.trim(),
-      tel_client: form.tel.trim() || null,
-      depart: messageComplet || null,
-      destination: form.destination?.label || null,
-      date_heure: form.date_heure ? new Date(form.date_heure).toISOString() : new Date().toISOString(),
-      marque: 'provencal', source: 'site', statut: 'nouvelle', user_id: null,
+    const dateIso = form.date_heure ? new Date(form.date_heure).toISOString() : new Date().toISOString()
+    const dateLisible = form.date_heure
+      ? new Date(form.date_heure).toLocaleString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+      : '—'
+
+    // Triple sécu : Supabase + EmailJS + WhatsApp en parallèle
+    const result = await sendReservation({
+      nom: form.nom.trim(),
+      telephone: form.tel.trim(),
+      email: '',
+      depart: messageComplet,
+      arrivee: form.destination?.label || '',
+      dateHeure: dateIso,
+      dateHeureLisible: dateLisible,
+      distanceKm: form.destination?.km,
+      message: form.message,
+      marque: 'provencale',
+      driverEmail: 'provencalcoastdriver@gmail.com',
+      source: 'site-contact-section',
     })
-    // 2. Notification email vers provencalcoastdriver@gmail.com
-    try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          client_nom:   form.nom.trim(),
-          client_tel:   form.tel.trim() || '—',
-          depart:       messageComplet || '—',
-          destination:  form.destination?.label || '—',
-          distance:     form.destination?.km ? `${form.destination.km} km` : '—',
-          date:         form.date_heure || '—',
-          heure:        '—',
-          vehicule:     form.vehicule || '—',
-          message:      form.message || '(aucun message)',
-          to_email:     'provencalcoastdriver@gmail.com',
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      )
-    } catch (emailErr) {
-      console.error('EmailJS error:', emailErr)
-    }
 
     setLoading(false)
-    if (insertError) { setError('Une erreur est survenue. Appelez-nous directement.'); return }
-    setSuccess(true)
-    setForm({ nom: '', tel: '', destination: null, vehicule: '', service: '', date_heure: '', message: '' })
+
+    if (result.ok) {
+      setSuccess(true)
+      setForm({ nom: '', tel: '', destination: null, vehicule: '', service: '', date_heure: '', message: '' })
+    } else {
+      setError('Connexion impossible. Merci de nous appeler au 06 15 96 32 75.')
+    }
   }
 
   useEffect(() => {

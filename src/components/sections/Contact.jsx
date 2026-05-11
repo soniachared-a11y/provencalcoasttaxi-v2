@@ -88,7 +88,7 @@ export default function Contact() {
       dateHeureLisible: dateLisible,
       distanceKm: form.destination?.km,
       message: form.message,
-      marque: 'provencale',
+      marque: 'provencal',
       driverEmail: 'provencalcoastdriver@gmail.com',
       source: 'site-contact-section',
     })

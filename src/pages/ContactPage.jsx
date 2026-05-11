@@ -202,7 +202,7 @@ export default function ContactPage() {
       prix: prix?.montant,
       distanceKm: form.destination?.km,
       message: messageComplet,
-      marque: 'provencale',
+      marque: 'provencal',
       driverEmail: 'provencalcoastdriver@gmail.com',
       source: 'site-contact-page',
     })

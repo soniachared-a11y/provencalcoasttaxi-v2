@@ -10,6 +10,7 @@ import {
 } from '@phosphor-icons/react'
 import { CONTACT } from '../data/content'
 import { sendReservation } from '../lib/sendReservation'
+import { TENANT_MARQUE } from '../lib/tenant'
 import AddressAutocomplete from '../components/ui/AddressAutocomplete'
 import SEOHead from '../seo/SEOHead'
 
@@ -202,7 +203,7 @@ export default function ContactPage() {
       prix: prix?.montant,
       distanceKm: form.destination?.km,
       message: messageComplet,
-      marque: 'provencal',
+      marque: TENANT_MARQUE,
       driverEmail: 'provencalcoastdriver@gmail.com',
       source: 'site-contact-page',
     })

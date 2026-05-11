@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ArrowRight, CheckCircle, Phone, EnvelopeSimple, Users } from '@phosphor-icons/react'
 import { SECTION_INTROS, IMAGES } from '../../data/content'
 import { sendReservation } from '../../lib/sendReservation'
+import { TENANT_MARQUE } from '../../lib/tenant'
 import AddressAutocomplete from '../ui/AddressAutocomplete'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -88,7 +89,7 @@ export default function Contact() {
       dateHeureLisible: dateLisible,
       distanceKm: form.destination?.km,
       message: form.message,
-      marque: 'provencal',
+      marque: TENANT_MARQUE,
       driverEmail: 'provencalcoastdriver@gmail.com',
       source: 'site-contact-section',
     })

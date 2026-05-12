@@ -177,12 +177,11 @@ export default function ContactPage() {
 
     setLoading(true)
 
-    // Construction message complet (préserve le détail métier)
+    // Construction message complet (préserve le détail métier — sans prix ni km, à la demande du chauffeur)
     const messageMeta = [
       `Trajet: ${TRIP_TYPES[form.tripType]}`,
       form.vehicule && `Véhicule: ${form.vehicule}`,
       form.passagers && `Passagers: ${form.passagers}`,
-      prix ? `Prix estimé: ${prix.montant} € ${prix.isNuit ? '(tarif nuit)' : ''}` : null,
     ].filter(Boolean).join(' | ')
     const messageComplet = [form.message, messageMeta].filter(Boolean).join(' — ')
 

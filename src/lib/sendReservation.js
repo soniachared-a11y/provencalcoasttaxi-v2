@@ -75,37 +75,37 @@ async function sendToEmail(data) {
   }
 }
 
-// ── Canal 3 : CallMeBot WhatsApp (notification instantanée chauffeur) ───────
+// ── Canal 3 : WhatsApp via fonction serverless /api/notify-whatsapp ─────────
+// La clé CallMeBot reste côté serveur (env vars sans préfixe VITE_), jamais
+// exposée dans le bundle public. Le navigateur appelle simplement notre API.
 async function sendToWhatsapp(data) {
   try {
-    const phone = import.meta.env.VITE_CALLMEBOT_PHONE
-    const apikey = import.meta.env.VITE_CALLMEBOT_APIKEY
-
-    if (!phone || !apikey) {
-      return { ok: false, error: 'WhatsApp non configuré' }
-    }
-
     const lines = [
       `🚗 NOUVELLE RÉSA ${String(data.marque).toUpperCase()}`,
       ``,
       `👤 ${data.nom}`,
       `📞 ${data.telephone}`,
-      `📧 ${data.email}`,
+    ]
+    if (data.email) lines.push(`📧 ${data.email}`)
+    lines.push(
       ``,
       `📍 De : ${data.depart}`,
       `📍 À : ${data.arrivee}`,
       `🕐 ${data.dateHeureLisible}`,
-    ]
+    )
     if (data.prix) lines.push(`💰 ${data.prix} €`)
     if (data.distanceKm) lines.push(`📏 ${data.distanceKm} km`)
     if (data.message) lines.push(``, `💬 ${data.message}`)
 
-    const text = encodeURIComponent(lines.join('\n'))
-    const url = `https://api.callmebot.com/whatsapp.php?phone=${encodeURIComponent(phone)}&text=${text}&apikey=${encodeURIComponent(apikey)}`
-
-    // mode: 'no-cors' nécessaire — CallMeBot ne renvoie pas les headers CORS,
-    // mais le message est bien envoyé côté serveur.
-    await fetch(url, { method: 'GET', mode: 'no-cors' })
+    const r = await fetch('/api/notify-whatsapp', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: lines.join('\n') }),
+    })
+    if (!r.ok) {
+      const errBody = await r.json().catch(() => ({}))
+      return { ok: false, error: errBody.error || `HTTP ${r.status}` }
+    }
     return { ok: true }
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : 'erreur inconnue' }

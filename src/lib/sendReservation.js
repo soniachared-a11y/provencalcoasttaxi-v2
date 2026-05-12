@@ -50,6 +50,15 @@ async function sendToEmail(data) {
       return { ok: false, error: 'EmailJS non configuré (variables manquantes)' }
     }
 
+    // Le template EmailJS est partagé entre Provençal et Malacrida avec un
+    // subject hardcodé. Pour garantir l'identification claire de la marque
+    // côté chauffeur, on injecte le branding en tête du message et on tente
+    // de pousser un subject dynamique (override si le template a {{subject}}).
+    const brandLabel = data.marque === 'malacrida' ? 'MALACRIDA TAXI' : 'TAXIS PROVENÇALE AIX'
+    const brandHeader = `🏷️ ${brandLabel} — RÉSERVATION`
+    const enrichedMessage = `${brandHeader}\n\n${data.message || '(aucun message client)'}`
+    const dynamicSubject = `[${brandLabel}] Nouvelle réservation — ${data.nom}`
+
     await emailjs.send(
       serviceId,
       templateId,
@@ -63,8 +72,10 @@ async function sendToEmail(data) {
         date_heure: data.dateHeureLisible,
         date: data.dateHeureLisible,
         prix_estime: data.prix ? `${data.prix} €` : '—',
-        message: data.message || '(aucun message)',
+        message: enrichedMessage,
         marque: data.marque,
+        subject: dynamicSubject,
+        title: dynamicSubject,
         to_email: data.driverEmail,
       },
       publicKey

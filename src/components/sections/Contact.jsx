@@ -90,6 +90,7 @@ export default function Contact() {
       distanceKm: form.destination?.km,
       message: form.message,
       marque: TENANT_MARQUE,
+      intent: 'reservation', // formulaire home = toujours réservation (pas de toggle ici)
       driverEmail: 'provencalcoastdriver@gmail.com',
       source: 'site-contact-section',
     })

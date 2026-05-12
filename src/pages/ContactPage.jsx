@@ -107,6 +107,7 @@ export default function ContactPage() {
     passagers: 1,
     message: '',
     tripType: 0, // 0=aller simple, 1=aller-retour, 2=à l'heure
+    intent: 'reservation', // 'devis' | 'reservation' — choix du client en haut du formulaire
   })
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
@@ -203,8 +204,9 @@ export default function ContactPage() {
       distanceKm: form.destination?.km,
       message: messageComplet,
       marque: TENANT_MARQUE,
+      intent: form.intent, // 'devis' | 'reservation'
       driverEmail: 'provencalcoastdriver@gmail.com',
-      source: 'site-contact-page',
+      source: form.intent === 'devis' ? 'site-devis' : 'site-contact-page',
     })
 
     setLoading(false)
@@ -359,13 +361,46 @@ export default function ContactPage() {
                     display: 'flex', alignItems: 'center', justifyContent: 'space-between',
                   }}>
                     <div>
-                      <span style={{ fontFamily: 'Sora', fontSize: 8, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--olive)', display: 'block', marginBottom: 3 }}>Réservation</span>
+                      <span style={{ fontFamily: 'Sora', fontSize: 8, fontWeight: 700, letterSpacing: '0.3em', textTransform: 'uppercase', color: 'var(--olive)', display: 'block', marginBottom: 3 }}>
+                        {form.intent === 'devis' ? 'Demande de devis' : 'Réservation'}
+                      </span>
                       <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: 19, fontWeight: 400, color: 'var(--texte)', margin: 0 }}>
-                        Votre trajet sur mesure
+                        {form.intent === 'devis' ? 'Estimez votre trajet' : 'Votre trajet sur mesure'}
                       </h2>
                     </div>
                     {/* Accent line */}
                     <div style={{ width: 28, height: 2, background: 'linear-gradient(90deg, var(--olive), var(--lavande))' }} />
+                  </div>
+
+                  {/* Intent selector — Devis ou Réservation */}
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', borderBottom: '1px solid var(--border)', background: '#F6F3EE' }}>
+                    {[
+                      { id: 'reservation', label: 'Réservation', sub: 'Je confirme mon trajet' },
+                      { id: 'devis', label: 'Devis', sub: 'Je veux un prix' },
+                    ].map(opt => (
+                      <button
+                        key={opt.id} type="button"
+                        onClick={() => set('intent')(opt.id)}
+                        style={{
+                          padding: '12px 8px',
+                          background: form.intent === opt.id ? 'var(--olive)' : 'transparent',
+                          border: 'none',
+                          borderRight: opt.id === 'reservation' ? '1px solid var(--border)' : 'none',
+                          cursor: 'pointer',
+                          fontFamily: 'Sora',
+                          color: form.intent === opt.id ? '#fff' : 'var(--texte-light)',
+                          transition: 'all 0.2s',
+                          textAlign: 'center',
+                        }}
+                      >
+                        <div style={{ fontSize: 11, fontWeight: form.intent === opt.id ? 700 : 600, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
+                          {opt.label}
+                        </div>
+                        <div style={{ fontSize: 9, opacity: form.intent === opt.id ? 0.85 : 0.55, marginTop: 2, fontStyle: 'italic' }}>
+                          {opt.sub}
+                        </div>
+                      </button>
+                    ))}
                   </div>
 
                   {/* Trip type tabs */}
@@ -563,7 +598,7 @@ export default function ContactPage() {
                       }}
                         onMouseEnter={e => { if (!loading) e.currentTarget.style.background = '#5A6B3A' }}
                         onMouseLeave={e => { e.currentTarget.style.background = 'var(--olive)' }}>
-                        {loading ? 'Envoi…' : <><span>Envoyer ma demande</span><ArrowRight size={12} weight="bold" /></>}
+                        {loading ? 'Envoi…' : <><span>{form.intent === 'devis' ? 'Demander un devis' : 'Confirmer la réservation'}</span><ArrowRight size={12} weight="bold" /></>}
                       </button>
                     </div>
 

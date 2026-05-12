@@ -56,9 +56,11 @@ async function sendToEmail(data) {
     // de pousser un subject dynamique (override si le template a {{subject}}).
     // Volontairement : pas de prix ni de distance (le chauffeur fixe lui-même).
     const brandLabel = data.marque === 'malacrida' ? 'MALACRIDA TAXI' : 'TAXIS PROVENÇALE AIX'
-    const brandHeader = `🏷️ ${brandLabel} — DEMANDE DE RÉSERVATION`
+    const intentLabel = data.intent === 'devis' ? 'DEMANDE DE DEVIS' : 'DEMANDE DE RÉSERVATION'
+    const intentSubject = data.intent === 'devis' ? 'Demande de devis' : 'Demande de réservation'
+    const brandHeader = `🏷️ ${brandLabel} — ${intentLabel}`
     const enrichedMessage = `${brandHeader}\n\n${data.message || '(aucun message client)'}`
-    const dynamicSubject = `[${brandLabel}] Demande de réservation — ${data.nom}`
+    const dynamicSubject = `[${brandLabel}] ${intentSubject} — ${data.nom}`
 
     await emailjs.send(
       serviceId,
@@ -91,8 +93,11 @@ async function sendToEmail(data) {
 async function sendToWhatsapp(data) {
   try {
     const brandLabel = data.marque === 'malacrida' ? 'MALACRIDA' : 'PROVENCAL'
+    const isDevis = data.intent === 'devis'
+    const headerIcon = isDevis ? '💼' : '📋'
+    const headerType = isDevis ? 'DEMANDE DE DEVIS' : 'DEMANDE DE RÉSERVATION'
     const lines = [
-      `📋 DEMANDE DE RÉSERVATION — ${brandLabel}`,
+      `${headerIcon} ${headerType} — ${brandLabel}`,
       ``,
       `👤 ${data.nom}`,
       `📞 ${data.telephone}`,

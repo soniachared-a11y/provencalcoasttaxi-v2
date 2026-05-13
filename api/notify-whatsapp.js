@@ -51,11 +51,33 @@ export default async function handler(req, res) {
   try {
     const r = await fetch(url, { method: 'GET' })
     const text = await r.text()
+
+    // CallMeBot répond toujours HTTP 200 même en cas d'erreur — il faut
+    // parser le body pour distinguer vraies réussites des faux succès.
     if (!r.ok) {
       console.error('[notify-whatsapp] CallMeBot HTTP', r.status, text.slice(0, 200))
       return res.status(502).json({ error: 'callmebot_rejected', status: r.status })
     }
-    return res.status(200).json({ ok: true })
+
+    // Détection des erreurs cachées dans le body HTML retourné par CallMeBot
+    const lower = text.toLowerCase()
+    const isQueued = lower.includes('message queued')
+    const isError = lower.includes('error') ||
+                    lower.includes('apikey is invalid') ||
+                    lower.includes('haven\'t received') ||
+                    lower.includes('stopped') ||
+                    lower.includes('not allowed') ||
+                    lower.includes('please send')
+
+    if (isError || !isQueued) {
+      console.error('[notify-whatsapp] CallMeBot body error:', text.slice(0, 400))
+      return res.status(502).json({
+        error: 'callmebot_body_error',
+        detail: text.replace(/<[^>]*>/g, '').slice(0, 300).trim(),
+      })
+    }
+
+    return res.status(200).json({ ok: true, queued: true })
   } catch (err) {
     console.error('[notify-whatsapp] fetch error:', err)
     return res.status(500).json({ error: 'fetch_failed' })

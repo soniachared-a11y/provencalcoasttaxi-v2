@@ -77,9 +77,15 @@ export default async function handler(req, res) {
       })
     }
 
-    return res.status(200).json({ ok: true, queued: true })
+    // En cas de succès, on renvoie aussi le détail brut côté front pour debug
+    return res.status(200).json({
+      ok: true,
+      queued: true,
+      callmebot_response: text.replace(/<[^>]*>/g, '').slice(0, 300).trim(),
+      callmebot_status: r.status,
+    })
   } catch (err) {
     console.error('[notify-whatsapp] fetch error:', err)
-    return res.status(500).json({ error: 'fetch_failed' })
+    return res.status(500).json({ error: 'fetch_failed', detail: String(err?.message || err) })
   }
 }
